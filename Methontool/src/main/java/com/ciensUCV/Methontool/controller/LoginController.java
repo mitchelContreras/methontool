@@ -3,6 +3,7 @@
  */
 package com.ciensUCV.Methontool.controller;
 
+
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -11,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.ciensUCV.Methontool.util.ConeccionBD;
+import com.ciensUCV.Methontool.util.LeerConfig;
 
 /**
  * @author mitchell
@@ -26,8 +30,10 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("En login");
-		
+		logger.info("Dentro de home ");
+		LeerConfig.cargarConfig();
+		ConeccionBD.leerConfigConeccion();
+
 		return "login";
 	}
 	
