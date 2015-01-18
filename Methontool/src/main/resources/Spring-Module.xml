@@ -6,5 +6,6 @@
 	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
  
 	<import resource="database/Spring-Datasource.xml" />
-	<import resource="rolUsuario/Spring-RolUsuario.xml" />
+	<import resource="beanDataBase/Spring-RolUsuario.xml" />
+	<import resource="beanDataBase/Spring-Usuario.xml" />
 </beans>

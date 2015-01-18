@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ciensUCV.Methontool.dao.RolUsuarioDAO;
+import com.ciensUCV.Methontool.dao.UsuarioDAO;
 import com.ciensUCV.Methontool.model.RolUsuario;
+import com.ciensUCV.Methontool.model.Usuario;
 //import com.ciensUCV.Methontool.util.ConeccionBD;
 //import com.ciensUCV.Methontool.util.LeerConfig;
 
@@ -42,10 +44,13 @@ public class LoginController {
     	ApplicationContext context = 
     		new ClassPathXmlApplicationContext("Spring-Module.xml");
  
-    	RolUsuarioDAO rolUsuarioDao = (RolUsuarioDAO) context.getBean("rolUsuarioDAO");
- 
-    	RolUsuario rolUsuario = rolUsuarioDao.buscarByRolUsuarioId(1);
-        logger.info(rolUsuario.toString());
+//    	RolUsuarioDAO rolUsuarioDao = (RolUsuarioDAO) context.getBean("rolUsuarioDAO");
+// 
+//    	RolUsuario rolUsuario = rolUsuarioDao.buscarByRolUsuarioId(1);
+//        logger.info(rolUsuario.toString());
+    	UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("usuarioDAO");
+    	Usuario usuario = usuarioDAO.buscarByCorreo("mitchellcontreras@gmail.com");
+    	logger.info(usuario.toString());
         
 
 		return "login";
