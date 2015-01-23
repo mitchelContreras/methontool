@@ -18,6 +18,10 @@
 
 	<!-- css de login-->
 	<link href="${pageContext.request.contextPath}/resources/css/login.css" rel="stylesheet">
+	
+	<!-- AngularJS -->
+<!-- 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/css/angular.min.css"></script> -->
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
 </head>
 <body>
 
@@ -35,11 +39,11 @@
 		</form>
 	</div>
 	
-<!-- 
+ 
 	Write some text in textbox bla bla:
 	<input type="text" ng-model="sometext" />
 
 	<h1>Hello {{ sometext }}, estas en login</h1>
- -->		
+ 	
 </body>
 </html>

@@ -22,6 +22,8 @@ import com.ciensUCV.Methontool.model.Usuario;
 //import com.ciensUCV.Methontool.util.ConeccionBD;
 //import com.ciensUCV.Methontool.util.LeerConfig;
 
+
+
 /**
  * @author mitchell
  *
@@ -51,11 +53,6 @@ public class LoginController {
     	UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("usuarioDAO");
     	Usuario usuario = usuarioDAO.buscarByCorreo("mitchellcontreras@gmail.com");
     	logger.info(usuario.toString());
-        
-
-		return "login";
+		return "pruebaAjaxAngularJS";
 	}
-	
-	
-	
 }

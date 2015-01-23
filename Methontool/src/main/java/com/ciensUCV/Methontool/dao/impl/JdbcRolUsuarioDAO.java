@@ -24,12 +24,12 @@ public class JdbcRolUsuarioDAO implements RolUsuarioDAO {
 		String sql = "SELECT * FROM rol_usuario WHERE id_rol_usuario = ?";
 		 
 		Connection conn = null;
- 
+		RolUsuario rolUsuario = null;
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idRolUsuario);
-			RolUsuario rolUsuario = null;
+			
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				rolUsuario = new RolUsuario(
@@ -46,7 +46,9 @@ public class JdbcRolUsuarioDAO implements RolUsuarioDAO {
 			if (conn != null) {
 				try {
 				conn.close();
-				} catch (SQLException e) {}
+				} catch (SQLException e) {
+					return rolUsuario;
+				}
 			}
 		}
 	}

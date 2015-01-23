@@ -11,7 +11,7 @@ public class RolUsuario {
 
 	int idRolUsuario;
 	String nombre;
-	
+	public RolUsuario(){}
 	public RolUsuario(int idRolUsuario, String nombre) {
 		super();
 		this.idRolUsuario = idRolUsuario;
