@@ -38,21 +38,20 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("Dentro de home ");
 //		LeerConfig.cargarConfig();
 //		ConeccionBD.leerConfigConeccion();
 		
-		//Agregado
-    	ApplicationContext context = 
-    		new ClassPathXmlApplicationContext("Spring-Module.xml");
- 
-//    	RolUsuarioDAO rolUsuarioDao = (RolUsuarioDAO) context.getBean("rolUsuarioDAO");
+//		//Agregado
+//    	ApplicationContext context = 
+//    		new ClassPathXmlApplicationContext("Spring-Module.xml");
 // 
-//    	RolUsuario rolUsuario = rolUsuarioDao.buscarByRolUsuarioId(1);
-//        logger.info(rolUsuario.toString());
-    	UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("usuarioDAO");
-    	Usuario usuario = usuarioDAO.buscarByCorreo("mitchellcontreras@gmail.com");
-    	logger.info(usuario.toString());
-		return "pruebaAjaxAngularJS";
+////    	RolUsuarioDAO rolUsuarioDao = (RolUsuarioDAO) context.getBean("rolUsuarioDAO");
+//// 
+////    	RolUsuario rolUsuario = rolUsuarioDao.buscarByRolUsuarioId(1);
+////        logger.info(rolUsuario.toString());
+//    	UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("usuarioDAO");
+//    	Usuario usuario = usuarioDAO.buscarByCorreo("mitchellcontreras@gmail.com");
+//    	logger.info(usuario.toString());
+		return "login";
 	}
 }

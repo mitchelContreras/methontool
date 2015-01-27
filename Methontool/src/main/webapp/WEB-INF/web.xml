@@ -30,5 +30,16 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-
+	<!-- Filtro para aceptar spring -->
+	<filter>
+	    <filter-name>simpleCORSFilter</filter-name>
+	    <filter-class>
+	       com.ciensUCV.Methontool.rest.SimpleCORSFilter
+	    </filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>simpleCORSFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 </web-app>

@@ -1,1 +1,1 @@
-{"ide":{},"plugins":{"angular":{}},"libs":["browser","ecma5"]}
+{"ide":{"scriptPaths":[{"type":"FOLDER","path":"src/main/webapp/resources/js/MVC-Angular"}]},"plugins":{"angular":{}},"libs":["browser","ecma5"]}

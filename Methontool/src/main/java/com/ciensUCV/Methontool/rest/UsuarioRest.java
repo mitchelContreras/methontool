@@ -47,7 +47,25 @@ public class UsuarioRest {
             		usuario.setContrasena("");
             logger.info(usuario.toString());
         }
-
+		return usuario;
+	}
+	
+	@RequestMapping(value="/validarUsuario", method = RequestMethod.GET)
+	public @ResponseBody Usuario validarUsuario(@RequestParam(value="correo", required=true) String correo, @RequestParam(value="pass", required=true) String pass){
+		logger.info("Entro");
+		logger.info("entro en validarUsuario con correo="+correo+" con pass="+pass);
+		Usuario usuario = new Usuario();
+	
+		
+//        UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("usuarioDAO");
+//        usuario = usuarioDAO.buscarByCorreo(correo);
+//        if(usuario != null){
+//            RolUsuarioDAO rolusuarioDAO = (RolUsuarioDAO) context.getBean("rolUsuarioDAO");
+//            usuario.setRolUsuario(rolusuarioDAO.
+//            		buscarByRolUsuarioId(usuario.getRolUsuario().getIdRolUsuario()));
+//            		usuario.setContrasena("");
+//            logger.info(usuario.toString());
+//        }
 		return usuario;
 	}
 }
