@@ -1,0 +1,53 @@
+html {
+	min-height: 100%;
+}
+
+body {
+	/*padding-top: 40px;*/
+	padding-bottom: 40px;
+}
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+.cabecera{
+	height: 100px;
+}
+
+.cabeceraTitulo{
+	 text-align: center;
+	 vertical-align: center;
+	 margin-top: 30px;
+}
+
+.cabeceraTitulo > a{
+	text-decoration: none;
+	font-size:25px;
+}
+
+.sesionCabecera{
+	margin-top: 25px;
+	text-align: right;
+}
+
+.navegar{
+	height: 50px;
+}
+
+.CampoTrabajo{
+	/*este height quiero que sea en porcentaje de la vista para poder trabajar en diferentes maquinas*/
+	height: 500px;
+	background-color: orange;
+}
+
+.cuerpoUno{
+	height:100%;
+	background-color: pink;
+}
+
+.cuerpoDos{
+	height:100%;
+	background-color: gray;
+}

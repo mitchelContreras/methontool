@@ -38,6 +38,7 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
+		logger.info("Levano login");
 //		LeerConfig.cargarConfig();
 //		ConeccionBD.leerConfigConeccion();
 		
@@ -53,5 +54,12 @@ public class LoginController {
 //    	Usuario usuario = usuarioDAO.buscarByCorreo("mitchellcontreras@gmail.com");
 //    	logger.info(usuario.toString());
 		return "login";
+	}
+	
+	@RequestMapping(value = "/aplicacion", method = RequestMethod.GET)
+	public String aplicacion(Locale locale, Model model) {
+		logger.info("Levano aplicacion");
+		
+		return "aplicacion";
 	}
 }
