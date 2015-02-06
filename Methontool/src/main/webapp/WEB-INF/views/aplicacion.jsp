@@ -21,9 +21,11 @@
 	<!-- css de aplicacion-->
 	<link href="${pageContext.request.contextPath}/resources/css/aplicacion.css" rel="stylesheet">
 	
-	<!-- AngularJS -->
+	<!-- AngularJS 
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-
+-->
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/angular.min.js"></script>
+	
 	<!-- JS -->
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/MVC-Angular/login-AngularJS.js"></script>
 	
