@@ -1,3 +1,4 @@
+
 html {
 	min-height: 100%;
 }
@@ -27,6 +28,15 @@ body {
 	font-size:25px;
 }
 
+.classTituloSeleccionado{
+	color:#0000FF;
+}
+
+.classTituloNoSeleccionado{
+	color:#00BFFF;
+	/*color:#81DAF5;*/
+}
+
 .sesionCabecera{
 	margin-top: 25px;
 	text-align: right;
@@ -44,10 +54,22 @@ body {
 
 .cuerpoUno{
 	height:100%;
-	background-color: pink;
+	background-color: #D8D8D8; /*Gris mientras encuentro color que pao*/
+	border: solid #000;
+ 	border-top-width: 1px;
+  	border-left-width: 1px;
+  	border-right-width: 1px; 
+  	border-bottom-width: 1px; 
+   	border-color: #000000; /*Color negro*/
 }
 
 .cuerpoDos{
 	height:100%;
-	background-color: gray;
+	background-color: #D8D8D8; /*Gris mientras encuentro color que pao*/
+	border: solid #000;
+ 	border-top-width: 1px;
+  	border-left-width: 0.5px;
+  	border-right-width: 1px; 
+  	border-bottom-width: 1px; 
+   	border-color: #000000; /*Color negro*/
 }
