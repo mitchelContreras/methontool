@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ciensUCV.Methontool.dao.RolUsuarioDAO;
 import com.ciensUCV.Methontool.dao.UsuarioDAO;
 import com.ciensUCV.Methontool.model.Usuario;
+import com.ciensUCV.Methontool.rest.model.UsuarioMensaje;
+import com.ciensUCV.Methontool.rest.model.ErrorEnviar;
 import com.ciensUCV.Methontool.util.VariablesConfiguracion;
+
 
 @Controller
 public class UsuarioRest {
@@ -49,23 +52,48 @@ public class UsuarioRest {
         }
 		return usuario;
 	}
-	
-	@RequestMapping(value="/validarUsuario", method = RequestMethod.GET)
-	public @ResponseBody Usuario validarUsuario(@RequestParam(value="correo", required=true) String correo, @RequestParam(value="pass", required=true) String pass){
-		logger.info("Entro");
+	/*
+	 * @User: Mitchell Contreras
+	 * @Param correo: correo del usuario
+	 * @Param pass: password del usuario
+	 */
+	@RequestMapping(value="/api/usuario/validarUsuario", method = RequestMethod.GET)
+	public @ResponseBody UsuarioMensaje validarUsuario(@RequestParam(value="correo", required=true) String correo, 
+			@RequestParam(value="pass", required=true) String pass){
+		
 		logger.info("entro en validarUsuario con correo="+correo+" con pass="+pass);
 		Usuario usuario = new Usuario();
-	
+		UsuarioMensaje usuarioMensaje = new UsuarioMensaje ();
+		ErrorEnviar errorEnviar;
 		
-//        UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("usuarioDAO");
-//        usuario = usuarioDAO.buscarByCorreo(correo);
-//        if(usuario != null){
-//            RolUsuarioDAO rolusuarioDAO = (RolUsuarioDAO) context.getBean("rolUsuarioDAO");
-//            usuario.setRolUsuario(rolusuarioDAO.
-//            		buscarByRolUsuarioId(usuario.getRolUsuario().getIdRolUsuario()));
-//            		usuario.setContrasena("");
-//            logger.info(usuario.toString());
-//        }
-		return usuario;
+        UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("usuarioDAO");
+        usuario = usuarioDAO.buscarByCorreo(correo);
+//        logger.info("Usuario es "+usuario.toString());
+        if(usuario == null){
+        	logger.info("Usuario es null");
+        	usuarioMensaje.setSucces(false);
+        	errorEnviar = new ErrorEnviar("0001", "correo", "Usuario o Correo incorrecto");
+        	usuarioMensaje.getListaError().add(errorEnviar);
+        }else{
+            RolUsuarioDAO rolusuarioDAO = (RolUsuarioDAO) context.getBean("rolUsuarioDAO");
+            usuario.setRolUsuario(rolusuarioDAO.
+            		buscarByRolUsuarioId(usuario.getRolUsuario().getIdRolUsuario()));
+            logger.info(usuario.toString());
+            
+            if(usuario.getContrasena().equals(pass)){
+            	logger.info("Usuario valido");
+            	usuarioMensaje.setSucces(true);
+            	usuario.setContrasena("");
+            	usuarioMensaje.setUsuario(usuario);
+            }else{
+            	logger.info("Usuario es invalido");
+            	usuarioMensaje.setSucces(false);
+            	errorEnviar = new ErrorEnviar("0002", "correo", "Usuario o Correo incorrecto");
+            	usuarioMensaje.getListaError().add(errorEnviar);
+            }
+        }
+        logger.info(usuarioMensaje.toString());
+        
+		return usuarioMensaje;
 	}
 }

@@ -3,18 +3,32 @@
 
 	var App = angular.module('methontool',[
 		//dependencias a usar
+		'ngResource'
 		])
 
 	.service('Category',function($http){
 
 	    this.getAll = function(success,failure){
-	        $http.get('http://localhost:8080/jdbc/customer?id=3') //Step 1
+	    	
+//			console.log("$scope.usuario.correo "+$scope.usuario.correo);
+//			console.log("$scope.usuario.pass "+$scope.usuario.pass);
+			
+	        $http.get('http://localhost:8080/Methontool/api/usuario/validarUsuario?correo=mitchellcontreras@gmail.com&pass=123456789') //Step 1
 	            .success(success) //Step 2
 	            .error(failure);  
 	    }
 	})
 
-	App.controller('LoginController', function($scope, Category) {
+	.factory('Usuario',function($resource){ //Step 2
+        //Step 3
+ //       return $resource('http://localhost:8080/jdbc/valCustomer');
+         return $resource('http://localhost:8080/Methontool/api/usuario/validarUsuario',{},{
+            query: {method: 'GET', isArray:false}
+            });
+    })
+    
+    
+	App.controller('LoginController', function($scope, Category, Usuario) {
      
 	$scope.validarCorreo = false;
 	$scope.validarPass = false;
@@ -85,15 +99,40 @@
      	}else{
      		$scope.validarPass = false;
      	}
-
-     	if(pass == "1234"){
-     		$scope.usuarioInValido = true;
-     	}else{
-     		u$scope.usuarioInValido = false;
-     	}
-	    Category.getAll(function(data){         
-	    	console.log("data es "+data.name);
+     	
+//	    Category.getAll(function(data){         
+//	    	console.log("data es "+data.succes);
+//	    });
+//	    console.log("antes");
+	    $scope.salida = Usuario.query({'correo': correo, 'pass':pass},{});
+//	    console.log("bla "+ JSON.stringify($scope.datos));
+//	    console.log(Pinta el json como string"+JSON.stringify($scope.datos));
+//	    console.log("despues "+JSON.stringify($scope.datos.succes));
+	    $scope.salida.$promise.then(function(data){
+	    	console.log("sucess es "+$scope.salida.succes);
+	    	if($scope.salida.succes == true){
+//	    		$scope.mensajeInvalido = scope.salida.listaError.length
+	    		console.log("El id del usuario es "+$scope.salida.usuario.idUsuario);
+	    		console.log("El usuario es "+$scope.salida.usuario.nombre+" "+$scope.salida.usuario.apellido);
+	    		location.href = 'http://localhost:8080/Methontool/aplicacion';
+	    	}else{
+	    		console.log("Longitud de lista de errores es"+$scope.salida.listaError.length);
+	    		console.log("El mensaje es "+$scope.salida.listaError[0].mensaje);
+	    		$scope.usuarioInValido = true;
+	    		$scope.mensajeInvalido = $scope.salida.listaError[0].mensaje;
+	    	}
 	    });
+
+	    
+//	    console.log("mensaje es1 "+datos);
+//		console.log("aaa "+datos.succes);
+//	    $scope.datos = datos;
+	    //     	if(pass == "1234"){
+//     		$scope.usuarioInValido = true;
+//     	}else{
+//     		u$scope.usuarioInValido = false;
+//     	}
+	    return false;
      }
     });
 	

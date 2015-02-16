@@ -21,10 +21,12 @@
 	<link href="${pageContext.request.contextPath}/resources/css/login.css" rel="stylesheet">
 	
 	<!-- AngularJS -->
-	 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"></script> 
-<!--  	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/angular.min.js"></script> -->
+<!--	 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"></script>  --> 
+  	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/angular.min.js"></script> 
 
-	<!-- JS -->
+	<!-- AngularJS Resource -->
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/angular-resource.min.js"></script>
+	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/MVC-Angular/login-AngularJS.js"></script>
 	
 </head>
@@ -41,7 +43,7 @@
 		</div>
 		<div align="center" class="alert alert-danger" ng-if="usuarioInValido">
 	   		<!--<a href="#" class="close" data-dismiss="alert">&times;</a>-->
-	   		 <strong>Error!</strong> Usuario invalido
+	   		 <strong>Error!</strong> {{mensajeInvalido}}
 		</div>
 		<div align="center" class="alert alert-success" ng-if="envieCorreoRecuperar">
 		    <strong>Success!</strong> Informaci&#243n enviada a su correo
@@ -64,7 +66,6 @@
 			</div>
 			<button class="btn btn-lg btn-primary btn-block" ng-click="validarDatos()">Entrar</button>
 		</form>
-
 
      <div class="modal fade" id="olvidoContrasenaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
