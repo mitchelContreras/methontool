@@ -8,4 +8,5 @@
 	<import resource="database/Spring-Datasource.xml" />
 	<import resource="beanDataBase/Spring-RolUsuario.xml" />
 	<import resource="beanDataBase/Spring-Usuario.xml" />
+	<import resource="beanDataBase/Spring-Proyecto.xml" />
 </beans>
