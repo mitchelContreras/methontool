@@ -27,7 +27,7 @@
 	<!-- AngularJS Resource -->
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/angular-resource.min.js"></script>
 	
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/MVC-Angular/login-AngularJS.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/login/login.js"></script>
 	
 </head>
 <body ng-app="methontool" ng-controller="LoginController">
