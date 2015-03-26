@@ -17,18 +17,21 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title" id="myModalLabel">Lista de proyectos</h4>
+					<h6>Seleccione el proyecto con el que desea trabajar</h6>
 				</div>
 				<div class="modal-body">
 					<div>
 						<ul>
 							<li ng-repeat="proyecto in cnProyecto.proyectos" >
-							id={{proyecto.idProyecto}} con nombre={{proyecto.nombre}}
+								<span>{{proyecto.nombre}}</span>
+								<a class="btn"ng-click="cnProyecto.seleccioneProyecto(proyecto)" ><i class="glyphicon glyphicon-ok"></i></a>
+ <!-- 							<a class="btn" href="#"><i class="glyphicon glyphicon-remove"></i></a>  -->  
 							</li>
 						</ul>
 					</div>  
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 				</div>
 			</div>
 		</div>

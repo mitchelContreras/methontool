@@ -4,7 +4,7 @@
 <html ng-app="methontool">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Methontool</title>
+		<title>Methontool &nbsp;{{proyecto.nombre}}</title>
 		
 		 <!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
@@ -38,7 +38,7 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/componentes/proyecto.js"></script>
 	
 	</head>
-	<body ng-app="methontool">
+	<body >
 		<div class="container" ng-controller="ControllerPrincipal as cnPrincipal">
 			<jsp:include page="componentesAplicacion/cabecera.jsp" />
 			<!-- Vista principal limpia -->

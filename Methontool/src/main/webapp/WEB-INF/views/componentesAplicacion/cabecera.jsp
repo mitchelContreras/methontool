@@ -13,6 +13,7 @@
 				<a href="#" class="classTituloNoSeleccionado" >&#62</a>
 				<a href="#" ng-click="cnCabecera.clickImplementacion()"
 				ng-class="{'classTituloNoSeleccionado':!cnCabecera.implementacion, 'classTituloSeleccionado':cnCabecera.implementacion}">Implementaci&#243n</a>
+				<h4 ng-show="cnCabecera.mostrarNombreProyecto">{{cnCabecera.nombreProyecto}}</h4>
 			</div>
 			<div class="col-md-2 sesionCabecera">
 				<label> Mitchell Contreras</label>

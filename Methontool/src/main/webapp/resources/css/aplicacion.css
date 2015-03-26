@@ -73,3 +73,10 @@ body {
   	border-bottom-width: 1px; 
    	border-color: #000000; /*Color negro*/
 }
+
+<!--Proyecto -->
+#divListarProyecto{
+	width: 50px;
+}
+
+<!--Fin proyecto-->
