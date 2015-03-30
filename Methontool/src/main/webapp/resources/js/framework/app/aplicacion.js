@@ -16,8 +16,13 @@
 
     InformacionPrincipalApp.$inject = ['$rootScope'];
     ControllerPrincipal.$inject = ['InformacionPrincipalApp','$rootScope'];
-    ControllerProyecto.$inject = ['$scope','$rootScope', '$listarProyectos', 'InformacionPrincipalApp'];
     ControllerCabecera.$inject = ['$rootScope', 'InformacionPrincipalApp'];
+    ControllerProyecto.$inject = ['$scope',
+                                  '$rootScope', 
+                                  '$listarProyectos', 
+                                  '$crearProyecto', 
+                                  'InformacionPrincipalApp'];
+    
     
 
     function InformacionPrincipalApp ($rootScope){
@@ -127,7 +132,11 @@
     	cnCabecera.clickEspecificacion = clickEspecificacion;
     	cnCabecera.clickConceptualizacion = clickConceptualizacion;
     	cnCabecera.clickImplementacion = clickImplementacion;
-    	cnCabecera.listarProyectos = listarProyectos;
+    	
+ //Funciones relacionadas con el controllerProyecto   	
+    	cnCabecera.menuListarProyectos = menuListarProyectos;
+    	cnCabecera.menuCrearProyecto = menuCrearProyecto;
+//Fin funciones relacionadas con el controllerProyecto
     	
         function clickEspecificacion(){
 		    cambiarMenu(true, false, false, false);
@@ -145,8 +154,12 @@
             cnCabecera.menuInicial = menuInicial;
 		}
 		
-		function listarProyectos (){
-			$rootScope.$broadcast('listarProyectos');
+		function menuListarProyectos (){
+			$rootScope.$broadcast('menuListarProyectos');
+		}
+		
+		function menuCrearProyecto(){
+			$rootScope.$broadcast('menuCrearProyecto');
 		}
 		
 		//Observa si cambia el nombre del proyecto
@@ -164,10 +177,12 @@
     	$scope,
     	$rootScope,
     	$listarProyectos,
-    	InformacionPrincipalApp	
+    	$crearProyecto,
+    	InformacionPrincipalApp
     ){
     	var cnProyecto = this;
     	cnProyecto.seleccioneProyecto = seleccioneProyecto;
+    	cnProyecto.creeProyecto = creeProyecto;
 //    	console.log("Es proyecto el actual "+InformacionPrincipalApp.soyVistaActual('Proyecto'));
 //    	console.log("Es usuario el actual "+InformacionPrincipalApp.soyVistaActual('Usuario'));
 //    	console.log("Es Principal el actual "+InformacionPrincipalApp.soyVistaActual('Principal'));
@@ -182,17 +197,48 @@
 
     	var idUsuario = InformacionPrincipalApp.getUsuario().idUsuario;
     	
-    	function seleccioneProyecto( proyecto){
+    	function seleccioneProyecto(proyecto){
 //    		console.log("el idProyecto es "+proyecto.idProyecto);
     		InformacionPrincipalApp.setProyecto(proyecto);
 //    		console.log("el2 idProyecto es "+InformacionPrincipalApp.getProyecto().idProyecto);
     		InformacionPrincipalApp.voyAvista("Proyecto");
+    		
     		console.log("InformacionPrincipalApp.soyVistaActual('Proyecto'); "+InformacionPrincipalApp.soyVistaActual('Proyecto'));
     		console.log("InformacionPrincipalApp.soyVistaActual('Principal'); "+InformacionPrincipalApp.soyVistaActual('Principal'));
     		$('#myModal').modal('hide');
     	}
     	
-        $rootScope.$on('listarProyectos', function(event, data){
+    	function creeProyecto(nombreProyecto){
+    		console.log("nombreProyecto "+nombreProyecto);  
+            $crearProyecto.post({
+                id: idUsuario,
+                'nombre': nombreProyecto,
+                 },{}).$promise.then(
+            function(salida) {
+               // success
+                if(salida.succes){
+//                    console.log("en el promise");
+//                    console.log("el id es "+salida.proyecto.idProyecto);
+//                    console.log("el nombre es "+salida.proyecto.nombre);
+                	InformacionPrincipalApp.setProyecto(salida.proyecto);
+                	$('#crearProyectoModal').modal('hide');
+                }else{
+                    
+                }
+
+                
+            }, 
+            function(errResponse) {
+               // fail
+               console.log("EPIC FAIL");
+               console.log("errResponse "+errResponse);
+            }
+            );
+    		//validar longitud antes de crear sino mostrar msj debajo del texto
+    		
+    	}
+    	
+        $rootScope.$on('menuListarProyectos', function(event, data){
         	$listarProyectos.get({id: idUsuario}).$promise.then(
                     function(salida) {
                        // success
@@ -219,6 +265,12 @@
             );
 
         });
+        
+        $rootScope.$on('menuCrearProyecto', function(event, data){
+        	cnProyecto.nombreProyecto = "";
+        	$('#crearProyectoModal').modal('show');
+        });
+        
     }
 
 

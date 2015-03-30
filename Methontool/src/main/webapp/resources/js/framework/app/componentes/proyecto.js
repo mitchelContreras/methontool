@@ -26,11 +26,18 @@
    
     proy.factory('$listarProyectos',function($resource){ 
     	var urlConsultar = urlProyecto+"/api/usuario/:id/proyecto";
-    	console.log("$listarProyectos "+urlConsultar);
          return $resource(urlConsultar,{},{
             get: {method: 'GET', isArray:false}
             });
     });
+    
+    proy.factory('$crearProyecto',function($resource){ 
+        var urlConsultar = urlProyecto+"/api/usuario/:id/proyecto";
+        return $resource(urlConsultar,{},{
+           post: {method: 'POST', params: {id: '@id'}, isArray:false}
+           });
+   });
+    
     
     /*  
     proy.factory('$verProyecto',function($resource){ 
@@ -38,14 +45,6 @@
     	console.log("$verProyecto "+urlConsultar);
         return $resource(urlConsultar,{},{
            query: {method: 'GET', isArray:false}
-           });
-   });
-    
-    proy.factory('$crearProyecto',function($resource){ 
-    	var urlConsultar = urlProyecto+"/api/usuario/:id/proyecto";
-    	console.log("$crearProyecto "+urlConsultar);
-        return $resource(urlConsultar,{},{
-           query: {method: 'POST', isArray:false}
            });
    });
     

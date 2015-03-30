@@ -31,8 +31,8 @@
 		      		<li class="dropdown">
 		          		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Documento <span class="caret"></span></a>
 		        		<ul class="dropdown-menu" role="menu">
-				            <li><a href="#">Crear proyecto</a></li>
-				            <li><a href="#" ng-click="cnCabecera.listarProyectos()" >Ver proyectos</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuCrearProyecto()">Crear proyecto</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuListarProyectos()" >Ver proyectos</a></li>
 				            <li><a href="#">Crear version</a></li>
 				            <li><a href="#">Ver versiones</a></li>
 		        		 </ul>
@@ -54,13 +54,12 @@
 		      		<li class="dropdown">
 		          		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Documento <span class="caret"></span></a>
 		        		<ul class="dropdown-menu" role="menu">
-				            <li><a href="#">Abrir proyecto</a></li>
-				            <li><a href="#">Seleccionar proyecto</a></li>
-				            <li><a href="#">Eliminar proyecto</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuCrearProyecto()" >Crear proyecto</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuListarProyectos()" >Ver proyectos</a></li>
 				            <li><a href="#">Crear version</a></li>
-				            <li><a href="#">Seleccionar version</a></li>
+				            <li><a href="#">Ver versiones</a></li>
 		        		 </ul>
-		        	</li>
+		        	</li>	
 		        	<li><a href="#">Editar</a></li>			        
 		      	</ul>
 			    <ul class="nav navbar-nav navbar-right">
@@ -79,13 +78,12 @@
 		      		<li class="dropdown">
 		          		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Documento <span class="caret"></span></a>
 		        		<ul class="dropdown-menu" role="menu">
-				            <li><a href="#">Abrir proyecto</a></li>
-				            <li><a href="#">Seleccionar proyecto</a></li>
-				            <li><a href="#">Eliminar proyecto</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuCrearProyecto()" >Crear proyecto</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuListarProyectos()" >Ver proyectos</a></li>
 				            <li><a href="#">Crear version</a></li>
-				            <li><a href="#">Seleccionar version</a></li>
+				            <li><a href="#">Ver versiones</a></li>
 		        		 </ul>
-		        	</li>
+		        	</li>	
 		      		<li class="dropdown">
 		         		 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Visualizar <span class="caret"></span></a>
 		         		 <ul class="dropdown-menu" role="menu">
@@ -134,13 +132,12 @@
 		      		<li class="dropdown">
 		          		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Documento <span class="caret"></span></a>
 		        		<ul class="dropdown-menu" role="menu">
-				            <li><a href="#">Abrir proyecto</a></li>
-				            <li><a href="#">Seleccionar proyecto</a></li>
-				            <li><a href="#">Eliminar proyecto</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuCrearProyecto()">Crear proyecto</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuListarProyectos()" >Ver proyectos</a></li>
 				            <li><a href="#">Crear version</a></li>
-				            <li><a href="#">Seleccionar version</a></li>
+				            <li><a href="#">Ver versiones</a></li>
 		        		 </ul>
-		        	</li>
+		        	</li>	
 		      		<li class="dropdown">
 		         		 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Exportar <span class="caret"></span></a>
 		         		 <ul class="dropdown-menu" role="menu">

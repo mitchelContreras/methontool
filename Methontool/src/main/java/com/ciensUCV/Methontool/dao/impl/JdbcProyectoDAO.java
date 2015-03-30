@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.sql.DataSource;
 
@@ -141,47 +142,33 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 	public int crearProyecto(Proyecto proyecto, int [] usuarios) {
 		// TODO Auto-generated method stub
 		
-		String sql = "SELECT sp_crear_proyecto( ?, ?, ?, ?, ? , ?, ?, ?, ?)";
+		String sql = "SELECT sp_crear_proyecto( ?, ?)";
 		Connection conn = null;
 		int salida = -1;
-	
+//		logger.info("el ombre es en jdbc "+proyecto.getNombre());
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, proyecto.getNombre());
-			ps.setString(2, proyecto.getFuenteConocimiento());
-			ps.setString(3, proyecto.getDominio());
-			ps.setString(4, proyecto.getProposito());
-			ps.setString(5, proyecto.getAlcance());
-			ps.setString(6, proyecto.preguntasCompetenciaArrayToString());
-			try {
-				java.sql.Date sqlDate = new java.sql.Date(proyecto.getFecha().getTime());
-				ps.setDate(7, sqlDate);
-			} catch (Exception e) {
-				// TODO: handle exception
-				ps.setDate(7, null);
-			}
-			ps.setInt(8, proyecto.getNivelFormalidad().getIdNivelFormalidad());
-			
-			logger.info("antes del for");
+//			logger.info("antes del for");
 			Object[] array = new Object[usuarios.length];
 			for(int i =0;i<array.length; i++){
 				array[i] = (Object)usuarios[i];
 			}
-			logger.info("despues del for");
+//			logger.info("despues del for");
 			Array aArray = conn.createArrayOf("int", array);
-			ps.setArray(9, aArray);
+			ps.setArray(2, aArray);
 			
-			logger.info("antes del execute");
+//			logger.info("antes del execute");
 			ResultSet rs = ps.executeQuery();
-			logger.info("despues del execute");
+//			logger.info("despues del execute");
 			if(rs.next()){
 				salida = rs.getInt("sp_crear_proyecto");
 			}
-			logger.info("salida es "+salida);
+//			logger.info("salida es "+salida);
 			rs.close();
 			ps.close();
-			logger.info("proyecto es "+proyecto.toString());
+//			logger.info("proyecto es "+proyecto.toString());
 			return salida;
 		} catch (SQLException e) {
 			logger.info("SQLException "+e.toString());
