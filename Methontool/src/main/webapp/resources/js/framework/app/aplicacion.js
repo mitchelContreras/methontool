@@ -13,6 +13,7 @@
     App.controller('ControllerPrincipal', ControllerPrincipal);
     App.controller('ControllerCabecera', ControllerCabecera);
     App.controller('ControllerProyecto', ControllerProyecto);
+    App.controller('ControllerEditar', ControllerEditar);
 
     InformacionPrincipalApp.$inject = ['$rootScope'];
     ControllerPrincipal.$inject = ['InformacionPrincipalApp','$rootScope'];
@@ -22,7 +23,8 @@
                                   '$listarProyectos', 
                                   '$crearProyecto', 
                                   'InformacionPrincipalApp'];
-    
+    ControllerEditar.$inject = ['$rootScope',
+                                'InformacionPrincipalApp'];
     
 
     function InformacionPrincipalApp ($rootScope){
@@ -32,7 +34,8 @@
     	$rootScope.actual ={
     		principal : true,	
     		usuario : false,
-    		proyecto : false
+    		proyecto : false,
+    		editar :false
     	};
     	$rootScope.proyecto ={
     			idProyecto : 0,
@@ -44,11 +47,13 @@
     			preguntasCompetencia : [],
     			nivelFormalidad : {}
     	};
-    	function cambioActual(principal, usuario, proyecto){
+    	function cambioActual(principal, usuario, proyecto, editar){
     		$rootScope.actual.principal = principal;
     		$rootScope.actual.usuario = usuario;
     		$rootScope.actual.proyecto = proyecto;
+    		$rootScope.actual.editar = editar;
     	};
+    	
     	var funcion = {
     		getUsuario : function (){
     			return usuario;
@@ -73,6 +78,9 @@
     		    case 'Proyecto':
     		        return $rootScope.actual.proyecto;
     		        break;
+    		    case 'Editar':
+    		        return $rootScope.actual.editar;
+    		        break;    		        
     		    default:
     		        return false;
     		    	break;
@@ -81,14 +89,17 @@
     		voyAvista : function (Avista){
     			switch(Avista) {
     		    case 'Principal':
-    		    	cambioActual(true, false, false);
+    		    	cambioActual(true, false, false, false);
     		        break;   
     		    case 'Usuario':
-    		    	cambioActual(false, true, false);
+    		    	cambioActual(false, true, false, false);
     		        break;
     		    case 'Proyecto':
-    		    	cambioActual(false, false, true);
+    		    	cambioActual(false, false, true, false);
     		        break; 
+    		    case 'Editar':
+    		    	cambioActual(false, false, false, true);
+    		        break;     		        
     		    default:
     		        return false;
     		    	break;
@@ -136,6 +147,7 @@
  //Funciones relacionadas con el controllerProyecto   	
     	cnCabecera.menuListarProyectos = menuListarProyectos;
     	cnCabecera.menuCrearProyecto = menuCrearProyecto;
+    	cnCabecera.menuEditar = menuEditar;
 //Fin funciones relacionadas con el controllerProyecto
     	
         function clickEspecificacion(){
@@ -160,6 +172,10 @@
 		
 		function menuCrearProyecto(){
 			$rootScope.$broadcast('menuCrearProyecto');
+		}
+		
+		function menuEditar(){
+			$rootScope.$broadcast('menuEditar');
 		}
 		
 		//Observa si cambia el nombre del proyecto
@@ -273,5 +289,82 @@
         
     }
 
+    function ControllerEditar (
+        	$rootScope,
+        	InformacionPrincipalApp
+    ){
+    	var cnEditar = this;
+    	
+    	cnEditar.soyActual = false;
+    	cnEditar.vacio = false;
+    	cnEditar.dominio = false;
+    	cnEditar.fecha = false;
+    	cnEditar.desarrolladores = false;
+    	cnEditar.nivelFormalidad = false;
+    	cnEditar.alcance = false;
+    	cnEditar.fuenteConocimiento = false;
+    	
+    	cnEditar.seleccion = seleccion;
+    	
+    	function seleccion (variable){
+    		console.log("seleccione a '"+variable+"'");
+    		switch(variable) {
+    	    case 'dominio':
+    	    	cambioSeleccion(false, true, false, false, false, false, false);
+    	        break;
+    	    case 'fecha':
+    	    	cambioSeleccion(false, false, true, false, false, false, false);
+    	        break;
+    	    case 'desarrolladores':
+    	    	cambioSeleccion(false, false, false, true, false, false, false);
+    	        break;
+    	    case 'nivelFormalidad':
+    	    	cambioSeleccion(false, false, false, false, true, false, false);
+    	        break;
+    	    case 'fuenteConocimiento':
+    	    	cambioSeleccion(false, false, false, false, false, true, false);
+    	        break;  	
+    	    case 'alcance':
+    	    	cambioSeleccion(false, false, false, false, false, false, true);
+    	        break;    	        
+    	    default:
+    	    	cambioSeleccion(false, false, false, false, false, false, false);
+    	    	break;
+    		} 
+    	}
+    	
+    	function cambioSeleccion(vacio, dominio, fecha, desarrolladores, nivelFormalidad, fuenteConocimiento, alcance){
+        	cnEditar.vacio = vacio;
+        	cnEditar.dominio = dominio;
+        	cnEditar.fecha = fecha;
+        	cnEditar.desarrolladores = desarrolladores;
+        	cnEditar.nivelFormalidad = nivelFormalidad;
+        	cnEditar.alcance = alcance;
+        	cnEditar.fuenteConocimiento = fuenteConocimiento;
+    	}
+    	
+        // validate data.
+        $rootScope.$watch('actual.editar', function (newValue, oldValue) {
+        	if (newValue !== oldValue) {
+                console.log("cambio valor editar a '"+newValue+"'");
+                cnEditar.soyActual = InformacionPrincipalApp.soyVistaActual('Editar');
+                if(cnEditar.soyActual == true){
+                	cambioSeleccion(true, false, false, false, false, false, false);
+                }else{
+                	cambioSeleccion(false, false, false, false, false, false, false);
+                }
+        	}
+        }, false);
 
+    	var idUsuario = InformacionPrincipalApp.getUsuario().idUsuario;
+    	
+    	
+        $rootScope.$on('menuEditar', function(event, data){
+        	InformacionPrincipalApp.voyAvista("Editar");
+        });
+    	
+    }
+    
+    
+    
 })();

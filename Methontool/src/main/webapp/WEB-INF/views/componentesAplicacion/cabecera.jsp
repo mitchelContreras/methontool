@@ -60,7 +60,7 @@
 				            <li><a href="#">Ver versiones</a></li>
 		        		 </ul>
 		        	</li>	
-		        	<li><a href="#">Editar</a></li>			        
+		        	<li><a href="#" ng-click="cnCabecera.menuEditar()" >Editar</a></li>			        
 		      	</ul>
 			    <ul class="nav navbar-nav navbar-right">
 			       <li><a href="#">Usuario</a></li>
