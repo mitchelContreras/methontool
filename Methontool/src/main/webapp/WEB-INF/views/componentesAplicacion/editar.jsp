@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <div ng-controller="ControllerEditar  as cnEditar">
-	<div ng-show="cnEditar.soyActual">  	
-<!--<div ng-show="true"> -->
+<!--	<div ng-show="cnEditar.soyActual"> -->  	
+<div ng-show="true"> 
 		<div class="row CampoTrabajo">
 			<div class="col-md-4 cuerpoUno ">
 				<div class="inicioTexto">
@@ -45,7 +45,48 @@
 					</div>	
 				</div> 
 			</div>
-			<div class="col-md-8 cuerpoDos" ng-show="cnEditar.fecha">
+<!-- <div class="col-md-8 cuerpoDos" ng-show="cnEditar.fecha"> -->			
+			<div class="col-md-8 cuerpoDos" ng-show="true">
+			
+				<div class="inicioTexto">
+					<div class="row centered">
+						<div class="col-xs-2 divCentrado formulario" >
+							<label for="inputEmail" class="control-label col-xs-2">Fecha:</label>
+						</div>
+						<div class="col-xs-6 divCentrado formulario">
+							<input id = "inputFecha" ng-disabled="cnEditar.disabled" type="text" data-date="" class="form-control form_datetime" data-link-field="dtp_input2" data-link-format="dd/mm/yyyy">
+							<input type="hidden" id="dtp_input2" value="" />
+						</div>
+					</div>					
+					<div class="row centered" ng-show="!cnEditar.modificar">
+						<div class="col-xs-offset-2 col-xs-10 divCentrado formulario">
+							<button type="submit" class="btn btn-primary" ng-click="cnEditar.modificarAtributo()">Modificar</button>
+						</div>
+					</div>
+					<div class="row centered" ng-show="cnEditar.modificar">
+						<div class="col-xs-offset-2 col-xs-10 divCentrado formulario">
+							<button type="submit" class="btn btn-primary ">Guardar</button>
+							<button type="submit" class="btn btn" ng-click="cnEditar.cancelarModificarAtributo() ">Cancelar</button>
+						</div>	
+					</div>	
+				</div> 	
+
+
+ 
+<script type="text/javascript">
+    $(".form_datetime").datetimepicker({
+    	language:  'es',
+    	format: 'dd/mm/yyyy',
+    	todayBtn:  1,
+    	startView: 2,
+    	minView: 2,
+    	autoclose: 1
+    	});
+    $('.form_datetime').datepicker('hide');
+</script>   	
+			
+			
+<!-- 
 				<div>
 					<div>
 						<span>Fecha</span>
@@ -59,6 +100,7 @@
 						<button>Cancelar</button>
 					</div>
 				</div>
+ -->							
 			</div>
 			<div class="col-md-8 cuerpoDos" ng-show="cnEditar.desarrolladores">
 				<p>DOS desarrolladores</p>

@@ -7,17 +7,26 @@
 		<title>Methontool &nbsp;{{proyecto.nombre}}</title>
 		
 		 <!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+
+		 <!-- Css para calendar bootstrap -->
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-datetimepicker.min.css">
 	
 		<!-- Optional theme -->
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.min.css">
 	
 		<!--Libreria de jquery-->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-2.1.3.min.js"></script>
 		
 		<!-- Latest compiled and minified JavaScript -Antes debe ir la libreria de jQuery- -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-	
+
+		<!-- Manejo de calendar en bootstrap -->
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
+
+		<!-- Manejo de calendar en bootstrap -->
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/locales/bootstrap-datetimepicker.es.js"></script>
+				
 		<!-- css de aplicacion-->
 		<link href="${pageContext.request.contextPath}/resources/css/aplicacion.css" rel="stylesheet">
 		

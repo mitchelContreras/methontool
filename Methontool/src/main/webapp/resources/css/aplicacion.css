@@ -46,6 +46,10 @@ body {
 	height: 50px;
 }
 
+.navbar{
+	margin-bottom: 0px;
+}
+
 .CampoTrabajo{
 	/*este height quiero que sea en porcentaje de la vista para poder trabajar en diferentes maquinas*/
 	height: 500px;
