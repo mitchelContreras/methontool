@@ -74,9 +74,29 @@ body {
    	border-color: #000000; /*Color negro*/
 }
 
-<!--Proyecto -->
+.formulario {
+    padding: 5px;
+}
+
+.inicioTexto{
+	margin-top : 20px;	
+}
+
+/* Centrar columna */
+.centered {
+    text-align: center;
+}
+.centered > .divCentrado {
+    float: none;
+    display: inline-block;
+    text-align: center;
+}
+/*Fin centrar columna */
+	
+
+/*Proyecto */
 #divListarProyecto{
 	width: 50px;
 }
 
-<!--Fin proyecto-->
+/*Fin proyecto*/

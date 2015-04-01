@@ -53,9 +53,7 @@
 				</div>
 			</div>
 			<jsp:include page="componentesAplicacion/proyecto.jsp" />
-			<jsp:include page="componentesAplicacion/editar.jsp" />
-		</div>		
-
-   			
+			<jsp:include page="componentesAplicacion/editar.jsp" />		
+		</div>			
 	</body>
 </html>

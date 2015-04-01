@@ -303,8 +303,22 @@
     	cnEditar.nivelFormalidad = false;
     	cnEditar.alcance = false;
     	cnEditar.fuenteConocimiento = false;
+    	cnEditar.disabled = true;
+    	cnEditar.modificar = false;
     	
     	cnEditar.seleccion = seleccion;
+    	cnEditar.modificarAtributo = modificarAtributo;
+    	cnEditar.cancelarModificarAtributo = cancelarModificarAtributo;
+    	
+    	function cancelarModificarAtributo(){
+        	cnEditar.disabled = true;
+        	cnEditar.modificar = false;
+    	}
+    	
+    	function modificarAtributo(){
+        	cnEditar.disabled = false;
+        	cnEditar.modificar = true;
+    	}
     	
     	function seleccion (variable){
     		console.log("seleccione a '"+variable+"'");

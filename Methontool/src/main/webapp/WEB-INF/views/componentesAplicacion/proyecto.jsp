@@ -19,11 +19,16 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title" id="myModalLabel">Crear proyecto</h4>
 				</div>
-				<div class="modal-body">
-					<div>
-						Nombre <input ng-model="cnProyecto.nombreProyecto">
-					</div>  
-				</div>
+				<div class="inicioTexto">
+					<div class="row centered">
+						<div class="col-xs-2 divCentrado formulario" >
+							<label for="inputNombreProyecto" class="control-label col-xs-2">Nombre:</label>
+						</div>
+						<div class="col-xs-6 divCentrado formulario">
+							<input id="inputNombreProyecto" type="text" class="form-control" placeholder="Nombre" ng-model="cnProyecto.nombreProyecto">
+						</div>
+					</div>
+				</div>				
 				<div class="modal-footer">
 					<button class="btn btn-primary" type="button" ng-click="cnProyecto.creeProyecto(cnProyecto.nombreProyecto)">Crear</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -42,17 +47,21 @@
 					<h6>Seleccione el proyecto con el que desea trabajar</h6>
 				</div>
 				<div class="modal-body">
-					<div>
-						<ul>
-							<li ng-repeat="proyecto in cnProyecto.proyectos" >
-								<div style = "width: 50px;"> 
-									<span>{{proyecto.nombre}}</span>
+					<div class= "inicioTexto">
+						<ul style="list-style:none;">
+							<li ng-repeat="proyecto in cnProyecto.proyectos">
+								<div class="row ">
+									<div class="col-xs-8  " >
+										<span>{{proyecto.nombre}}</span>
+									</div>
+									<div class="col-xs-1  ">
+										<a class="btn"ng-click="cnProyecto.seleccioneProyecto(proyecto)" ><i class="glyphicon glyphicon-ok"></i></a>
+	 <!-- 							<a class="btn" href="#"><i class="glyphicon glyphicon-remove"></i></a>  -->
+									</div>
 								</div>
-									<a class="btn"ng-click="cnProyecto.seleccioneProyecto(proyecto)" ><i class="glyphicon glyphicon-ok"></i></a>
-	 <!-- 							<a class="btn" href="#"><i class="glyphicon glyphicon-remove"></i></a>  -->  
 							</li>
 						</ul>
-					</div>  
+					</div>				
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
