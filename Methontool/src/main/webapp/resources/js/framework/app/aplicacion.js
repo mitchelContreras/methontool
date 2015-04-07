@@ -296,7 +296,7 @@
     	var cnEditar = this;
     	
     	cnEditar.soyActual = false;
-    	cnEditar.vacio = false;
+    	cnEditar.vacio = true;
     	cnEditar.dominio = false;
     	cnEditar.fecha = false;
     	cnEditar.desarrolladores = false;
@@ -305,10 +305,44 @@
     	cnEditar.fuenteConocimiento = false;
     	cnEditar.disabled = true;
     	cnEditar.modificar = false;
+    	cnEditar.listaDesarrolladores = ['Carlos Perez', 'José Contreras', 'Kenny Bustillo', 'Antonio hernandez'];
+    	cnEditar.nuevoDesarrollador = "";
     	
+    	console.log("cnEditar.desarrolladores.length "+cnEditar.listaDesarrolladores.length);
     	cnEditar.seleccion = seleccion;
     	cnEditar.modificarAtributo = modificarAtributo;
     	cnEditar.cancelarModificarAtributo = cancelarModificarAtributo;
+    	cnEditar.eliminarDesarrollador = eliminarDesarrollador;
+    	cnEditar.agregarDesarrollador = agregarDesarrollador;
+    	cnEditar.agregueDesarrollador = agregueDesarrollador;
+    	cnEditar.modificarDesarrollador = modificarDesarrollador;
+    	
+    	function modificarDesarrollador(id){
+    		if(cnEditar.disabled == false){
+    			console.log("modificar a "+id);
+    		}
+    		
+    	}
+    	
+    	function agregueDesarrollador (nuevoDesarrollador){
+    		console.log("agregueDesarrollador "+nuevoDesarrollador);
+    		cnEditar.listaDesarrolladores.push(nuevoDesarrollador);
+    		$('#agregarDesarrolladorModal').modal('hide');
+    	}
+    	
+    	function agregarDesarrollador(){
+    		console.log("Agregar uno nuevo");
+    		cnEditar.nuevoDesarrollador = "";
+    		$('#agregarDesarrolladorModal').modal('show');
+    	}
+    	
+    	function eliminarDesarrollador(id){
+    		if(cnEditar.disabled == false){
+      	      console.log("el id es "+id);
+    	      cnEditar.listaDesarrolladores.splice(id, 1);
+    		}
+
+    	}
     	
     	function cancelarModificarAtributo(){
         	cnEditar.disabled = true;

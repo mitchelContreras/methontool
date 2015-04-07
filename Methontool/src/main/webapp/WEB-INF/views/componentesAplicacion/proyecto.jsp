@@ -51,10 +51,10 @@
 						<ul style="list-style:none;">
 							<li ng-repeat="proyecto in cnProyecto.proyectos">
 								<div class="row ">
-									<div class="col-xs-8  " >
+									<div class="col-xs-8" >
 										<span>{{proyecto.nombre}}</span>
 									</div>
-									<div class="col-xs-1  ">
+									<div class="col-xs-1">
 										<a class="btn"ng-click="cnProyecto.seleccioneProyecto(proyecto)" ><i class="glyphicon glyphicon-ok"></i></a>
 	 <!-- 							<a class="btn" href="#"><i class="glyphicon glyphicon-remove"></i></a>  -->
 									</div>
