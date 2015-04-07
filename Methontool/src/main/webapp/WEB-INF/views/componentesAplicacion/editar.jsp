@@ -149,32 +149,113 @@
 					</div>	
 				</div> 
 			</div>
-			<div class="col-md-8 cuerpoDos" ng-show="cnEditar.fuenteConocimiento">
+			<div class="col-md-8 cuerpoDos" ng-show="cnEditar.fuenteConocimiento">		
+<!--			<div class="col-md-8 cuerpoDos" ng-show="true"> -->			
 				<p>DOS fuenteConocimiento</p>
+				<div class="inicioTexto">
+					<div class="row centered">
+						<div class="col-xs-2 divCentrado formulario" >
+							<label class="control-label col-xs-2">Fuentes de conocimientos:</label>
+						</div>
+						<div class="col-xs-6 divCentrado formulario">
+							<div class="row" ng-repeat="fuenteConocimiento in cnEditar.listafuenteConocimiento track by $index" id="{{$index}}">
+								<div class="col-xs-8 ">
+									<input ng-model="fuenteConocimiento" ng-disabled="cnEditar.disabled">
+								</div>
+								<div class="col-xs-4">
+									<div class="btn-group">
+										<button ng-click="cnEditar.modificarFuenteConocimiento($index)" class="btn btn-link " ng-class="{'disabled': cnEditar.disabled == true}" ng-show="cnEditar.modificar" aria-label="Left Align" type="button">
+										    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+										</button>
+										<button ng-click="cnEditar.eliminarFuenteConocimiento($index)" class="btn btn-link " ng-class="{'disabled': cnEditar.disabled == true}" ng-show="cnEditar.modificar" aria-label="Center Align" type="button">
+										    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+										</button>
+									</div>									
+								</div>
+							</div>
+							<div>
+								<button ng-click="cnEditar.agregarFuenteConocimiento()" class="btn btn-link " ng-class="{'disabled': cnEditar.disabled == true}" ng-show="cnEditar.modificar" aria-label="Center Align" type="button">
+								    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								</button>							
+							</div>
+						</div>
+					</div>
+					<div class="row centered" ng-show="!cnEditar.modificar">
+						<div class="col-xs-offset-2 col-xs-10 divCentrado formulario">
+							<button type="submit" class="btn btn-primary" ng-click="cnEditar.modificarAtributo()">Modificar</button>
+						</div>
+					</div>
+					<div class="row centered" ng-show="cnEditar.modificar">
+						<div class="col-xs-offset-2 col-xs-10 divCentrado formulario">
+							<button type="submit" class="btn btn-primary ">Guardar</button>
+							<button type="submit" class="btn btn" ng-click="cnEditar.cancelarModificarAtributo() ">Cancelar</button>
+						</div>	
+					</div>	
+				</div> 				
 			</div>										
+ 			<div class="col-md-8 cuerpoDos" ng-show="cnEditar.nivelFormalidad"> 			
+<!--			<div class="col-md-8 cuerpoDos" ng-show="true"> -->
+			
+				<div class="inicioTexto">
+					<div class="row centered">
+						<div class="col-xs-2 divCentrado formulario" >
+							<label for="inputEmail" class="control-label col-xs-2">Nivel de Formalidad:</label>
+						</div>
+						<div class="col-xs-6 divCentrado formulario">
+							    <select class="btn">
+							        <option>Mustard</option>
+							        <option>Ketchup</option>
+							        <option>Relish</option>
+							    </select>
+						</div>
+					</div>					
+					<div class="row centered" ng-show="!cnEditar.modificar">
+						<div class="col-xs-offset-2 col-xs-10 divCentrado formulario">
+							<button type="submit" class="btn btn-primary" ng-click="cnEditar.modificarAtributo()">Modificar</button>
+						</div>
+					</div>
+					<div class="row centered" ng-show="cnEditar.modificar">
+						<div class="col-xs-offset-2 col-xs-10 divCentrado formulario">
+							<button type="submit"  class="btn btn-primary ">Guardar</button>
+							<button type="submit" class="btn " ng-click="cnEditar.cancelarModificarAtributo() ">Cancelar</button>
+						</div>	
+					</div>	
+				</div> 	
+				<script type="text/javascript">
+				    $(".form_datetime").datetimepicker({
+				    	language:  'es',
+				    	format: 'dd/mm/yyyy',
+				    	todayBtn:  1,
+				    	startView: 2,
+				    	minView: 2,
+				    	autoclose: 1
+				    	});
+<!--				    $('.form_datetime').datepicker('hide'); -->
+				</script>   						
+			</div>
 		</div>
 	</div>
 	
 	<!-- Crear Proyecto Modal-->
-	<div class="modal fade" id="agregarDesarrolladorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="agregarFuenteConocimientoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Agregar desarrollador</h4>
+					<h4 class="modal-title" id="myModalLabel">Agregar Fuente de Conocimiento</h4>
 				</div>
 				<div class="inicioTexto">
 					<div class="row centered">
 						<div class="col-xs-2 divCentrado formulario" >
-							<label for="inputNombreProyecto" class="control-label col-xs-2">Nombre:</label>
+							<label for="inputNombreProyecto" class="control-label col-xs-2">Fuente:</label>
 						</div>
 						<div class="col-xs-6 divCentrado formulario">
-							<input id="inputNombreProyecto" type="text" class="form-control" placeholder="Nombre" ng-model="cnEditar.nuevoDesarrollador">
+							<input id="inputNombreProyecto" type="text" class="form-control" placeholder="Fuente de conocimiento" ng-model="cnEditar.nuevoFuenteConocimiento">
 						</div>
 					</div>
 				</div>				
 				<div class="modal-footer">
-					<button class="btn btn-primary" type="button" ng-click="cnEditar.agregueDesarrollador(cnEditar.nuevoDesarrollador)">Crear</button>
+					<button class="btn btn-primary" type="button" ng-click="cnEditar.agregueFuenteConocimiento(cnEditar.nuevoFuenteConocimiento)">Crear</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 				</div>
 			</div>

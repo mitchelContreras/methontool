@@ -307,8 +307,9 @@
     	cnEditar.modificar = false;
     	cnEditar.listaDesarrolladores = ['Carlos Perez', 'José Contreras', 'Kenny Bustillo', 'Antonio hernandez'];
     	cnEditar.nuevoDesarrollador = "";
+    	cnEditar.listafuenteConocimiento = ['Todos los libros', 'internet', 'otros libros'];
+    	cnEditar.nuevoFuenteConocimiento = "";
     	
-    	console.log("cnEditar.desarrolladores.length "+cnEditar.listaDesarrolladores.length);
     	cnEditar.seleccion = seleccion;
     	cnEditar.modificarAtributo = modificarAtributo;
     	cnEditar.cancelarModificarAtributo = cancelarModificarAtributo;
@@ -316,12 +317,40 @@
     	cnEditar.agregarDesarrollador = agregarDesarrollador;
     	cnEditar.agregueDesarrollador = agregueDesarrollador;
     	cnEditar.modificarDesarrollador = modificarDesarrollador;
+    	cnEditar.modificarFuenteConocimiento = modificarFuenteConocimiento;
+    	cnEditar.eliminarFuenteConocimiento = eliminarFuenteConocimiento;
+    	cnEditar.agregarFuenteConocimiento = agregarFuenteConocimiento;
+    	cnEditar.agregueFuenteConocimiento = agregueFuenteConocimiento;
+    	
+    	function agregueFuenteConocimiento(agregueFuenteConocimiento){
+    		console.log("agregueFuenteConocimiento "+agregueFuenteConocimiento);
+    		cnEditar.listafuenteConocimiento.push(agregueFuenteConocimiento);
+    		$('#agregarFuenteConocimientoModal').modal('hide');
+    	}
+    	
+    	function agregarFuenteConocimiento (){
+    		console.log("Agregar uno nuevo");
+    		cnEditar.nuevoFuenteConocimiento = "";
+    		$('#agregarFuenteConocimientoModal').modal('show');
+    	}
+    	
+    	function eliminarFuenteConocimiento(id){
+    		if(cnEditar.disabled == false){
+        	  console.log("el id es "+id);
+        	  cnEditar.listafuenteConocimiento.splice(id, 1);
+      		}
+    	}
+    	
+    	function modificarFuenteConocimiento(id){
+    		if(cnEditar.disabled == false){
+    			console.log("modificar a "+id);
+    		}
+    	}
     	
     	function modificarDesarrollador(id){
     		if(cnEditar.disabled == false){
     			console.log("modificar a "+id);
     		}
-    		
     	}
     	
     	function agregueDesarrollador (nuevoDesarrollador){
@@ -341,7 +370,6 @@
       	      console.log("el id es "+id);
     	      cnEditar.listaDesarrolladores.splice(id, 1);
     		}
-
     	}
     	
     	function cancelarModificarAtributo(){
