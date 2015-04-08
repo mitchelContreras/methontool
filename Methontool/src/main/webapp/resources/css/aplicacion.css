@@ -65,6 +65,7 @@ body {
   	border-right-width: 1px; 
   	border-bottom-width: 1px; 
    	border-color: #000000; /*Color negro*/
+   	overflow-y:scroll;
 }
 
 .cuerpoDos{
@@ -76,6 +77,7 @@ body {
   	border-right-width: 1px; 
   	border-bottom-width: 1px; 
    	border-color: #000000; /*Color negro*/
+   	overflow-y:scroll;
 }
 
 .formulario {

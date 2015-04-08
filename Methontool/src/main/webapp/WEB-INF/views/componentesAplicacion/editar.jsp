@@ -11,7 +11,7 @@
 			            <li><a href="#" ng-click="cnEditar.seleccion('dominio') ">Dominio</a></li>
 			            <li><a href="#" ng-click="cnEditar.seleccion('fecha') ">Fecha</a></li>
 			            <li><a href="#" ng-click="cnEditar.seleccion('desarrolladores') ">Desarrolladores</a></li>
-			            <li><a href="#" ng-click="cnEditar.seleccion('alcance') ">alcance</a></li>
+			            <li><a href="#" ng-click="cnEditar.seleccion('alcance') ">Alcance</a></li>
 			            <li><a href="#" ng-click="cnEditar.seleccion('fuenteConocimiento') ">Fuentes de conocimiento</a></li>
 		       		 	<li><a href="#" ng-click="cnEditar.seleccion('nivelFormalidad') ">Nivel de formalidad</a></li>
 		       		 </ul>				
@@ -19,7 +19,142 @@
 
 			</div>
 			<div class="col-md-8 cuerpoDos" ng-show="cnEditar.vacio">
-				<p>DOS Vacio</p>
+
+<!-- 
+<fieldset>
+
+
+<legend>Form Name</legend>
+
+
+<div class="row centered control-group">
+	<div class="">
+		<label class="control-label" for="Dominio">Dominio1</label>
+	</div>
+	<div class="">
+		<input id="Dominio" name="Dominio" type="text" placeholder="Dominio" class="input-xlarge">
+	</div>
+</div>
+
+</fieldset>
+-->
+
+<div class="inicioTexto">
+	<form class=" form-horizontal">
+		<div class="form-group">
+			<div class="col-xs-4 control-label" >
+				<label >Dominio:</label>
+			</div>
+			<div class="col-xs-5 ">
+				<input type="text" class="form-control" placeholder="Dominio" ng-disabled="cnEditar.disabled">
+			</div>
+		</div>	
+		<div class="form-group">
+			<div class="col-xs-4 control-label" >
+				<label>Fecha:</label>
+			</div>
+			<div class="col-xs-5">
+				<input id = "inputFecha" ng-disabled="cnEditar.disabled" type="text" data-date="" class="form-control form_datetime" data-link-field="dtp_input2" data-link-format="dd/mm/yyyy">
+				<input type="hidden" id="dtp_input2" value="" />
+			</div>
+		</div>	
+		<div class="form-group">
+			<div class="col-xs-4 control-label" >
+				<label>Desarrollador(es):</label>
+			</div>
+			<div class="col-xs-5">
+				<div class="row" ng-repeat="desarrollador in cnEditar.listaDesarrolladores track by $index" id="{{$index}}">
+					<div class="col-xs-9 ">
+						<input class="form-control" ng-model="desarrollador" ng-disabled="cnEditar.disabled">
+					</div>
+					<div class="col-xs-3">
+						<div class="btn-group">
+<!--							<button ng-click="cnEditar.modificarDesarrollador($index)" class="btn btn-link " ng-class="{'disabled': cnEditar.disabled == true}" ng-show="cnEditar.modificar" aria-label="Left Align" type="button">
+							    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+							</button>  -->
+							<button ng-click="cnEditar.eliminarDesarrollador($index)" class="btn btn-link " ng-class="{'disabled': cnEditar.disabled == true}" ng-show="cnEditar.modificar" aria-label="Center Align" type="button">
+							    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+							</button>
+						</div>									
+					</div>
+				</div>	
+				<div>
+					<button ng-click="cnEditar.agregarDesarrollador()" class="btn btn-link " ng-class="{'disabled': cnEditar.disabled == true}" ng-show="cnEditar.modificar" aria-label="Center Align" type="button">
+					    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					</button>							
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-4 control-label" >
+				<label>Alcance:</label>
+			</div>
+			<div class="col-xs-5">
+				<textarea class="form-control" rows="3" ng-disabled="cnEditar.disabled"></textarea>
+			</div>
+		</div>		
+		<div class="form-group">
+			<div class="col-xs-4 control-label" >
+				<label>Fuentes de conocimientos:</label>
+			</div>
+			<div class="col-xs-5">
+				<div class="row" ng-repeat="fuenteConocimiento in cnEditar.listafuenteConocimiento track by $index" id="{{$index}}">
+					<div class="col-xs-9">
+						<input class="form-control" ng-model="fuenteConocimiento" ng-disabled="cnEditar.disabled">
+					</div>
+					<div class="col-xs-3">
+						<div class="btn-group">
+<!--							<button ng-click="cnEditar.modificarFuenteConocimiento($index)" class="btn btn-link " ng-class="{'disabled': cnEditar.disabled == true}" ng-show="cnEditar.modificar" aria-label="Left Align" type="button">
+							    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+							</button>  -->
+							<button ng-click="cnEditar.eliminarFuenteConocimiento($index)" class="btn btn-link " ng-class="{'disabled': cnEditar.disabled == true}" ng-show="cnEditar.modificar" aria-label="Center Align" type="button">
+							    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+							</button>
+						</div>									
+					</div>
+				</div>
+				<div>
+					<button ng-click="cnEditar.agregarFuenteConocimiento()" class="btn btn-link " ng-class="{'disabled': cnEditar.disabled == true}" ng-show="cnEditar.modificar" aria-label="Center Align" type="button">
+					    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					</button>							
+				</div>
+			</div>
+		</div>		
+		<div class="form-group">
+			<div class="col-xs-4 control-label" >
+				<label>Nivel de Formalidad:</label>
+			</div>
+			<div class="col-xs-5">
+				    <select class="form-control" ng-disabled="cnEditar.disabled">
+				        <option>[SELECCIONE]</option>
+				        <option>Opcion 1</option>
+				        <option>Opcion 2</option>
+				        <option>Opcion 3</option>
+				        <option>Opcion 3</option>				        
+				    </select>
+			</div>
+		</div>			
+		<div class="form-group" ng-show="!cnEditar.modificar">
+			<div class="col-xs-offset-4 col-xs-5">
+				<button type="submit" class="btn btn-primary" ng-click="cnEditar.modificarAtributo()">Modificar</button>
+			</div>
+		</div>
+		<div class="form-group" ng-show="cnEditar.modificar">
+			<div class="col-xs-offset-4 col-xs-5">
+				<button type="submit" class="btn btn-primary ">Guardar</button>
+				<button type="submit" class="btn btn-defaul" ng-click="cnEditar.cancelarModificarAtributo() ">Cancelar</button>
+			</div>	
+		</div>	    
+	    
+	</form>
+</div>	    
+
+
+
+
+
+
+
 			</div>
 			<div class="col-md-8 cuerpoDos" ng-show="cnEditar.dominio"> 	
  <!--			<div class="col-md-8 cuerpoDos" ng-show="true">	 -->	
