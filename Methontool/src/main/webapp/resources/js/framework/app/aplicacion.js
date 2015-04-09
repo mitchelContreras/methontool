@@ -309,6 +309,15 @@
     	cnEditar.nuevoDesarrollador = "";
     	cnEditar.listafuenteConocimiento = ['Todos los libros', 'internet', 'otros libros'];
     	cnEditar.nuevoFuenteConocimiento = "";
+    	cnEditar.listaPreguntasCompetencia = ['Pregunta uno de todas las preguntas', 'pregunta dos de todas las pregurntas', 'Pregunta 3 de muchas preguntas'];
+    	cnEditar.nuevoPreguntaCompetencia = "";
+//----------------Variables usadas para capturar los datos--------------
+    	cnEditar.varNombre = "";
+    	cnEditar.varDominio = "";
+    	cnEditar.varAlcance = "";
+    	cnEditar.varFuenteConocimiento = [];
+    	cnEditar.varDesarrollador = [];
+    	cnEditar.varNivelFormalidad = {};
     	
     	cnEditar.seleccion = seleccion;
     	cnEditar.modificarAtributo = modificarAtributo;
@@ -321,6 +330,28 @@
     	cnEditar.eliminarFuenteConocimiento = eliminarFuenteConocimiento;
     	cnEditar.agregarFuenteConocimiento = agregarFuenteConocimiento;
     	cnEditar.agregueFuenteConocimiento = agregueFuenteConocimiento;
+    	cnEditar.eliminarPreguntaCompetencia = eliminarPreguntaCompetencia;
+    	cnEditar.agregarPreguntaCompetencia = agregarPreguntaCompetencia;
+    	cnEditar.agreguePreguntaCompetencia = agreguePreguntaCompetencia;
+    	
+    	function agreguePreguntaCompetencia(nuevoPreguntaCompetencia){
+    		console.log("agreguePreguntaCompetencia "+nuevoPreguntaCompetencia);
+    		cnEditar.listaPreguntasCompetencia.push(nuevoPreguntaCompetencia);
+    		$('#agregarPreguntaCompetenciaModal').modal('hide');   		
+    	}
+    	
+    	function agregarPreguntaCompetencia (){
+    		console.log("Agregar uno nuevo");
+    		cnEditar.nuevoPreguntaCompetencia = "";
+    		$('#agregarPreguntaCompetenciaModal').modal('show');
+    	}
+    	
+    	function eliminarPreguntaCompetencia(id){
+    		if(cnEditar.disabled == false){
+          	  console.log("el id es "+id);
+          	cnEditar.listaPreguntasCompetencia.splice(id, 1);
+        	}
+    	}
     	
     	function agregueFuenteConocimiento(agregueFuenteConocimiento){
     		console.log("agregueFuenteConocimiento "+agregueFuenteConocimiento);
@@ -437,9 +468,19 @@
     	
         $rootScope.$on('menuEditar', function(event, data){
         	InformacionPrincipalApp.voyAvista("Editar");
+        	cnEditar.varNombre = InformacionPrincipalApp.getProyecto().nombre;
+        	cnEditar.varDominio = InformacionPrincipalApp.getProyecto().dominio;
+        	cnEditar.varAlcance = InformacionPrincipalApp.getProyecto().alcance;
+        	cnEditar.varFuenteConocimiento = InformacionPrincipalApp.getProyecto().fuenteConocimiento;
+        	cnEditar.varDesarrollador = InformacionPrincipalApp.getProyecto().nombre;
+        	cnEditar.varNivelFormalidad = InformacionPrincipalApp.getProyecto().nivelFormalidad;
+        	cnEditar.varProposito = InformacionPrincipalApp.getProyecto().proposito;
         });
     	
     }
+    
+//	preguntasCompetencia : [],
+    
     
     
     

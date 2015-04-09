@@ -62,7 +62,16 @@
 				</div>
 			</div>
 			<jsp:include page="componentesAplicacion/proyecto.jsp" />
-			<jsp:include page="componentesAplicacion/editar.jsp" />		
+			<jsp:include page="componentesAplicacion/editar.jsp" />	
+		
+		{{proyecto.idProyecto}}<br>
+		{{proyecto.nombre}}<br>
+		{{proyecto.fuenteConocimiento}}<br>
+		{{proyecto.dominio}}<br>
+		{{proyecto.proposito}}<br>
+		{{proyecto.alcance}}<br>
+		{{proyecto.preguntasCompetencia}}<br>
+		{{proyecto.nivelFormalidad}}<br>	
 		</div>			
 	</body>
 </html>
