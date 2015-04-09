@@ -40,12 +40,14 @@
     	$rootScope.proyecto ={
     			idProyecto : 0,
     			nombre : "",
-    			fuenteConocimiento : "",
+    			fuenteConocimiento : [],
     			dominio : "",
     			proposito : "",
     			alcance : "",
     			preguntasCompetencia : [],
-    			nivelFormalidad : {}
+    			nivelFormalidad : {},
+    			desarrolladores: [],
+    			fecha : ""
     	};
     	function cambioActual(principal, usuario, proyecto, editar){
     		$rootScope.actual.principal = principal;
@@ -315,8 +317,11 @@
     	cnEditar.varNombre = "";
     	cnEditar.varDominio = "";
     	cnEditar.varAlcance = "";
+    	cnEditar.varProposito = "";
+    	cnEditar.fecha = "";
     	cnEditar.varFuenteConocimiento = [];
-    	cnEditar.varDesarrollador = [];
+    	cnEditar.varDesarrolladores = [];
+    	cnEditar.varPreguntaCompetencia = [];
     	cnEditar.varNivelFormalidad = {};
     	
     	cnEditar.seleccion = seleccion;
@@ -472,9 +477,11 @@
         	cnEditar.varDominio = InformacionPrincipalApp.getProyecto().dominio;
         	cnEditar.varAlcance = InformacionPrincipalApp.getProyecto().alcance;
         	cnEditar.varFuenteConocimiento = InformacionPrincipalApp.getProyecto().fuenteConocimiento;
-        	cnEditar.varDesarrollador = InformacionPrincipalApp.getProyecto().nombre;
         	cnEditar.varNivelFormalidad = InformacionPrincipalApp.getProyecto().nivelFormalidad;
         	cnEditar.varProposito = InformacionPrincipalApp.getProyecto().proposito;
+        	cnEditar.varDesarrolladores = InformacionPrincipalApp.getProyecto().desarrolladores;
+        	cnEditar.varPreguntaCompetencia = InformacionPrincipalApp.getProyecto().desarrolladores;
+        	cnEditar.fecha = InformacionPrincipalApp.getProyecto().fecha;
         });
     	
     }

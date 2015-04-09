@@ -64,14 +64,16 @@
 			<jsp:include page="componentesAplicacion/proyecto.jsp" />
 			<jsp:include page="componentesAplicacion/editar.jsp" />	
 		
-		{{proyecto.idProyecto}}<br>
-		{{proyecto.nombre}}<br>
-		{{proyecto.fuenteConocimiento}}<br>
-		{{proyecto.dominio}}<br>
-		{{proyecto.proposito}}<br>
-		{{proyecto.alcance}}<br>
-		{{proyecto.preguntasCompetencia}}<br>
-		{{proyecto.nivelFormalidad}}<br>	
+		idProyecto:{{proyecto.idProyecto}}<br>
+		nombre:{{proyecto.nombre}}<br>
+		fuenteConocimiento:{{proyecto.fuenteConocimiento}}<br>
+		dominio:{{proyecto.dominio}}<br>
+		proposito:{{proyecto.proposito}}<br>
+		alcance:{{proyecto.alcance}}<br>
+		preguntasCompetencia:{{proyecto.preguntasCompetencia}}<br>
+		nivelFormalidad:{{proyecto.nivelFormalidad}}<br>
+		fecha:{{proyeto.fecha}}	
+		desarrolladores:{{proyecto.desarrolladores}}
 		</div>			
 	</body>
 </html>

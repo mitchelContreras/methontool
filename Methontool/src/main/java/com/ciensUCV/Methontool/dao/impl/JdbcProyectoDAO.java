@@ -43,33 +43,35 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idUsuario);
-			
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
+				
 				proyecto = new Proyecto();
 				nivelFormalidad = new NivelFormalidad();
 				proyecto.setIdProyecto(rs.getInt("id_proyecto"));
 				proyecto.setNombre(rs.getString(2));
-				proyecto.setFuenteConocimiento(rs.getString("fuente_conocimiento"));
+				proyecto.fuenteConocimientoStringToArray(rs.getString("fuente_conocimiento"));
+				proyecto.desarrolladoresStringToArray(rs.getString("desarrolladores"));
 				proyecto.setDominio(rs.getString("dominio"));
 				proyecto.setProposito(rs.getString("proposito"));
 				proyecto.setAlcance(rs.getString("alcance"));
 				proyecto.setFecha(rs.getDate("fecha"));
 				proyecto.preguntasCompetenciaStringToArray(rs.getString("preguntas_competencia"));
-				
 				nivelFormalidad.setIdNivelFormalidad(rs.getInt("id_nivel_formalidad"));
 				nivelFormalidad.setCodigo(rs.getString("codigo"));
 				nivelFormalidad.setNombre(rs.getString(15));
 				nivelFormalidad.setDescripcion(rs.getString("descripcion"));
 				proyecto.setNivelFormalidad(nivelFormalidad);
-				
 				arrayProyecto.add(proyecto);
 			}
 			rs.close();
 			ps.close();
-			return arrayProyecto;
+			return arrayProyecto;	
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} catch(Exception e) {
+			logger.info("error "+e.toString());
+			return arrayProyecto;	
 		} finally {
 			if (conn != null) {
 				try {
@@ -108,7 +110,7 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 				nivelFormalidad = new NivelFormalidad();
 				proyecto.setIdProyecto(rs.getInt("id_proyecto"));
 				proyecto.setNombre(rs.getString(2));
-				proyecto.setFuenteConocimiento(rs.getString("fuente_conocimiento"));
+//				proyecto.setFuenteConocimiento(rs.getString("fuente_conocimiento"));
 				proyecto.setDominio(rs.getString("dominio"));
 				proyecto.setProposito(rs.getString("proposito"));
 				proyecto.setAlcance(rs.getString("alcance"));
@@ -199,7 +201,7 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1,proyecto.getIdProyecto());
 			ps.setString(2, proyecto.getNombre());
-			ps.setString(3, proyecto.getFuenteConocimiento());
+//			ps.setString(3, proyecto.getFuenteConocimiento());
 			ps.setString(4, proyecto.getDominio());
 			ps.setString(5, proyecto.getProposito());
 			ps.setString(6, proyecto.getAlcance());

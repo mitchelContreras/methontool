@@ -13,26 +13,30 @@ import java.util.Date;
 public class Proyecto {
 	private int idProyecto;
 	private String nombre;
-	private String fuenteConocimiento;
+	private ArrayList<String> fuenteConocimiento;
 	private String dominio;
 	private String proposito;
 	private String alcance;
 	private ArrayList<String> preguntasCompetencia;
+	private ArrayList<String> desarrolladores;
 	private NivelFormalidad nivelFormalidad;
 	private Date fecha;
-	private String separador = "\\/";
+	private String separador = "-||-";
 	public Proyecto() {
 		super();
 		this.preguntasCompetencia = new  ArrayList<String> ();
+		this.fuenteConocimiento = new  ArrayList<String> ();
+		this.desarrolladores = new  ArrayList<String> ();
 		this.nivelFormalidad = new NivelFormalidad();
 		// TODO Auto-generated constructor stub
 	}
-	public Proyecto(int idProyecto, String nombre, String fuenteConocimiento,
-			String dominio, String proposito, String alcance,
-			ArrayList<String> preguntasCompetencia, NivelFormalidad nivelFormalidad,
-			Date fecha) {
+	public Proyecto(int idProyecto, String nombre,
+			ArrayList<String> fuenteConocimiento, String dominio,
+			String proposito, String alcance,
+			ArrayList<String> preguntasCompetencia,
+			ArrayList<String> desarrolladores, NivelFormalidad nivelFormalidad,
+			Date fecha, String separador) {
 		super();
-		this.preguntasCompetencia = new  ArrayList<String> ();
 		this.idProyecto = idProyecto;
 		this.nombre = nombre;
 		this.fuenteConocimiento = fuenteConocimiento;
@@ -40,8 +44,10 @@ public class Proyecto {
 		this.proposito = proposito;
 		this.alcance = alcance;
 		this.preguntasCompetencia = preguntasCompetencia;
+		this.desarrolladores = desarrolladores;
 		this.nivelFormalidad = nivelFormalidad;
 		this.fecha = fecha;
+		this.separador = separador;
 	}
 	public int getIdProyecto() {
 		return idProyecto;
@@ -54,12 +60,6 @@ public class Proyecto {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-	public String getFuenteConocimiento() {
-		return fuenteConocimiento;
-	}
-	public void setFuenteConocimiento(String fuenteConocimiento) {
-		this.fuenteConocimiento = fuenteConocimiento;
 	}
 	public String getDominio() {
 		return dominio;
@@ -97,31 +97,93 @@ public class Proyecto {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
+	public ArrayList<String> getFuenteConocimiento() {
+		return fuenteConocimiento;
+	}
+	public void setFuenteConocimiento(ArrayList<String> fuenteConocimiento) {
+		this.fuenteConocimiento = fuenteConocimiento;
+	}
+	public ArrayList<String> getDesarrolladores() {
+		return desarrolladores;
+	}
+	public void setDesarrolladores(ArrayList<String> desarrolladores) {
+		this.desarrolladores = desarrolladores;
+	}
+	public String getSeparador() {
+		return separador;
+	}
+	public void setSeparador(String separador) {
+		this.separador = separador;
+	}
 	@Override
 	public String toString() {
 		return "Proyecto [idProyecto=" + idProyecto + ", nombre=" + nombre
 				+ ", fuenteConocimiento=" + fuenteConocimiento + ", dominio="
 				+ dominio + ", proposito=" + proposito + ", alcance=" + alcance
-				+ ", preguntasCompetencia=" + preguntasCompetencia.toString()
-				+ ", nivelFormalidad=" + nivelFormalidad.toString() + ", fecha=" + fecha
-				+ "]";
+				+ ", preguntasCompetencia=" + preguntasCompetencia
+				+ ", desarrolladores=" + desarrolladores + ", nivelFormalidad="
+				+ nivelFormalidad + ", fecha=" + fecha + ", separador="
+				+ separador + "]";
 	}
 	
 	public void preguntasCompetenciaStringToArray(String entrada){
 		this.preguntasCompetencia = new  ArrayList<String> ();
-		String [] aux = entrada.split(this.separador);
-		for (String auxS : aux){
-			this.preguntasCompetencia.add(auxS);
+		if(entrada != null){
+			String [] aux = entrada.split(this.separador);
+			for (String auxS : aux){
+				this.preguntasCompetencia.add(auxS);
+			}
 		}
 	}
 	
 	public String preguntasCompetenciaArrayToString(){
 		String salida = "";
-		for (String aux : preguntasCompetencia){
-			salida = salida+aux+this.separador;
+		if (preguntasCompetencia != null){
+			for (String aux : preguntasCompetencia){
+				salida = salida+aux+this.separador;
+			}
 		}
 		return salida;
 	}
+	public void desarrolladoresStringToArray(String entrada){
+		this.desarrolladores = new  ArrayList<String> ();
+		if (entrada != null){
+			String [] aux = entrada.split(this.separador);
+			for (String auxS : aux){
+				this.desarrolladores.add(auxS);
+			}
+		}
+	}
+	
+	public String desarrolladoresArrayToString(){
+		String salida = "";
+		if(desarrolladores != null){
+			for (String aux : desarrolladores){
+				salida = salida+aux+this.separador;
+			}
+		}
+		return salida;
+	}
+	public void fuenteConocimientoStringToArray(String entrada){
+		this.fuenteConocimiento = new  ArrayList<String> ();
+		if(entrada != null){
+			String [] aux = entrada.split(this.separador);
+			for (String auxS : aux){
+				this.fuenteConocimiento.add(auxS);
+			}
+		}
+
+	}
+	
+	public String fuenteConocimientoArrayToString(){
+		String salida = "";
+		if(fuenteConocimiento != null){
+			for (String aux : fuenteConocimiento){
+				salida = salida+aux+this.separador;
+			}
+		}
+		return salida;
+	}	
 	
 	
 }

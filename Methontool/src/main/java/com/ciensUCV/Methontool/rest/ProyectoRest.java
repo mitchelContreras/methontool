@@ -42,6 +42,7 @@ public class ProyectoRest {
 			enviarError = new ErrorEnviar("0050", null, "Error al traer datos de BD");
 			proyectosMensaje.getListaError().add(enviarError);
 		}
+		logger.info("salio de listarProyecto con proyectosMensaje="+proyectosMensaje);
 		return proyectosMensaje;
 	}
 	
@@ -155,7 +156,7 @@ public class ProyectoRest {
 		ProyectoDAO proyectoDAO = (ProyectoDAO) context.getBean("proyectoDAO");
 		Proyecto proyecto = new Proyecto();
 		proyecto.setNombre(nombre);
-		proyecto.setFuenteConocimiento(fuenteConocimiento);
+//		proyecto.setFuenteConocimiento(fuenteConocimiento);
 		proyecto.setDominio(dominio);
 		proyecto.setAlcance(alcance);
 		proyecto.setProposito(proposito);
@@ -294,7 +295,7 @@ public class ProyectoRest {
 		Proyecto proyecto = new Proyecto();
 		proyecto.setIdProyecto(idProyecto);
 		proyecto.setNombre(nombre);
-		proyecto.setFuenteConocimiento(fuenteConocimiento);
+//		proyecto.setFuenteConocimiento(fuenteConocimiento);
 		proyecto.setDominio(dominio);
 		proyecto.setAlcance(alcance);
 		proyecto.setProposito(proposito);
