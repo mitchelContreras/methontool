@@ -122,7 +122,7 @@
         // validate data.
         $rootScope.$watch('actual.principal', function (newValue, oldValue) {
         	if (newValue !== oldValue) {
-                console.log("cambio alguno de los valores de esta vaina2");
+                console.log("cambio el valor de actual.principal a "+newValue);
                 cnPrincipal.soyActual = InformacionPrincipalApp.soyVistaActual('Principal');
         	}
         }, false);
@@ -208,7 +208,7 @@
         // validate data.
         $rootScope.$watch('actual.proyecto', function (newValue, oldValue) {
         	if (newValue !== oldValue) {
-                console.log("cambio alguno de los valores de esta vaina1");
+                console.log("cambio alguno de actual.proyecto a "+newValue);
                 cnProyecto.soyActual = InformacionPrincipalApp.soyVistaActual('Proyecto');
         	}
         }, false);
@@ -299,12 +299,6 @@
     	
     	cnEditar.soyActual = false;
     	cnEditar.vacio = true;
-    	cnEditar.dominio = false;
-    	cnEditar.fecha = false;
-    	cnEditar.desarrolladores = false;
-    	cnEditar.nivelFormalidad = false;
-    	cnEditar.alcance = false;
-    	cnEditar.fuenteConocimiento = false;
     	cnEditar.disabled = true;
     	cnEditar.modificar = false;
 //    	cnEditar.listaDesarrolladores = ['Carlos Perez', 'José Contreras', 'Kenny Bustillo', 'Antonio hernandez'];
@@ -324,7 +318,7 @@
     	cnEditar.varPreguntaCompetencia = [];
     	cnEditar.varNivelFormalidad = {};
     	
-    	cnEditar.seleccion = seleccion;
+    	
     	cnEditar.modificarAtributo = modificarAtributo;
     	cnEditar.cancelarModificarAtributo = cancelarModificarAtributo;
     	cnEditar.eliminarDesarrollador = eliminarDesarrollador;
@@ -418,53 +412,16 @@
         	cnEditar.modificar = true;
     	}
     	
-    	function seleccion (variable){
-    		console.log("seleccione a '"+variable+"'");
-    		switch(variable) {
-    	    case 'dominio':
-    	    	cambioSeleccion(false, true, false, false, false, false, false);
-    	        break;
-    	    case 'fecha':
-    	    	cambioSeleccion(false, false, true, false, false, false, false);
-    	        break;
-    	    case 'desarrolladores':
-    	    	cambioSeleccion(false, false, false, true, false, false, false);
-    	        break;
-    	    case 'nivelFormalidad':
-    	    	cambioSeleccion(false, false, false, false, true, false, false);
-    	        break;
-    	    case 'fuenteConocimiento':
-    	    	cambioSeleccion(false, false, false, false, false, true, false);
-    	        break;  	
-    	    case 'alcance':
-    	    	cambioSeleccion(false, false, false, false, false, false, true);
-    	        break;    	        
-    	    default:
-    	    	cambioSeleccion(false, false, false, false, false, false, false);
-    	    	break;
-    		} 
-    	}
-    	
-    	function cambioSeleccion(vacio, dominio, fecha, desarrolladores, nivelFormalidad, fuenteConocimiento, alcance){
-        	cnEditar.vacio = vacio;
-        	cnEditar.dominio = dominio;
-        	cnEditar.fecha = fecha;
-        	cnEditar.desarrolladores = desarrolladores;
-        	cnEditar.nivelFormalidad = nivelFormalidad;
-        	cnEditar.alcance = alcance;
-        	cnEditar.fuenteConocimiento = fuenteConocimiento;
-    	}
-    	
         // validate data.
         $rootScope.$watch('actual.editar', function (newValue, oldValue) {
         	if (newValue !== oldValue) {
                 console.log("cambio valor editar a '"+newValue+"'");
                 cnEditar.soyActual = InformacionPrincipalApp.soyVistaActual('Editar');
-                if(cnEditar.soyActual == true){
-                	cambioSeleccion(true, false, false, false, false, false, false);
-                }else{
-                	cambioSeleccion(false, false, false, false, false, false, false);
-                }
+//                if(cnEditar.soyActual == true){
+//                	cambioSeleccion(true, false, false, false, false, false, false);
+//                }else{
+//                	cambioSeleccion(false, false, false, false, false, false, false);
+//                }
         	}
         }, false);
 
