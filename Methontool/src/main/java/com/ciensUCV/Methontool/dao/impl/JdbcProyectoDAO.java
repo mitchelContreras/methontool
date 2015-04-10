@@ -28,24 +28,35 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 	@Override
 	public ArrayList<Proyecto> listarProyectos(int idUsuario) {
 		// TODO Auto-generated method stub
-		String sql = "Select * from "+
-		"proyecto as p "+
-		"join puede_ver as ver on p.id_proyecto = ver.id_proyecto "+
-		"join nivel_formalidad as nivel on p.id_nivel_formalidad = nivel.id_nivel_formalidad "+
-		"and ver.id_usuario = ? ";
+		String sql = "Select p.id_proyecto"+
+				",p.nombre"+
+				",p.nombre"+
+				",p.fuente_conocimiento"+
+				",p.dominio"+
+				",p.proposito"+
+				",p.alcance"+
+				",p.preguntas_competencia"+
+				",p.id_nivel_formalidad"+
+				",p.desarrolladores"+
+				",to_char(p.fecha, 'dd/mm/YYYY') AS fecha "+
+				",nivel.codigo "+
+				",nivel.nombre "+
+				",nivel.descripcion "+
+				"from proyecto as p "+
+				"join puede_ver as ver on p.id_proyecto = ver.id_proyecto "+
+				"join nivel_formalidad as nivel on p.id_nivel_formalidad = nivel.id_nivel_formalidad "+
+				"and ver.id_usuario = ? ";
 		
 		Connection conn = null;
 		Proyecto proyecto = null;
 		NivelFormalidad nivelFormalidad= null;
 		ArrayList<Proyecto>  arrayProyecto = new ArrayList<Proyecto> ();
-	
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
-				
 				proyecto = new Proyecto();
 				nivelFormalidad = new NivelFormalidad();
 				proyecto.setIdProyecto(rs.getInt("id_proyecto"));
@@ -55,11 +66,11 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 				proyecto.setDominio(rs.getString("dominio"));
 				proyecto.setProposito(rs.getString("proposito"));
 				proyecto.setAlcance(rs.getString("alcance"));
-				proyecto.setFecha(rs.getDate("fecha"));
+				proyecto.setFecha(rs.getString("fecha"));
 				proyecto.preguntasCompetenciaStringToArray(rs.getString("preguntas_competencia"));
 				nivelFormalidad.setIdNivelFormalidad(rs.getInt("id_nivel_formalidad"));
 				nivelFormalidad.setCodigo(rs.getString("codigo"));
-				nivelFormalidad.setNombre(rs.getString(15));
+				nivelFormalidad.setNombre(rs.getString(11));
 				nivelFormalidad.setDescripcion(rs.getString("descripcion"));
 				proyecto.setNivelFormalidad(nivelFormalidad);
 				arrayProyecto.add(proyecto);
@@ -68,6 +79,7 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 			ps.close();
 			return arrayProyecto;	
 		} catch (SQLException e) {
+			logger.info("SQLException "+e);
 			throw new RuntimeException(e);
 		} catch(Exception e) {
 			logger.info("error "+e.toString());
@@ -114,7 +126,7 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 				proyecto.setDominio(rs.getString("dominio"));
 				proyecto.setProposito(rs.getString("proposito"));
 				proyecto.setAlcance(rs.getString("alcance"));
-				proyecto.setFecha(rs.getDate("fecha"));
+				proyecto.setFecha(rs.getString("fecha"));
 				proyecto.preguntasCompetenciaStringToArray(rs.getString("preguntas_competencia"));
 				
 				nivelFormalidad.setIdNivelFormalidad(rs.getInt("id_nivel_formalidad"));
@@ -207,8 +219,8 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 			ps.setString(6, proyecto.getAlcance());
 			ps.setString(7, proyecto.preguntasCompetenciaArrayToString());
 			try {
-				java.sql.Date sqlDate = new java.sql.Date(proyecto.getFecha().getTime());
-				ps.setDate(8, sqlDate);
+//				java.sql.Date sqlDate = new java.sql.Date(proyecto.getFecha().getTime());
+//				ps.setDate(8, sqlDate);
 			} catch (Exception e) {
 				// TODO: handle exception
 				ps.setDate(8, null);

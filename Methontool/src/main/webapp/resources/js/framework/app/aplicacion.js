@@ -307,11 +307,11 @@
     	cnEditar.fuenteConocimiento = false;
     	cnEditar.disabled = true;
     	cnEditar.modificar = false;
-    	cnEditar.listaDesarrolladores = ['Carlos Perez', 'José Contreras', 'Kenny Bustillo', 'Antonio hernandez'];
+//    	cnEditar.listaDesarrolladores = ['Carlos Perez', 'José Contreras', 'Kenny Bustillo', 'Antonio hernandez'];
     	cnEditar.nuevoDesarrollador = "";
-    	cnEditar.listafuenteConocimiento = ['Todos los libros', 'internet', 'otros libros'];
+//    	cnEditar.listafuenteConocimiento = ['Todos los libros', 'internet', 'otros libros'];
     	cnEditar.nuevoFuenteConocimiento = "";
-    	cnEditar.listaPreguntasCompetencia = ['Pregunta uno de todas las preguntas', 'pregunta dos de todas las pregurntas', 'Pregunta 3 de muchas preguntas'];
+//    	cnEditar.listaPreguntasCompetencia = ['Pregunta uno de todas las preguntas', 'pregunta dos de todas las pregurntas', 'Pregunta 3 de muchas preguntas'];
     	cnEditar.nuevoPreguntaCompetencia = "";
 //----------------Variables usadas para capturar los datos--------------
     	cnEditar.varNombre = "";
@@ -476,17 +476,19 @@
         	cnEditar.varNombre = InformacionPrincipalApp.getProyecto().nombre;
         	cnEditar.varDominio = InformacionPrincipalApp.getProyecto().dominio;
         	cnEditar.varAlcance = InformacionPrincipalApp.getProyecto().alcance;
-        	cnEditar.varFuenteConocimiento = InformacionPrincipalApp.getProyecto().fuenteConocimiento;
+//        	cnEditar.varFuenteConocimiento = InformacionPrincipalApp.getProyecto().fuenteConocimiento;
         	cnEditar.varNivelFormalidad = InformacionPrincipalApp.getProyecto().nivelFormalidad;
         	cnEditar.varProposito = InformacionPrincipalApp.getProyecto().proposito;
-        	cnEditar.varDesarrolladores = InformacionPrincipalApp.getProyecto().desarrolladores;
-        	cnEditar.varPreguntaCompetencia = InformacionPrincipalApp.getProyecto().desarrolladores;
+//        	cnEditar.varDesarrolladores = InformacionPrincipalApp.getProyecto().desarrolladores;
+//        	cnEditar.varPreguntaCompetencia = InformacionPrincipalApp.getProyecto().desarrolladores;
         	cnEditar.fecha = InformacionPrincipalApp.getProyecto().fecha;
+        	cnEditar.listaDesarrolladores = InformacionPrincipalApp.getProyecto().desarrolladores;
+        	cnEditar.listafuenteConocimiento = InformacionPrincipalApp.getProyecto().fuenteConocimiento;
+        	cnEditar.listaPreguntasCompetencia = InformacionPrincipalApp.getProyecto().desarrolladores;
         });
     	
     }
     
-//	preguntasCompetencia : [],
     
     
     

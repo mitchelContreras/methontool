@@ -5,11 +5,17 @@ package com.ciensUCV.Methontool.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.StringTokenizer;
+
+
+
+import com.ciensUCV.Methontool.rest.ProyectoRest;
 
 /**
  * @author mitchell
  *
  */
+
 public class Proyecto {
 	private int idProyecto;
 	private String nombre;
@@ -20,8 +26,8 @@ public class Proyecto {
 	private ArrayList<String> preguntasCompetencia;
 	private ArrayList<String> desarrolladores;
 	private NivelFormalidad nivelFormalidad;
-	private Date fecha;
-	private String separador = "-||-";
+	private String fecha;
+	private String separador = "||||";
 	public Proyecto() {
 		super();
 		this.preguntasCompetencia = new  ArrayList<String> ();
@@ -35,7 +41,7 @@ public class Proyecto {
 			String proposito, String alcance,
 			ArrayList<String> preguntasCompetencia,
 			ArrayList<String> desarrolladores, NivelFormalidad nivelFormalidad,
-			Date fecha, String separador) {
+			String fecha, String separador) {
 		super();
 		this.idProyecto = idProyecto;
 		this.nombre = nombre;
@@ -91,10 +97,10 @@ public class Proyecto {
 	public void setNivelFormalidad(NivelFormalidad nivelFormalidad) {
 		this.nivelFormalidad = nivelFormalidad;
 	}
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 	public ArrayList<String> getFuenteConocimiento() {
@@ -129,9 +135,9 @@ public class Proyecto {
 	public void preguntasCompetenciaStringToArray(String entrada){
 		this.preguntasCompetencia = new  ArrayList<String> ();
 		if(entrada != null){
-			String [] aux = entrada.split(this.separador);
-			for (String auxS : aux){
-				this.preguntasCompetencia.add(auxS);
+			StringTokenizer token = new StringTokenizer(entrada, this.separador);
+			while(token.hasMoreTokens()){
+				this.preguntasCompetencia.add(token.nextToken());
 			}
 		}
 	}
@@ -148,9 +154,9 @@ public class Proyecto {
 	public void desarrolladoresStringToArray(String entrada){
 		this.desarrolladores = new  ArrayList<String> ();
 		if (entrada != null){
-			String [] aux = entrada.split(this.separador);
-			for (String auxS : aux){
-				this.desarrolladores.add(auxS);
+			StringTokenizer token = new StringTokenizer(entrada, this.separador);
+			while(token.hasMoreTokens()){
+				this.desarrolladores.add(token.nextToken());
 			}
 		}
 	}
@@ -167,9 +173,9 @@ public class Proyecto {
 	public void fuenteConocimientoStringToArray(String entrada){
 		this.fuenteConocimiento = new  ArrayList<String> ();
 		if(entrada != null){
-			String [] aux = entrada.split(this.separador);
-			for (String auxS : aux){
-				this.fuenteConocimiento.add(auxS);
+			StringTokenizer token = new StringTokenizer(entrada, this.separador);
+			while(token.hasMoreTokens()){
+				this.fuenteConocimiento.add(token.nextToken());
 			}
 		}
 

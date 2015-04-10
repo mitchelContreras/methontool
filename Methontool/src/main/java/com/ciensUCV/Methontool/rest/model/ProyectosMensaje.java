@@ -6,19 +6,20 @@ import com.ciensUCV.Methontool.model.Proyecto;
 
 
 public class ProyectosMensaje extends MensajeBase {
-	private ArrayList<Proyecto> Proyectos;
+	private ArrayList<Proyecto> proyectos;
 
 	public ArrayList<Proyecto> getProyectos() {
-		return Proyectos;
+		return proyectos;
 	}
 
-	public void setProyectos(ArrayList<Proyecto> proyectos) {
-		Proyectos = proyectos;
+	public void setProyectos(ArrayList<Proyecto> entrada) {
+		proyectos = entrada;
+		
 	}
 
-	public ProyectosMensaje(ArrayList<Proyecto> proyectos) {
+	public ProyectosMensaje(ArrayList<Proyecto> entrada) {
 		super();
-		Proyectos = proyectos;
+		proyectos = entrada;
 	}
 
 	public ProyectosMensaje() {
@@ -28,9 +29,10 @@ public class ProyectosMensaje extends MensajeBase {
 
 	@Override
 	public String toString() {
-		return "ProyectosMensaje [Proyectos=" + Proyectos + " , MensajeBase()="
+		return "ProyectosMensaje [Proyectos=" + proyectos + " , MensajeBase()="
 				+ super.toString() + "]";
 	}
+	
 	
 	
 }

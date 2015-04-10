@@ -42,7 +42,6 @@ public class ProyectoRest {
 			enviarError = new ErrorEnviar("0050", null, "Error al traer datos de BD");
 			proyectosMensaje.getListaError().add(enviarError);
 		}
-		logger.info("salio de listarProyecto con proyectosMensaje="+proyectosMensaje);
 		return proyectosMensaje;
 	}
 	

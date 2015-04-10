@@ -72,7 +72,7 @@
 		alcance:{{proyecto.alcance}}<br>
 		preguntasCompetencia:{{proyecto.preguntasCompetencia}}<br>
 		nivelFormalidad:{{proyecto.nivelFormalidad}}<br>
-		fecha:{{proyeto.fecha}}	
+		fecha:{{proyecto.fecha}}	<br>
 		desarrolladores:{{proyecto.desarrolladores}}
 		</div>			
 	</body>

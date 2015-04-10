@@ -26,7 +26,7 @@
 								<label >Nombre:</label>
 							</div>
 							<div class="col-xs-5 ">
-								<input type="text" class="form-control" placeholder="Nombre" ng-disabled="cnEditar.disabled">
+								<input type="text" class="form-control" placeholder="Nombre" ng-disabled="cnEditar.disabled" ng-model="cnEditar.varNombre">
 							</div>
 						</div>						
 						<div class="form-group">
@@ -34,7 +34,7 @@
 								<label >Dominio:</label>
 							</div>
 							<div class="col-xs-5 ">
-								<input type="text" class="form-control" placeholder="Dominio" ng-disabled="cnEditar.disabled">
+								<input type="text" class="form-control" placeholder="Dominio" ng-disabled="cnEditar.disabled" ng-model="cnEditar.varDominio">
 							</div>
 						</div>	
 						<div class="form-group">
@@ -42,7 +42,7 @@
 								<label>Fecha:</label>
 							</div>
 							<div class="col-xs-5">
-								<input id = "inputFecha" ng-disabled="cnEditar.disabled" type="text" data-date="" class="form-control form_datetime" data-link-field="dtp_input2" data-link-format="dd/mm/yyyy">
+								<input id = "inputFecha" ng-model = "cnEditar.fecha" ng-disabled="cnEditar.disabled" type="text" data-date="" class="form-control form_datetime" data-link-field="dtp_input2" data-link-format="dd/mm/yyyy">
 								<input type="hidden" id="dtp_input2" value="" />
 							</div>
 						</div>	
@@ -78,7 +78,7 @@
 								<label>Propósito:</label>
 							</div>
 							<div class="col-xs-5">
-								<textarea class="form-control" rows="3" ng-disabled="cnEditar.disabled"></textarea>
+								<textarea class="form-control" rows="3" ng-disabled="cnEditar.disabled" ng-model="cnEditar.varProposito" ></textarea>
 							</div>
 						</div>												
 						<div class="form-group">
@@ -86,7 +86,7 @@
 								<label>Alcance:</label>
 							</div>
 							<div class="col-xs-5">
-								<textarea class="form-control" rows="3" ng-disabled="cnEditar.disabled"></textarea>
+								<textarea class="form-control" rows="3" ng-disabled="cnEditar.disabled" ng-model="cnEditar.varAlcance"></textarea>
 							</div>
 						</div>		
 						<div class="form-group">
@@ -121,7 +121,7 @@
 								<label>Nivel de Formalidad:</label>
 							</div>
 							<div class="col-xs-5">
-								    <select class="form-control" ng-disabled="cnEditar.disabled">
+								    <select class="form-control" ng-disabled="cnEditar.disabled" ng-model="cnEditar.varNivelFormalidad">
 								        <option>[SELECCIONE]</option>
 								        <option>Opcion 1</option>
 								        <option>Opcion 2</option>
