@@ -23,7 +23,8 @@
                                   '$listarProyectos', 
                                   '$crearProyecto', 
                                   'InformacionPrincipalApp'];
-    ControllerEditar.$inject = ['$rootScope',
+    ControllerEditar.$inject = ['$scope',
+                                '$rootScope',
                                 'InformacionPrincipalApp'];
     
 
@@ -292,6 +293,7 @@
     }
 
     function ControllerEditar (
+    		$scope,
         	$rootScope,
         	InformacionPrincipalApp
     ){
@@ -332,6 +334,8 @@
     	cnEditar.eliminarPreguntaCompetencia = eliminarPreguntaCompetencia;
     	cnEditar.agregarPreguntaCompetencia = agregarPreguntaCompetencia;
     	cnEditar.agreguePreguntaCompetencia = agreguePreguntaCompetencia;
+    	cnEditar.setearValoresMostrarEditar = setearValoresMostrarEditar;
+    	cnEditar.safeApply = safeApply;
     	
     	function agreguePreguntaCompetencia(nuevoPreguntaCompetencia){
     		console.log("agreguePreguntaCompetencia "+nuevoPreguntaCompetencia);
@@ -398,19 +402,51 @@
     	function eliminarDesarrollador(id){
     		if(cnEditar.disabled == false){
       	      console.log("el id es "+id);
+      	      console.log("InformacionPrincipalApp.getProyecto().desarrolladores "+InformacionPrincipalApp.getProyecto().desarrolladores.length);
     	      cnEditar.listaDesarrolladores.splice(id, 1);
+      	      console.log("InformacionPrincipalApp.getProyecto().desarrolladores "+InformacionPrincipalApp.getProyecto().desarrolladores.length);
+      	      console.log(" cnEditar.listaDesarrolladores "+ cnEditar.listaDesarrolladores.length);
+
     		}
     	}
     	
     	function cancelarModificarAtributo(){
         	cnEditar.disabled = true;
         	cnEditar.modificar = false;
+//        	cnEditar.setearValoresMostrarEditar();
+        	cnEditar.safeApply(cnEditar.setearValoresMostrarEditar());
     	}
     	
     	function modificarAtributo(){
         	cnEditar.disabled = false;
         	cnEditar.modificar = true;
     	}
+    	
+    	function setearValoresMostrarEditar(){
+        	cnEditar.varNombre = InformacionPrincipalApp.getProyecto().nombre;
+        	cnEditar.varDominio = InformacionPrincipalApp.getProyecto().dominio;
+        	cnEditar.varAlcance = InformacionPrincipalApp.getProyecto().alcance;
+//    	            	cnEditar.varFuenteConocimiento = InformacionPrincipalApp.getProyecto().fuenteConocimiento;
+        	cnEditar.varNivelFormalidad = InformacionPrincipalApp.getProyecto().nivelFormalidad;
+        	cnEditar.varProposito = InformacionPrincipalApp.getProyecto().proposito;
+//    	            	cnEditar.varDesarrolladores = InformacionPrincipalApp.getProyecto().desarrolladores;
+//    	            	cnEditar.varPreguntaCompetencia = InformacionPrincipalApp.getProyecto().desarrolladores;
+        	cnEditar.fecha = InformacionPrincipalApp.getProyecto().fecha;
+        	cnEditar.listaDesarrolladores = InformacionPrincipalApp.getProyecto().desarrolladores.slice();
+        	cnEditar.listafuenteConocimiento = InformacionPrincipalApp.getProyecto().fuenteConocimiento.slice();
+        	cnEditar.listaPreguntasCompetencia = InformacionPrincipalApp.getProyecto().preguntasCompetencia.slice();  
+    	}
+    	
+    	function safeApply(fn) {
+    		var phase = this.$root.$$phase;
+			if(phase == '$apply' || phase == '$digest') {
+				if(fn && (typeof(fn) === 'function')) {
+					fn();
+				}
+			} else {
+				this.$apply(fn);
+			}
+    	};
     	
         // validate data.
         $rootScope.$watch('actual.editar', function (newValue, oldValue) {
@@ -430,18 +466,8 @@
     	
         $rootScope.$on('menuEditar', function(event, data){
         	InformacionPrincipalApp.voyAvista("Editar");
-        	cnEditar.varNombre = InformacionPrincipalApp.getProyecto().nombre;
-        	cnEditar.varDominio = InformacionPrincipalApp.getProyecto().dominio;
-        	cnEditar.varAlcance = InformacionPrincipalApp.getProyecto().alcance;
-//        	cnEditar.varFuenteConocimiento = InformacionPrincipalApp.getProyecto().fuenteConocimiento;
-        	cnEditar.varNivelFormalidad = InformacionPrincipalApp.getProyecto().nivelFormalidad;
-        	cnEditar.varProposito = InformacionPrincipalApp.getProyecto().proposito;
-//        	cnEditar.varDesarrolladores = InformacionPrincipalApp.getProyecto().desarrolladores;
-//        	cnEditar.varPreguntaCompetencia = InformacionPrincipalApp.getProyecto().desarrolladores;
-        	cnEditar.fecha = InformacionPrincipalApp.getProyecto().fecha;
-        	cnEditar.listaDesarrolladores = InformacionPrincipalApp.getProyecto().desarrolladores;
-        	cnEditar.listafuenteConocimiento = InformacionPrincipalApp.getProyecto().fuenteConocimiento;
-        	cnEditar.listaPreguntasCompetencia = InformacionPrincipalApp.getProyecto().desarrolladores;
+        	$scope.safeApply(cnEditar.setearValoresMostrarEditar());
+//        	cnEditar.setearValoresMostrarEditar();
         });
     	
     }
