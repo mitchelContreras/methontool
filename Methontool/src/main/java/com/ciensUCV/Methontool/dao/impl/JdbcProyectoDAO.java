@@ -2,12 +2,12 @@ package com.ciensUCV.Methontool.dao.impl;
 
 import java.sql.Array;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import javax.sql.DataSource;
 
@@ -201,7 +201,7 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 		}
 	}
 	@Override
-	public int actualizarProyecto(Proyecto proyecto, int [] usuarios) {
+	public int actualizarProyecto(Proyecto proyecto) {
 		// TODO Auto-generated method stub
 		
 		String sql = "SELECT sp_actualizar_proyecto(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -213,32 +213,26 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1,proyecto.getIdProyecto());
 			ps.setString(2, proyecto.getNombre());
-//			ps.setString(3, proyecto.getFuenteConocimiento());
+			ps.setString(3, proyecto.fuenteConocimientoArrayToString());
 			ps.setString(4, proyecto.getDominio());
 			ps.setString(5, proyecto.getProposito());
 			ps.setString(6, proyecto.getAlcance());
 			ps.setString(7, proyecto.preguntasCompetenciaArrayToString());
+			
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			
 			try {
-//				java.sql.Date sqlDate = new java.sql.Date(proyecto.getFecha().getTime());
-//				ps.setDate(8, sqlDate);
-			} catch (Exception e) {
-				// TODO: handle exception
-				ps.setDate(8, null);
+		 
+				java.util.Date date = formatter.parse(proyecto.getFecha());
+				ps.setDate(8, new java.sql.Date(date.getTime()));
+		 
+			} catch (ParseException e) {
+				e.printStackTrace();
 			}
 			ps.setInt(9, proyecto.getNivelFormalidad().getIdNivelFormalidad());
-			
-			logger.info("antes del for");
-			Object[] array = new Object[usuarios.length];
-			for(int i =0;i<array.length; i++){
-				array[i] = (Object)usuarios[i];
-			}
-			logger.info("despues del for");
-			Array aArray = conn.createArrayOf("int", array);
-			ps.setArray(10, aArray);
-			
-			logger.info("antes del execute");
+			ps.setString(10, proyecto.desarrolladoresArrayToString());
+
 			ResultSet rs = ps.executeQuery();
-			logger.info("despues del execute");
 			if(rs.next()){
 				salida = rs.getInt("sp_actualizar_proyecto");
 			}

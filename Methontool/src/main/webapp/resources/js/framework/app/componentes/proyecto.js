@@ -37,7 +37,14 @@
            post: {method: 'POST', params: {id: '@id'}, isArray:false}
            });
    });
-    
+ 
+    proy.factory('$actualizarProtecto',function($resource){ 
+    	var urlConsultar = urlProyecto+"/api/usuario/:idUsuario/proyecto/:idProyecto";
+    	console.log("$actualizarProtecto "+urlConsultar);
+        return $resource(urlConsultar,{},{
+           post: {method: 'POST', params: {idUsuario: '@idUsuario', idProyecto: '@idProyecto'}, isArray:false}
+           });
+   });    
     
     /*  
     proy.factory('$verProyecto',function($resource){ 

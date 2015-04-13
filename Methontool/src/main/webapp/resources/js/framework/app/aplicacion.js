@@ -25,7 +25,8 @@
                                   'InformacionPrincipalApp'];
     ControllerEditar.$inject = ['$scope',
                                 '$rootScope',
-                                'InformacionPrincipalApp'];
+                                'InformacionPrincipalApp',
+                                '$actualizarProtecto'];
     
 
     function InformacionPrincipalApp ($rootScope){
@@ -295,7 +296,8 @@
     function ControllerEditar (
     		$scope,
         	$rootScope,
-        	InformacionPrincipalApp
+        	InformacionPrincipalApp,
+        	$actualizarProtecto
     ){
     	var cnEditar = this;
     	
@@ -322,6 +324,7 @@
     	
     	
     	cnEditar.modificarAtributo = modificarAtributo;
+    	cnEditar.modifiqueAtributo = modifiqueAtributo;
     	cnEditar.cancelarModificarAtributo = cancelarModificarAtributo;
     	cnEditar.eliminarDesarrollador = eliminarDesarrollador;
     	cnEditar.agregarDesarrollador = agregarDesarrollador;
@@ -335,7 +338,6 @@
     	cnEditar.agregarPreguntaCompetencia = agregarPreguntaCompetencia;
     	cnEditar.agreguePreguntaCompetencia = agreguePreguntaCompetencia;
     	cnEditar.setearValoresMostrarEditar = setearValoresMostrarEditar;
-    	cnEditar.safeApply = safeApply;
     	
     	function agreguePreguntaCompetencia(nuevoPreguntaCompetencia){
     		console.log("agreguePreguntaCompetencia "+nuevoPreguntaCompetencia);
@@ -413,8 +415,68 @@
     	function cancelarModificarAtributo(){
         	cnEditar.disabled = true;
         	cnEditar.modificar = false;
-//        	cnEditar.setearValoresMostrarEditar();
-        	cnEditar.safeApply(cnEditar.setearValoresMostrarEditar());
+        	cnEditar.setearValoresMostrarEditar();
+    	}
+    	
+    	function modifiqueAtributo(){
+    		console.log("modifiqueAtributo");
+    
+//        	cnEditar.listaDesarrolladores = InformacionPrincipalApp.getProyecto().desarrolladores.slice();
+//        	cnEditar.listafuenteConocimiento = InformacionPrincipalApp.getProyecto().fuenteConocimiento.slice();
+//        	cnEditar.listaPreguntasCompetencia = InformacionPrincipalApp.getProyecto().preguntasCompetencia.slice();  
+    		var desarrolladores= "";
+    		var i;
+    		for (i in cnEditar.listaDesarrolladores) {
+    			desarrolladores = desarrolladores + cnEditar.listaDesarrolladores[i]; 
+    			if(i != (cnEditar.listaDesarrolladores.length-1) ){
+    				desarrolladores = desarrolladores  + '||||';
+    			}
+    		}
+    		
+    		var fuenteConocimiento= "";
+    		var i;
+    		for (i in cnEditar.listafuenteConocimiento) {
+    			fuenteConocimiento = fuenteConocimiento + cnEditar.listafuenteConocimiento[i]; 
+    			if(i != (cnEditar.listafuenteConocimiento.length-1) ){
+    				fuenteConocimiento = fuenteConocimiento  + '||||';
+    			}
+    		}    		
+
+    		var preguntasCompetencia= "";
+    		var i;
+    		for (i in cnEditar.listaPreguntasCompetencia) {
+    			preguntasCompetencia = preguntasCompetencia + cnEditar.listaPreguntasCompetencia[i]; 
+    			if(i != (cnEditar.listafuenteConocimiento.length-1) ){
+    				preguntasCompetencia = preguntasCompetencia  + '||||';
+    			}
+    		}    
+    		
+    		$actualizarProtecto.post({
+	            idUsuario: InformacionPrincipalApp.getUsuario().idUsuario,
+	            idProyecto:  InformacionPrincipalApp.getProyecto().idProyecto,
+	            'nombre': cnEditar.varNombre,
+	            'fuenteConocimiento' : fuenteConocimiento,
+	            'dominio' : cnEditar.varDominio,
+	            'proposito' : cnEditar.varProposito,
+	            'alcance' : cnEditar.varAlcance,
+	            'preguntasCompetencia' : preguntasCompetencia,
+	            'fecha' : cnEditar.fecha,
+	            'idNivelFormalidad' : cnEditar.varNivelFormalidad,
+	            'desarrolladores' : desarrolladores,
+	             },{}).$promise.then(
+	        function(todo) {
+	           // success
+	           console.log("en el promise");
+	           $scope.todos = todo;
+	           console.log("todo "+todo);
+	            console.log("sucess es "+$scope.todos.succes);
+	        }, 
+	        function(errResponse) {
+	           // fail
+	           console.log("EPIC FAIL");
+	           console.log("errResponse "+errResponse);
+	        }
+	        );
     	}
     	
     	function modificarAtributo(){
@@ -436,18 +498,7 @@
         	cnEditar.listafuenteConocimiento = InformacionPrincipalApp.getProyecto().fuenteConocimiento.slice();
         	cnEditar.listaPreguntasCompetencia = InformacionPrincipalApp.getProyecto().preguntasCompetencia.slice();  
     	}
-    	
-    	function safeApply(fn) {
-    		var phase = this.$root.$$phase;
-			if(phase == '$apply' || phase == '$digest') {
-				if(fn && (typeof(fn) === 'function')) {
-					fn();
-				}
-			} else {
-				this.$apply(fn);
-			}
-    	};
-    	
+    		
         // validate data.
         $rootScope.$watch('actual.editar', function (newValue, oldValue) {
         	if (newValue !== oldValue) {
@@ -466,8 +517,8 @@
     	
         $rootScope.$on('menuEditar', function(event, data){
         	InformacionPrincipalApp.voyAvista("Editar");
-        	$scope.safeApply(cnEditar.setearValoresMostrarEditar());
-//        	cnEditar.setearValoresMostrarEditar();
+        	console.log("antes de safeApply en menuEditar");
+        	cnEditar.setearValoresMostrarEditar();
         });
     	
     }

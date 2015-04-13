@@ -111,7 +111,7 @@
 							<div class="col-xs-5">
 								    <select class="form-control" ng-disabled="cnEditar.disabled" ng-model="cnEditar.varNivelFormalidad">
 								        <option>[SELECCIONE]</option>
-								        <option>Opcion 1</option>
+								        <option value="1">Opcion 1</option>
 								        <option>Opcion 2</option>
 								        <option>Opcion 3</option>
 								        <option>Opcion 3</option>				        
@@ -150,7 +150,7 @@
 						</div>
 						<div class="form-group" ng-show="cnEditar.modificar">
 							<div class="col-xs-offset-4 col-xs-5">
-								<button type="submit" class="btn btn-primary ">Guardar</button>
+								<button type="submit" class="btn btn-primary" ng-click="cnEditar.modifiqueAtributo()" >Guardar</button>
 								<button type="submit" class="btn btn-defaul" ng-click="cnEditar.cancelarModificarAtributo() ">Cancelar</button>
 							</div>	
 						</div>	    

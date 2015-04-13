@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ciensUCV.Methontool.dao.ProyectoDAO;
+import com.ciensUCV.Methontool.model.NivelFormalidad;
 import com.ciensUCV.Methontool.model.Proyecto;
 import com.ciensUCV.Methontool.rest.model.ErrorEnviar;
 import com.ciensUCV.Methontool.rest.model.ProyectoMensaje;
@@ -162,8 +163,8 @@ public class ProyectoRest {
 		proyecto.preguntasCompetenciaStringToArray(preguntasCompetencia);
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-			Date fechaDate = sdf.parse(fecha);
-			proyecto.setFecha(fechaDate);
+//			Date fechaDate = sdf.parse(fecha);
+//			proyecto.setFecha(fechaDate);
 		} catch (Exception e) {
 			// TODO: handle exception
 			logger.info("Error al parsear la fecha");
@@ -262,9 +263,9 @@ public class ProyectoRest {
 		return proyectoMensaje;
 	}
 	
-	@RequestMapping(value="/api/proyecto/{id}", 
+	@RequestMapping(value="/api/usuario/{idUsuario}/proyecto/{idProyecto}", 
 			method = RequestMethod.POST, 
-			params = {"nombre", "fuenteConocimiento", "dominio", "proposito", "alcance", "preguntasCompetencia", "fecha", "idNivelFormalidad", "idUsuario"})
+			params = {"nombre", "fuenteConocimiento", "dominio", "proposito", "alcance", "preguntasCompetencia", "fecha", "idNivelFormalidad", "desarrolladores"})
 	public @ResponseBody ProyectoMensaje actualizarProyecto(
             @RequestParam(value = "nombre") String nombre,
             @RequestParam(value = "fuenteConocimiento") String fuenteConocimiento,
@@ -273,11 +274,12 @@ public class ProyectoRest {
             @RequestParam(value = "alcance") String alcance,
             @RequestParam(value = "preguntasCompetencia") String preguntasCompetencia,
             @RequestParam(value = "fecha") String fecha,
-            @RequestParam(value = "idNivelFormalidad") int idNivelFormalidad,
-            @RequestParam(value = "idUsuario") String idUsuario,
-            @PathVariable("id") int idProyecto
-            ){
-
+            @RequestParam(value = "idNivelFormalidad") String idNivelFormalidad,
+            @RequestParam(value = "desarrolladores") String desarrolladores,
+            @PathVariable("idUsuario") String idUsuario,
+            @PathVariable("idProyecto") String idProyecto
+            ){  
+		
 		logger.info("El nombre es "+nombre);
 		logger.info("El fuenteConocimiento es "+fuenteConocimiento);
 		logger.info("El dominio es "+dominio);
@@ -286,44 +288,31 @@ public class ProyectoRest {
 		logger.info("El preguntasCompetencia es "+preguntasCompetencia);
 		logger.info("El fecha es "+fecha);
 		logger.info("El idNivelFormalidad es "+idNivelFormalidad);
+		logger.info("desarrolladores es "+desarrolladores);
 		logger.info("El idUsuario es "+idUsuario);
 		logger.info("El idProyecto es "+idProyecto);
-		
+
 		ProyectoMensaje proyectoMensaje = new ProyectoMensaje ();
 		ProyectoDAO proyectoDAO = (ProyectoDAO) context.getBean("proyectoDAO");
 		Proyecto proyecto = new Proyecto();
-		proyecto.setIdProyecto(idProyecto);
+		proyecto.setIdProyecto(Integer.parseInt(idProyecto));
 		proyecto.setNombre(nombre);
-//		proyecto.setFuenteConocimiento(fuenteConocimiento);
+		proyecto.fuenteConocimientoStringToArray(fuenteConocimiento);
 		proyecto.setDominio(dominio);
 		proyecto.setAlcance(alcance);
 		proyecto.setProposito(proposito);
 		proyecto.preguntasCompetenciaStringToArray(preguntasCompetencia);
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-			Date fechaDate = sdf.parse(fecha);
-			proyecto.setFecha(fechaDate);
-		} catch (Exception e) {
-			// TODO: handle exception
-			logger.info("Error al parsear la fecha");
-			proyecto.setFecha(null);
-		}
-		proyecto.getNivelFormalidad().setIdNivelFormalidad(idNivelFormalidad);
+		proyecto.desarrolladoresStringToArray(desarrolladores);
+		proyecto.setFecha(fecha);
+		proyecto.setNivelFormalidad(new NivelFormalidad(1,null,null,null));
+		logger.info("el id es "+proyecto.getNivelFormalidad().getIdNivelFormalidad());
+
 		
-		idUsuario = idUsuario.replace("[", "");
-		idUsuario = idUsuario.replace("]", "");
-		logger.info("idUsuario es "+idUsuario);
-		String aux [] = idUsuario.split(",");
-		logger.info("longitud es "+aux.length);
-		int arrayUsuario [] = new int [aux.length];
-		for(int i = 0; i<aux.length;i++){
-			arrayUsuario[i] = Integer.parseInt(aux[i]);
-		}
 		int salida;
 		
-		//Debo borrar los corcheste y separar por ',' idUsuario para obtener los ID
+
 		try {
-			salida = proyectoDAO.actualizarProyecto(proyecto, arrayUsuario);
+			salida = proyectoDAO.actualizarProyecto(proyecto);
 			proyectoMensaje.setProyecto(proyecto);
 			if(salida == -1){
 				proyectoMensaje.setSucces(false);

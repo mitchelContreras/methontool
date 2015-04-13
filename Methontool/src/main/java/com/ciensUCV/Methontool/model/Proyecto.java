@@ -145,8 +145,11 @@ public class Proyecto {
 	public String preguntasCompetenciaArrayToString(){
 		String salida = "";
 		if (preguntasCompetencia != null){
-			for (String aux : preguntasCompetencia){
-				salida = salida+aux+this.separador;
+			for(int i = 0; i <preguntasCompetencia.size();i++ ){
+				salida = salida + preguntasCompetencia.get(i);
+				if(i != preguntasCompetencia.size()-1){
+					salida = salida+this.separador;
+				}
 			}
 		}
 		return salida;
@@ -164,8 +167,11 @@ public class Proyecto {
 	public String desarrolladoresArrayToString(){
 		String salida = "";
 		if(desarrolladores != null){
-			for (String aux : desarrolladores){
-				salida = salida+aux+this.separador;
+			for(int i = 0; i <desarrolladores.size();i++ ){
+				salida = salida + desarrolladores.get(i);
+				if(i != desarrolladores.size()-1){
+					salida = salida+this.separador;
+				}
 			}
 		}
 		return salida;
@@ -184,8 +190,11 @@ public class Proyecto {
 	public String fuenteConocimientoArrayToString(){
 		String salida = "";
 		if(fuenteConocimiento != null){
-			for (String aux : fuenteConocimiento){
-				salida = salida+aux+this.separador;
+			for(int i = 0; i <fuenteConocimiento.size();i++ ){
+				salida = salida + fuenteConocimiento.get(i);
+				if(i != fuenteConocimiento.size()-1){
+					salida = salida+this.separador;
+				}
 			}
 		}
 		return salida;
