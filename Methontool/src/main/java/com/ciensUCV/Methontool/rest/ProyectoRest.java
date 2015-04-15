@@ -1,7 +1,6 @@
 package com.ciensUCV.Methontool.rest;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -304,7 +303,7 @@ public class ProyectoRest {
 		proyecto.preguntasCompetenciaStringToArray(preguntasCompetencia);
 		proyecto.desarrolladoresStringToArray(desarrolladores);
 		proyecto.setFecha(fecha);
-		proyecto.setNivelFormalidad(new NivelFormalidad(1,null,null,null));
+		proyecto.setNivelFormalidad(new NivelFormalidad(Integer.parseInt(idNivelFormalidad),null,null,null));
 		logger.info("el id es "+proyecto.getNivelFormalidad().getIdNivelFormalidad());
 
 		

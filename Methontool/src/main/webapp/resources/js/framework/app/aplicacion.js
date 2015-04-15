@@ -6,7 +6,8 @@
 
     var App = angular.module('methontool',[
         //dependencias a usar
-        'modProyecto'
+        'modProyecto',
+        'modNivelFormalidad'
         ]);
     
     App.factory('InformacionPrincipalApp', InformacionPrincipalApp);
@@ -26,7 +27,8 @@
     ControllerEditar.$inject = ['$scope',
                                 '$rootScope',
                                 'InformacionPrincipalApp',
-                                '$actualizarProtecto'];
+                                '$actualizarProtecto',
+                                '$listarNivelFormalidad'];
     
 
     function InformacionPrincipalApp ($rootScope){
@@ -297,7 +299,8 @@
     		$scope,
         	$rootScope,
         	InformacionPrincipalApp,
-        	$actualizarProtecto
+        	$actualizarProtecto,
+        	$listarNivelFormalidad
     ){
     	var cnEditar = this;
     	
@@ -321,6 +324,7 @@
     	cnEditar.varDesarrolladores = [];
     	cnEditar.varPreguntaCompetencia = [];
     	cnEditar.varNivelFormalidad = {};
+    	cnEditar.listaNivelFormalidad = {};
     	
     	
     	cnEditar.modificarAtributo = modificarAtributo;
@@ -338,6 +342,8 @@
     	cnEditar.agregarPreguntaCompetencia = agregarPreguntaCompetencia;
     	cnEditar.agreguePreguntaCompetencia = agreguePreguntaCompetencia;
     	cnEditar.setearValoresMostrarEditar = setearValoresMostrarEditar;
+    	cnEditar.buscarNivelFormalidad = buscarNivelFormalidad;
+    	
     	
     	function agreguePreguntaCompetencia(nuevoPreguntaCompetencia){
     		console.log("agreguePreguntaCompetencia "+nuevoPreguntaCompetencia);
@@ -461,7 +467,7 @@
 	            'alcance' : cnEditar.varAlcance,
 	            'preguntasCompetencia' : preguntasCompetencia,
 	            'fecha' : cnEditar.fecha,
-	            'idNivelFormalidad' : cnEditar.varNivelFormalidad,
+	            'idNivelFormalidad' : cnEditar.varNivelFormalidad.idNivelFormalidad,
 	            'desarrolladores' : desarrolladores,
 	             },{}).$promise.then(
 	        function(todo) {
@@ -514,11 +520,31 @@
 
     	var idUsuario = InformacionPrincipalApp.getUsuario().idUsuario;
     	
+    	function buscarNivelFormalidad(){
+    		console.log("Busco nivel de formalidad ");
+    		$listarNivelFormalidad.get(
+	             {},{}).$promise.then(
+	        function(todo) {
+	           // success
+	            console.log("sucess es "+todo.succes);
+	            cnEditar.listaNivelFormalidad = todo.elementos;
+	            console.log("elementos es "+cnEditar.listaNivelFormalidad.length);
+	        }, 
+	        function(errResponse) {
+	           // fail
+	           console.log("EPIC FAIL");
+	           console.log("errResponse "+errResponse);
+	        }
+	        );
+    		
+    		console.log("el succes es "+cnEditar.listaNivelFormalidad.succes);
+    	}
     	
         $rootScope.$on('menuEditar', function(event, data){
         	InformacionPrincipalApp.voyAvista("Editar");
         	console.log("antes de safeApply en menuEditar");
         	cnEditar.setearValoresMostrarEditar();
+        	cnEditar.buscarNivelFormalidad();
         });
     	
     }

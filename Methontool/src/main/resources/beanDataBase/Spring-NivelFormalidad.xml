@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
  
-	<import resource="database/Spring-Datasource.xml" />
-	<import resource="beanDataBase/Spring-RolUsuario.xml" />
-	<import resource="beanDataBase/Spring-Usuario.xml" />
-	<import resource="beanDataBase/Spring-Proyecto.xml" />
-	<import resource="beanDataBase/Spring-NivelFormalidad.xml" />
+	<bean id="nivelFormalidadDAO" class="com.ciensUCV.Methontool.dao.impl.JdbcNivelFormalidadDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
 </beans>

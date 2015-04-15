@@ -30,7 +30,6 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 		// TODO Auto-generated method stub
 		String sql = "Select p.id_proyecto"+
 				",p.nombre"+
-				",p.nombre"+
 				",p.fuente_conocimiento"+
 				",p.dominio"+
 				",p.proposito"+
@@ -70,7 +69,7 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 				proyecto.preguntasCompetenciaStringToArray(rs.getString("preguntas_competencia"));
 				nivelFormalidad.setIdNivelFormalidad(rs.getInt("id_nivel_formalidad"));
 				nivelFormalidad.setCodigo(rs.getString("codigo"));
-				nivelFormalidad.setNombre(rs.getString(11));
+				nivelFormalidad.setNombre(rs.getString(12));
 				nivelFormalidad.setDescripcion(rs.getString("descripcion"));
 				proyecto.setNivelFormalidad(nivelFormalidad);
 				arrayProyecto.add(proyecto);
@@ -127,12 +126,8 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 				proyecto.setProposito(rs.getString("proposito"));
 				proyecto.setAlcance(rs.getString("alcance"));
 				proyecto.setFecha(rs.getString("fecha"));
-				proyecto.preguntasCompetenciaStringToArray(rs.getString("preguntas_competencia"));
-				
+				proyecto.preguntasCompetenciaStringToArray(rs.getString("preguntas_competencia"));				
 				nivelFormalidad.setIdNivelFormalidad(rs.getInt("id_nivel_formalidad"));
-				nivelFormalidad.setCodigo(rs.getString("codigo"));
-				nivelFormalidad.setNombre(rs.getString(15));
-				nivelFormalidad.setDescripcion(rs.getString("descripcion"));
 				proyecto.setNivelFormalidad(nivelFormalidad);
 
 			}

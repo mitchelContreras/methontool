@@ -45,7 +45,9 @@
 		
 		<!-- Proyecto -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/componentes/proyecto.js"></script>
-	
+
+		<!-- Nivel de formalidad -->	
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/componentes/nivelFormalidad.js"></script>
 	</head>
 	<body >
 		<div class="container" ng-controller="ControllerPrincipal as cnPrincipal">

@@ -109,13 +109,10 @@
 								<label>Nivel de Formalidad:</label>
 							</div>
 							<div class="col-xs-5">
-								    <select class="form-control" ng-disabled="cnEditar.disabled" ng-model="cnEditar.varNivelFormalidad">
-								        <option>[SELECCIONE]</option>
-								        <option value="1">Opcion 1</option>
-								        <option>Opcion 2</option>
-								        <option>Opcion 3</option>
-								        <option>Opcion 3</option>				        
-								    </select>
+									<select class="form-control" ng-disabled="cnEditar.disabled" ng-model="cnEditar.varNivelFormalidad"
+									ng-options="nivelFormalidad.nombre for nivelFormalidad in cnEditar.listaNivelFormalidad track by nivelFormalidad.idNivelFormalidad">
+								        <option value="">[SELECCIONE]</option>		        
+								    </select>			
 							</div>
 						</div>							
 						<div class="form-group">
@@ -231,6 +228,7 @@
 					<button class="btn btn-primary" type="button" ng-click="cnEditar.agregueDesarrollador(cnEditar.nuevoDesarrollador)">Crear</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 				</div>
+				
 			</div>
 		</div>
 	</div>		
