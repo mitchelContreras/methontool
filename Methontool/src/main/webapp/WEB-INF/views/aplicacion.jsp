@@ -41,13 +41,26 @@
 		<!-- JS -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/aplicacion.js"></script>
 	
-		<!-- Modulos de AngularJS -->
-		
+		<!-- Controller -->
+		<!-- Cabecera -->	
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/cabecera.js"></script>
+		<!-- Principal -->
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/principal.js"></script>
 		<!-- Proyecto -->
-		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/componentes/proyecto.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/proyecto.js"></script>
+		<!-- Editar -->	
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/editar.js"></script>
+	
+		<!-- factory -->
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/informacionPrincipalApp.js"></script>
+		
+		
+		<!-- Modulos de AngularJS -->
+		<!-- Proyecto -->
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/proyecto.js"></script>
 
 		<!-- Nivel de formalidad -->	
-		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/componentes/nivelFormalidad.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/nivelFormalidad.js"></script>
 	</head>
 	<body >
 		<div class="container" ng-controller="ControllerPrincipal as cnPrincipal">
