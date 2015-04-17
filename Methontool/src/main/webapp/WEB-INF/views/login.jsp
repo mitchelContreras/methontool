@@ -6,10 +6,10 @@
 	<title>Methontool</title>
 	
 	 <!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 
 	<!-- Optional theme -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.min.css">
 
 	<!--Libreria de jquery-->
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-2.1.3.min.js"></script>
@@ -48,7 +48,7 @@
 		<div align="center" class="alert alert-success" ng-if="envieCorreoRecuperar">
 		    <strong>Success!</strong> Informaci&#243n enviada a su correo
 		</div>
-
+	
 
 		<form class="form-signin" id="usuarioForm" name="usuarioForm">
 			<div align="center">
@@ -66,7 +66,8 @@
 			</div>
 			<button class="btn btn-lg btn-primary btn-block" ng-click="validarDatos()">Entrar</button>
 		</form>
-
+	</div>	
+ 
      <div class="modal fade" id="olvidoContrasenaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -76,14 +77,14 @@
             </div>
             <div class="modal-body">
               	<div align="center" class="alert alert-danger" ng-if="validarCorreoOlvidado">
-			   		<!--<a href="#" class="close" data-dismiss="alert">&times;</a>-->
+			   		<!-- <a href="#" class="close" data-dismiss="alert">&times;</a>  -->
 			   		 <strong>Error!</strong> El correo tiene un formato incorrecto
 				</div>
               <form name="olvideCorreoForm" id="olvideCorreoForm">
                 <p>Podemos ayudarte a restablecer tu  contrase&#241a y la informaci&#243n de seguridad. Primero necesitamos que indique su correo. </p>
 
                 <div class="form-group" ng-class="{'has-error':bookmarkForm.url.$invalid && bookmarkForm.url.$touched}">
-                 <!-- <label for="url">Correo</label> -->
+                <!-- <label for="url">Correo</label>  -->
                   <div class="input-group">
                     <div class="input-group-addon">
                     </div>

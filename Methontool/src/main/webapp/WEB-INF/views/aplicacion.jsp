@@ -50,6 +50,10 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/proyecto.js"></script>
 		<!-- Editar -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/editar.js"></script>
+		<!-- Glosario -->
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/glosario.js"></script>
+			
+	
 	
 		<!-- factory -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/informacionPrincipalApp.js"></script>
@@ -78,7 +82,8 @@
 			</div>
 			<jsp:include page="componentesAplicacion/proyecto.jsp" />
 			<jsp:include page="componentesAplicacion/editar.jsp" />	
-		
+			<jsp:include page="componentesAplicacion/glosario.jsp" />	
+<!-- 
 		idProyecto:{{proyecto.idProyecto}}<br>
 		nombre:{{proyecto.nombre}}<br>
 		fuenteConocimiento:{{proyecto.fuenteConocimiento}}<br>
@@ -89,6 +94,7 @@
 		nivelFormalidad:{{proyecto.nivelFormalidad}}<br>
 		fecha:{{proyecto.fecha}}	<br>
 		desarrolladores:{{proyecto.desarrolladores}}
+ -->		
 		</div>			
 	</body>
 </html>

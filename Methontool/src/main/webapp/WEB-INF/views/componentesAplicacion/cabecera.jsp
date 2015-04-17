@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <div class="nopadding" ng-controller="ControllerCabecera as cnCabecera">
-	<div class="row cabecera titulo">
+	<div class="row cabecera titulo" ng-controller="ControllerCabecera">
 		<div class="col-md-12">
 			<div class="col-md-10 cabeceraTitulo" >
 				<a href="#" ng-click="cnCabecera.clickEspecificacion()" 
