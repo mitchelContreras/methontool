@@ -22,7 +22,7 @@ function ControllerGlosario(
 	var cnGlosario = this;
 	
 	
-	cnGlosario.soyActual = true; //debo cambiarlo a false al terminar el desarrollo   -1
+	cnGlosario.soyActual = false; //debo cambiarlo a false al terminar el desarrollo   
 	cnGlosario.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnGlosario.modificar = false; //si se permite modificar los valores 
 
