@@ -44,7 +44,7 @@ function ControllerAtributoClase($rootScope,
 	     	                          ];
 	cnAtributoClase.selectedConcepto = {"id": 3, "nombre":"Casa"};
 	
-	cnAtributoClase.soyActual = true; //debo cambiarlo a false al terminar el desarrollo  -1
+	cnAtributoClase.soyActual = false; //debo cambiarlo a false al terminar el desarrollo
 	cnAtributoClase.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnAtributoClase.modificar = false; //si se permite modificar los valores 
 	
