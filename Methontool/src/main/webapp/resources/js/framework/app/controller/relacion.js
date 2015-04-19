@@ -3,7 +3,9 @@
  * de la aplicación
  * 
  * @author Mitchell Contreras
- * @param
+ * @param $rootScope
+ * @param InformacionPrincipalApp
+ * @param $http este se incluye porque la directiva de autocompletar la requiere
  */
 (function(){
     "use strict"
@@ -52,7 +54,7 @@ function ControllerRelacion(
 	
 	
 	
-	cnRelacion.soyActual = false; //debo cambiarlo a false al terminar el desarrollo   
+	cnRelacion.soyActual = false; //debo cambiarlo a false al terminar el desarrollo 
 	cnRelacion.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnRelacion.modificar = false; //si se permite modificar los valores 
 
@@ -87,16 +89,16 @@ function ControllerRelacion(
 		cnRelacion.modificar = true;
 	}
 	function verRelacionInversa(){
-		$('#verRelacionInversaModal').modal('show');
+		$('#verRelacionInversaRelacionModal').modal('show');
 	}
 	function  verDescripcionGlosario(){
-		$('#verDescripcionGlosarioModal').modal('show');
+		$('#verDescripcionGlosarioRelacionModal').modal('show');
 	}
 	function verConceptoDestino(){
-		$('#verConceptoDestinoModal').modal('show');
+		$('#verConceptoDestinoRelacionModal').modal('show');
 	}
 	function verConceptoOrigen(id){
-		$('#verConceptoOrigenModal').modal('show');
+		$('#verConceptoOrigenRelacionModal').modal('show');
 	}
 
 	

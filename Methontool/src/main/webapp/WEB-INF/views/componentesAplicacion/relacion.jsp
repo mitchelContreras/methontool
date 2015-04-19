@@ -8,32 +8,6 @@
 			<div class="col-md-8 cuerpoDos">
 				<div class="inicioTexto">
 					<form class=" form-horizontal">
-					
-						<div class="form-group">
-							<div class="col-xs-4 control-label" >
-								<label >Prueba autocompletar:</label>
-							</div>
-							<div class="col-xs-5 ">
-								<div angucomplete-alt
-								 id="prueba1" placeholder="Concepto"
-								  maxlength="50"
-								  pause="100"
-								  selected-object="cnRelacion.selectedConceptoOrigen" 
-								  local-data="cnRelacion.concepto" 
-								  search-fields="nombre" 
-								  title-field="nombre" 
-								  minlength="1" 
-								  input-class="form-control" 
-								  match-class="highlight" 
-								  initial-value="{{cnRelacion.selectedConceptoOrigen.nombre}}"
-								  disable-input="cnRelacion.disabled">
-        						</div>
-							</div>
-							<div class="col-xs-1">
-								<a class="btn"ng-click="cnRelacion.verDescripcionGlosario()" ><i class="glyphicon glyphicon-zoom-in"></i></a>							
-							</div>
-						</div>						
-					
 						<div class="form-group">
 							<div class="col-xs-4 control-label" >
 								<label >Nombre:</label>
@@ -63,7 +37,8 @@
 								  match-class="highlight" 
 								  initial-value="{{cnRelacion.selectedConceptoOrigen.nombre}}"
 								  disable-input="cnRelacion.disabled">
-        						</div>							</div>
+        						</div>
+        					</div>
 							<div class="col-xs-1">
 								<a class="btn"ng-click="cnRelacion.verConceptoOrigen()" ><i class="glyphicon glyphicon-zoom-in"></i></a>														
 							</div>
@@ -141,7 +116,7 @@
 	
 	
 	<!-- Modal Glosario -->
-	<div class="modal fade" id="verDescripcionGlosarioModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="verDescripcionGlosarioRelacionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -167,7 +142,7 @@
 	</div>
 	
 	<!-- Modal Relacion inversa -->
-	<div class="modal fade" id="verRelacionInversaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="verRelacionInversaRelacionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -193,7 +168,7 @@
 	</div>	
 	
 	<!-- Modal Concepto Origen -->
-	<div class="modal fade" id="verConceptoOrigenModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="verConceptoOrigenRelacionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -219,7 +194,7 @@
 	</div>
 	
 	<!-- Modal Concepto Destino -->
-	<div class="modal fade" id="verConceptoDestinoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="verConceptoDestinoRelacionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">

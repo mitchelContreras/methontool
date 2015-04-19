@@ -64,7 +64,9 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/glosario.js"></script>
 		<!-- Relacion -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/relacion.js"></script>
-	
+		<!-- Atributo de instancia -->	
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/atributoInstancia.js"></script>
+		
 	
 		<!-- factory -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/informacionPrincipalApp.js"></script>
@@ -94,7 +96,8 @@
 			<jsp:include page="componentesAplicacion/proyecto.jsp" />
 			<jsp:include page="componentesAplicacion/editar.jsp" />	
 			<jsp:include page="componentesAplicacion/glosario.jsp" />	
-			<jsp:include page="componentesAplicacion/relacion.jsp" />	
+			<jsp:include page="componentesAplicacion/relacion.jsp" />
+			<jsp:include page="componentesAplicacion/atributoInstancia.jsp" />		
 <!-- 
 		idProyecto:{{proyecto.idProyecto}}<br>
 		nombre:{{proyecto.nombre}}<br>
