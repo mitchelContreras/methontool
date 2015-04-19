@@ -3,7 +3,9 @@
  * de la aplicación
  * 
  * @author Mitchell Contreras
- * @param 
+ * @param $rootScope
+ * @param InformacionPrincipalApp
+ * @param $http la funcion de autocompletar da uso a esta variable
  */
 
 (function(){
@@ -42,7 +44,7 @@ function ControllerAtributoInstancia($rootScope,
 	                          ];
 	cnAtributoInstancia.selectedConcepto = {"id": 3, "nombre":"Casa"};
 	
-	cnAtributoInstancia.soyActual = true; //debo cambiarlo a false al terminar el desarrollo  -1
+	cnAtributoInstancia.soyActual = false; //debo cambiarlo a false al terminar el desarrollo 
 	cnAtributoInstancia.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnAtributoInstancia.modificar = false; //si se permite modificar los valores 
 	
