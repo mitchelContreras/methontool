@@ -24,7 +24,7 @@ function ControllerConstante($rootScope,
 	console.log("Entro en ControllerConstante");
 	var cnConstante = this;
 	
-	cnConstante.soyActual = true; //debo cambiarlo a false al terminar el desarrollo  -1
+	cnConstante.soyActual = false; //debo cambiarlo a false al terminar el desarrollo 
 	cnConstante.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnConstante.modificar = false; //si se permite modificar los valores 
 	

@@ -1,6 +1,5 @@
 <div ng-controller="ControllerRelacion  as cnRelacion">
  <div ng-show="cnRelacion.soyActual"> 
-<!--	<div ng-show="false"> -->	
 		<div class="row CampoTrabajo">
 			<div class="col-md-4 cuerpoUno">	
 				<p> UNO Relacion </p>
