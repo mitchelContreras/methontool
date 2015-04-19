@@ -13,7 +13,9 @@
     angular.module('methontool',[
         //dependencias a usar
         'modProyecto',
-        'modNivelFormalidad'
+        'modNivelFormalidad',
+        'ngTouch',
+        'angucomplete-alt'
         ])
     
 })();

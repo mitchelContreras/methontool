@@ -8,6 +8,32 @@
 			<div class="col-md-8 cuerpoDos">
 				<div class="inicioTexto">
 					<form class=" form-horizontal">
+					
+						<div class="form-group">
+							<div class="col-xs-4 control-label" >
+								<label >Prueba autocompletar:</label>
+							</div>
+							<div class="col-xs-5 ">
+								<div angucomplete-alt
+								 id="prueba1" placeholder="Concepto"
+								  maxlength="50"
+								  pause="100"
+								  selected-object="cnRelacion.selectedConceptoOrigen" 
+								  local-data="cnRelacion.concepto" 
+								  search-fields="nombre" 
+								  title-field="nombre" 
+								  minlength="1" 
+								  input-class="form-control" 
+								  match-class="highlight" 
+								  initial-value="{{cnRelacion.selectedConceptoOrigen.nombre}}"
+								  disable-input="cnRelacion.disabled">
+        						</div>
+							</div>
+							<div class="col-xs-1">
+								<a class="btn"ng-click="cnRelacion.verDescripcionGlosario()" ><i class="glyphicon glyphicon-zoom-in"></i></a>							
+							</div>
+						</div>						
+					
 						<div class="form-group">
 							<div class="col-xs-4 control-label" >
 								<label >Nombre:</label>
@@ -24,8 +50,20 @@
 								<label >Concepto origen:</label>
 							</div>
 							<div class="col-xs-5 ">
-								<input type="text" class="form-control" placeholder="Concepto origen" ng-disabled="cnRelacion.disabled" ng-model="cnRelacion.conceptoOrigen.nombre">
-							</div>
+								<div angucomplete-alt
+								 id="prueba1" placeholder="Concepto"
+								  maxlength="50"
+								  pause="100"
+								  selected-object="cnRelacion.selectedConceptoOrigen" 
+								  local-data="cnRelacion.concepto" 
+								  search-fields="nombre" 
+								  title-field="nombre" 
+								  minlength="1" 
+								  input-class="form-control" 
+								  match-class="highlight" 
+								  initial-value="{{cnRelacion.selectedConceptoOrigen.nombre}}"
+								  disable-input="cnRelacion.disabled">
+        						</div>							</div>
 							<div class="col-xs-1">
 								<a class="btn"ng-click="cnRelacion.verConceptoOrigen()" ><i class="glyphicon glyphicon-zoom-in"></i></a>														
 							</div>
@@ -43,8 +81,20 @@
 								<label >Concepto destino:</label>
 							</div>
 							<div class="col-xs-5 ">
-								<input type="text" class="form-control" placeholder="Concepto destino" ng-disabled="cnRelacion.disabled" ng-model="cnRelacion.verConceptoDestino.nombre">
-							</div>
+								<div angucomplete-alt
+								 id="prueba1" placeholder="Concepto"
+								  maxlength="50"
+								  pause="100"
+								  selected-object="cnRelacion.selectedConceptoDestino" 
+								  local-data="cnRelacion.concepto" 
+								  search-fields="nombre" 
+								  title-field="nombre" 
+								  minlength="1" 
+								  input-class="form-control" 
+								  match-class="highlight" 
+								  initial-value="{{cnRelacion.selectedConceptoDestino.nombre}}"
+								  disable-input="cnRelacion.disabled">
+        						</div>							</div>
 							<div class="col-xs-1">
 								<a class="btn"ng-click="cnRelacion.verConceptoDestino()" ><i class="glyphicon glyphicon-zoom-in"></i></a>														
 							</div>
@@ -54,8 +104,20 @@
 								<label >Relación inversa:</label>
 							</div>
 							<div class="col-xs-5 ">
-								<input type="text" class="form-control" placeholder="Relación inversa" ng-disabled="cnRelacion.disabled" ng-model="cnRelacion.relacionInversa.nombre">
-							</div>
+								<div angucomplete-alt
+								 id="prueba1" placeholder="Concepto"
+								  maxlength="50"
+								  pause="100"
+								  selected-object="cnRelacion.selectedRelacionInversa" 
+								  local-data="cnRelacion.relaciones" 
+								  search-fields="nombre" 
+								  title-field="nombre" 
+								  minlength="1" 
+								  input-class="form-control" 
+								  match-class="highlight" 
+								  initial-value="{{cnRelacion.selectedRelacionInversa.nombre}}"
+								  disable-input="cnRelacion.disabled">
+        						</div>								</div>
 							<div class="col-xs-1">
 								<a class="btn"ng-click="cnRelacion.verRelacionInversa()" ><i class="glyphicon glyphicon-zoom-in"></i></a>																												
 							</div>

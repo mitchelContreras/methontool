@@ -14,6 +14,10 @@
 	
 		<!-- Optional theme -->
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.min.css">
+
+		<!-- Librerias para autocomplete alt -->
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/angucomplete-alt.css"/>
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/fonts/bariol/bariol.css"/>		
 	
 		<!--Libreria de jquery-->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-2.1.3.min.js"></script>
@@ -37,6 +41,12 @@
 		
 		<!-- AngularJS resource -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/angular-resource.min.js"></script>
+
+		<!--  AngularJS touch -->
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/angular-touch.min.js"></script>
+			
+		<!-- Angucomple-alt -->	
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/angucomplete-alt.min.js"></script>
 		
 		<!-- JS -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/aplicacion.js"></script>

@@ -11,17 +11,48 @@
 angular.module('methontool')
 	.controller('ControllerRelacion', ControllerRelacion);
 
-ControllerRelacion.$inject = ['$rootScope', 'InformacionPrincipalApp'];	
+ControllerRelacion.$inject = ['$rootScope', 
+                              'InformacionPrincipalApp',
+                              '$http'];	
 
 function ControllerRelacion(
     	$rootScope,
-    	InformacionPrincipalAp
+    	InformacionPrincipalAp,
+    	$http
     ){
 	console.log("Entro en ControllerRelacion");
 	var cnRelacion = this;
+
+	
+	cnRelacion.concepto = [
+                   	{"id": 1, "nombre":"Arbol"},
+                   	{"id": 2, "nombre":"Agua"},
+                   	{"id": 3, "nombre":"Casa"},
+                   	{"id": 4, "nombre":"Cocina"},
+                   	{"id": 5, "nombre":"Ventana"},
+                   	{"id": 6, "nombre":"Mesa"},
+                   	{"id": 7, "nombre":"Nevera"},
+                   	{"id": 8, "nombre":"Antena"},
+                   	{"id": 9, "nombre":"Computadora"},
+                   	{"id": 10, "nombre":"Cama"},
+                   	{"id": 11, "nombre":"Microhonda"},
+                   	{"id": 12, "nombre":"Familia"},
+                   	{"id": 13, "nombre":"Ventilador"}
+                       ];
+	cnRelacion.relaciones = [
+	                      	{"id": 1, "nombre":"Parte de"},
+	                      	{"id": 2, "nombre":"Pertenece a"},
+	                      	{"id": 3, "nombre":"Incluido en"}
+	                          ];
+	
+	cnRelacion.selectedConceptoOrigen = {"id": 3, "nombre":"Casa"};
+	cnRelacion.selectedConceptoDestino = {"id": 2, "nombre":"Agua"};
+	cnRelacion.selectedRelacionInversa = {"id": 1, "nombre":"Parte de"};
+                   
 	
 	
-	cnRelacion.soyActual = true; //debo cambiarlo a false al terminar el desarrollo   -1
+	
+	cnRelacion.soyActual = false; //debo cambiarlo a false al terminar el desarrollo   
 	cnRelacion.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnRelacion.modificar = false; //si se permite modificar los valores 
 
