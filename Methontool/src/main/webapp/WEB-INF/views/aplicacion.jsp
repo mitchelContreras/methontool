@@ -72,7 +72,9 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/constante.js"></script>
 		<!-- Axioma -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/axioma.js"></script>
-		
+		<!-- Reglas -->
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/regla.js"></script>
+				
 		<!-- factory -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/informacionPrincipalApp.js"></script>
 		
@@ -105,7 +107,8 @@
 			<jsp:include page="componentesAplicacion/atributoInstancia.jsp" />		
 			<jsp:include page="componentesAplicacion/atributoClase.jsp" />		
 			<jsp:include page="componentesAplicacion/constante.jsp" />				
-			<jsp:include page="componentesAplicacion/axioma.jsp" />				
+			<jsp:include page="componentesAplicacion/axioma.jsp" />			
+			<jsp:include page="componentesAplicacion/regla.jsp" />						
 					
 <!-- 
 		idProyecto:{{proyecto.idProyecto}}<br>
