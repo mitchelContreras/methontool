@@ -22,9 +22,10 @@ function ControllerGlosario(
 	var cnGlosario = this;
 	
 	
-	cnGlosario.soyActual = false; //debo cambiarlo a false al terminar el desarrollo   
+	cnGlosario.soyActual = false; //debo cambiarlo a false al terminar el desarrollo 
 	cnGlosario.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnGlosario.modificar = false; //si se permite modificar los valores 
+	cnGlosario.enBlanco = true;	    //mostrar seccion en blanco
 
 
 //-------------------Variables de edicion---------------------

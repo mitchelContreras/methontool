@@ -27,6 +27,7 @@ function ControllerConstante($rootScope,
 	cnConstante.soyActual = false; //debo cambiarlo a false al terminar el desarrollo 
 	cnConstante.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnConstante.modificar = false; //si se permite modificar los valores 
+	cnConstante.enBlanco = true;	    //mostrar seccion en blanco
 	
 	//-------------------Variables de edicion---------------------
 	cnConstante.unidad = "";

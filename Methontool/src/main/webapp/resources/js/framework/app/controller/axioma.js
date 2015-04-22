@@ -49,9 +49,10 @@ function ControllerAxioma($rootScope,
 	   	                      	{"id": 3, "nombre":"Incluido en"}
 	   	                          ];
 	   	
-	cnAxioma.soyActual = false; //debo cambiarlo a false al terminar el desarrollo 
+	cnAxioma.soyActual = false; //debo cambiarlo a false al terminar el desarrollo
 	cnAxioma.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnAxioma.modificar = false; //si se permite modificar los valores 
+	cnAxioma.enBlanco = true;	    //mostrar seccion en blanco
 	
 	//-------------------Variables de edicion---------------------
 	cnAxioma.variables = "";

@@ -54,9 +54,10 @@ function ControllerRelacion(
 	
 	
 	
-	cnRelacion.soyActual = false; //debo cambiarlo a false al terminar el desarrollo 
+	cnRelacion.soyActual = true; //debo cambiarlo a false al terminar el desarrollo -1
 	cnRelacion.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnRelacion.modificar = false; //si se permite modificar los valores 
+	cnRelacion.enBlanco = true;	    //mostrar seccion en blanco
 
 
 //-------------------Variables de edicion---------------------

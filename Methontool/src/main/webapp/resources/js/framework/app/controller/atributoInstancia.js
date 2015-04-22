@@ -44,9 +44,10 @@ function ControllerAtributoInstancia($rootScope,
 	                          ];
 	cnAtributoInstancia.selectedConcepto = {"id": 3, "nombre":"Casa"};
 	
-	cnAtributoInstancia.soyActual = false; //debo cambiarlo a false al terminar el desarrollo 
+	cnAtributoInstancia.soyActual = false; //debo cambiarlo a false al terminar el desarrollo
 	cnAtributoInstancia.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnAtributoInstancia.modificar = false; //si se permite modificar los valores 
+	cnAtributoInstancia.enBlanco = true;	    //mostrar seccion en blanco
 	
 	//-------------------Variables de edicion---------------------
 	cnAtributoInstancia.concepto = {};

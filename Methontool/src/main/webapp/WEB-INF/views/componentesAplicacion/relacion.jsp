@@ -3,8 +3,12 @@
 		<div class="row CampoTrabajo">
 			<div class="col-md-4 cuerpoUno">	
 				<p> UNO Relacion </p>
+				<button  class="btn btn-primary" ng-click="cnRelacion.enBlanco = !cnRelacion.enBlanco" >cambiar en blanco</button>
 			</div>
-			<div class="col-md-8 cuerpoDos">
+			<div class="col-md-8 cuerpoDos" ng-show="cnRelacion.enBlanco">	
+				<p> DOS Relacion </p>
+			</div>
+			<div class="col-md-8 cuerpoDos" ng-show="!cnRelacion.enBlanco">
 				<div class="inicioTexto">
 					<form class=" form-horizontal">
 						<div class="form-group">

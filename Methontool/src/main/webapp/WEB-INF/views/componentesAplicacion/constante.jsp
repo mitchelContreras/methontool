@@ -3,8 +3,12 @@
 		<div class="row CampoTrabajo">
 			<div class="col-md-4 cuerpoUno">	
 				<p> UNO Constante </p>
+				<button  class="btn btn-primary" ng-click="cnConstante.enBlanco = !cnConstante.enBlanco" >cambiar en blanco</button>
 			</div>
-			<div class="col-md-8 cuerpoDos">
+			<div class="col-md-8 cuerpoDos" ng-show="cnConstante.enBlanco">
+				<p> DOS Constante </p>
+			</div>
+			<div class="col-md-8 cuerpoDos" ng-show="!cnConstante.enBlanco">
 				<div class="inicioTexto">
 					<form class=" form-horizontal">
 						<div class="form-group">

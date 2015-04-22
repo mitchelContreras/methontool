@@ -1,11 +1,14 @@
 <div ng-controller="ControllerGlosario  as cnGlosario">
  <div ng-show="cnGlosario.soyActual"> 
-<!--	<div ng-show="false"> -->	
 		<div class="row CampoTrabajo">
 			<div class="col-md-4 cuerpoUno">	
 				<p> UNO Glosario </p>
+				<button  class="btn btn-primary" ng-click="cnGlosario.enBlanco = !cnGlosario.enBlanco" >cambiar en blanco</button>
 			</div>
-			<div class="col-md-8 cuerpoDos">
+			<div class="col-md-8 cuerpoDos" ng-show="cnGlosario.enBlanco">
+				<p> DOS Glosario </p>
+			</div>
+			<div class="col-md-8 cuerpoDos" ng-show="!cnGlosario.enBlanco">
 				<div class="inicioTexto">
 					<form class=" form-horizontal">
 						<div class="form-group">

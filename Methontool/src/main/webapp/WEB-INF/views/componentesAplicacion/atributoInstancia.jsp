@@ -3,8 +3,12 @@
 		<div class="row CampoTrabajo">
 			<div class="col-md-4 cuerpoUno">	
 				<p> UNO Atributo de Instancia </p>
+				<button  class="btn btn-primary" ng-click="cnAtributoInstancia.enBlanco = !cnAtributoInstancia.enBlanco" >cambiar en blanco</button>
 			</div>
-			<div class="col-md-8 cuerpoDos">
+			<div class="col-md-8 cuerpoDos" ng-show="cnAtributoInstancia.enBlanco">
+				<p> DOS Atributo de Instancia </p>
+			</div>
+			<div class="col-md-8 cuerpoDos" ng-show="!cnAtributoInstancia.enBlanco">
 				<div class="inicioTexto">
 					<form class=" form-horizontal">
 						<div class="form-group">

@@ -55,7 +55,7 @@ function ControllerRegla($rootScope,
  	                      	{"id": 3, "nombre":"Atributo 3"}
  	                          ];
 	   	
-	cnRegla.soyActual = true; //debo cambiarlo a false al terminar el desarrollo -1
+	cnRegla.soyActual = false; //debo cambiarlo a false al terminar el desarrollo 
 	cnRegla.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnRegla.modificar = false; //si se permite modificar los valores 
 	
