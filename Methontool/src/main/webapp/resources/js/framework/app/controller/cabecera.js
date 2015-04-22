@@ -37,6 +37,52 @@ function ControllerCabecera(
     	cnCabecera.menuEditar = menuEditar;
 //Fin funciones relacionadas con el controllerProyecto
     	
+//FUnciones de visualisar ó tarea no se define cual sera
+    	cnCabecera.menuGlosarioPrincipal = menuGlosarioPrincipal;
+    	cnCabecera.menuAtributoClasePrincipal = menuAtributoClasePrincipal;
+    	cnCabecera.menuAtributoInstanciaPrincipal = menuAtributoInstanciaPrincipal;
+    	cnCabecera.menuReglaPrincipal = menuReglaPrincipal;
+    	cnCabecera.menuAxiomaPrincipal = menuAxiomaPrincipal;
+    	cnCabecera.menuRelacionPrincipal = menuRelacionPrincipal;
+    	cnCabecera.menuTaxonomiaPrincipal = menuTaxonomiaPrincipal;
+    	cnCabecera.menuConceptoPrincipal = menuConceptoPrincipal;
+    	cnCabecera.menuInstanciaPrincipal = menuInstanciaPrincipal;
+    	cnCabecera.menuConstantePrincipal = menuConstantePrincipal;
+//fin funciones relacionadas con  visualisar ó tarea
+    	function menuConstantePrincipal(){
+    		$rootScope.$broadcast('menuConstantePrincipal');
+    	}
+    	function menuInstanciaPrincipal(){
+    		//$rootScope.$broadcast('menuInstanciaPrincipal');
+    		console.log("instancia no se ha implementado");
+    	}
+    	function menuConceptoPrincipal(){
+    		//$rootScope.$broadcast('menuConceptoPrincipal');
+    		console.log("concepto no se ha implementado");
+    	}
+    	function menuTaxonomiaPrincipal(){
+    		//$rootScope.$broadcast('menuTaxonomiaPrincipal');
+    		console.log("taxonomia no se ha implementado");
+    	}
+    	function menuRelacionPrincipal(){
+    		$rootScope.$broadcast('menuRelacionPrincipal');
+    	}
+    	function menuAxiomaPrincipal(){
+    		$rootScope.$broadcast('menuAxiomaPrincipal');
+    	}
+    	function menuReglaPrincipal(){
+    		$rootScope.$broadcast('menuReglaPrincipal');
+    	}
+    	function menuAtributoInstanciaPrincipal(){
+    		$rootScope.$broadcast('menuAtributoInstanciaPrincipal');
+    	}
+    	function menuAtributoClasePrincipal(){
+    		$rootScope.$broadcast('menuAtributoClasePrincipal');
+    	}
+    	function menuGlosarioPrincipal (){
+    		$rootScope.$broadcast('menuGlosarioPrincipal');
+    	}
+    	
         function clickEspecificacion(){
 		    cambiarMenu(true, false, false, false);
 		}

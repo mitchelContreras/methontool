@@ -3,8 +3,12 @@
 		<div class="row CampoTrabajo">
 			<div class="col-md-4 cuerpoUno">	
 				<p> UNO Regla </p>
+				<button type="submit" class="btn btn-primary" ng-click="cnRegla.enBlanco = !cnRegla.enBlanco" >enBlanco</button>
 			</div>
-			<div class="col-md-8 cuerpoDos">
+			<div class="col-md-8 cuerpoDos" ng-show="cnRegla.enBlanco">
+				<p> DOS Regla </p>
+			</div>
+			<div class="col-md-8 cuerpoDos" ng-show="!cnRegla.enBlanco">
 				<div class="inicioTexto">
 					<form class=" form-horizontal">
 						<div class="form-group">

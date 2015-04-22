@@ -106,7 +106,23 @@ function ControllerAxioma($rootScope,
 	function verDescripcionGlosario(){
 		$('#verDescripcionGlosarioAxiomaModal').modal('show');
 	}
-}
+	
+    $rootScope.$on('menuAxiomaPrincipal', function(event, data){
+    	InformacionPrincipalApp.voyAvista("Axioma");	//Indico a las otras secciones que esta es la actual
+    	//Inicio los valores por si han sido modificados anteriormente
+    	cnAxioma.disabled = true;  //variable usada para bloquear los campos de edicion 
+    	cnAxioma.modificar = false; //si se permite modificar los valores 
+    	cnAxioma.enBlanco = true;	    //mostrar seccion en blanco
+    });
+	
+    $rootScope.$watch('actual.axioma', function (newValue, oldValue) {
+    	if (newValue !== oldValue) {
+            console.log("cambio valor actual.axioma a '"+newValue+"'");
+            cnAxioma.soyActual = InformacionPrincipalApp.soyVistaActual('Axioma');	//Indico al controlador actual si se debe mostrar
+    	}
+    }, false);
+    
+}//fin controller
 	
 	
 })();	

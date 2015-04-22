@@ -19,7 +19,7 @@ ControllerRelacion.$inject = ['$rootScope',
 
 function ControllerRelacion(
     	$rootScope,
-    	InformacionPrincipalAp,
+    	InformacionPrincipalApp,
     	$http
     ){
 	console.log("Entro en ControllerRelacion");
@@ -54,7 +54,7 @@ function ControllerRelacion(
 	
 	
 	
-	cnRelacion.soyActual = true; //debo cambiarlo a false al terminar el desarrollo -1
+	cnRelacion.soyActual = false; //debo cambiarlo a false al terminar el desarrollo
 	cnRelacion.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnRelacion.modificar = false; //si se permite modificar los valores 
 	cnRelacion.enBlanco = true;	    //mostrar seccion en blanco
@@ -102,9 +102,22 @@ function ControllerRelacion(
 		$('#verConceptoOrigenRelacionModal').modal('show');
 	}
 
+    $rootScope.$on('menuRelacionPrincipal', function(event, data){
+    	InformacionPrincipalApp.voyAvista("Relacion");	//Indico a las otras secciones que esta es la actual
+    	//Inicio los valores por si han sido modificados anteriormente
+    	cnRelacion.disabled = true;  //variable usada para bloquear los campos de edicion 
+    	cnRelacion.modificar = false; //si se permite modificar los valores 
+    	cnRelacion.enBlanco = true;	    //mostrar seccion en blanco
+    });
+	
+    $rootScope.$watch('actual.relacion', function (newValue, oldValue) {
+    	if (newValue !== oldValue) {
+            console.log("cambio valor actual.relacion a '"+newValue+"'");
+            cnRelacion.soyActual = InformacionPrincipalApp.soyVistaActual('Relacion');	//Indico al controlador actual si se debe mostrar
+    	}
+    }, false);
 	
 	
-	
-}
+}// fin controller
 	
 })();

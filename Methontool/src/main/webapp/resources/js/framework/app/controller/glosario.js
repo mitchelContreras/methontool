@@ -83,8 +83,20 @@ function ControllerGlosario(
 		
 	}
 	
+    $rootScope.$on('menuGlosarioPrincipal', function(event, data){
+    	InformacionPrincipalApp.voyAvista("Glosario");	//Indico a las otras secciones que esta es la actual
+    	//Inicio los valores por si han sido modificados anteriormente
+    	cnGlosario.disabled = true;  //variable usada para bloquear los campos de edicion 
+    	cnGlosario.modificar = false; //si se permite modificar los valores 
+    	cnGlosario.enBlanco = true;	    //mostrar seccion en blanco
+    });
 	
-	
+    $rootScope.$watch('actual.glosario', function (newValue, oldValue) {
+    	if (newValue !== oldValue) {
+            console.log("cambio valor actual.glosario a '"+newValue+"'");
+            cnGlosario.soyActual = InformacionPrincipalApp.soyVistaActual('Glosario');	//Indico al controlador actual si se debe mostrar
+    	}
+    }, false);
 }
 	
 })();

@@ -81,7 +81,22 @@ function ControllerAtributoInstancia($rootScope,
 		$('#verConceptoAtributoInstanciaModal').modal('show');
 	}
 	
-}
+    $rootScope.$on('menuAtributoInstanciaPrincipal', function(event, data){
+    	InformacionPrincipalApp.voyAvista("AtributoInstancia");	//Indico a las otras secciones que esta es la actual
+    	//Inicio los valores por si han sido modificados anteriormente
+    	cnAtributoInstancia.disabled = true;  //variable usada para bloquear los campos de edicion 
+    	cnAtributoInstancia.modificar = false; //si se permite modificar los valores 
+    	cnAtributoInstancia.enBlanco = true;	    //mostrar seccion en blanco
+    });
+	
+    $rootScope.$watch('actual.atributoInstancia', function (newValue, oldValue) {
+    	if (newValue !== oldValue) {
+            console.log("cambio valor actual.atributoInstancia a '"+newValue+"'");
+            cnAtributoInstancia.soyActual = InformacionPrincipalApp.soyVistaActual('AtributoInstancia');	//Indico al controlador actual si se debe mostrar
+    	}
+    }, false);	
+	
+}//fin controller
 	
 	
 })();

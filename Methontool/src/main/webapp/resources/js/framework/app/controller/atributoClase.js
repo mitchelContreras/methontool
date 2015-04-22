@@ -82,8 +82,22 @@ function ControllerAtributoClase($rootScope,
 		$('#verConceptoAtributoClaseModal').modal('show');
 	}
 		
+    $rootScope.$on('menuAtributoClasePrincipal', function(event, data){
+    	InformacionPrincipalApp.voyAvista("AtributoClase");	//Indico a las otras secciones que esta es la actual
+    	//Inicio los valores por si han sido modificados anteriormente
+    	cnAtributoClase.disabled = true;  //variable usada para bloquear los campos de edicion 
+    	cnAtributoClase.modificar = false; //si se permite modificar los valores 
+    	cnAtributoClase.enBlanco = true;	    //mostrar seccion en blanco
+    });
 	
-}
+    $rootScope.$watch('actual.atributoClase', function (newValue, oldValue) {
+    	if (newValue !== oldValue) {
+            console.log("cambio valor actual.atributoClase a '"+newValue+"'");
+            cnAtributoClase.soyActual = InformacionPrincipalApp.soyVistaActual('AtributoClase');	//Indico al controlador actual si se debe mostrar
+    	}
+    }, false);
+	
+}//fin controller
 	
 	
 })();	

@@ -56,7 +56,23 @@ function ControllerConstante($rootScope,
 	function verDescripcionGlosario(){
 		$('#verDescripcionGlosarioConstanteModal').modal('show');
 	}
-}
+	
+    $rootScope.$on('menuConstantePrincipal', function(event, data){
+    	InformacionPrincipalApp.voyAvista("Constante");	//Indico a las otras secciones que esta es la actual
+    	//Inicio los valores por si han sido modificados anteriormente
+    	cnConstante.disabled = true;  //variable usada para bloquear los campos de edicion 
+    	cnConstante.modificar = false; //si se permite modificar los valores 
+    	cnConstante.enBlanco = true;	    //mostrar seccion en blanco
+    });
+	
+    $rootScope.$watch('actual.constante', function (newValue, oldValue) {
+    	if (newValue !== oldValue) {
+            console.log("cambio valor actual.constante a '"+newValue+"'");
+            cnConstante.soyActual = InformacionPrincipalApp.soyVistaActual('Constante');	//Indico al controlador actual si se debe mostrar
+    	}
+    }, false);
+    
+}//fin controller
 	
 	
 })();	

@@ -87,16 +87,16 @@
 		      		<li class="dropdown">
 		         		 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Visualizar <span class="caret"></span></a>
 		         		 <ul class="dropdown-menu" role="menu">
-		           			<li><a href="#">Glosario</a></li>
-		            		<li><a href="#">Atributo de clase</a></li>
-		            		<li><a href="#">Atributo de instancia</a></li>
-		            		<li><a href="#">Reglas</a></li>
-				            <li><a href="#">Axioma</a></li>
-				            <li><a href="#">Relaciones</a></li>
-				            <li><a href="#">Taxonomia</a></li>
-				            <li><a href="#">Concepto</a></li>
-				            <li><a href="#">Instancia</a></li>
-				            <li><a href="#">Constante</a></li>			            
+		           			<li><a href="#" ng-click="cnCabecera.menuGlosarioPrincipal()" >Glosario</a></li>
+		            		<li><a href="#" ng-click="cnCabecera.menuAtributoClasePrincipal()">Atributo de clase</a></li>
+		            		<li><a href="#" ng-click="cnCabecera.menuAtributoInstanciaPrincipal()">Atributo de instancia</a></li>
+		            		<li><a href="#" ng-click="cnCabecera.menuReglaPrincipal()">Reglas</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuAxiomaPrincipal()">Axioma</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuRelacionPrincipal()">Relaciones</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuTaxonomiaPrincipal()">Taxonomia</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuConceptoPrincipal()">Concepto</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuInstanciaPrincipal()">Instancia</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuConstantePrincipal()">Constante</a></li>			            
 		         		 </ul>
 		        	</li>
 		        	<li class="dropdown">

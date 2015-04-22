@@ -124,7 +124,23 @@ function ControllerRegla($rootScope,
 	function verDescripcionGlosario(){
 		$('#verDescripcionGlosarioReglaModal').modal('show');
 	}
-}
+	
+    $rootScope.$on('menuReglaPrincipal', function(event, data){
+    	InformacionPrincipalApp.voyAvista("Regla");	//Indico a las otras secciones que esta es la actual
+    	//Inicio los valores por si han sido modificados anteriormente
+    	cnRegla.disabled = true;  //variable usada para bloquear los campos de edicion 
+    	cnRegla.modificar = false; //si se permite modificar los valores 
+    	cnRegla.enBlanco = true;	    //mostrar seccion en blanco
+    });
+	
+    $rootScope.$watch('actual.regla', function (newValue, oldValue) {
+    	if (newValue !== oldValue) {
+    		console.log("cambio valor actual.regla a '"+newValue+"'");
+    		cnRegla.soyActual = InformacionPrincipalApp.soyVistaActual('Regla');	//Indico al controlador actual si se debe mostrar
+    	}
+    }, false);
+	
+}//fin controller
 	
 	
 })();	
