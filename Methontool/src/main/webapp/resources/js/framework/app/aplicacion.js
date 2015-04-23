@@ -14,6 +14,7 @@
         //dependencias a usar
         'modProyecto',
         'modNivelFormalidad',
+        'modGlosario',
         'ngTouch',
         'angucomplete-alt'
         ])

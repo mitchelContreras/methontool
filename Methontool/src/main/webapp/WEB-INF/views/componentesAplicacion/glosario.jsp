@@ -4,6 +4,15 @@
 			<div class="col-md-4 cuerpoUno">	
 				<p> UNO Glosario </p>
 				<button  class="btn btn-primary" ng-click="cnGlosario.enBlanco = !cnGlosario.enBlanco" >cambiar en blanco</button>
+				
+				<p><input type="text" ng-model="test"></p>
+
+				<ul>
+				  <li ng-repeat="glosario in cnGlosario.listaGlosario | filter:test">
+				    {{glosario.nombre}}
+				  </li>
+				</ul>
+			
 			</div>
 			<div class="col-md-8 cuerpoDos" ng-show="cnGlosario.enBlanco">
 				<p> DOS Glosario </p>

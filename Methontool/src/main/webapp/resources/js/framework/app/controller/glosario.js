@@ -12,11 +12,15 @@
 angular.module('methontool')
 	.controller('ControllerGlosario', ControllerGlosario);
 
-ControllerGlosario.$inject = ['$rootScope', 'InformacionPrincipalApp'];	
+ControllerGlosario.$inject = ['$rootScope'
+                              ,'InformacionPrincipalApp'
+                              ,'$listarGlosario'
+                              ];	
 
 function ControllerGlosario(
     	$rootScope,
-    	InformacionPrincipalApp
+    	InformacionPrincipalApp,
+    	$listarGlosario
     ){
 	console.log("Entro en ControllerGlosario");
 	var cnGlosario = this;
@@ -83,6 +87,31 @@ function ControllerGlosario(
 		
 	}
 	
+//Funciones ajenas al $scope
+	function listarGlosario(){
+		$listarGlosario.get({id: InformacionPrincipalApp.getProyecto().idProyecto}).$promise.then(
+                function(salida) {
+                   // success
+                  console.log("sucess es "+salida.succes);
+                  cnGlosario.listaGlosario = salida.elementos;
+                  console.log("cantidad de glosario son "+cnGlosario.listaGlosario.length);
+                  
+                    if(salida.succes){
+                    	console.log("succes es true");
+                    }else{
+                        if(!salida.succes){
+                            console.log("listaProyecto es false");
+                        }else{
+                            console.log("No entro");
+                        }
+                    }
+                }, 
+                function(errResponse) {
+                   // fail
+                }
+        );
+	}
+	
     $rootScope.$on('menuGlosarioPrincipal', function(event, data){
     	InformacionPrincipalApp.voyAvista("Glosario");	//Indico a las otras secciones que esta es la actual
     	//Inicio los valores por si han sido modificados anteriormente
@@ -95,6 +124,7 @@ function ControllerGlosario(
     	if (newValue !== oldValue) {
             console.log("cambio valor actual.glosario a '"+newValue+"'");
             cnGlosario.soyActual = InformacionPrincipalApp.soyVistaActual('Glosario');	//Indico al controlador actual si se debe mostrar
+            listarGlosario();//llamo a funcion para traer la lista de glosario
     	}
     }, false);
 }

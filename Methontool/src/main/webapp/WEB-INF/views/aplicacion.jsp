@@ -85,6 +85,10 @@
 
 		<!-- Nivel de formalidad -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/nivelFormalidad.js"></script>
+
+		<!-- Glosario -->	
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/glosario.js"></script>
+		
 	</head>
 	<body >
 		<div class="container" ng-controller="ControllerPrincipal as cnPrincipal">

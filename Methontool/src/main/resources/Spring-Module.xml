@@ -10,4 +10,5 @@
 	<import resource="beanDataBase/Spring-Usuario.xml" />
 	<import resource="beanDataBase/Spring-Proyecto.xml" />
 	<import resource="beanDataBase/Spring-NivelFormalidad.xml" />
+	<import resource="beanDataBase/Spring-Glosario.xml" />
 </beans>
