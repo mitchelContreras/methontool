@@ -52,6 +52,12 @@ public class LeerConfig {
 	 */
 	public static String obtenerPropiedad(String propiedad){
 		try {
+			if(prop == null){
+				prop = new Properties();
+				InputStream is = null;
+				is = new FileInputStream(LeerConfig.class.getResource(direccionConfig).getFile());
+				prop.load(is);
+			}
 			return prop.getProperty(propiedad);
 		} catch (Exception e) {
 			// TODO: handle exception

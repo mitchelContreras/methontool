@@ -11,12 +11,12 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ciensUCV.Methontool.dao.GlosarioDAO;
+import com.ciensUCV.Methontool.dao.TipoGlosarioDAO;
 import com.ciensUCV.Methontool.model.Glosario;
 import com.ciensUCV.Methontool.model.TipoGlosario;
 
-public class JdbcGlosarioDAO implements GlosarioDAO {
-	private static final Logger logger = LoggerFactory.getLogger(JdbcGlosarioDAO.class);
+public class JdbcTipoGlosarioDAO implements TipoGlosarioDAO {
+	private static final Logger logger = LoggerFactory.getLogger(JdbcTipoGlosarioDAO.class);
 	
 	private DataSource dataSource;
 	public void setDataSource(DataSource dataSource) {
@@ -24,36 +24,30 @@ public class JdbcGlosarioDAO implements GlosarioDAO {
 	}
 	
 	@Override
-	public ArrayList<Glosario> listarGlosario(int idProyecto) {
+	public ArrayList<TipoGlosario> listarTipoGlosario() {
 		// TODO Auto-generated method stub
 		String sql;
 		sql = "select "
-				+ "glo.id_glosario "
-				+ ",glo.nombre "
-				+ ",glo.acronimos "
-				+ ",glo.tipo_glosario "
-				+ ",glo.descripcion "
-				+ ",glo.sinonimo "
-				+ ",glo.id_proyecto "
-				+ "from glosario as glo "
-				+ "where glo.id_Proyecto = ?";
+				+ "tg.id_tipo_glosario "
+				+ ",tg.codigo "
+				+ ",tg.nombre "
+				+ ",tg.descripcion "
+				+ "from tipo_glosario as tg";
 		Connection conn = null;
-		Glosario glosario = null;
-		ArrayList<Glosario> arrayList = new ArrayList<Glosario>();
+		TipoGlosario tipoGlosario;
+		ArrayList<TipoGlosario> arrayList = new ArrayList();
+		
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, idProyecto);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
-				glosario = new Glosario();
-				glosario.setId(rs.getString("id_glosario"));
-				glosario.setNombre(rs.getString("nombre"));
-				glosario.sinonimosStringToArray(rs.getString("sinonimo"));
-				glosario.acronimosStringToArray(rs.getString("acronimos"));
-				glosario.setTipoGlosario(new TipoGlosario (rs.getString("tipo_glosario"), null, null, null));
-				glosario.setDescripcion (rs.getString("descripcion"));
-				arrayList.add(glosario);
+				tipoGlosario = new TipoGlosario(
+						rs.getString("id_tipo_glosario"),
+						rs.getString("codigo"), 
+						rs.getString("nombre"), 
+						rs.getString("descripcion"));
+				arrayList.add(tipoGlosario);
 			}
 			rs.close();
 			ps.close();
@@ -76,25 +70,25 @@ public class JdbcGlosarioDAO implements GlosarioDAO {
 	}
 
 	@Override
-	public Glosario verGlosario(int idProyecto, int idGlosario) {
+	public TipoGlosario verGlosario(int idTipoGlosario) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String crearGlosario(int idProyecto, Glosario glosario) {
+	public String crearTipoGlosario(TipoGlosario tipoGlosario) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String actualizarGlosario(Glosario glosario) {
+	public String actualizarTipoGlosario(TipoGlosario tipoGlosario) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String eliminarGlosario(int idProyecto, int idGlosario) {
+	public String eliminarTipoGlosario(int idTipoGlosario) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -38,7 +38,7 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("Levano login");
+		logger.info("Levanto login");
 //		LeerConfig.cargarConfig();
 //		ConeccionBD.leerConfigConeccion();
 		

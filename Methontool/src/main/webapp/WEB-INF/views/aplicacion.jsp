@@ -77,6 +77,7 @@
 				
 		<!-- factory -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/informacionPrincipalApp.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryGlosario.js"></script>
 		
 		
 		<!-- Modulos de AngularJS -->

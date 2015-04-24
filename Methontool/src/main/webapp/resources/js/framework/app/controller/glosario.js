@@ -15,12 +15,14 @@ angular.module('methontool')
 ControllerGlosario.$inject = ['$rootScope'
                               ,'InformacionPrincipalApp'
                               ,'$listarGlosario'
+                              ,'FactoryGlosario'
                               ];	
 
 function ControllerGlosario(
-    	$rootScope,
-    	InformacionPrincipalApp,
-    	$listarGlosario
+    	$rootScope
+    	,InformacionPrincipalApp
+    	,$listarGlosario
+    	,FactoryGlosario
     ){
 	console.log("Entro en ControllerGlosario");
 	var cnGlosario = this;
@@ -30,6 +32,8 @@ function ControllerGlosario(
 	cnGlosario.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnGlosario.modificar = false; //si se permite modificar los valores 
 	cnGlosario.enBlanco = true;	    //mostrar seccion en blanco
+	cnGlosario.seleccionado = -1;
+	cnGlosario.enCrear = false;
 
 
 //-------------------Variables de edicion---------------------
@@ -38,6 +42,7 @@ function ControllerGlosario(
 	cnGlosario.descripcion = "";
 	cnGlosario.listaSinonimo = [];
 	cnGlosario.listaAcronimo = [];
+	cnGlosario.idGlosario = "";
 	
 	cnGlosario.nuevoSinonimo = "";
 	cnGlosario.nuevoAcronimo = "";
@@ -54,7 +59,37 @@ function ControllerGlosario(
 	cnGlosario.modificarGlosario = modificarGlosario;
 	cnGlosario.modifiqueGlosario = modifiqueGlosario;
 	cnGlosario.cancelarModificarGlosario = cancelarModificarGlosario;
+	cnGlosario.seleccioneGlosario = seleccioneGlosario;
+	cnGlosario.crearGlosario = crearGlosario;
 	
+	function crearGlosario(){
+		cnGlosario.enCrear = true;
+		cnGlosario.enBlanco = false;
+		cnGlosario.seleccionado = -1;
+		cnGlosario.disabled = false; 
+		
+		//limpio los valores de la vista
+		cnGlosario.varNombre =	"";
+		cnGlosario.varTipo = "";
+		cnGlosario.descripcion = "";
+		cnGlosario.listaSinonimo = [];
+		cnGlosario.listaAcronimo = [];
+		cnGlosario.idGlosario = "";
+		
+	}
+	function seleccioneGlosario(id){
+		cnGlosario.seleccionado = id;
+		cnGlosario.enCrear = false;
+		cnGlosario.enBlanco = false;
+		
+		//lleno los valores de la vista
+		cnGlosario.varNombre =	cnGlosario.listaGlosario[id].nombre;
+		cnGlosario.varTipo = cnGlosario.listaGlosario[id].tipoGlosario.id;
+		cnGlosario.descripcion = cnGlosario.listaGlosario[id].descripcion;
+		cnGlosario.listaSinonimo =  cnGlosario.listaGlosario[id].sinonimos.slice();
+		cnGlosario.listaAcronimo =  cnGlosario.listaGlosario[id].acronimos.slice();
+		cnGlosario.idGlosario = cnGlosario.listaGlosario[id].id;
+	}
 	function cancelarModificarGlosario(){
 		cnGlosario.disabled = true;
 		cnGlosario.modificar = false;
@@ -92,12 +127,11 @@ function ControllerGlosario(
 		$listarGlosario.get({id: InformacionPrincipalApp.getProyecto().idProyecto}).$promise.then(
                 function(salida) {
                    // success
-                  console.log("sucess es "+salida.succes);
-                  cnGlosario.listaGlosario = salida.elementos;
-                  console.log("cantidad de glosario son "+cnGlosario.listaGlosario.length);
-                  
                     if(salida.succes){
                     	console.log("succes es true");
+                    	FactoryGlosario.setListaGlosario (salida.elementos);
+                        cnGlosario.listaGlosario = FactoryGlosario.getListaGlosario();
+                        console.log("cantidad de glosario son "+cnGlosario.listaGlosario.length);
                     }else{
                         if(!salida.succes){
                             console.log("listaProyecto es false");
@@ -118,6 +152,7 @@ function ControllerGlosario(
     	cnGlosario.disabled = true;  //variable usada para bloquear los campos de edicion 
     	cnGlosario.modificar = false; //si se permite modificar los valores 
     	cnGlosario.enBlanco = true;	    //mostrar seccion en blanco
+    	cnGlosario.seleccionado = -1;
     });
 	
     $rootScope.$watch('actual.glosario', function (newValue, oldValue) {

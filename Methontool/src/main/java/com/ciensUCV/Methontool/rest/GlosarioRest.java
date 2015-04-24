@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ciensUCV.Methontool.dao.GlosarioDAO;
 import com.ciensUCV.Methontool.model.Glosario;
+import com.ciensUCV.Methontool.rest.model.ElementoMensaje;
 import com.ciensUCV.Methontool.rest.model.ElementosMensaje;
 import com.ciensUCV.Methontool.rest.model.ErrorEnviar;
+import com.ciensUCV.Methontool.util.LeerConfig;
 import com.ciensUCV.Methontool.util.VariablesConfiguracion;
 
 @Controller
@@ -40,5 +42,26 @@ public class GlosarioRest {
 			elementosMensaje.getListaError().add(enviarError);
 		}
 		return elementosMensaje;
+	}
+	
+	@RequestMapping(value="/api/proyecto/{idProyecto}/glosario/{idGlosario}", method = RequestMethod.GET)
+	public @ResponseBody ElementoMensaje<Glosario> verGlosario(
+			@PathVariable("idProyecto") int idProyecto
+			,@PathVariable("idGlosario") int idGlosario){
+		logger.info("el idProyecto es "+idProyecto);
+		logger.info("el idGlosario es "+idGlosario);
+		ElementoMensaje<Glosario> elementoMensaje = new ElementoMensaje<Glosario> ();
+		GlosarioDAO glosarioDAO = (GlosarioDAO) context.getBean("glosarioDAO");
+		try {
+			elementoMensaje.setElemento(glosarioDAO.verGlosario(idProyecto, idGlosario));
+			elementoMensaje.setSucces(true);
+		} catch (Exception e) {
+			// TODO: handle exception
+			elementoMensaje.setSucces(false);
+			ErrorEnviar enviarError;
+			enviarError = new ErrorEnviar("0050", null, "Error al traer datos de BD");
+			elementoMensaje.getListaError().add(enviarError);
+		}
+		return elementoMensaje;
 	}
 }

@@ -2,20 +2,34 @@
  <div ng-show="cnGlosario.soyActual"> 
 		<div class="row CampoTrabajo">
 			<div class="col-md-4 cuerpoUno">	
-				<p> UNO Glosario </p>
-				<button  class="btn btn-primary" ng-click="cnGlosario.enBlanco = !cnGlosario.enBlanco" >cambiar en blanco</button>
-				
-				<p><input type="text" ng-model="test"></p>
+				<div class="inicioTexto">
+					<button  class="btn btn-primary" ng-click="cnGlosario.crearGlosario()" >Agregar</button>
+					
+					<p><input type="text" ng-model="test"></p>
+					
+					<div class="list-group">
+						<div ng-repeat="glosario in cnGlosario.listaGlosario | filter:test">
+							<a href="#" class="list-group-item" 
+							ng-class="{active: cnGlosario.seleccionado ==  $index}" 
+							ng-click="cnGlosario.seleccioneGlosario ($index)"> {{glosario.nombre}}</a>
+						</div>
+					</div>	
 
-				<ul>
-				  <li ng-repeat="glosario in cnGlosario.listaGlosario | filter:test">
-				    {{glosario.nombre}}
-				  </li>
-				</ul>
+<!-- 
+cnGlosario.seleccionado = $index
+ng-class="{'active':}" 
+active
+					<ul>
+					  <li ng-repeat="glosario in cnGlosario.listaGlosario | filter:test">
+					    {{glosario.nombre}}
+					  </li>
+					</ul>
+ -->					
+				</div>	
 			
 			</div>
 			<div class="col-md-8 cuerpoDos" ng-show="cnGlosario.enBlanco">
-				<p> DOS Glosario </p>
+			
 			</div>
 			<div class="col-md-8 cuerpoDos" ng-show="!cnGlosario.enBlanco">
 				<div class="inicioTexto">
@@ -54,7 +68,7 @@
 							<div class="col-xs-5">
 								<div class="row" ng-repeat="sinonimo in cnGlosario.listaSinonimo track by $index" id="{{$index}}">
 									<div class="col-xs-9">
-										<textarea class="form-control" ng-model="pregunta" rows="2" ng-disabled="cnGlosario.disabled"></textarea>
+										<textarea class="form-control" ng-model="sinonimo" rows="2" ng-disabled="cnGlosario.disabled"></textarea>
 									</div>
 									<div class="col-xs-3">
 										<div class="btn-group">
@@ -78,7 +92,7 @@
 							<div class="col-xs-5">
 								<div class="row" ng-repeat="acronimo in cnGlosario.listaAcronimo track by $index" id="{{$index}}">
 									<div class="col-xs-9">
-										<textarea class="form-control" ng-model="pregunta" rows="2" ng-disabled="cnGlosario.disabled"></textarea>
+										<textarea class="form-control" ng-model="acronimo" rows="2" ng-disabled="cnGlosario.disabled"></textarea>
 									</div>
 									<div class="col-xs-3">
 										<div class="btn-group">
@@ -94,18 +108,28 @@
 									</button>							
 								</div>
 							</div>
-						</div>					
-	
-						<div class="form-group" ng-show="!cnGlosario.modificar">
-							<div class="col-xs-offset-4 col-xs-5">
-								<button type="submit" class="btn btn-primary" ng-click="cnGlosario.modificarGlosario()">Modificar</button>
-							</div>
 						</div>
-						<div class="form-group" ng-show="cnGlosario.modificar">
-							<div class="col-xs-offset-4 col-xs-5">
-								<button type="submit" class="btn btn-primary" ng-click="cnGlosario.modifiqueGlosario()" >Guardar</button>
-								<button type="submit" class="btn btn-defaul" ng-click="cnGlosario.cancelarModificarGlosario() ">Cancelar</button>
-							</div>	
+						<!-- en crear -->					
+						<div ng-show="cnGlosario.enCrear">
+							<div class="form-group">
+								<div class="col-xs-offset-4 col-xs-5">
+									<button type="submit" class="btn btn-primary" ng-click="cnGlosario.crearGlosario()">Crear</button>
+								</div>
+							</div>
+						</div>							
+						<!-- en modificar -->					
+						<div ng-show="!cnGlosario.enCrear">
+							<div class="form-group" ng-show="!cnGlosario.modificar">
+								<div class="col-xs-offset-4 col-xs-5">
+									<button type="submit" class="btn btn-primary" ng-click="cnGlosario.modificarGlosario()">Modificar</button>
+								</div>
+							</div>
+							<div class="form-group" ng-show="cnGlosario.modificar">
+								<div class="col-xs-offset-4 col-xs-5">
+									<button type="submit" class="btn btn-primary" ng-click="cnGlosario.modifiqueGlosario()" >Guardar</button>
+									<button type="submit" class="btn btn-defaul" ng-click="cnGlosario.cancelarModificarGlosario() ">Cancelar</button>
+								</div>	
+							</div>
 						</div>																											
 					</form>
 				</div>

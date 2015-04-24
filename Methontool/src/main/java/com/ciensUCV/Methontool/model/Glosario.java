@@ -1,85 +1,37 @@
 package com.ciensUCV.Methontool.model;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+import com.ciensUCV.Methontool.util.LeerConfig;
 
 public class Glosario {
 	private String id;
-	private ArrayList <Glosario> sinonimos;
-	private String acronimos;
+	private String nombre;
+	private ArrayList <String> sinonimos;
+	private ArrayList <String> acronimos;
 	private String descripcion;
 	private TipoGlosario tipoGlosario;
-	private String idRelacion;
-	private String idConcepto;
-	private String idAtributoInstancia;
-	private String idAtributoClase;
-	private String idConstante;
-	private String idAxiomaFormal;
-	private String idRegla;
-	private String idInstancia;
-	private String nombre;
-	
-	public Glosario(String id, ArrayList<Glosario> sinonimos, String acronimos,
-			String descripcion, TipoGlosario tipoGlosario, String idRelacion,
-			String idConcepto, String idAtributoInstancia,
-			String idAtributoClase, String idConstante, String idAxiomaFormal,
-			String idRegla, String idInstancia, String nombre) {
-		super();
-		this.id = id;
-		this.sinonimos = sinonimos;
-		this.acronimos = acronimos;
-		this.descripcion = descripcion;
-		this.tipoGlosario = tipoGlosario;
-		this.idRelacion = idRelacion;
-		this.idConcepto = idConcepto;
-		this.idAtributoInstancia = idAtributoInstancia;
-		this.idAtributoClase = idAtributoClase;
-		this.idConstante = idConstante;
-		this.idAxiomaFormal = idAxiomaFormal;
-		this.idRegla = idRegla;
-		this.idInstancia = idInstancia;
-		this.nombre = nombre;
-	}
-	public String getNombre() {
-		return nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
 	public Glosario() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Glosario(String id, ArrayList<Glosario> sinonimos, String acronimos,
-			String descripcion, TipoGlosario tipoGlosario, String idRelacion,
-			String idConcepto, String idAtributoInstancia,
-			String idAtributoClase, String idConstante, String idAxiomaFormal,
-			String idRegla, String idInstancia) {
+	public Glosario(String id, String nombre, ArrayList<String> sinonimos,
+			ArrayList<String> acronimos, String descripcion,
+			TipoGlosario tipoGlosario) {
 		super();
 		this.id = id;
+		this.nombre = nombre;
 		this.sinonimos = sinonimos;
 		this.acronimos = acronimos;
 		this.descripcion = descripcion;
 		this.tipoGlosario = tipoGlosario;
-		this.idRelacion = idRelacion;
-		this.idConcepto = idConcepto;
-		this.idAtributoInstancia = idAtributoInstancia;
-		this.idAtributoClase = idAtributoClase;
-		this.idConstante = idConstante;
-		this.idAxiomaFormal = idAxiomaFormal;
-		this.idRegla = idRegla;
-		this.idInstancia = idInstancia;
 	}
 	@Override
 	public String toString() {
-		return "Glosario [id=" + id + ", sinonimos=" + sinonimos
-				+ ", acronimos=" + acronimos + ", descripcion=" + descripcion
-				+ ", tipoGlosario=" + tipoGlosario + ", idRelacion="
-				+ idRelacion + ", idConcepto=" + idConcepto
-				+ ", idAtributoInstancia=" + idAtributoInstancia
-				+ ", idAtributoClase=" + idAtributoClase + ", idConstante="
-				+ idConstante + ", idAxiomaFormal=" + idAxiomaFormal
-				+ ", idRegla=" + idRegla + ", idInstancia=" + idInstancia
-				+ ", nombre=" + nombre + "]";
+		return "Glosario [id=" + id + ", nombre=" + nombre + ", sinonimos="
+				+ sinonimos + ", acronimos=" + acronimos + ", descripcion="
+				+ descripcion + ", tipoGlosario=" + tipoGlosario + "]";
 	}
 	public String getId() {
 		return id;
@@ -87,16 +39,22 @@ public class Glosario {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public ArrayList<Glosario> getSinonimos() {
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public ArrayList<String> getSinonimos() {
 		return sinonimos;
 	}
-	public void setSinonimos(ArrayList<Glosario> sinonimos) {
+	public void setSinonimos(ArrayList<String> sinonimos) {
 		this.sinonimos = sinonimos;
 	}
-	public String getAcronimos() {
+	public ArrayList<String> getAcronimos() {
 		return acronimos;
 	}
-	public void setAcronimos(String acronimos) {
+	public void setAcronimos(ArrayList<String> acronimos) {
 		this.acronimos = acronimos;
 	}
 	public String getDescripcion() {
@@ -111,54 +69,49 @@ public class Glosario {
 	public void setTipoGlosario(TipoGlosario tipoGlosario) {
 		this.tipoGlosario = tipoGlosario;
 	}
-	public String getIdRelacion() {
-		return idRelacion;
-	}
-	public void setIdRelacion(String idRelacion) {
-		this.idRelacion = idRelacion;
-	}
-	public String getIdConcepto() {
-		return idConcepto;
-	}
-	public void setIdConcepto(String idConcepto) {
-		this.idConcepto = idConcepto;
-	}
-	public String getIdAtributoInstancia() {
-		return idAtributoInstancia;
-	}
-	public void setIdAtributoInstancia(String idAtributoInstancia) {
-		this.idAtributoInstancia = idAtributoInstancia;
-	}
-	public String getIdAtributoClase() {
-		return idAtributoClase;
-	}
-	public void setIdAtributoClase(String idAtributoClase) {
-		this.idAtributoClase = idAtributoClase;
-	}
-	public String getIdConstante() {
-		return idConstante;
-	}
-	public void setIdConstante(String idConstante) {
-		this.idConstante = idConstante;
-	}
-	public String getIdAxiomaFormal() {
-		return idAxiomaFormal;
-	}
-	public void setIdAxiomaFormal(String idAxiomaFormal) {
-		this.idAxiomaFormal = idAxiomaFormal;
-	}
-	public String getIdRegla() {
-		return idRegla;
-	}
-	public void setIdRegla(String idRegla) {
-		this.idRegla = idRegla;
-	}
-	public String getIdInstancia() {
-		return idInstancia;
-	}
-	public void setIdInstancia(String idInstancia) {
-		this.idInstancia = idInstancia;
-	}
 	
-	
+	public void sinonimosStringToArray(String entrada){
+		this.sinonimos = new  ArrayList<String> ();
+		if(entrada != null){
+			StringTokenizer token = new StringTokenizer(entrada, LeerConfig.obtenerPropiedad("variable.separadorString"));
+			while(token.hasMoreTokens()){
+				this.sinonimos.add(token.nextToken());
+			}
+		}
+
+	}
+	public String sinonimosArrayToString(){
+		String salida = "";
+		if(sinonimos != null){
+			for(int i = 0; i <sinonimos.size();i++ ){
+				salida = salida + sinonimos.get(i);
+				if(i != sinonimos.size()-1){
+					salida = salida+LeerConfig.obtenerPropiedad("variable.separadorString");
+				}
+			}
+		}
+		return salida;
+	}	
+	public void acronimosStringToArray(String entrada){
+		this.acronimos = new  ArrayList<String> ();
+		if(entrada != null){
+			StringTokenizer token = new StringTokenizer(entrada, LeerConfig.obtenerPropiedad("variable.separadorString"));
+			while(token.hasMoreTokens()){
+				this.acronimos.add(token.nextToken());
+			}
+		}
+
+	}
+	public String acronimosArrayToString(){
+		String salida = "";
+		if(acronimos != null){
+			for(int i = 0; i <acronimos.size();i++ ){
+				salida = salida + acronimos.get(i);
+				if(i != acronimos.size()-1){
+					salida = salida+LeerConfig.obtenerPropiedad("variable.separadorString");
+				}
+			}
+		}
+		return salida;
+	}		
 }
