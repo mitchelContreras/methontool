@@ -1,5 +1,5 @@
 /**
- * Manejo del arreglo de Glosario y todas las funciones referente a esta lista
+ * Manejo del arreglo de tipoGlosario y todas las funciones referente a esta lista
  * 
  */
 
@@ -7,15 +7,13 @@
     "use strict"
 angular.module('methontool')
 
-	.factory('FactoryGlosario', FactoryGlosario);
+	.factory('FactoryTipoGlosario', FactoryTipoGlosario);
 
 
-	FactoryGlosario.$inject = ['$listarGlosario'
-	                           ,'InformacionPrincipalApp'];
+	FactoryTipoGlosario.$inject = ['$listarTipoGlosario'];
 
-	function FactoryGlosario (
-			$listarGlosario
-			,InformacionPrincipalApp
+	function FactoryTipoGlosario (
+			$listarTipoGlosario
 			){
 		
 		var funcion = {
@@ -42,30 +40,28 @@ angular.module('methontool')
 				}
 			};
 		function getListaElemento(){
-			console.log("en getListaElemento Glosario");
+			console.log("llegue hasta alla :D");
 			if (yaConsulte){
-				console.log("Ya tengo el valor de Glosario");
 				return listaObjeto;
 			}else{
-				console.log("antes del rest");
-				$listarGlosario.get({id: InformacionPrincipalApp.getProyecto().idProyecto}).$promise.then(
+				$listarTipoGlosario.get().$promise.then(
 		                function(salida) {
 		                   // success
 		                    if(salida.succes){
-		                    	console.log("succes es true en getListaElemento Glosario");
+		                    	console.log("listarTipoGlosario succes es true");
+		                    	yaConsulte = true;
 		                    	listaObjeto = salida.elementos;
-		                        console.log("cantidad de glosario son "+listaObjeto.length);
-		                        yaConsulte = true;
+		                    	console.log(listaObjeto.length);
 		                    }else{
 		                        if(!salida.succes){
-		                        	console.log("succes es false en getListaElemento Glosario");
+		                            console.log("listarTipoGlosario succes es false");
 		                        }else{
-		                            console.log("No en getListaElemento Glosario");
+		                            console.log("No entro");
 		                        }
 		                    }
 		                }, 
 		                function(errResponse) {
-		                   console.log("error es "+errResponse);
+		                   // fail
 		                }
 		        );
 			}

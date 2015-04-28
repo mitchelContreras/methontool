@@ -51,7 +51,7 @@ public class JdbcGlosarioDAO implements GlosarioDAO {
 				glosario.setNombre(rs.getString("nombre"));
 				glosario.sinonimosStringToArray(rs.getString("sinonimo"));
 				glosario.acronimosStringToArray(rs.getString("acronimos"));
-				glosario.setTipoGlosario(new TipoGlosario (rs.getString("tipo_glosario"), null, null, null));
+				glosario.setTipoGlosario(new TipoGlosario (rs.getInt("tipo_glosario"), null, null, null));
 				glosario.setDescripcion (rs.getString("descripcion"));
 				arrayList.add(glosario);
 			}

@@ -43,7 +43,7 @@ public class JdbcTipoGlosarioDAO implements TipoGlosarioDAO {
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				tipoGlosario = new TipoGlosario(
-						rs.getString("id_tipo_glosario"),
+						rs.getInt("id_tipo_glosario"),
 						rs.getString("codigo"), 
 						rs.getString("nombre"), 
 						rs.getString("descripcion"));

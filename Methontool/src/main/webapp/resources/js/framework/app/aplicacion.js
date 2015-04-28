@@ -17,6 +17,7 @@
         'modGlosario',
         'ngTouch',
         'angucomplete-alt'
+        ,'modTipoGlosario'
         ])
     
 })();

@@ -78,6 +78,7 @@
 		<!-- factory -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/informacionPrincipalApp.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryGlosario.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryTipoGlosario.js"></script>
 		
 		
 		<!-- Modulos de AngularJS -->
@@ -89,7 +90,10 @@
 
 		<!-- Glosario -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/glosario.js"></script>
-		
+
+		<!-- Tipo Glosario -->	
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/tipoGlosario.js"></script>
+				
 	</head>
 	<body >
 		<div class="container" ng-controller="ControllerPrincipal as cnPrincipal">

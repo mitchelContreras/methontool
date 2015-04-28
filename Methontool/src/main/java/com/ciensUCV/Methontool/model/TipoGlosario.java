@@ -1,7 +1,7 @@
 package com.ciensUCV.Methontool.model;
 
 public class TipoGlosario {
-	private String id;
+	private int id;
 	private String codigo;
 	private String nombre;
 	private String descripcion;
@@ -9,7 +9,7 @@ public class TipoGlosario {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public TipoGlosario(String id, String codigo, String nombre,
+	public TipoGlosario(int id, String codigo, String nombre,
 			String descripcion) {
 		super();
 		this.id = id;
@@ -17,10 +17,10 @@ public class TipoGlosario {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 	}
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getCodigo() {

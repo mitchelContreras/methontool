@@ -19,7 +19,10 @@ angular.module('methontool')
                               '$rootScope', 
                               '$listarProyectos', 
                               '$crearProyecto', 
-                              'InformacionPrincipalApp'];
+                              'InformacionPrincipalApp'
+                              ,'FactoryTipoGlosario'
+                              ,'FactoryGlosario'
+                              ];
    
    function ControllerProyecto (
 	    	$scope,
@@ -27,6 +30,8 @@ angular.module('methontool')
 	    	$listarProyectos,
 	    	$crearProyecto,
 	    	InformacionPrincipalApp
+	    	,FactoryTipoGlosario
+	    	,FactoryGlosario
 	    ){
 	    	var cnProyecto = this;
 	    	cnProyecto.seleccioneProyecto = seleccioneProyecto;
@@ -53,6 +58,12 @@ angular.module('methontool')
 	    		
 	    		console.log("InformacionPrincipalApp.soyVistaActual('Proyecto'); "+InformacionPrincipalApp.soyVistaActual('Proyecto'));
 	    		console.log("InformacionPrincipalApp.soyVistaActual('Principal'); "+InformacionPrincipalApp.soyVistaActual('Principal'));
+	    		
+	    		
+	    		//busco los valores de las listas a este nivel
+	    		FactoryTipoGlosario.getListaElemento();
+	    		FactoryGlosario.getListaElemento();
+	    		
 	    		$('#myModal').modal('hide');
 	    	}
 	    	
