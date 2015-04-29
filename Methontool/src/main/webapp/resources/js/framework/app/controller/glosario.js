@@ -194,6 +194,10 @@ function ControllerGlosario(
             console.log("entre listar glosario y ipo");
             cnGlosario.listaTipoGlosario = FactoryTipoGlosario.getListaElemento();
             console.log("despes de listarTIpoGlosario");
+            
+//            FactoryGlosario.crearElemento('nombre', 'tipoGlosario', 'descripcion', 'sinonimo', 'acronimo');
+            FactoryGlosario.actualizarElemento(2, 'nombre', 'tipoGlosario', 'descripcion', 'sinonimo', 'acronimo');
+            console.log("paso por aca !!!!");
     	}
     }, false);
 }

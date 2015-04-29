@@ -17,7 +17,19 @@
             get: {method: 'GET', isArray:false}
             });
     });
-    
+ 
+    proy.factory('$crearGlosario',function($resource){ 
+        var urlConsultar = urlProyecto+"/api/proyecto/:idProyecto/glosario";
+        return $resource(urlConsultar,{},{
+           post: {method: 'POST', params: {idProyecto: '@idProyecto'}, isArray:false}
+           });
+   }); 
 
+    proy.factory('$actualizarGlosario',function($resource){ 
+        var urlConsultar = urlProyecto+"/api/proyecto/:idProyecto/glosario/:idGlosario";
+        return $resource(urlConsultar,{},{
+           put: {method: 'PUT', params: {idProyecto: '@idProyecto', idGlosario: 'idGlosario'}, isArray:false}
+           });
+   }); 
 
 })();

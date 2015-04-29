@@ -11,11 +11,16 @@ angular.module('methontool')
 
 
 	FactoryGlosario.$inject = ['$listarGlosario'
-	                           ,'InformacionPrincipalApp'];
+	                           ,'InformacionPrincipalApp'
+	                           ,'$crearGlosario'
+	                           ,'$actualizarGlosario'
+	                           ];
 
 	function FactoryGlosario (
 			$listarGlosario
 			,InformacionPrincipalApp
+			,$crearGlosario
+			,$actualizarGlosario
 			){
 		
 		var funcion = {
@@ -28,8 +33,11 @@ angular.module('methontool')
 				getListaElemento: function (){
 					return getListaElemento();
 				},
-				crearElemento: function (nuevo){
-					return crearElemento(nuevo);
+				crearElemento: function (nombre, tipoGlosario, descripcion, sinonimo, acronimo){
+					return crearElemento(nombre, tipoGlosario, descripcion, sinonimo, acronimo);
+				},
+				actualizarElemento: function (idGlosario, nombre, tipoGlosario, descripcion, sinonimo, acronimo){
+					actualizarElemento(idGlosario, nombre, tipoGlosario, descripcion, sinonimo, acronimo);
 				},
 				consultarElemento: function (id){
 					return consultarElemento (id);
@@ -41,6 +49,46 @@ angular.module('methontool')
 					return eliminarElemento (id);
 				}
 			};
+		
+		function actualizarElemento(idGlosario, nombre, tipoGlosario, descripcion, sinonimo, acronimo){
+			console.log("entre en el actualizarElemento");
+			var semaforo = false;
+			$actualizarGlosario.put({
+				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
+				,idGlosario: idGlosario
+				,'nombre' : nombre
+				,'tipoGlosario' : tipoGlosario
+				,'descripcion' : descripcion
+				,'sinonimo' : sinonimo
+				,'acronimo' : acronimo
+				},{}).$promise.then(
+	                function(salida) {
+	                   // success
+	                	console.log("Llegue al servidor");
+	                    if(salida.succes){
+	                    	console.log("succes es true en $crearGlosario");
+	                    	
+	                    }else{
+	                        if(!salida.succes){
+	                        	console.log("succes es false en $crearGlosario");
+	                        	semaforo = true;
+	                        }else{
+	                            console.log("ni si ni no $crearGlosario");
+	                            semaforo = true;
+	                        }
+	                    }
+	                }, 
+	                function(errResponse) {
+	                   console.log("error es "+errResponse);
+	                   semaforo = true;
+	                }
+	        );	
+//			while (!semaforo) {
+//				  // We're just waiting.
+//			}
+			console.log("semafooooorooO");
+		}
+		
 		function getListaElemento(){
 			console.log("en getListaElemento Glosario");
 			if (yaConsulte){
@@ -51,6 +99,7 @@ angular.module('methontool')
 				$listarGlosario.get({id: InformacionPrincipalApp.getProyecto().idProyecto}).$promise.then(
 		                function(salida) {
 		                   // success
+		                	
 		                    if(salida.succes){
 		                    	console.log("succes es true en getListaElemento Glosario");
 		                    	listaObjeto = salida.elementos;
@@ -80,8 +129,35 @@ angular.module('methontool')
 		function consultarElemento (id){
 			return true;
 		}
-		function crearElemento(nuevo){
-		
+		function crearElemento(nombre, tipoGlosario, descripcion, sinonimo, acronimo){
+			$crearGlosario.post({
+				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
+				,'nombre' : nombre
+				,'tipoGlosario' : tipoGlosario
+				,'descripcion' : descripcion
+				,'sinonimo' : sinonimo
+				,'acronimo' : acronimo
+				},{}).$promise.then(
+	                function(salida) {
+	                   // success
+	                	console.log("Llegue al servidor");
+	                    if(salida.succes){
+	                    	console.log("succes es true en $crearGlosario");
+	                    	
+	                    }else{
+	                        if(!salida.succes){
+	                        	console.log("succes es false en $crearGlosario");
+	                        }else{
+	                            console.log("ni si ni no $crearGlosario");
+	                        }
+	                    }
+	                }, 
+	                function(errResponse) {
+	                   console.log("error es "+errResponse);
+	                }
+	        );		
+			
+			
 			return true;
 		}
 		
