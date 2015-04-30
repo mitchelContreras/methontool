@@ -22,6 +22,7 @@ angular.module('methontool')
                               'InformacionPrincipalApp'
                               ,'FactoryTipoGlosario'
                               ,'FactoryGlosario'
+                              ,'FactoryMensajeCarga'
                               ];
    
    function ControllerProyecto (
@@ -32,6 +33,7 @@ angular.module('methontool')
 	    	InformacionPrincipalApp
 	    	,FactoryTipoGlosario
 	    	,FactoryGlosario
+	    	,FactoryMensajeCarga
 	    ){
 	    	var cnProyecto = this;
 	    	cnProyecto.seleccioneProyecto = seleccioneProyecto;
@@ -61,10 +63,11 @@ angular.module('methontool')
 	    		
 	    		
 	    		//busco los valores de las listas a este nivel
+	    		$('#myModal').modal('hide');
+	    		FactoryMensajeCarga.abrirMensaje("Cargando");
 	    		FactoryTipoGlosario.getListaElemento();
 	    		FactoryGlosario.getListaElemento();
-	    		
-	    		$('#myModal').modal('hide');
+	    		FactoryMensajeCarga.cerrarMensaje();
 	    	}
 	    	
 	    	function creeProyecto(nombreProyecto){

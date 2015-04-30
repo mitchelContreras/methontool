@@ -27,7 +27,7 @@ angular.module('methontool')
                 cnPrincipal.soyActual = InformacionPrincipalApp.soyVistaActual('Principal');
         	}
         }, false);
-    	
+
     	
     }
     

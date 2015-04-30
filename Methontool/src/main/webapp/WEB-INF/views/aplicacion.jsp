@@ -79,6 +79,7 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/informacionPrincipalApp.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryGlosario.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryTipoGlosario.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryMensajeCarga.js"></script>
 		
 		
 		<!-- Modulos de AngularJS -->
@@ -117,8 +118,7 @@
 			<jsp:include page="componentesAplicacion/atributoClase.jsp" />		
 			<jsp:include page="componentesAplicacion/constante.jsp" />				
 			<jsp:include page="componentesAplicacion/axioma.jsp" />			
-			<jsp:include page="componentesAplicacion/regla.jsp" />						
-					
+			<jsp:include page="componentesAplicacion/regla.jsp" />							
 <!-- 
 		idProyecto:{{proyecto.idProyecto}}<br>
 		nombre:{{proyecto.nombre}}<br>
@@ -131,6 +131,29 @@
 		fecha:{{proyecto.fecha}}	<br>
 		desarrolladores:{{proyecto.desarrolladores}}
  -->		
-		</div>			
+		</div>	
+		
+	<!-- Modal de cargando-->
+	<div class="modal fade" id="modalCargando" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">{{mensajeCargando}}</h4>
+				</div>
+				<div class="inicioTexto">
+					<div class="row centered">
+						<div class="col-xs-10 divCentrado formulario" >
+							<div class="progress progress-striped active">
+							  <div class="progress-bar" role="progressbar"
+								   aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"
+								   style="width: 100%">
+							  </div>
+							</div>
+						</div>
+					</div>
+				</div>		
+			</div>
+		</div>
+	</div>				
 	</body>
 </html>
