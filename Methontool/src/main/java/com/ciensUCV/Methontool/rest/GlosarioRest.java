@@ -1,5 +1,7 @@
 package com.ciensUCV.Methontool.rest;
 
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ciensUCV.Methontool.dao.GlosarioDAO;
 import com.ciensUCV.Methontool.model.Glosario;
+import com.ciensUCV.Methontool.model.TipoGlosario;
 import com.ciensUCV.Methontool.rest.model.ElementoMensaje;
 import com.ciensUCV.Methontool.rest.model.ElementosMensaje;
 import com.ciensUCV.Methontool.rest.model.ErrorEnviar;
@@ -81,19 +84,33 @@ public class GlosarioRest {
 		logger.info("el descripcion es "+descripcion);
 		logger.info("el sinonimo es "+sinonimo);
 		logger.info("el acronimo es "+acronimo);
+		Glosario glosario = 
+				new Glosario(
+						null, 
+						nombre, 
+						null, 
+						null,
+						descripcion,
+						new TipoGlosario (
+								Integer.parseInt(tipoGlosario), 
+								null, 
+								null, 
+								null));
+					glosario.sinonimosStringToArray(sinonimo);
+					glosario.acronimosStringToArray(acronimo);
 		ElementoMensaje<Glosario> elementoMensaje = new ElementoMensaje<Glosario> ();
-//		GlosarioDAO glosarioDAO = (GlosarioDAO) context.getBean("glosarioDAO");
-//		try {
-//			elementosMensaje.setElementos(glosarioDAO.listarGlosario(idProyecto));
-//			logger.info("Cantidad de la lista es "+elementosMensaje.getElementos().size());
-//			elementosMensaje.setSucces(true);
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			elementosMensaje.setSucces(false);
-//			ErrorEnviar enviarError;
-//			enviarError = new ErrorEnviar("0050", null, "Error al traer datos de BD");
-//			elementosMensaje.getListaError().add(enviarError);
-//		}
+		GlosarioDAO glosarioDAO = (GlosarioDAO) context.getBean("glosarioDAO");
+		try {
+			elementoMensaje.setElemento(glosarioDAO.crearGlosario(idProyecto, glosario));
+			logger.info("EL id es "+glosario.getId());
+			elementoMensaje.setSucces(true);
+		} catch (Exception e) {
+			// TODO: handle exception
+			elementoMensaje.setSucces(false);
+			ErrorEnviar enviarError;
+			enviarError = new ErrorEnviar("0051", null, "Error al insertar en BD");
+			elementoMensaje.getListaError().add(enviarError);
+		}
 		return elementoMensaje;
 	}
 	
@@ -115,18 +132,40 @@ public class GlosarioRest {
 		logger.info("el sinonimo es "+sinonimo);
 		logger.info("el acronimo es "+acronimo);
 		ElementoMensaje<Glosario> elementoMensaje = new ElementoMensaje<Glosario> ();
-//		GlosarioDAO glosarioDAO = (GlosarioDAO) context.getBean("glosarioDAO");
-//		try {
-//			elementosMensaje.setElementos(glosarioDAO.listarGlosario(idProyecto));
-//			logger.info("Cantidad de la lista es "+elementosMensaje.getElementos().size());
-//			elementosMensaje.setSucces(true);
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			elementosMensaje.setSucces(false);
-//			ErrorEnviar enviarError;
-//			enviarError = new ErrorEnviar("0050", null, "Error al traer datos de BD");
-//			elementosMensaje.getListaError().add(enviarError);
-//		}
+		String salida = null;
+		Glosario glosario = 
+				new Glosario(
+						String.valueOf(idGlosario), 
+						nombre, 
+						null, 
+						null,
+						descripcion,
+						new TipoGlosario (
+								Integer.parseInt(tipoGlosario), 
+								null, 
+								null, 
+								null));
+					glosario.sinonimosStringToArray(sinonimo);
+					glosario.acronimosStringToArray(acronimo);
+		GlosarioDAO glosarioDAO = (GlosarioDAO) context.getBean("glosarioDAO");
+		try {
+			salida = glosarioDAO.actualizarGlosario(glosario);
+			if(salida.equalsIgnoreCase(glosario.getId())){
+				elementoMensaje.setSucces(true);
+				elementoMensaje.setElemento(glosario);
+			}else{
+				elementoMensaje.setSucces(false);
+				//Debo desarrollar aca como manejar el error enviado por el guardar en BD
+			}
+			logger.info("EL id es "+glosario.getId());
+			elementoMensaje.setSucces(true);
+		} catch (Exception e) {
+			// TODO: handle exception
+			elementoMensaje.setSucces(false);
+			ErrorEnviar enviarError;
+			enviarError = new ErrorEnviar("0051", null, "Error al insertar en BD");
+			elementoMensaje.getListaError().add(enviarError);
+		}
 		return elementoMensaje;
 	}
 }

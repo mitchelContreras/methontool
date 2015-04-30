@@ -30,7 +30,7 @@ function ControllerGlosario(
 	var cnGlosario = this;
 	
 	
-	cnGlosario.soyActual = false; //debo cambiarlo a false al terminar el desarrollo 
+	cnGlosario.soyActual = true; //debo cambiarlo a false al terminar el desarrollo -1
 	cnGlosario.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnGlosario.modificar = false; //si se permite modificar los valores 
 	cnGlosario.enBlanco = true;	    //mostrar seccion en blanco
@@ -53,6 +53,10 @@ function ControllerGlosario(
 	cnGlosario.listaGlosario = [];
 	cnGlosario.listaTipoGlosario = [];
 	
+	
+	//toca borrar
+		listarGlosario();
+		cnGlosario.listaTipoGlosario = FactoryTipoGlosario.getListaElemento();
 //-------------------Funciones----------------------------------	
 	
 	cnGlosario.eliminarSinonimo = eliminarSinonimo;
@@ -74,6 +78,10 @@ function ControllerGlosario(
 		console.log(cnGlosario.descripcion);
 		console.log(cnGlosario.listaSinonimo);
 		console.log(cnGlosario.listaAcronimo);
+		
+		var salida;
+		salida = FactoryGlosario.crearElemento(cnGlosario.varNombre, cnGlosario.varTipo, cnGlosario.descripcion, cnGlosario.listaSinonimo, cnGlosario.listaAcronimo);
+		console.log("La salida en glosario es "+salida.succes);
 	}
 	
 	function crearGlosario(){
@@ -113,8 +121,23 @@ function ControllerGlosario(
 		seleccioneGlosario(cnGlosario.seleccionado); //Llamo con el id del seleccionado porque es su posicion en el arreglo lo que necesito y no su id en bd
 	}
 	function modifiqueGlosario(){
+		console.log(cnGlosario.idGlosario);
+		console.log(cnGlosario.varNombre);
+		console.log(cnGlosario.varTipo);
+		console.log(cnGlosario.descripcion);
+		console.log(cnGlosario.listaSinonimo);
+		console.log(cnGlosario.listaAcronimo);
+		
+		var salida;
+		salida = FactoryGlosario.actualizarElemento(cnGlosario.idGlosario
+				, cnGlosario.varNombre
+				,cnGlosario.varTipo
+				,cnGlosario.descripcion
+				,cnGlosario.listaSinonimo
+				,cnGlosario.listaAcronimo);
 		
 	}
+	
 	function modificarGlosario(){
 		cnGlosario.disabled = false;
 		cnGlosario.modificar = true;
@@ -195,9 +218,6 @@ function ControllerGlosario(
             cnGlosario.listaTipoGlosario = FactoryTipoGlosario.getListaElemento();
             console.log("despes de listarTIpoGlosario");
             
-//            FactoryGlosario.crearElemento('nombre', 'tipoGlosario', 'descripcion', 'sinonimo', 'acronimo');
-            FactoryGlosario.actualizarElemento(2, 'nombre', 'tipoGlosario', 'descripcion', 'sinonimo', 'acronimo');
-            console.log("paso por aca !!!!");
     	}
     }, false);
 }

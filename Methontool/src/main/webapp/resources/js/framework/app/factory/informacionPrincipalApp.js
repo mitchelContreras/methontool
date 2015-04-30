@@ -37,7 +37,7 @@ InformacionPrincipalApp.$inject = ['$rootScope'];
 			exportar : false
 		};
 		$rootScope.proyecto ={
-				idProyecto : 0,
+				idProyecto : 1,
 				nombre : "",
 				fuenteConocimiento : [],
 				dominio : "",

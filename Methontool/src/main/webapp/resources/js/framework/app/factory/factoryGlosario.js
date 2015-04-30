@@ -14,6 +14,7 @@ angular.module('methontool')
 	                           ,'InformacionPrincipalApp'
 	                           ,'$crearGlosario'
 	                           ,'$actualizarGlosario'
+	                           ,'FactoryMensajeCarga'
 	                           ];
 
 	function FactoryGlosario (
@@ -21,6 +22,7 @@ angular.module('methontool')
 			,InformacionPrincipalApp
 			,$crearGlosario
 			,$actualizarGlosario
+			,FactoryMensajeCarga
 			){
 		
 		var funcion = {
@@ -37,7 +39,7 @@ angular.module('methontool')
 					return crearElemento(nombre, tipoGlosario, descripcion, sinonimo, acronimo);
 				},
 				actualizarElemento: function (idGlosario, nombre, tipoGlosario, descripcion, sinonimo, acronimo){
-					actualizarElemento(idGlosario, nombre, tipoGlosario, descripcion, sinonimo, acronimo);
+					return actualizarElemento(idGlosario, nombre, tipoGlosario, descripcion, sinonimo, acronimo);
 				},
 				consultarElemento: function (id){
 					return consultarElemento (id);
@@ -50,43 +52,54 @@ angular.module('methontool')
 				}
 			};
 		
-		function actualizarElemento(idGlosario, nombre, tipoGlosario, descripcion, sinonimo, acronimo){
-			console.log("entre en el actualizarElemento");
+		function actualizarElemento(idGlosario, nombre, tipoGlosario, descripcion, listaSinonimo, listaAcronimo){
+			
+			var sinonimos= "";
+			var i;
+			for (i in listaSinonimo) {
+				sinonimos = sinonimos + listaSinonimo[i]; 
+				if(i != (listaSinonimo.length-1) ){
+					sinonimos = sinonimos  + '||||';
+				}
+			}
+			
+			var acronimos= "";
+			var i;
+			for (i in listaAcronimo) {
+				acronimos = acronimos + listaAcronimo[i]; 
+				if(i != (listaAcronimo.length-1) ){
+					acronimos = acronimos  + '||||';
+				}
+			}
+			
+			console.log("dentro de actualizar elemento");
+					console.log(idGlosario);
+					console.log(nombre);
+					console.log(tipoGlosario);
+					console.log(descripcion);
+					console.log(sinonimos);
+					console.log(acronimos);
+					
 			var semaforo = false;
 			$actualizarGlosario.put({
 				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
 				,idGlosario: idGlosario
 				,'nombre' : nombre
-				,'tipoGlosario' : tipoGlosario
+				,'tipoGlosario' : tipoGlosario.id
 				,'descripcion' : descripcion
-				,'sinonimo' : sinonimo
-				,'acronimo' : acronimo
+				,'sinonimo' : sinonimos
+				,'acronimo' : acronimos
 				},{}).$promise.then(
 	                function(salida) {
 	                   // success
-	                	console.log("Llegue al servidor");
-	                    if(salida.succes){
-	                    	console.log("succes es true en $crearGlosario");
-	                    	
-	                    }else{
-	                        if(!salida.succes){
-	                        	console.log("succes es false en $crearGlosario");
-	                        	semaforo = true;
-	                        }else{
-	                            console.log("ni si ni no $crearGlosario");
-	                            semaforo = true;
-	                        }
-	                    }
+	                	console.log("salida es "+salida.succes);
+	                	return salida;
 	                }, 
 	                function(errResponse) {
 	                   console.log("error es "+errResponse);
-	                   semaforo = true;
 	                }
 	        );	
-//			while (!semaforo) {
-//				  // We're just waiting.
-//			}
-			console.log("semafooooorooO");
+			
 		}
 		
 		function getListaElemento(){
@@ -129,31 +142,48 @@ angular.module('methontool')
 		function consultarElemento (id){
 			return true;
 		}
-		function crearElemento(nombre, tipoGlosario, descripcion, sinonimo, acronimo){
+		function crearElemento(nombre, tipoGlosario, descripcion, listaSinonimo, listaAcronimo){
+			var sinonimos= "";
+			var i;
+			for (i in listaSinonimo) {
+				sinonimos = sinonimos + listaSinonimo[i]; 
+				if(i != (listaSinonimo.length-1) ){
+					sinonimos = sinonimos  + '||||';
+				}
+			}
+			
+			var acronimos= "";
+			var i;
+			for (i in listaAcronimo) {
+				acronimos = acronimos + listaAcronimo[i]; 
+				if(i != (listaAcronimo.length-1) ){
+					acronimos = acronimos  + '||||';
+				}
+			}
+
+			console.log(nombre);
+			console.log(tipoGlosario);
+			console.log(descripcion);
+			console.log(sinonimos);
+			console.log(acronimos);
+			FactoryMensajeCarga.abrirMensaje("Guardando nuevo glosario");
+			
 			$crearGlosario.post({
 				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
 				,'nombre' : nombre
-				,'tipoGlosario' : tipoGlosario
+				,'tipoGlosario' : tipoGlosario.id
 				,'descripcion' : descripcion
-				,'sinonimo' : sinonimo
-				,'acronimo' : acronimo
+				,'sinonimo' : sinonimos
+				,'acronimo' : acronimos
 				},{}).$promise.then(
 	                function(salida) {
-	                   // success
-	                	console.log("Llegue al servidor");
-	                    if(salida.succes){
-	                    	console.log("succes es true en $crearGlosario");
-	                    	
-	                    }else{
-	                        if(!salida.succes){
-	                        	console.log("succes es false en $crearGlosario");
-	                        }else{
-	                            console.log("ni si ni no $crearGlosario");
-	                        }
-	                    }
+	                    FactoryMensajeCarga.cerrarMensaje();
+	                    console.log("la salida en factoryGlosario es "+salida.succes);
+	                    return salida;
 	                }, 
 	                function(errResponse) {
 	                   console.log("error es "+errResponse);
+	                   FactoryMensajeCarga.cerrarMensaje();
 	                }
 	        );		
 			

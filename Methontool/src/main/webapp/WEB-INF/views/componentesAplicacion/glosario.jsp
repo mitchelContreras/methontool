@@ -1,12 +1,20 @@
 <div ng-controller="ControllerGlosario  as cnGlosario">
  <div ng-show="cnGlosario.soyActual"> 
 		<div class="row CampoTrabajo">
-			<div class="col-md-4 cuerpoUno">	
+			<div class="col-md-4 cuerpoUno">
 				<div class="inicioTexto">
-					<button  class="btn btn-primary" ng-click="cnGlosario.crearGlosario()" >Agregar</button>
-					
-					<p><input type="text" ng-model="test"></p>
-					
+					<div class="form-group row">
+						<div class="col-xs-9">
+							<input type="text" ng-model="test" class="form-control" placeholder="Buscar" ng-disabled="false">
+						</div>
+						<div class="col-xs-1">
+							<div class="btn-group">
+								<button ng-click="cnGlosario.crearGlosario()" class="btn btn-link "  aria-label="Center Align" type="button">
+								    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								</button>
+							</div>									
+						</div>
+					</div>	
 					<div class="list-group">
 						<div ng-repeat="glosario in cnGlosario.listaGlosario | filter:test">
 							<a href="#" class="list-group-item" 
