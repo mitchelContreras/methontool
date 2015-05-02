@@ -91,12 +91,37 @@ function ControllerGlosario(
 	cnGlosario.crearGlosario = crearGlosario;
 	cnGlosario.creeGlosario = creeGlosario;
 	
+	function validarCampos(nombre, varTipo, descripcion){
+		if(jQuery.isEmptyObject(varTipo) 
+				|| nombre.length == 0
+				|| descripcion.length == 0){
+			cnGlosario.alertNegativa = true;
+			cnGlosario.mensajeAlertNegativa = "Debe llenar todos los campos obligatorios (*)";
+			return false;
+		}
+		if(nombre.length > 50){
+			cnGlosario.alertNegativa = true;
+			cnGlosario.mensajeAlertNegativa = "La longitud del Nombre no puede exceder de 50 caracteres";
+			return false;
+		}
+		if(descripcion.length > 500){
+			cnGlosario.alertNegativa = true;
+			cnGlosario.mensajeAlertNegativa = "La longitud de la Descripción no puede exceder de 500 caracteres";
+			return false;
+		}
+		return true;
+	}
+	
 	function creeGlosario(){
 		console.log(cnGlosario.varNombre);
 		console.log(cnGlosario.varTipo);
 		console.log(cnGlosario.descripcion);
 		console.log(cnGlosario.listaSinonimo);
 		console.log(cnGlosario.listaAcronimo);
+		
+		if(!validarCampos(cnGlosario.varNombre, cnGlosario.varTipo, cnGlosario.descripcion)){
+			return false;
+		}
 		
 		var salida;
 		salida = FactoryGlosario.crearElemento(cnGlosario.varNombre, cnGlosario.varTipo, cnGlosario.descripcion, cnGlosario.listaSinonimo, cnGlosario.listaAcronimo);
@@ -159,6 +184,10 @@ function ControllerGlosario(
 		console.log(cnGlosario.descripcion);
 		console.log(cnGlosario.listaSinonimo);
 		console.log(cnGlosario.listaAcronimo);
+		
+		if(!validarCampos(cnGlosario.varNombre, cnGlosario.varTipo, cnGlosario.descripcion)){
+			return false;
+		}
 		
 		var salida;
 		salida = FactoryGlosario.actualizarElemento(cnGlosario.idGlosario

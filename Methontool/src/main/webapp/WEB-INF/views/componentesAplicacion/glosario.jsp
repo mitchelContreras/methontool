@@ -9,7 +9,9 @@
 						</div>
 						<div class="col-xs-1">
 							<div class="btn-group">
-								<button ng-click="cnGlosario.crearGlosario()" class="btn btn-link "  aria-label="Center Align" type="button">
+								<button ng-click="cnGlosario.crearGlosario()" class="btn btn-link "  
+								aria-label="Center Align" type="button" 
+								data-toggle="tooltip" data-placement="top" title="Agregar Glosario">
 								    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 								</button>
 							</div>									
@@ -17,22 +19,12 @@
 					</div>	
 					<div class="list-group">
 						<div ng-repeat="glosario in cnGlosario.listaGlosario | filter:test">
+						<!-- { 'nombre': test, 'sinonimos': test ,'acronimos': test} -->
 							<a href="#" class="list-group-item" 
 							ng-class="{active: cnGlosario.seleccionado ==  $index}" 
 							ng-click="cnGlosario.seleccioneGlosario ($index)"> {{glosario.nombre}}</a>
 						</div>
-					</div>	
-
-<!-- 
-cnGlosario.seleccionado = $index
-ng-class="{'active':}" 
-active
-					<ul>
-					  <li ng-repeat="glosario in cnGlosario.listaGlosario | filter:test">
-					    {{glosario.nombre}}
-					  </li>
-					</ul>
- -->					
+					</div>				
 				</div>	
 			
 			</div>
@@ -41,10 +33,18 @@ active
 			</div>
 			<div class="col-md-8 cuerpoDos" ng-show="!cnGlosario.enBlanco">
 				<div class="inicioTexto">
+					<div align="center" class="alert alert-success alert-dismissible" ng-if="cnGlosario.alertPositiva">
+				   		 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				   		 {{cnGlosario.mensajeAlertPositiva}}
+					</div>
+					<div align="center" class="alert alert-danger alert-dismissible" ng-if="cnGlosario.alertNegativa">
+				   		 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				   		 <strong>Error!</strong> {{cnGlosario.mensajeAlertNegativa}}
+					</div>					
 					<form class=" form-horizontal">
 						<div class="form-group">
 							<div class="col-xs-4 control-label" >
-								<label >Nombre:</label>
+								<span class="obligatorio" ng-show="cnGlosario.modificar">*&nbsp;</span><label >Nombre:</label>
 							</div>
 							<div class="col-xs-5 ">
 								<input type="text" class="form-control" placeholder="Nombre" ng-disabled="cnGlosario.disabled" ng-model="cnGlosario.varNombre">
@@ -52,7 +52,7 @@ active
 						</div>	
 						<div class="form-group">
 							<div class="col-xs-4 control-label" >
-								<label>Tipo de elemento:</label>
+								<span class="obligatorio" ng-show="cnGlosario.modificar">*&nbsp;</span><label>Tipo de elemento:</label>
 							</div>
 							<div class="col-xs-5">
 									<select class="form-control" ng-disabled="cnGlosario.disabled" ng-model="cnGlosario.varTipo"
@@ -63,7 +63,7 @@ active
 						</div>
 						<div class="form-group">
 							<div class="col-xs-4 control-label" >
-								<label>Descripción:</label>
+								<span class="obligatorio" ng-show="cnGlosario.modificar">*&nbsp;</span><label>Descripción:</label>
 							</div>
 							<div class="col-xs-5">
 								<textarea class="form-control" rows="3" ng-disabled="cnGlosario.disabled" ng-model="cnGlosario.descripcion"></textarea>
@@ -80,14 +80,21 @@ active
 									</div>
 									<div class="col-xs-3">
 										<div class="btn-group">
-											<button ng-click="cnGlosario.eliminarSinonimo($index)" class="btn btn-link " ng-class="{'disabled': cnGlosario.disabled == true}" ng-show="cnGlosario.modificar" aria-label="Center Align" type="button">
+											<button ng-click="cnGlosario.eliminarSinonimo($index)" 
+											class="btn btn-link " 
+											ng-class="{'disabled': cnGlosario.disabled == true}" 
+											ng-show="cnGlosario.modificar" aria-label="Center Align" type="button"
+											data-toggle="tooltip" data-placement="top" title="Eliminar Sinónimo">
 											    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 											</button>
 										</div>									
 									</div>
 								</div>
 								<div>
-									<button ng-click="cnGlosario.agregarSinonimo()" class="btn btn-link " ng-class="{'disabled': cnGlosario.disabled == true}" ng-show="cnGlosario.modificar" aria-label="Center Align" type="button">
+									<button ng-click="cnGlosario.agregarSinonimo()" class="btn btn-link " 
+									ng-class="{'disabled': cnGlosario.disabled == true}" 
+									ng-show="cnGlosario.modificar" aria-label="Center Align" type="button"
+									data-toggle="tooltip" data-placement="top" title="Agregar Sinónimo">
 									    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 									</button>							
 								</div>
@@ -104,20 +111,35 @@ active
 									</div>
 									<div class="col-xs-3">
 										<div class="btn-group">
-											<button ng-click="cnGlosario.eliminarAcronimo($index)" class="btn btn-link " ng-class="{'disabled': cnGlosario.disabled == true}" ng-show="cnGlosario.modificar" aria-label="Center Align" type="button">
+											<button ng-click="cnGlosario.eliminarAcronimo($index)"
+											 class="btn btn-link "
+											 ng-class="{'disabled': cnGlosario.disabled == true}"
+											 ng-show="cnGlosario.modificar"
+											 aria-label="Center Align" type="button"
+											 data-toggle="tooltip" data-placement="top" title="Eliminar Acrónimo">
 											    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 											</button>
 										</div>									
 									</div>
 								</div>
 								<div>
-									<button ng-click="cnGlosario.agregarAcronimo()" class="btn btn-link " ng-class="{'disabled': cnGlosario.disabled == true}" ng-show="cnGlosario.modificar" aria-label="Center Align" type="button">
+									<button ng-click="cnGlosario.agregarAcronimo()"
+									 class="btn btn-link " 
+									 ng-class="{'disabled': cnGlosario.disabled == true}" 
+									 ng-show="cnGlosario.modificar" 
+									 aria-label="Center Align" type="button"
+									 data-toggle="tooltip" data-placement="top" title="Agregar Acrónimo">
 									    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 									</button>							
 								</div>
 							</div>
 						</div>
-						<!-- en crear -->					
+						<!-- en crear -->	
+						<div class="form-group">
+							<div class="col-xs-offset-3 col-xs-6">
+								<span class="obligatorio" style="text-align: center;" ng-show="cnGlosario.modificar">Los campos con (*) son obligatorios</span>				
+							</div>
+						</div>
 						<div ng-show="cnGlosario.enCrear">
 							<div class="form-group">
 								<div class="col-xs-offset-4 col-xs-5">
