@@ -13,6 +13,9 @@ body {
    margin: 0 !important;
 }
 
+.obligatorio{
+	color:#FF0000;
+}
 .cabecera{
 	height: 100px;
 }
