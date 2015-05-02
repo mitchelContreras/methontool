@@ -17,6 +17,7 @@ ControllerGlosario.$inject = ['$rootScope'
                               ,'$listarGlosario'
                               ,'FactoryTipoGlosario'
                               ,'FactoryGlosario'
+                              ,'$scope'
                               ];	
 
 function ControllerGlosario(
@@ -25,12 +26,13 @@ function ControllerGlosario(
     	,$listarGlosario
     	,FactoryTipoGlosario
     	,FactoryGlosario
+    	,$scope
     ){
 	console.log("Entro en ControllerGlosario");
 	var cnGlosario = this;
 	
 	
-	cnGlosario.soyActual = true; //debo cambiarlo a false al terminar el desarrollo -1
+	cnGlosario.soyActual = false; //debo cambiarlo a false al terminar el desarrollo 
 	cnGlosario.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnGlosario.modificar = false; //si se permite modificar los valores 
 	cnGlosario.enBlanco = true;	    //mostrar seccion en blanco
@@ -55,8 +57,25 @@ function ControllerGlosario(
 	
 	
 	//toca borrar
-		listarGlosario();
-		cnGlosario.listaTipoGlosario = FactoryTipoGlosario.getListaElemento();
+//	var glosario;
+//	glosario = FactoryGlosario.getListaElemento();
+//	glosario.then(
+//            function(salida) {
+//                if(salida.succes){
+//                	FactoryGlosario.setListaElemento (salida.elementos);
+//                	FactoryGlosario.setYaConsulte (true);
+//                	cnGlosario.listaGlosario = FactoryGlosario.getListaElemento();
+//                }else{
+//                    if(!salida.succes){
+//                    	console.log("succes es false en getListaElemento Glosario");
+//                    }else{
+//                        console.log("No en getListaElemento Glosario");
+//                    }
+//                }
+//            }
+//    );
+//	cnGlosario.listaTipoGlosario = FactoryTipoGlosario.getListaElemento();
+	
 //-------------------Funciones----------------------------------	
 	
 	cnGlosario.eliminarSinonimo = eliminarSinonimo;
@@ -81,7 +100,20 @@ function ControllerGlosario(
 		
 		var salida;
 		salida = FactoryGlosario.crearElemento(cnGlosario.varNombre, cnGlosario.varTipo, cnGlosario.descripcion, cnGlosario.listaSinonimo, cnGlosario.listaAcronimo);
-		console.log("La salida en glosario es "+salida.succes);
+		console.log("salida es "+salida);
+		salida.then(
+            function(aux) {
+                if(aux.succes){
+                	FactoryGlosario.agregarElemento(aux.elemento);
+                	cnGlosario.listaGlosario = FactoryGlosario.getListaElemento();
+                	seleccioneGlosario(cnGlosario.listaGlosario.indexOf(aux.elemento));
+                }else{
+                	
+                }
+            }
+        );
+
+		
 	}
 	
 	function crearGlosario(){
@@ -135,6 +167,17 @@ function ControllerGlosario(
 				,cnGlosario.descripcion
 				,cnGlosario.listaSinonimo
 				,cnGlosario.listaAcronimo);
+		salida.then(
+            function(aux) {
+                // success
+                if(aux.succes){
+                	console.log("actualizar es true");
+                	FactoryGlosario.modificarElemento(aux.elemento);
+                	cnGlosario.listaGlosario = FactoryGlosario.getListaElemento();
+                	seleccioneGlosario(cnGlosario.listaGlosario.indexOf(aux.elemento));
+                }
+             }
+		);	
 		
 	}
 	
@@ -177,27 +220,6 @@ function ControllerGlosario(
 	function listarGlosario(){
 		console.log("en listarGlosario");
 		cnGlosario.listaGlosario = FactoryGlosario.getListaElemento();
-		 console.log("cantidad de glosario son en glosario "+cnGlosario.listaGlosario.length);
-//		$listarGlosario.get({id: InformacionPrincipalApp.getProyecto().idProyecto}).$promise.then(
-//                function(salida) {
-//                   // success
-//                    if(salida.succes){
-//                    	console.log("succes es true");
-//                    	FactoryGlosario.setListaGlosario (salida.elementos);
-//                        cnGlosario.listaGlosario = FactoryGlosario.getListaGlosario();
-//                        console.log("cantidad de glosario son "+cnGlosario.listaGlosario.length);
-//                    }else{
-//                        if(!salida.succes){
-//                            console.log("listaProyecto es false");
-//                        }else{
-//                            console.log("No entro");
-//                        }
-//                    }
-//                }, 
-//                function(errResponse) {
-//                   // fail
-//                }
-//        );
 	}
 	
     $rootScope.$on('menuGlosarioPrincipal', function(event, data){

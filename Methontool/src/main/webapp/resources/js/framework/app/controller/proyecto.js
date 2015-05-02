@@ -65,8 +65,28 @@ angular.module('methontool')
 	    		//busco los valores de las listas a este nivel
 	    		$('#myModal').modal('hide');
 	    		FactoryMensajeCarga.abrirMensaje("Cargando");
+	    		var glosario;
+	    		
+	    		//Siempre sera la primera vez que traigo las listas
+	    		glosario = FactoryGlosario.getListaElemento();
+	    		console.log("salida de getListaElemento "+glosario);
+	    		glosario.then(
+		                function(salida) {
+		                    if(salida.succes){
+		                    	FactoryGlosario.setListaElemento (salida.elementos);
+		                    	FactoryGlosario.setYaConsulte (true);
+		                    }else{
+		                        if(!salida.succes){
+		                        	console.log("succes es false en getListaElemento Glosario");
+		                        }else{
+		                            console.log("No en getListaElemento Glosario");
+		                        }
+		                    }
+		                }
+		        );
+	    		
 	    		FactoryTipoGlosario.getListaElemento();
-	    		FactoryGlosario.getListaElemento();
+
 	    		FactoryMensajeCarga.cerrarMensaje();
 	    	}
 	    	

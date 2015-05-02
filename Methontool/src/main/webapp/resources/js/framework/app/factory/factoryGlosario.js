@@ -26,14 +26,11 @@ angular.module('methontool')
 			){
 		
 		var funcion = {
-				getListaError: function (){
-					return listaErrores;
-				},
-				existeError: function (){
-					return existeError;
-				},
 				getListaElemento: function (){
 					return getListaElemento();
+				},
+				setListaElemento: function (entrada){
+					listaObjeto = entrada;
 				},
 				crearElemento: function (nombre, tipoGlosario, descripcion, sinonimo, acronimo){
 					return crearElemento(nombre, tipoGlosario, descripcion, sinonimo, acronimo);
@@ -49,8 +46,29 @@ angular.module('methontool')
 				},
 				eliminarElemento: function (id){
 					return eliminarElemento (id);
+				}, 
+				getYaConsulte: function (){
+					return yaConsulte;
+				},
+				setYaConsulte: function (entrada){
+					yaConsulte = entrada;
+				},
+				modificarElemento: function (glosario){
+					modificarElemento (glosario);
 				}
 			};
+		
+		function modificarElemento (glosario){
+			var i = 0;
+			for (i = 0; i<listaObjeto.length;i++){
+				console.log("el objeto es "+listaObjeto[i].id);
+				if(glosario.id == listaObjeto[i].id){
+					console.log("elimine");
+					listaObjeto.splice(i, 1);
+				}
+			}
+			listaObjeto.push(glosario);
+		}
 		
 		function actualizarElemento(idGlosario, nombre, tipoGlosario, descripcion, listaSinonimo, listaAcronimo){
 			
@@ -79,9 +97,7 @@ angular.module('methontool')
 					console.log(descripcion);
 					console.log(sinonimos);
 					console.log(acronimos);
-					
-			var semaforo = false;
-			$actualizarGlosario.put({
+			return 	$actualizarGlosario.put({
 				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
 				,idGlosario: idGlosario
 				,'nombre' : nombre
@@ -89,17 +105,7 @@ angular.module('methontool')
 				,'descripcion' : descripcion
 				,'sinonimo' : sinonimos
 				,'acronimo' : acronimos
-				},{}).$promise.then(
-	                function(salida) {
-	                   // success
-	                	console.log("salida es "+salida.succes);
-	                	return salida;
-	                }, 
-	                function(errResponse) {
-	                   console.log("error es "+errResponse);
-	                }
-	        );	
-			
+				},{}).$promise;
 		}
 		
 		function getListaElemento(){
@@ -109,35 +115,16 @@ angular.module('methontool')
 				return listaObjeto;
 			}else{
 				console.log("antes del rest");
-				$listarGlosario.get({id: InformacionPrincipalApp.getProyecto().idProyecto}).$promise.then(
-		                function(salida) {
-		                   // success
-		                	
-		                    if(salida.succes){
-		                    	console.log("succes es true en getListaElemento Glosario");
-		                    	listaObjeto = salida.elementos;
-		                        console.log("cantidad de glosario son "+listaObjeto.length);
-		                        yaConsulte = true;
-		                    }else{
-		                        if(!salida.succes){
-		                        	console.log("succes es false en getListaElemento Glosario");
-		                        }else{
-		                            console.log("No en getListaElemento Glosario");
-		                        }
-		                    }
-		                }, 
-		                function(errResponse) {
-		                   console.log("error es "+errResponse);
-		                }
-		        );
-			}
-			return listaObjeto;
+				return $listarGlosario.get
+				({id: InformacionPrincipalApp.getProyecto().idProyecto})
+				.$promise;
+			} 
 		}
 		function eliminarElemento (id){
 			return true;
 		}
 		function agregarElemento (objeto){
-			return true;
+			listaObjeto.push(objeto);
 		}
 		function consultarElemento (id){
 			return true;
@@ -166,29 +153,14 @@ angular.module('methontool')
 			console.log(descripcion);
 			console.log(sinonimos);
 			console.log(acronimos);
-			FactoryMensajeCarga.abrirMensaje("Guardando nuevo glosario");
-			
-			$crearGlosario.post({
-				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
-				,'nombre' : nombre
-				,'tipoGlosario' : tipoGlosario.id
-				,'descripcion' : descripcion
-				,'sinonimo' : sinonimos
-				,'acronimo' : acronimos
-				},{}).$promise.then(
-	                function(salida) {
-	                    FactoryMensajeCarga.cerrarMensaje();
-	                    console.log("la salida en factoryGlosario es "+salida.succes);
-	                    return salida;
-	                }, 
-	                function(errResponse) {
-	                   console.log("error es "+errResponse);
-	                   FactoryMensajeCarga.cerrarMensaje();
-	                }
-	        );		
-			
-			
-			return true;
+			return $crearGlosario.post({
+			idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
+			,'nombre' : nombre
+			,'tipoGlosario' : tipoGlosario.id
+			,'descripcion' : descripcion
+			,'sinonimo' : sinonimos
+			,'acronimo' : acronimos
+			},{}).$promise;
 		}
 		
 		var listaObjeto = [];
