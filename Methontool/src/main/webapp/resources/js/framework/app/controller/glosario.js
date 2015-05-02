@@ -131,7 +131,7 @@ function ControllerGlosario(
                 if(aux.succes){
                 	FactoryGlosario.agregarElemento(aux.elemento);
                 	cnGlosario.listaGlosario = FactoryGlosario.getListaElemento();
-                	seleccioneGlosario(cnGlosario.listaGlosario.indexOf(aux.elemento));
+                	seleccioneGlosario(aux.elemento);
                 }else{
                 	
                 }
@@ -157,8 +157,10 @@ function ControllerGlosario(
 		cnGlosario.idGlosario = "";
 		
 	}
-	function seleccioneGlosario(id){
-		cnGlosario.seleccionado = id;
+	function seleccioneGlosario(elemento){
+		var id;
+		id = cnGlosario.listaGlosario.indexOf(elemento);
+		cnGlosario.seleccionado = elemento.id;
 		cnGlosario.enCrear = false;
 		cnGlosario.enBlanco = false;
 		cnGlosario.modificar = false;
@@ -175,7 +177,7 @@ function ControllerGlosario(
 	function cancelarModificarGlosario(){
 		cnGlosario.disabled = true;
 		cnGlosario.modificar = false;
-		seleccioneGlosario(cnGlosario.seleccionado); //Llamo con el id del seleccionado porque es su posicion en el arreglo lo que necesito y no su id en bd
+		seleccioneGlosario({'id':cnGlosario.idGlosario}); //Llamo con el id del seleccionado porque es su posicion en el arreglo lo que necesito y no su id en bd
 	}
 	function modifiqueGlosario(){
 		console.log(cnGlosario.idGlosario);
@@ -203,7 +205,7 @@ function ControllerGlosario(
                 	console.log("actualizar es true");
                 	FactoryGlosario.modificarElemento(aux.elemento);
                 	cnGlosario.listaGlosario = FactoryGlosario.getListaElemento();
-                	seleccioneGlosario(cnGlosario.listaGlosario.indexOf(aux.elemento));
+                	seleccioneGlosario(aux.elemento);
                 }
              }
 		);	
