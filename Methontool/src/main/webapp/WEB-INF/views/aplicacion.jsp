@@ -74,7 +74,9 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/axioma.js"></script>
 		<!-- Reglas -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/regla.js"></script>
-				
+		<!-- Taxonomia -->
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/taxonomia.js"></script>				
+		
 		<!-- factory -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/informacionPrincipalApp.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryGlosario.js"></script>
@@ -118,7 +120,8 @@
 			<jsp:include page="componentesAplicacion/atributoClase.jsp" />		
 			<jsp:include page="componentesAplicacion/constante.jsp" />				
 			<jsp:include page="componentesAplicacion/axioma.jsp" />			
-			<jsp:include page="componentesAplicacion/regla.jsp" />							
+			<jsp:include page="componentesAplicacion/regla.jsp" />		
+			<jsp:include page="componentesAplicacion/taxonomia.jsp" />								
 <!-- 
 		idProyecto:{{proyecto.idProyecto}}<br>
 		nombre:{{proyecto.nombre}}<br>

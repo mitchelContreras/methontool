@@ -61,8 +61,7 @@ function ControllerCabecera(
     		console.log("concepto no se ha implementado");
     	}
     	function menuTaxonomiaPrincipal(){
-    		//$rootScope.$broadcast('menuTaxonomiaPrincipal');
-    		console.log("taxonomia no se ha implementado");
+    		$rootScope.$broadcast('menuTaxonomiaPrincipal');
     	}
     	function menuRelacionPrincipal(){
     		$rootScope.$broadcast('menuRelacionPrincipal');
