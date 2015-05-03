@@ -75,11 +75,14 @@ angular.module('methontool')
 		                    if(salida.succes){
 		                    	FactoryGlosario.setListaElemento (salida.elementos);
 		                    	FactoryGlosario.setYaConsulte (true);
+		                    	FactoryMensajeCarga.cerrarMensaje();
 		                    }else{
 		                        if(!salida.succes){
 		                        	console.log("succes es false en getListaElemento Glosario");
+		                        	FactoryMensajeCarga.cerrarMensaje();
 		                        }else{
 		                            console.log("No en getListaElemento Glosario");
+		                            FactoryMensajeCarga.cerrarMensaje();
 		                        }
 		                    }
 		                }

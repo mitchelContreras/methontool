@@ -49,7 +49,7 @@
 								<div ng-repeat="glosario in cnGlosario.listaGlosario | orderBy: 'nombre' | filter:{nombre: filtroGlosario.nombre}">
 									<a href="#" class="list-group-item" 
 									ng-class="{active: cnGlosario.seleccionado == glosario.id}"
-									ng-click="cnGlosario.seleccioneGlosario (glosario)"> {{glosario.nombre}}</a>
+									ng-click="cnGlosario.seleccioneGlosario (glosario, 1)"> {{glosario.nombre}}</a>
 								</div>
 							</div>	
 						
@@ -59,7 +59,7 @@
 								<div ng-repeat="glosario in cnGlosario.listaGlosario | orderBy: 'nombre' | filter:{sinonimos:filtroGlosario.sinonimo}">
 									<a href="#" class="list-group-item" 
 									ng-class="{active: cnGlosario.seleccionado == glosario.id}"
-									ng-click="cnGlosario.seleccioneGlosario (glosario)"> {{glosario.nombre}}</a>
+									ng-click="cnGlosario.seleccioneGlosario (glosario, 1)"> {{glosario.nombre}}</a>
 								</div>
 							</div>
 						</div>
@@ -68,7 +68,7 @@
 								<div ng-repeat="glosario in cnGlosario.listaGlosario | orderBy: 'nombre' | filter:{acronimos:filtroGlosario.acronimo}">
 									<a href="#" class="list-group-item" 
 									ng-class="{active: cnGlosario.seleccionado == glosario.id}"
-									ng-click="cnGlosario.seleccioneGlosario (glosario)"> {{glosario.nombre}}</a>
+									ng-click="cnGlosario.seleccioneGlosario (glosario, 1)"> {{glosario.nombre}}</a>
 								</div>
 							</div>
 						</div>
@@ -77,7 +77,7 @@
 								<div ng-repeat="glosario in cnGlosario.listaGlosario | orderBy: 'nombre'">
 									<a href="#" class="list-group-item" 
 									ng-class="{active: cnGlosario.seleccionado == glosario.id}"
-									ng-click="cnGlosario.seleccioneGlosario (glosario)"> {{glosario.nombre}}</a>
+									ng-click="cnGlosario.seleccioneGlosario (glosario, 1)"> {{glosario.nombre}}</a>
 								</div>
 							</div>					
 						</div>		
@@ -91,11 +91,9 @@
 			<div class="col-md-8 cuerpoDos" ng-show="!cnGlosario.enBlanco">
 				<div class="inicioTexto">
 					<div align="center" class="alert alert-success alert-dismissible" ng-if="cnGlosario.alertPositiva">
-				   		 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				   		 {{cnGlosario.mensajeAlertPositiva}}
 					</div>
 					<div align="center" class="alert alert-danger alert-dismissible" ng-if="cnGlosario.alertNegativa">
-				   		 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				   		 <strong>Error!</strong> {{cnGlosario.mensajeAlertNegativa}}
 					</div>					
 					<form class=" form-horizontal">

@@ -131,7 +131,9 @@ function ControllerGlosario(
                 if(aux.succes){
                 	FactoryGlosario.agregarElemento(aux.elemento);
                 	cnGlosario.listaGlosario = FactoryGlosario.getListaElemento();
-                	seleccioneGlosario(aux.elemento);
+                	cnGlosario.alertPositiva = true;
+                	cnGlosario.mensajeAlertPositiva = "El Glosario ha sido creado";
+                	seleccioneGlosario(aux.elemento,2);
                 }else{
                 	
                 }
@@ -157,7 +159,15 @@ function ControllerGlosario(
 		cnGlosario.idGlosario = "";
 		
 	}
-	function seleccioneGlosario(elemento){
+	
+	/*
+	 * SeleccioneGlosario
+	 * elemento: es el glosario que se seleccionado
+	 * codigo: 1 Quiero limpiar mensaje positivo y negativo
+	 * 		   2 Quiero dejar mensaje positvo
+	 * 		La diferencia es que cuando llamo con (2) no quiero limpiar el mensaje que dice que fue modificado
+	 */
+	function seleccioneGlosario(elemento, codigo){
 		var id;
 		id = cnGlosario.listaGlosario.indexOf(elemento);
 		cnGlosario.seleccionado = elemento.id;
@@ -165,6 +175,12 @@ function ControllerGlosario(
 		cnGlosario.enBlanco = false;
 		cnGlosario.modificar = false;
 		cnGlosario.disabled = true;
+		
+		if(codigo == 1){
+			//Si selecciono desde la lista quiero quitar el mensaje positivo
+			cnGlosario.alertPositiva = false;
+		}
+		cnGlosario.alertNegativa = false;
 		
 		//lleno los valores de la vista
 		cnGlosario.varNombre =	cnGlosario.listaGlosario[id].nombre;
@@ -177,7 +193,7 @@ function ControllerGlosario(
 	function cancelarModificarGlosario(){
 		cnGlosario.disabled = true;
 		cnGlosario.modificar = false;
-		seleccioneGlosario({'id':cnGlosario.idGlosario}); //Llamo con el id del seleccionado porque es su posicion en el arreglo lo que necesito y no su id en bd
+		seleccioneGlosario({'id':cnGlosario.idGlosario},1); //Llamo con el id del seleccionado porque es su posicion en el arreglo lo que necesito y no su id en bd
 	}
 	function modifiqueGlosario(){
 		console.log(cnGlosario.idGlosario);
@@ -205,7 +221,9 @@ function ControllerGlosario(
                 	console.log("actualizar es true");
                 	FactoryGlosario.modificarElemento(aux.elemento);
                 	cnGlosario.listaGlosario = FactoryGlosario.getListaElemento();
-                	seleccioneGlosario(aux.elemento);
+                	cnGlosario.alertPositiva = true;
+                	cnGlosario.mensajeAlertPositiva = "El Glosario ha sido modificado";
+                	seleccioneGlosario(aux.elemento,2);
                 }
              }
 		);	
