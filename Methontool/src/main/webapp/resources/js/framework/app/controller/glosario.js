@@ -267,7 +267,6 @@ function ControllerGlosario(
 	
 //Funciones ajenas al $scope
 	function listarGlosario(){
-		console.log("en listarGlosario");
 		cnGlosario.listaGlosario = FactoryGlosario.getListaElemento();
 	}
 	

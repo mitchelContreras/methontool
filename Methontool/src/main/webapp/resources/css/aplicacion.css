@@ -108,4 +108,12 @@ body {
 	width: 50px;
 }
 
+/*tamano de busqueda de concepto dentro de ventana modal*/
+.buscarEnModal{
+	height: 300px;
+	width: 300px;
+	margin-top : 10px;	
+	overflow-y:scroll;
+}
+
 /*Fin proyecto*/
