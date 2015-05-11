@@ -38,25 +38,16 @@ public class TwoDimentionalArrayList<T> extends ArrayList<ArrayList<T>> {
     	try {
     		int size = this.get(i).size();
     		ArrayList<T> arrayList= this.get(i);
-    		logger.trace("arrayList "+arrayList.size());
-    		logger.trace("0 "+arrayList.get(0));
-    		logger.trace(" longitud adentro "+size);
-        	salida = (T[]) Array.newInstance(this.get(i).getClass().getComponentType(), size);
-        	logger.trace("longitud arreglo "+salida.length);
+    		
+        	salida = (T[]) Array.newInstance(this.get(i).get(0).getClass(), size);
         	for(int itera = 0; itera< size; itera++){
-        		logger.trace("elemento en lista "+arrayList.get(itera));
         		salida[itera] = arrayList.get(itera);
-        		logger.trace("elemento en array "+salida[itera]);
-        		logger.trace("----------");
         	}			
-        	logger.trace("Paso");
 		} catch (Exception e) {
 			// TODO: handle exception
-			logger.debug("error--- "+e.toString());
+			logger.debug(e.toString());
 		}
 
-    	
-    	
     	return salida;
     }
 }

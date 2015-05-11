@@ -2,6 +2,8 @@ package com.ciensUCV.Methontool.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.sql.DataSource;
@@ -10,7 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ciensUCV.Methontool.dao.TaxonomiaDAO;
+import com.ciensUCV.Methontool.model.Glosario;
 import com.ciensUCV.Methontool.model.Taxonomia;
+import com.ciensUCV.Methontool.model.TipoGlosario;
 
 public class JdbcTaxonomiaDAO implements TaxonomiaDAO {
 	private static final Logger logger = LoggerFactory.getLogger(JdbcTaxonomiaDAO.class);
@@ -37,42 +41,63 @@ public class JdbcTaxonomiaDAO implements TaxonomiaDAO {
 		// TODO Auto-generated method stub
 		logger.trace("entre a actualizaraxonomia");
 		String sql = null;
-		sql = "SELECT SP_crear_actualizar_taxonomia (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+		sql = "SELECT SP_crear_actualizar_taxonomia (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 //		--SELECT SP_crear_actualizar_taxonomia (1, 1,
 //		varchar 'desDisjunta', array[4,6,7,9,10,12], 
 //		varchar 'desDisjunta', array[4,6,7,9,10,12],
 //		varchar 'desDisjunta', array[4,6,7,9,10,12], 
 //		varchar 'desDisjunta', array[4,6,7,9,10,12] );
 		Connection conn = null;
-		logger.trace("la clase es "+taxonomia.getConceptosDestino().get(0).getClass());
-		
-//		try {
-//			conn = dataSource.getConnection();
-//			PreparedStatement ps = conn.prepareStatement(sql);
-//			ps.setInt(1, idProyecto);
-//			ps.setInt(2, taxonomia.getConceptoOrigen());
-//			ps.setString(3, taxonomia.getRelaciones().get(0));
-//			Object[] aux = new Object[taxonomia.getConceptosDestino().get(0).size()];
-//			logger.trace("la clase es "+taxonomia.getConceptosDestino().get(0).getClass());
-//			taxonomia.getConceptosDestino().get(0).toArray();
-//			aux = taxonomia.getConceptosDestino().get(0).toArray();
-//			int[] aux1;
-//
-//			
-////			ps.setArray(4, taxonomia.getConceptosDestino().get(0).toArray());
-////			taxonomia.getConceptosDestino().get(0).toArray(new Integer [taxonomia.getConceptosDestino().get(0).size()]);
-//			
-////			arreglo 0
-//			ps.setString(5, taxonomia.getRelaciones().get(1));
-////			arreglo 1
-//			ps.setString(7, taxonomia.getRelaciones().get(2));
-////			arreglo 2			
-//			ps.setString(9, taxonomia.getRelaciones().get(3));
-////			arreglo 3
-//			
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
+		Taxonomia taxonomiaResult = new Taxonomia ();
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idProyecto);
+			ps.setInt(2, taxonomia.getConceptoOrigen());
+			
+			//Primera relacion
+			ps.setString(3, taxonomia.getRelaciones().get(0));
+			Object aux [] = (Integer []) taxonomia.getConceptosDestino().returnArr(0); 
+			java.sql.Array prueba = conn.createArrayOf("integer", aux);
+			ps.setArray(4, prueba);
+			//segunda relacion
+			ps.setString(5, taxonomia.getRelaciones().get(1));
+			aux = (Integer []) taxonomia.getConceptosDestino().returnArr(1); 
+			logger.trace("aux es "+aux);
+			if(aux == null){
+				logger.trace("es null");
+				prueba = conn.createArrayOf("integer", null);
+			}else{
+				prueba = conn.createArrayOf("integer", aux);
+			}
+			logger.trace("sali");
+			ps.setArray(6, prueba);
+			//segunda relacion
+			ps.setString(7, taxonomia.getRelaciones().get(2));
+			aux = (Integer []) taxonomia.getConceptosDestino().returnArr(2); 
+			prueba = conn.createArrayOf("integer", aux);
+			ps.setArray(8, prueba);	
+			//segunda relacion
+			ps.setString(9, taxonomia.getRelaciones().get(3));
+			aux = (Integer []) taxonomia.getConceptosDestino().returnArr(3); 
+			prueba = conn.createArrayOf("integer", aux);
+			ps.setArray(10, prueba);
+			
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				logger.trace("salida es "+rs.getInt("SP_crear_actualizar_taxonomia"));
+			}
+			rs.close();
+			ps.close();
+		} 
+		catch(SQLException e){
+			logger.error(""+e);
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			logger.error(""+e);
+		}
+
 		
 		
 		

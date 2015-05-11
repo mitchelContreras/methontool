@@ -22,8 +22,6 @@ public class PruebaFunciones {
 		
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println("Entro en el main");
-		logger.info("entro en main");
 //--------------Prueba de actualizar proyecto -----------------------------		
 //		ProyectoDAO proyectoDAO = (ProyectoDAO) context.getBean("proyectoDAO");
 //		Proyecto proyecto = new Proyecto();
@@ -63,32 +61,24 @@ public class PruebaFunciones {
 		Taxonomia taxonomia = new Taxonomia(); 
 		TaxonomiaDAO taxonomiaDAO = (TaxonomiaDAO) context.getBean("taxonomiaDAO");
 		
-		taxonomia.getConceptosDestino().addToInnerArray(0, 1);
-		taxonomia.getConceptosDestino().addToInnerArray(0, 10);
-		taxonomia.getConceptosDestino().addToInnerArray(0, 100);
-		taxonomia.getConceptosDestino().addToInnerArray(0, 1000);
-		taxonomia.getConceptosDestino().addToInnerArray(0, 101);
-		taxonomia.getConceptosDestino().addToInnerArray(0, 102);
-		taxonomia.getConceptosDestino().addToInnerArray(0, 11);
-		logger.trace(" "+taxonomia.getConceptosDestino().get(0).size());
-		Integer[] salidaFuncion = taxonomia.getConceptosDestino().returnArr(0);
+		taxonomia.setConceptoOrigen(1);
+//		taxonomia.getRelaciones().add("desDisjunta");
+//		taxonomia.getConceptosDestino().addToInnerArray(0, 4);
+//		taxonomia.getConceptosDestino().addToInnerArray(0, 6);
+//		taxonomia.getRelaciones().add("desExhaustiva");
+//		taxonomia.getConceptosDestino().addToInnerArray(1, 7);
+//		taxonomia.getRelaciones().add("particion");
+//		taxonomia.getConceptosDestino().addToInnerArray(2, 9);
+//		taxonomia.getRelaciones().add("subClase");
+//		taxonomia.getConceptosDestino().addToInnerArray(3, 9);
 		
-		logger.trace("longitud es "+taxonomia.getConceptosDestino().size());
-		logger.trace("salida funcion "+salidaFuncion.length);
-		for (int i = 0; i < taxonomia.getConceptosDestino().size(); i++){
-			logger.trace("iterando con i "+i);
-//			Object[] aux = new Object[taxonomia.getConceptosDestino().get(i).size()];
-			Integer[] aux1 = null;
-			aux1 = new Integer[taxonomia.getConceptosDestino().get(i).size()];
-			aux1 = (Integer[])taxonomia.getConceptosDestino().get(i).toArray();
-			for(int j = 0; j < aux1.length; j++){
-				logger.trace("dentro de j "+aux1[j]);
-			}
-		}
-		
-		
-		
-		
+		taxonomia.getRelaciones().add("desDisjunta");
+		taxonomia.getConceptosDestino().addToInnerArray(0, 4);
+		taxonomia.getConceptosDestino().addToInnerArray(0, 6);	
+		taxonomia.getRelaciones().add("desExhaustiva");
+		taxonomia.getRelaciones().add("particion");
+		taxonomia.getRelaciones().add("subClase");
+
 		taxonomia = taxonomiaDAO.actualizarTaxonomia(1, taxonomia);
 		
 		
