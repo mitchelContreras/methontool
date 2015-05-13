@@ -15,12 +15,14 @@ angular.module('methontool')
 
 ControllerTaxonomia.$inject = ['$rootScope'
                                        ,'InformacionPrincipalApp'
-                                       ,FactoryGlosario
+                                       ,'FactoryGlosario'
+                                       ,'FactoryTaxonomia'
                                        ];	
 
 function ControllerTaxonomia($rootScope
 		,InformacionPrincipalApp
 		,FactoryGlosario
+		,FactoryTaxonomia
 		){
 	
 	console.log("Entro en ControllerTaxonomia");
@@ -141,7 +143,21 @@ function ControllerTaxonomia($rootScope
 	}
 	
 	function modifiqueTaxonomia(){
-		
+		var salida;
+		salida = FactoryTaxonomia.actualizarElemento(cnTaxonomia.varEdicion.id, 
+				cnTaxonomia.varEdicion.listaSubClase, 
+				cnTaxonomia.varEdicion.listaParticion,
+				cnTaxonomia.varEdicion.listaDisjunta,
+				cnTaxonomia.varEdicion.listaExhustiva);
+		salida.then(
+            function(aux) {
+                if(aux.succes){
+                	console.log("fue satisfactorio");
+                }else{
+                	
+                }
+            }
+        );
 	}
 	
 	function modificarTaxonomia(){

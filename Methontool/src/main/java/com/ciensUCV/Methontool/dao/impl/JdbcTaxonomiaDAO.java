@@ -37,71 +37,123 @@ public class JdbcTaxonomiaDAO implements TaxonomiaDAO {
 	}
 
 	@Override
-	public Taxonomia actualizarTaxonomia (int idProyecto, Taxonomia taxonomia) {
+	public int actualizarTaxonomia (int idProyecto, Taxonomia taxonomia) {
 		// TODO Auto-generated method stub
-		logger.trace("entre a actualizaraxonomia");
 		String sql = null;
-		sql = "SELECT SP_crear_actualizar_taxonomia (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-//		--SELECT SP_crear_actualizar_taxonomia (1, 1,
-//		varchar 'desDisjunta', array[4,6,7,9,10,12], 
-//		varchar 'desDisjunta', array[4,6,7,9,10,12],
-//		varchar 'desDisjunta', array[4,6,7,9,10,12], 
-//		varchar 'desDisjunta', array[4,6,7,9,10,12] );
+		String salida = null;
 		Connection conn = null;
-		Taxonomia taxonomiaResult = new Taxonomia ();
+		int contador = 0;
+		
+		Object aux1 [] = (Integer []) taxonomia.getConceptosDestino().returnArr(0);
+		if(aux1 != null){
+			contador ++;
+			logger.trace("uno no es null");
+		}
+		
+		Object aux2 [] = (Integer []) taxonomia.getConceptosDestino().returnArr(1);
+		if(aux2 != null){
+			contador ++;
+			logger.trace("dos no es null");
+		}
+		
+		Object aux3 [] = (Integer []) taxonomia.getConceptosDestino().returnArr(2);
+		if(aux3 != null){
+			contador ++;
+			logger.trace("tres no es null");
+		}
+		
+		Object aux4 [] = (Integer []) taxonomia.getConceptosDestino().returnArr(3);
+		if(aux4 != null){
+			contador ++;
+			logger.trace("cuatro no es null");
+		}
+		logger.trace("contador es "+contador);
+		
+		switch (contador){
+		case 0:
+			sql = "SELECT SP_crear_actualizar_taxonomia_0 (?, ?)";
+			salida = "SP_crear_actualizar_taxonomia_0";
+			break;
+		case 1:
+			sql = "SELECT SP_crear_actualizar_taxonomia_1 (?, ?, ?, ?)";
+			salida = "SP_crear_actualizar_taxonomia_1";
+			break;
+		case 2:
+			sql = "SELECT SP_crear_actualizar_taxonomia_2 (?, ?, ?, ?, ?, ?)";
+			salida = "SP_crear_actualizar_taxonomia_2";
+			break;
+		case 3:
+			sql = "SELECT SP_crear_actualizar_taxonomia_3 (?, ?, ?, ?, ?, ?, ?, ?)";
+			salida = "SP_crear_actualizar_taxonomia_3";
+			break;
+		case 4:
+			sql = "SELECT SP_crear_actualizar_taxonomia_4 (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			salida = "SP_crear_actualizar_taxonomia_4";
+			break;
+		default:
+//			falta editar esto;
+			return -1;
+		}
+		logger.trace("sql es "+sql);
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idProyecto);
 			ps.setInt(2, taxonomia.getConceptoOrigen());
 			
-			//Primera relacion
-			ps.setString(3, taxonomia.getRelaciones().get(0));
-			Object aux [] = (Integer []) taxonomia.getConceptosDestino().returnArr(0); 
-			java.sql.Array prueba = conn.createArrayOf("integer", aux);
-			ps.setArray(4, prueba);
-			//segunda relacion
-			ps.setString(5, taxonomia.getRelaciones().get(1));
-			aux = (Integer []) taxonomia.getConceptosDestino().returnArr(1); 
-			logger.trace("aux es "+aux);
-			if(aux == null){
-				logger.trace("es null");
-				prueba = conn.createArrayOf("integer", null);
-			}else{
-				prueba = conn.createArrayOf("integer", aux);
+//			Primera relacion
+			contador = 3;
+			java.sql.Array aux;
+			if(aux1 != null){
+				logger.trace("arr1");
+				aux = conn.createArrayOf("integer", aux1);
+				ps.setString(contador, taxonomia.getRelaciones().get(0)); //relaciones.add("desDisjunta");
+				contador++;
+				ps.setArray(contador, aux);
+				contador++;
 			}
-			logger.trace("sali");
-			ps.setArray(6, prueba);
-			//segunda relacion
-			ps.setString(7, taxonomia.getRelaciones().get(2));
-			aux = (Integer []) taxonomia.getConceptosDestino().returnArr(2); 
-			prueba = conn.createArrayOf("integer", aux);
-			ps.setArray(8, prueba);	
-			//segunda relacion
-			ps.setString(9, taxonomia.getRelaciones().get(3));
-			aux = (Integer []) taxonomia.getConceptosDestino().returnArr(3); 
-			prueba = conn.createArrayOf("integer", aux);
-			ps.setArray(10, prueba);
 			
+			if(aux2 != null){
+				logger.trace("arr2");
+				aux = conn.createArrayOf("integer", aux2);
+				ps.setString(contador, taxonomia.getRelaciones().get(1)); //relaciones.add("desExhaustiva");
+				contador++;
+				ps.setArray(contador, aux);
+				contador++;
+			}
+
+			if(aux3 != null){
+				logger.trace("arr3");
+				aux = conn.createArrayOf("integer", aux3);
+				ps.setString(contador, taxonomia.getRelaciones().get(2)); //relaciones.add("particion");
+				contador++;
+				ps.setArray(contador, aux);
+				contador++;
+			}
+
+			if(aux4 != null){
+				logger.trace("arr4");
+				aux = conn.createArrayOf("integer", aux4);
+				ps.setString(contador, taxonomia.getRelaciones().get(3)); //relaciones.add("subClase");
+				contador++;
+				ps.setArray(contador, aux);
+				contador++;
+			}
+			logger.trace("Contador es "+contador);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
-				logger.trace("salida es "+rs.getInt("SP_crear_actualizar_taxonomia"));
+				contador = rs.getInt(salida);
+				logger.trace("Actualizar taxonomia con resultado "+rs.getInt(contador));
+				return contador;
+				
 			}
 			rs.close();
 			ps.close();
-		} 
-		catch(SQLException e){
-			logger.error(""+e);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
-			logger.error(""+e);
+			logger.error(""+e.toString());
 		}
-
-		
-		
-		
-		return null;
+		return -1;
 	}
 
 }

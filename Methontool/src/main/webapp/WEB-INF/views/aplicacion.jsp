@@ -82,6 +82,7 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryGlosario.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryTipoGlosario.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryMensajeCarga.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryTaxonomia.js"></script>
 		
 		
 		<!-- Modulos de AngularJS -->
@@ -96,6 +97,9 @@
 
 		<!-- Tipo Glosario -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/tipoGlosario.js"></script>
+
+		<!-- Taxonomia -->	
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/taxonomia.js"></script>
 				
 	</head>
 	<body >

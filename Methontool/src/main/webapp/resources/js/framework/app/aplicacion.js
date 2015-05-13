@@ -18,6 +18,7 @@
         'ngTouch',
         'angucomplete-alt'
         ,'modTipoGlosario'
+        ,'modTaxonomia'
         ])
     
 })();

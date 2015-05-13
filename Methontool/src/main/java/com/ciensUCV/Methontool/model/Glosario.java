@@ -100,7 +100,6 @@ public class Glosario {
 				this.acronimos.add(token.nextToken());
 			}
 		}
-
 	}
 	public String acronimosArrayToString(){
 		String salida = "";

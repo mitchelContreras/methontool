@@ -72,14 +72,20 @@ public class PruebaFunciones {
 //		taxonomia.getRelaciones().add("subClase");
 //		taxonomia.getConceptosDestino().addToInnerArray(3, 9);
 		
-		taxonomia.getRelaciones().add("desDisjunta");
-		taxonomia.getConceptosDestino().addToInnerArray(0, 4);
-		taxonomia.getConceptosDestino().addToInnerArray(0, 6);	
-		taxonomia.getRelaciones().add("desExhaustiva");
-		taxonomia.getRelaciones().add("particion");
-		taxonomia.getRelaciones().add("subClase");
-
-		taxonomia = taxonomiaDAO.actualizarTaxonomia(1, taxonomia);
+//		taxonomia.getRelaciones().add("desDisjunta");
+//		taxonomia.getRelaciones().add("desExhaustiva");
+//		taxonomia.getRelaciones().add("particion");
+//		taxonomia.getRelaciones().add("subClase");
+		
+//		taxonomia.getConceptosDestino().addToInnerArray(0, 4);
+//		taxonomia.getConceptosDestino().addToInnerArray(0, 6);	
+//		taxonomia.getConceptosDestino().addToInnerArray(1, 4);
+//		taxonomia.getConceptosDestino().addToInnerArray(1, 6);
+//		taxonomia.getConceptosDestino().addToInnerArray(2, 4);
+//		taxonomia.getConceptosDestino().addToInnerArray(2, 6);	
+//		taxonomia.getConceptosDestino().addToInnerArray(3, 4);
+//		taxonomia.getConceptosDestino().addToInnerArray(3, 6);	
+//		int salida = taxonomiaDAO.actualizarTaxonomia(1, taxonomia);
 		
 		
 	}

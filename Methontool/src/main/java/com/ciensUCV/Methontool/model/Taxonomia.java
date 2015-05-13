@@ -1,7 +1,9 @@
 package com.ciensUCV.Methontool.model;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
+import com.ciensUCV.Methontool.util.LeerConfig;
 import com.ciensUCV.Methontool.util.TwoDimentionalArrayList;
 
 public class Taxonomia {
@@ -15,6 +17,15 @@ public class Taxonomia {
 		// TODO Auto-generated constructor stub
 		relaciones = new ArrayList<String>();
 		conceptosDestino = new TwoDimentionalArrayList<Integer>();
+		conceptosDestino.add(new ArrayList<Integer>());
+		conceptosDestino.add(new ArrayList<Integer>());
+		conceptosDestino.add(new ArrayList<Integer>());
+		conceptosDestino.add(new ArrayList<Integer>());
+		
+		relaciones.add("desDisjunta");
+		relaciones.add("desExhaustiva");
+		relaciones.add("particion");
+		relaciones.add("subClase");
 	}
 
 	public Taxonomia(int conceptoOrigen,
@@ -56,6 +67,26 @@ public class Taxonomia {
 
 	public void setRelaciones(ArrayList<String> relaciones) {
 		this.relaciones = relaciones;
+	}
+	public void stringToArray(String entrada, int lista){
+		if(entrada != null && entrada != ""){
+			StringTokenizer token = new StringTokenizer(entrada, LeerConfig.obtenerPropiedad("variable.separadorString"));
+			while(token.hasMoreTokens()){
+				this.conceptosDestino.addToInnerArray(lista, Integer.parseInt(token.nextToken()));
+			}
+		}
+	}
+	public String arrayToString(int lista){
+		String salida = "";
+		if(conceptosDestino.get(lista) != null){
+			for(int i = 0; i < conceptosDestino.get(lista).size();i++ ){
+				salida = salida + conceptosDestino.get(lista).get(i);
+				if(i != conceptosDestino.get(lista).size()-1){
+					salida = salida+LeerConfig.obtenerPropiedad("variable.separadorString");
+				}
+			}
+		}
+		return salida;
 	}
 	
 	

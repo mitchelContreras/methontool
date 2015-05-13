@@ -38,8 +38,8 @@ public class TwoDimentionalArrayList<T> extends ArrayList<ArrayList<T>> {
     	try {
     		int size = this.get(i).size();
     		ArrayList<T> arrayList= this.get(i);
-    		
-        	salida = (T[]) Array.newInstance(this.get(i).get(0).getClass(), size);
+    		logger.trace("el i es "+i+" size="+arrayList.size());
+        	salida = (T[]) Array.newInstance(arrayList.get(0).getClass(), size);
         	for(int itera = 0; itera< size; itera++){
         		salida[itera] = arrayList.get(itera);
         	}			
