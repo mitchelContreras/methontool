@@ -127,7 +127,14 @@ angular.module('methontool')
 			listaObjeto.push(objeto);
 		}
 		function consultarElemento (id){
-			return true;
+			var i;
+			for(i=0;i<listaObjeto.length;i++){
+				if(listaObjeto[i].id == id ){
+					return listaObjeto[i];
+				}
+			}
+			var objetoError = {'id' :0};
+			return objetoError;
 		}
 		function crearElemento(nombre, tipoGlosario, descripcion, listaSinonimo, listaAcronimo){
 			var sinonimos= "";

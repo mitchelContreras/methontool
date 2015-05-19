@@ -18,6 +18,12 @@
            });
    }); 
 
+    proy.factory('$verTaxonomia',function($resource){ 
+        var urlConsultar = urlProyecto+"/api/proyecto/:idProyecto/taxonomia/:idGlosarioOrigen";
+        return $resource(urlConsultar,{},{
+           get: {method: 'GET', params: {idProyecto: '@idProyecto', idGlosarioOrigen: '@idGlosarioOrigen'}, isArray:false}
+           });
+   }); 
 
 
 })();

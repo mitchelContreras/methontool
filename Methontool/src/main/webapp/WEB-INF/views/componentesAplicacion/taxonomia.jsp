@@ -221,8 +221,8 @@
 							<div class="col-xs-3 btn-group ">
 								<span><strong>Buscar por:</strong></span>
 							</div>
-							<div class="col-xs-5" ng-init="filtroTaxonomiaAgregar.buscarPor='seleccione'">
-								<select ng-model="filtroTaxonomiaAgregar.buscarPor" class="form-control" style="padding-right: -15px">
+							<div class="col-xs-5" ">
+								<select ng-model="cnTaxonomia.filtroTaxonomiaAgregar.buscarPor" class="form-control" style="padding-right: -15px">
 									<option value="seleccione">[SELECCIONE]</option>
 									<option value="nombre">Nombre</option>
 									<option value="sinonimo">Sinónimo</option>
@@ -232,17 +232,17 @@
 						</div>
 						<div class="row" style="margin-top : 3px;">
 							<div class="col-xs-8 ">
-								<input type="text" ng-model="filtroTaxonomiaAgregar.nombre" class="form-control" placeholder="Buscar" ng-disabled="false" ng-if="filtroTaxonomiaAgregar.buscarPor == 'nombre'">
-								<input type="text" ng-model="filtroTaxonomiaAgregar.sinonimo" class="form-control" placeholder="Buscar" ng-disabled="false" ng-if="filtroTaxonomiaAgregar.buscarPor == 'sinonimo'">
-								<input type="text" ng-model="filtroTaxonomiaAgregar.acronimo" class="form-control" placeholder="Buscar" ng-disabled="false" ng-if="filtroTaxonomiaAgregar.buscarPor == 'acronimo'">
+								<input type="text" ng-model="filtroTaxonomiaAgregar.nombre" class="form-control" placeholder="Buscar" ng-disabled="false" ng-if="cnTaxonomia.filtroTaxonomiaAgregar.buscarPor == 'nombre'">
+								<input type="text" ng-model="filtroTaxonomiaAgregar.sinonimo" class="form-control" placeholder="Buscar" ng-disabled="false" ng-if="cnTaxonomia.filtroTaxonomiaAgregar.buscarPor == 'sinonimo'">
+								<input type="text" ng-model="filtroTaxonomiaAgregar.acronimo" class="form-control" placeholder="Buscar" ng-disabled="false" ng-if="cnTaxonomia.filtroTaxonomiaAgregar.buscarPor == 'acronimo'">
 							</div>
 						</div>
 						<div class="row buscarEnModal">
 							<div  class= "col-xs-11">
-								<div ng-if="filtroTaxonomiaAgregar.buscarPor == 'nombre'">
+								<div ng-if="cnTaxonomia.filtroTaxonomiaAgregar.buscarPor == 'nombre'">
 									<div class="list-group">
 										<div ng-repeat="glosario in cnTaxonomia.listaGlosario | orderBy: 'nombre' | filter:{nombre: filtroTaxonomiaAgregar.nombre}">
-											<div ng-if="glosario.tipoGlosario.id == 2 && glosario.id !=cnTaxonomia.varEdicion.id">
+											<div ng-if="glosario.tipoGlosario.id == 2 && glosario.id !=cnTaxonomia.varEdicion.id && !cnTaxonomia.estaEnLista(glosario)">
 												<a href="#" class="list-group-item" 
 												ng-class="{active: cnTaxonomia.seleccionadoAgregar.id == glosario.id}"
 												ng-click="cnTaxonomia.seleccionadoAgregar = glosario"> {{glosario.nombre}}</a>									
@@ -250,10 +250,10 @@
 										</div>
 									</div>	
 								</div>
-								<div ng-if="filtroTaxonomiaAgregar.buscarPor == 'sinonimo'">
+								<div ng-if="cnTaxonomia.filtroTaxonomiaAgregar.buscarPor == 'sinonimo'">
 									<div class="list-group ">
 										<div ng-repeat="glosario in cnTaxonomia.listaGlosario | orderBy: 'nombre' | filter:{sinonimos: filtroTaxonomiaAgregar.sinonimo}">
-											<div ng-if="glosario.tipoGlosario.id == 2 && glosario.id !=cnTaxonomia.varEdicion.id">
+											<div ng-if="glosario.tipoGlosario.id == 2 && glosario.id !=cnTaxonomia.varEdicion.id && !cnTaxonomia.estaEnLista(glosario)">
 												<a href="#" class="list-group-item" 
 												ng-class="{active: cnTaxonomia.seleccionadoAgregar.id == glosario.id}"
 												ng-click="cnTaxonomia.seleccionadoAgregar = glosario"> {{glosario.nombre}}</a>									
@@ -261,10 +261,10 @@
 										</div>
 									</div>
 								</div>
-								<div ng-if="filtroTaxonomiaAgregar.buscarPor == 'acronimo'">
+								<div ng-if="cnTaxonomia.filtroTaxonomiaAgregar.buscarPor == 'acronimo'">
 									<div class="list-group">
 										<div ng-repeat="glosario in cnTaxonomia.listaGlosario | orderBy: 'nombre' | filter:{acronimos: filtroTaxonomiaAgregar.acronimo}">
-											<div ng-if="glosario.tipoGlosario.id == 2 && glosario.id !=cnTaxonomia.varEdicion.id">
+											<div ng-if="glosario.tipoGlosario.id == 2 && glosario.id !=cnTaxonomia.varEdicion.id && !cnTaxonomia.estaEnLista(glosario)">
 												<a href="#" class="list-group-item" 
 												ng-class="{active: cnTaxonomia.seleccionadoAgregar.id == glosario.id}"
 												ng-click="cnTaxonomia.seleccionadoAgregar = glosario"> {{glosario.nombre}}</a>									
@@ -272,10 +272,10 @@
 										</div>
 									</div>
 								</div>
-								<div ng-if="filtroTaxonomiaAgregar.buscarPor == 'seleccione'">
+								<div ng-if="cnTaxonomia.filtroTaxonomiaAgregar.buscarPor == 'seleccione'">
 									<div class="list-group">
 										<div ng-repeat="glosario in cnTaxonomia.listaGlosario | orderBy: 'nombre' ">
-											<div ng-if="glosario.tipoGlosario.id == 2 && glosario.id !=cnTaxonomia.varEdicion.id">
+											<div ng-if="glosario.tipoGlosario.id == 2 && glosario.id !=cnTaxonomia.varEdicion.id && !cnTaxonomia.estaEnLista(glosario)">
 												<a href="#" class="list-group-item" 
 												ng-class="{active: cnTaxonomia.seleccionadoAgregar.id == glosario.id}"
 												ng-click="cnTaxonomia.seleccionadoAgregar = glosario"> {{glosario.nombre}}</a>									

@@ -277,6 +277,8 @@ function ControllerGlosario(
     	cnGlosario.modificar = false; //si se permite modificar los valores 
     	cnGlosario.enBlanco = true;	    //mostrar seccion en blanco
     	cnGlosario.seleccionado = -1;
+    	cnGlosario.alertPositiva = false;
+    	cnGlosario.alertNegativa = false;
     });
 	
     $rootScope.$watch('actual.glosario', function (newValue, oldValue) {

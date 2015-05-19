@@ -24,19 +24,6 @@ public class TaxonomiaRest {
     		new ClassPathXmlApplicationContext(
     				LeerConfig.obtenerPropiedad("Spring.rutaArchivoSpringDaoImpl"));
 	
-	@RequestMapping(value="/api/proyecto/{idProyecto}/taxonomia/{idTaxonomiaGlosario}", method = RequestMethod.GET)
-	public @ResponseBody ElementoMensaje<Taxonomia> verTaxonomiaIDGlosario(
-			@PathVariable("idProyecto") int idProyecto
-			,@PathVariable("idTaxonomiaGlosario") int idTaxonomiaGlosario
-			){
-		logger.info("el idProyecto es "+idProyecto);
-		logger.info("el idTaxonomiaGlosario es "+idTaxonomiaGlosario);
-		
-		ElementoMensaje<Taxonomia> elementoMensaje = new ElementoMensaje<Taxonomia> ();
-
-		return elementoMensaje;
-	}
-	
 	@RequestMapping(value="/api/proyecto/{idProyecto}/taxonomia/{idGlosarioOrigen}", method = RequestMethod.POST)
 	public @ResponseBody ElementoMensaje<Taxonomia> actualizarTaxonomia(
 			@PathVariable("idProyecto") int idProyecto
@@ -68,6 +55,29 @@ public class TaxonomiaRest {
 			elementoMensaje.setSucces(true);
 		}else{
 			elementoMensaje.setSucces(false);
+		}
+		
+		return elementoMensaje;
+	}
+	
+	@RequestMapping(value="/api/proyecto/{idProyecto}/taxonomia/{idGlosarioOrigen}", method = RequestMethod.GET)
+	public @ResponseBody ElementoMensaje<Taxonomia> verTaxonomia(
+			@PathVariable("idProyecto") int idProyecto
+			,@PathVariable("idGlosarioOrigen") int idGlosarioOrigen
+			){
+		logger.trace("***ver taxonomia");
+		logger.trace("el idProyecto es "+idProyecto);
+		logger.trace("el idGlosarioOrigen es "+idGlosarioOrigen);
+		
+		ElementoMensaje<Taxonomia> elementoMensaje = new ElementoMensaje<Taxonomia> ();
+		TaxonomiaDAO taxonomiaDAO = (TaxonomiaDAO) context.getBean("taxonomiaDAO");
+		elementoMensaje.setElemento(taxonomiaDAO.verTaxonomia(idProyecto, idGlosarioOrigen));
+		if(elementoMensaje.getElemento().getConceptoOrigen() == 0){
+			logger.trace("error");
+			elementoMensaje.setSucces(false);
+		}else{
+			logger.trace("exito");
+			elementoMensaje.setSucces(true);
 		}
 		
 		return elementoMensaje;

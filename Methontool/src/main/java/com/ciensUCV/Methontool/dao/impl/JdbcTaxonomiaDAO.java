@@ -33,7 +33,43 @@ public class JdbcTaxonomiaDAO implements TaxonomiaDAO {
 	@Override
 	public Taxonomia verTaxonomia(int idProyecto, int idConceptoOrigen) {
 		// TODO Auto-generated method stub
-		return null;
+		String sql = null;
+		Connection conn = null;
+		Taxonomia taxonomia = new Taxonomia();
+		taxonomia.setConceptoOrigen(idConceptoOrigen);
+		
+		sql = "SELECT id_glosario_destino"
+				+ " FROM taxonomia WHERE "
+				+ "id_proyecto = ? AND "
+				+ "id_glosario_origen = ? AND "
+				+ "codigo_tipo_taxonomia = ?";
+		
+		//recorro el arreglo de tipo_taxonomia
+		int i;
+		for(i=0; i<taxonomia.getRelaciones().size();i++){
+			try {
+				logger.trace("Iteracion i="+i);
+				logger.trace("relacion "+taxonomia.getRelaciones().get(i));
+				conn = dataSource.getConnection();
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, idProyecto);
+				ps.setInt(2, taxonomia.getConceptoOrigen());
+				ps.setString(3, taxonomia.getRelaciones().get(i));
+				
+				ResultSet rs = ps.executeQuery();
+				while(rs.next()){
+					taxonomia.getConceptosDestino().addToInnerArray(i, rs.getInt("id_glosario_destino"));
+				}
+				rs.close();
+				ps.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+				taxonomia.setConceptoOrigen(0);
+				return taxonomia;
+			}
+		}
+		
+		return taxonomia;
 	}
 
 	@Override
