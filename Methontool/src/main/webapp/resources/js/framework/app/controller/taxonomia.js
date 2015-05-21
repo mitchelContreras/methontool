@@ -233,8 +233,9 @@ function ControllerTaxonomia($rootScope
 	 */
 	function seleccioneGlosario(elemento, limpiar){
 		console.log("Seleccione con id "+elemento.id+" codigo="+limpiar);
-		var id;
-		id = cnTaxonomia.listaGlosario.indexOf(elemento);
+//		var id;
+		var elementoOrigen = FactoryGlosario.consultarElemento(elemento.id);
+//		id = cnTaxonomia.listaGlosario.indexOf(elemento);
 		cnTaxonomia.seleccionado = elemento.id;
 		cnTaxonomia.enBlanco = false;
 		cnTaxonomia.modificar = false;
@@ -243,7 +244,7 @@ function ControllerTaxonomia($rootScope
 		if(limpiar){
 			cnTaxonomia.alertPositiva = false;
 		}
-		cnTaxonomia.alertNegativa = false;
+		cnTaxonomia.alertNegativa = false;FactoryGlosario
 		
 		
 //		Limpio las listas
@@ -254,10 +255,11 @@ function ControllerTaxonomia($rootScope
 		
 		
 		var salida;
-		salida = FactoryTaxonomia.verElemento(elemento.id);
-		console.log("salida es "+salida.conceptoOrigen);
 		
-		if(salida.conceptoOrigen == 0){
+//		salida = FactoryTaxonomia.verElemento(elemento.id);
+//		console.log("salida es "+salida.conceptoOrigen);
+//		
+//		if(salida.conceptoOrigen == 0){
 			FactoryMensajeCarga.abrirMensaje("Cargando");
 			salida = FactoryTaxonomia.consultarElemento(elemento.id);
 			salida.then(
@@ -317,9 +319,9 @@ function ControllerTaxonomia($rootScope
 	                		}
 	                	}
 	                	
-	            		cnTaxonomia.varEdicion.id = cnTaxonomia.listaGlosario[id].id;
-	            		cnTaxonomia.varEdicion.nombre = cnTaxonomia.listaGlosario[id].nombre;
-	            		cnTaxonomia.varEdicion.descripcion = cnTaxonomia.listaGlosario[id].descripcion;
+	            		cnTaxonomia.varEdicion.id = elementoOrigen.id;
+	            		cnTaxonomia.varEdicion.nombre = elementoOrigen.nombre;
+	            		cnTaxonomia.varEdicion.descripcion = elementoOrigen.descripcion;
 	            		cnTaxonomia.varEdicion.listaSubClase = cnTaxonomia.elementoActual.conDestinoSubClase.slice();
 	            		cnTaxonomia.varEdicion.listaParticion = cnTaxonomia.elementoActual.conDestinoParticion.slice();
 	            		cnTaxonomia.varEdicion.listaDisjunta = cnTaxonomia.elementoActual.conDestinoDesDisjunta.slice();
@@ -336,38 +338,38 @@ function ControllerTaxonomia($rootScope
 	                }
 	            }
 	        );	
-		}else{
-			console.log("esto en else con "+salida.conceptoOrigen.id);
-        	cnTaxonomia.elementoActual = {};
-        	
-        	cnTaxonomia.elementoActual= {'conceptoOrigen':{'id':'','nombre':'','descripcion':''},
-					'relaciones':[],
-					'conDestinoSubClase':[],
-					'conDestinoParticion':[],
-					'conDestinoDesDisjunta':[],
-					'conDestinoDesExhaustiva':[]};
-        	cnTaxonomia.elementoActual.conceptoOrigen = FactoryGlosario.consultarElemento(salida.conceptoOrigen.id);
-        	
-    		cnTaxonomia.varEdicion.id = cnTaxonomia.elementoActual.conceptoOrigen.id;
-    		cnTaxonomia.varEdicion.nombre = cnTaxonomia.elementoActual.conceptoOrigen.nombre;
-    		cnTaxonomia.varEdicion.descripcion = cnTaxonomia.elementoActual.conceptoOrigen.descripcion;
-    		cnTaxonomia.elementoActual.relaciones = salida.relaciones.slice();
-    		cnTaxonomia.elementoActual.conDestinoSubClase = salida.conDestinoSubClase.slice();
-    		cnTaxonomia.elementoActual.conDestinoParticion = salida.conDestinoParticion.slice();
-    		cnTaxonomia.elementoActual.conDestinoDesDisjunta = salida.conDestinoDesDisjunta.slice();
-    		cnTaxonomia.elementoActual.conDestinoDesExhaustiva = salida.conDestinoDesExhaustiva.slice();
-    		
-    		cnTaxonomia.varEdicion.listaSubClase = salida.conDestinoSubClase.slice();
-    		cnTaxonomia.varEdicion.listaParticion = salida.conDestinoParticion.slice();
-    		cnTaxonomia.varEdicion.listaDisjunta = salida.conDestinoDesDisjunta.slice();
-    		cnTaxonomia.varEdicion.listaExhustiva = salida.conDestinoDesExhaustiva.slice();
-        	
-        	console.log("cnTaxonomia.elementoActual.conDestinoDesDisjunta.length "+cnTaxonomia.varEdicion.listaDisjunta.length);
-        	console.log("cnTaxonomia.elementoActual.conDestinoDesExhaustiva.length "+cnTaxonomia.varEdicion.listaExhustiva.length);
-        	console.log("cnTaxonomia.elementoActual.conDestinoParticion.length "+cnTaxonomia.varEdicion.listaParticion.length);
-        	console.log("cnTaxonomia.elementoActual.conDestinoSubClase.length "+cnTaxonomia.varEdicion.listaSubClase.length);
-       		console.log("cnTaxonomia.elementoActual.relaciones "+cnTaxonomia.elementoActual.relaciones.length);	
-		}
+//		}else{
+//			console.log("esto en else con "+salida.conceptoOrigen.id);
+//        	cnTaxonomia.elementoActual = {};
+//        	
+//        	cnTaxonomia.elementoActual= {'conceptoOrigen':{'id':'','nombre':'','descripcion':''},
+//					'relaciones':[],
+//					'conDestinoSubClase':[],
+//					'conDestinoParticion':[],
+//					'conDestinoDesDisjunta':[],
+//					'conDestinoDesExhaustiva':[]};
+//        	cnTaxonomia.elementoActual.conceptoOrigen = FactoryGlosario.consultarElemento(salida.conceptoOrigen.id);
+//        	
+//    		cnTaxonomia.varEdicion.id = cnTaxonomia.elementoActual.conceptoOrigen.id;
+//    		cnTaxonomia.varEdicion.nombre = cnTaxonomia.elementoActual.conceptoOrigen.nombre;
+//    		cnTaxonomia.varEdicion.descripcion = cnTaxonomia.elementoActual.conceptoOrigen.descripcion;
+//    		cnTaxonomia.elementoActual.relaciones = salida.relaciones.slice();
+//    		cnTaxonomia.elementoActual.conDestinoSubClase = salida.conDestinoSubClase.slice();
+//    		cnTaxonomia.elementoActual.conDestinoParticion = salida.conDestinoParticion.slice();
+//    		cnTaxonomia.elementoActual.conDestinoDesDisjunta = salida.conDestinoDesDisjunta.slice();
+//    		cnTaxonomia.elementoActual.conDestinoDesExhaustiva = salida.conDestinoDesExhaustiva.slice();
+//    		
+//    		cnTaxonomia.varEdicion.listaSubClase = salida.conDestinoSubClase.slice();
+//    		cnTaxonomia.varEdicion.listaParticion = salida.conDestinoParticion.slice();
+//    		cnTaxonomia.varEdicion.listaDisjunta = salida.conDestinoDesDisjunta.slice();
+//    		cnTaxonomia.varEdicion.listaExhustiva = salida.conDestinoDesExhaustiva.slice();
+//        	
+//        	console.log("cnTaxonomia.elementoActual.conDestinoDesDisjunta.length "+cnTaxonomia.varEdicion.listaDisjunta.length);
+//        	console.log("cnTaxonomia.elementoActual.conDestinoDesExhaustiva.length "+cnTaxonomia.varEdicion.listaExhustiva.length);
+//        	console.log("cnTaxonomia.elementoActual.conDestinoParticion.length "+cnTaxonomia.varEdicion.listaParticion.length);
+//        	console.log("cnTaxonomia.elementoActual.conDestinoSubClase.length "+cnTaxonomia.varEdicion.listaSubClase.length);
+//       		console.log("cnTaxonomia.elementoActual.relaciones "+cnTaxonomia.elementoActual.relaciones.length);	
+//		}
 	}
 	
 //-------------------Funciones complementarias---------------------------

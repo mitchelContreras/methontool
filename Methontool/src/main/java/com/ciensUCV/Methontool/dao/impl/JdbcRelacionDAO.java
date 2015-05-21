@@ -80,6 +80,7 @@ public class JdbcRelacionDAO implements RelacionDAO {
 	@Override
 	public Relacion crearRelacion(int idProyecto, Relacion relacion) {
 		// TODO Auto-generated method stub
+		String sql;
 		return null;
 	}
 

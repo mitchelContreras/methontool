@@ -126,12 +126,12 @@
 					        	<td>{{row.glosarioRelacionInversa.nombre}}</td>
 					        	<td>
 						        	<div class="btn-group">
-												<button ng-click="cnRelacion.modificarRelacion(row.glosarioOrigen.idRelacion)" 
+												<button ng-click="cnRelacion.modificarRelacion(row.idRelacion)" 
 												class="btn btn-link " aria-label="Center Align" type="button"
 												data-toggle="tooltip" data-placement="top" title="Modificar">
 												    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 												</button>
-												<button ng-click="cnRelacion.eliminarRelacion(row.glosarioOrigen.idRelacion)" 
+												<button ng-click="cnRelacion.eliminarRelacion(row.idRelacion)" 
 												class="btn btn-link " aria-label="Center Align" type="button"
 												data-toggle="tooltip" data-placement="top" title="Eliminar">
 												    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
@@ -148,49 +148,58 @@
 	</div>
 	
 	
-	<!-- Modal Glosario -->
-	<div class="modal fade" id="verDescripcionGlosarioRelacionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Descripción glosario</h4>
-				</div>
-				<div class="inicioTexto">
-					<div class="row centered">
-						<div class="col-xs-2 divCentrado formulario" >
-							<label class="control-label col-xs-2">Nombre:</label>
-						</div>
-						<div class="col-xs-6 divCentrado formulario">
-							<input type="text" class="form-control" placeholder="Nombre" ng-model="cnGlosario.nuevoSinonimo">
-						</div>
-					</div>
-				</div>				
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				</div>
-				
-			</div>
-		</div>
-	</div>
-	
 	<!-- Modal Relacion inversa -->
-	<div class="modal fade" id="verRelacionInversaRelacionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="verModalRelacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Relación inversa</h4>
+					<h4 class="modal-title" id="myModalLabel">Crear Relación</h4>
 				</div>
 				<div class="inicioTexto">
 					<div class="row centered">
 						<div class="col-xs-2 divCentrado formulario" >
-							<label class="control-label col-xs-2">Acrónimo:</label>
+							<label class="control-label col-xs-2">Concepto origen:</label>
 						</div>
 						<div class="col-xs-6 divCentrado formulario">
-							<input type="text" class="form-control" placeholder="Nombre" ng-model="cnGlosario.nuevoAcronimo">
-						</div>
+       						<div angucomplete-alt
+								 id="completeListaGlosarioOrigenRelacion" placeholder="Concepto"
+								  maxlength="50"
+								  pause="100"
+								  selected-object="cnRelacion.varEdicion.glosarioOrigenSelected" 
+								  local-data="cnRelacion.listaGlosarioConceptoOrigen" 
+								  search-fields="nombre" 
+								  title-field="nombre"
+								  minlength="1" 
+								  input-class="form-control" 
+								  match-class="highlight" 
+	 							  initial-value="{{cnRelacion.varEdicion.glosarioOrigen.nombre}}">
+       						</div>
+       					<!--	{{cnRelacion.varEdicion.glosarioOrigen}}
+       						{{cnRelacion.varEdicion.glosarioOrigen.id}}
+       						{{cnRelacion.varEdicion.glosarioOrigen.nombre}}-->
+        				</div>
 					</div>
+					<div class="row centered">
+						<div class="col-xs-2 divCentrado formulario" >
+							<label class="control-label col-xs-2">Concepto destino:</label>
+						</div>
+						<div class="col-xs-6 divCentrado formulario">
+       						<div angucomplete-alt
+								 id="completeListaGlosarioDestinoRelacion" placeholder="Concepto"
+								  maxlength="50"
+								  pause="100"
+								  selected-object="cnRelacion.varEdicion.glosarioDestinoSelected" 
+								  local-data="cnRelacion.listaGlosarioConceptoDestino" 
+								  search-fields="nombre" 
+								  title-field="nombre"
+								  minlength="1" 
+								  input-class="form-control" 
+								  match-class="highlight" 
+	 							  initial-value="{{cnRelacion.varEdicion.glosarioDestino.nombre}}">
+       						</div>
+        				</div>
+					</div>					
 				</div>				
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -199,58 +208,7 @@
 			</div>
 		</div>
 	</div>	
-	
-	<!-- Modal Concepto Origen -->
-	<div class="modal fade" id="verConceptoOrigenRelacionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Concepto origen</h4>
-				</div>
-				<div class="inicioTexto">
-					<div class="row centered">
-						<div class="col-xs-2 divCentrado formulario" >
-							<label class="control-label col-xs-2">Sinonimo:</label>
-						</div>
-						<div class="col-xs-6 divCentrado formulario">
-							<input type="text" class="form-control" placeholder="Nombre" ng-model="cnGlosario.nuevoSinonimo">
-						</div>
-					</div>
-				</div>				
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				</div>
-				
-			</div>
-		</div>
-	</div>
-	
-	<!-- Modal Concepto Destino -->
-	<div class="modal fade" id="verConceptoDestinoRelacionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Concepto destino</h4>
-				</div>
-				<div class="inicioTexto">
-					<div class="row centered">
-						<div class="col-xs-2 divCentrado formulario" >
-							<label class="control-label col-xs-2">Acrónimo:</label>
-						</div>
-						<div class="col-xs-6 divCentrado formulario">
-							<input type="text" class="form-control" placeholder="Nombre" ng-model="cnGlosario.nuevoAcronimo">
-						</div>
-					</div>
-				</div>				
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				</div>
-				
-			</div>
-		</div>
-	</div>		
+		
 	
 	
 	

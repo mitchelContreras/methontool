@@ -221,21 +221,21 @@
 							<label class="control-label col-xs-2">Nombre:</label>
 						</div>
 						<div class="col-xs-6 divCentrado formulario">
-								<div angucomplete-alt
-								 id="cnSelectedConcepto" placeholder="Concepto"
+       						<div angucomplete-alt
+								 id="completeListaGlosarioOrigenRelacion" placeholder="Concepto"
 								  maxlength="50"
 								  pause="100"
-								  selected-object="cnAtributoInstancia.selectedConcepto" 
-								  local-data="cnAxioma.relaciones" 
+								  selected-object="cnRelacion.varEdicion.glosarioOrigen" 
+								  local-data="cnRelacion.listaGlosarioConceptoOrigen" 
 								  search-fields="nombre" 
-								  title-field="nombre" 
+								  title-field="nombre"
 								  minlength="1" 
 								  input-class="form-control" 
 								  match-class="highlight" 
-  								  initial-value="{{cnAtributoInstancia.selectedConcepto.nombre}}"
-								  disable-input="cnAtributoInstancia.disabled">
-        						</div>
-        					</div>
+	 							  initial-value="{{cnRelacion.varEdicion.glosarioOrigen.nombre}}">
+       						</div>
+       						concepto: {{cnRelacion.varEdicion.glosarioOrigen}}
+        				</div>
 					</div>
 				</div>						
 				<div class="modal-footer">
