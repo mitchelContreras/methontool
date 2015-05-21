@@ -83,6 +83,7 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryTipoGlosario.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryMensajeCarga.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryTaxonomia.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryRelacion.js"></script>
 		
 		
 		<!-- Modulos de AngularJS -->
@@ -100,7 +101,10 @@
 
 		<!-- Taxonomia -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/taxonomia.js"></script>
-				
+		
+		<!-- Relacion -->	
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/relacion.js"></script>
+								
 	</head>
 	<body >
 		<div class="container" ng-controller="ControllerPrincipal as cnPrincipal">

@@ -81,7 +81,6 @@
 						</div>		
 					</div>							
 				</div>	
-			
 			</div>
 			<div class="col-md-8 cuerpoDos" ng-show="cnTaxonomia.enBlanco">
 			</div>

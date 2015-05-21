@@ -19,6 +19,7 @@
         'angucomplete-alt'
         ,'modTipoGlosario'
         ,'modTaxonomia'
+        ,'modRelacion'
         ])
     
 })();

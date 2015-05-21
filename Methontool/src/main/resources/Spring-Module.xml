@@ -13,4 +13,5 @@
 	<import resource="beanDataBase/Spring-Glosario.xml" />
 	<import resource="beanDataBase/Spring-TipoGlosario.xml" />
 	<import resource="beanDataBase/Spring-Taxonomia.xml" />
+	<import resource="beanDataBase/Spring-Relacion.xml" />
 </beans>
