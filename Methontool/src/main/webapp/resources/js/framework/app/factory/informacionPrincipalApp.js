@@ -34,7 +34,8 @@ InformacionPrincipalApp.$inject = ['$rootScope'];
 			regla : false,
 			instancia : false,
 			revisarOntologia : false,
-			exportar : false
+			exportar : false,
+			relacionDos :false
 		};
 		$rootScope.proyecto ={
 				idProyecto : 1,
@@ -52,7 +53,7 @@ InformacionPrincipalApp.$inject = ['$rootScope'];
 		function cambioActual(principal, usuario, proyecto, version, editar,
 				glosario, taxonomia, relacion, concepto, atributoInstancia, 
 				atributoClase, constante, axioma, regla, instancia, 
-				revisarOntologia, exportar){
+				revisarOntologia, exportar, relacionDos){
 			
 			$rootScope.actual.principal = principal;
 			$rootScope.actual.usuario = usuario;
@@ -71,6 +72,7 @@ InformacionPrincipalApp.$inject = ['$rootScope'];
 			$rootScope.actual.instancia = instancia;
 			$rootScope.actual.revisarOntologia = revisarOntologia;
 			$rootScope.actual.exportar = exportar;
+			$rootScope.actual.relacionDos = relacionDos;
 		};		
 		
 		
@@ -139,116 +141,127 @@ InformacionPrincipalApp.$inject = ['$rootScope'];
 			        break; 			        
 			    case 'Exportar':
 			    	return $rootScope.actual.exportar;
-			        break;				        
+			        break;
+			    case 'RelacionDos':
+			    	return $rootScope.actual.relacionDos;
+			        break;  
 			    default:
 			        return false;
 			    	break;
 				} 
 			},
 			voyAvista : function (Avista){
+				console.log("Avista "+Avista)
 				switch(Avista) {
 			    case 'Principal':
 			    	cambioActual(true, false, false, false, false,
 			    			false, false, false, false, false, 
 			    			false, false, false, false, false, 
-			    			false, false);
+			    			false, false, false);
 			        break;   
 			    case 'Usuario':
 			    	cambioActual(false, true, false, false, false,
 			    			false, false, false, false, false, 
 			    			false, false, false, false, false, 
-			    			false, false);
+			    			false, false, false);
 			        break;
 			    case 'Proyecto':
 			    	cambioActual(false, false, true, false, false,
 			    			false, false, false, false, false, 
 			    			false, false, false, false, false, 
-			    			false, false);
+			    			false, false, false);
 			        break; 
 			    case 'Version':
 			    	cambioActual(false, false, false, true, false,
 			    			false, false, false, false, false, 
 			    			false, false, false, false, false, 
-			    			false, false);
+			    			false, false, false);
 			        break; 			        
 			    case 'Editar':
 			    	cambioActual(false, false, false, false, true,
 			    			false, false, false, false, false, 
 			    			false, false, false, false, false, 
-			    			false, false);
+			    			false, false, false);
 			        break;   
 			    case 'Glosario':
 			    	cambioActual(false, false, false, false, false,
 			    			true, false, false, false, false, 
 			    			false, false, false, false, false, 
-			    			false, false);
+			    			false, false, false);
 			        break;   
 			    case 'Taxonomia':
 			    	cambioActual(false, false, false, false, false,
 			    			false, true, false, false, false, 
 			    			false, false, false, false, false, 
-			    			false, false);
+			    			false, false, false);
 			        break;
 			    case 'Relacion':
+			    	console.log("entre");
 			    	cambioActual(false, false, false, false, false,
 			    			false, false, true, false, false, 
 			    			false, false, false, false, false, 
-			    			false, false);
+			    			false, false, false);
 			        break; 
 			    case 'Concepto':
 			    	cambioActual(false, false, false, false, false,
 			    			false, false, false, true, false, 
 			    			false, false, false, false, false, 
-			    			false, false);
+			    			false, false, false);
 			        break; 			        
 			    case 'AtributoInstancia':
 			    	cambioActual(false, false, false, false, false,
 			    			false, false, false, false, true, 
 			    			false, false, false, false, false, 
-			    			false, false);
+			    			false, false, false);
 			        break;
 			    case 'AtributoClase':
 			    	cambioActual(false, false, false, false, false,
 			    			false, false, false, false, false, 
 			    			true, false, false, false, false, 
-			    			false, false);
+			    			false, false, false);
 			        break;   
 			    case 'Constante':
 			    	cambioActual(false, false, false, false, false,
 			    			false, false, false, false, false, 
 			    			false, true, false, false, false, 
-			    			false, false);
+			    			false, false, false);
 			        break;
 			    case 'Axioma':
 			    	cambioActual(false, false, false, false, false,
 			    			false, false, false, false, false, 
 			    			false, false, true, false, false, 
-			    			false, false);
+			    			false, false, false);
 			        break; 
 			    case 'Regla':
 			    	cambioActual(false, false, false, false, false,
 			    			false, false, false, false, false, 
 			    			false, false, false, true, false, 
-			    			false, false);
+			    			false, false, false);
 			        break; 			        
 			    case 'Instancia':
 			    	cambioActual(false, false, false, false, false,
 			    			false, false, false, false, false, 
 			    			false, false, false, false, true, 
-			    			false, false);
+			    			false, false, false);
 			        break;	
 			    case 'RevisarOntologia':
 			    	cambioActual(false, false, false, false, false,
 			    			false, false, false, false, false, 
 			    			false, false, false, false, false, 
-			    			false, false);
+			    			false, false, false);
 			        break; 			        
 			    case 'Exportar':
 			    	cambioActual(false, false, false, false, false,
 			    			false, false, false, false, false, 
 			    			false, false, false, false, false, 
-			    			true, true);
-			        break;			        
+			    			false, true, false);
+			        break;	
+			    case 'RelacionDos':
+			    	cambioActual(false, false, false, false, false,
+			    			false, false, false, false, false, 
+			    			false, false, false, false, false, 
+			    			false, false, true);
+			        break;     
 			    default:
 			        return false;
 			    	break;

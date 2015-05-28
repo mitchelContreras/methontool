@@ -86,6 +86,12 @@
 			</div>
 			<div class="col-md-8 cuerpoDos" ng-show="!cnRelacion.enBlanco">
 				<div class="inicioTexto">
+					<div align="center" class="alert alert-success alert-dismissible" ng-if="cnRelacion.alertPositiva">
+				   		 {{cnRelacion.mensajeAlertPositiva}}
+					</div>
+					<div align="center" class="alert alert-danger alert-dismissible" ng-if="cnRelacion.alertNegativa">
+				   		 <strong>Error!</strong> {{cnRelacion.mensajeAlertNegativa}}
+					</div>					
 					<form class=" form-horizontal">
 						<div class="form-group">
 							<div class="col-xs-4 control-label" >
@@ -103,7 +109,7 @@
 								<textarea class="form-control" rows="3" ng-disabled="true" ng-model="cnRelacion.glosarioRelacionActual.descripcion"></textarea>
 							</div>
 						</div>	
-					<button ng-click="cnRelacion.crearRelacion()" class="btn btn-link "  
+					<button ng-show="cnRelacion.enCrear" ng-click="cnRelacion.crearRelacion()" class="btn btn-link "  
 					aria-label="Center Align" type="button" 
 					data-toggle="tooltip" data-placement="top" title="Agregar Relación">
 					    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -113,20 +119,21 @@
 					      <tr>
 					        <th>Origen</th>
 					        <th>Destino</th>
-					        <th>Cardinalidad</th>
-					        <th>Relación inversa</th>
-					        <th>Acciones</th>
+					        <th ng-show="!cnRelacion.enCrear">Cardinalidad</th>
+					        <th ng-show="!cnRelacion.enCrear">Relación inversa</th>
+					        <th ng-show="cnRelacion.enCrear">Acción</th>
+					        <th ng-show="!cnRelacion.enCrear">Acciones</th>
 					      </tr>
 					    </thead>
     					<tbody>
     						<tr ng-repeat="row in cnRelacion.listaRelacion">
     							<td>{{row.glosarioOrigen.nombre}}</td>
 					        	<td>{{row.glosarioDestino.nombre}}</td>
-					       		<td>{{row.cardinalidad}}</td> 
-					        	<td>{{row.glosarioRelacionInversa.nombre}}</td>
+					       		<td ng-show="!cnRelacion.enCrear">{{row.cardinalidad}}</td> 
+					        	<td ng-show="!cnRelacion.enCrear">{{row.glosarioRelacionInversa.nombre}}</td>
 					        	<td>
 						        	<div class="btn-group">
-												<button ng-click="cnRelacion.modificarRelacion(row.idRelacion)" 
+												<button ng-show="!cnRelacion.enCrear" ng-click="cnRelacion.modificarRelacion(row.idRelacion)" 
 												class="btn btn-link " aria-label="Center Align" type="button"
 												data-toggle="tooltip" data-placement="top" title="Modificar">
 												    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -148,7 +155,7 @@
 	</div>
 	
 	
-	<!-- Modal Relacion inversa -->
+	<!-- Modal crear Relacion-->
 	<div class="modal fade" id="verModalRelacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -173,11 +180,8 @@
 								  minlength="1" 
 								  input-class="form-control" 
 								  match-class="highlight" 
-	 							  initial-value="{{cnRelacion.varEdicion.glosarioOrigen.nombre}}">
+	 							  >
        						</div>
-       					<!--	{{cnRelacion.varEdicion.glosarioOrigen}}
-       						{{cnRelacion.varEdicion.glosarioOrigen.id}}
-       						{{cnRelacion.varEdicion.glosarioOrigen.nombre}}-->
         				</div>
 					</div>
 					<div class="row centered">
@@ -194,21 +198,109 @@
 								  search-fields="nombre" 
 								  title-field="nombre"
 								  minlength="1" 
-								  input-class="form-control" 
-								  match-class="highlight" 
-	 							  initial-value="{{cnRelacion.varEdicion.glosarioDestino.nombre}}">
+								  input-class="form-control"
+								  match-class="highlight">
        						</div>
         				</div>
+					</div>
+					<div class="row centered" ng-show="false">
+						<div class="col-xs-2 divCentrado formulario" >
+							<label class="control-label col-xs-2">Cardinalidad:</label>
+						</div>
+						<div class="col-xs-6 divCentrado formulario">
+								<div class="col-xs-5">
+									<input type="text" class="form-control" placeholder="Origen" ng-model="cnGlosario.nuevoAcronimo">	
+								</div>
+								<div class="col-xs-1">
+								</div>
+								<div class="col-xs-5">
+									<input type="text" class="form-control" placeholder="Destino" ng-model="cnGlosario.nuevoAcronimo">										
+								</div>
+						</div>
 					</div>					
+					<div class="row centered" ng-show="false">
+						<div class="col-xs-2 divCentrado formulario" >
+							<label class="control-label col-xs-2">Relación inversa:</label>
+						</div>
+						<div class="col-xs-6 divCentrado formulario">
+       						<div angucomplete-alt
+								 id="completeListaRelacionInversa" placeholder="Relación inversa"
+								  maxlength="50"
+								  pause="100"
+								  selected-object="cnRelacion.varEdicion.relacionInversaSelected" 
+								  local-data="cnRelacion.listaRelacionInversa" 
+								  search-fields="nombre" 
+								  title-field="nombre"
+								  minlength="1" 
+								  input-class="form-control" 
+								  match-class="highlight" 
+	 							  initial-value="{{cnRelacion.varEdicion.relacionInversa.nombre}}">
+       						</div>
+        				</div>
+					</div>						
 				</div>				
 				<div class="modal-footer">
+					<button class="btn btn-primary" type="button" ng-click="cnRelacion.creadaRelacion()">Crear</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 				</div>
 				
 			</div>
 		</div>
 	</div>	
-		
+
+	<!-- Modal actualizar Relacion-->
+	<div class="modal fade" id="verModalactualizarRelacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Actualizar Relación</h4>
+				</div>
+				<div class="inicioTexto" >
+					<div class="row centered">
+						<div class="col-xs-2 divCentrado formulario" >
+							<label class="control-label col-xs-2">Cardinalidad:</label>
+						</div>
+						<div class="col-xs-6 divCentrado formulario">
+								<div class="col-xs-5">
+									<input type="text" class="form-control" placeholder="Origen" ng-model="cnRelacion.varEdicion.origenCardinalidad">	
+								</div>
+								<div class="col-xs-1">
+								</div>
+								<div class="col-xs-5">
+									<input type="text" class="form-control" placeholder="Destino" ng-model="cnRelacion.varEdicion.destinoCardinalidad">										
+								</div>
+						</div>
+					</div>					
+					<div class="row centered">
+						<div class="col-xs-2 divCentrado formulario" >
+							<label class="control-label col-xs-2">Relación inversa:</label>
+						</div>
+						<div class="col-xs-6 divCentrado formulario">
+       						<div angucomplete-alt
+								 id="completeListaRelacionInversa" placeholder="Relación inversa"
+								  maxlength="50"
+								  pause="100"
+								  selected-object="cnRelacion.varEdicion.relacionInversaSelected" 
+								  local-data="cnRelacion.listaRelacionInversa" 
+								  search-fields="nombre" 
+								  title-field="nombre"
+								  minlength="1" 
+								  input-class="form-control" 
+								  match-class="highlight"
+	 							  initial-value="{{cnRelacion.varEdicion.relacionInversa.nombre}}">
+       						</div>
+        				</div>
+					</div>						
+				</div>				
+				<div class="modal-footer">
+					<button class="btn btn-primary" type="button" ng-click="cnRelacion.modifiqueRelacion()">Guardar</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				</div>
+				
+			</div>
+		</div>
+	</div>			
 	
 	
 	

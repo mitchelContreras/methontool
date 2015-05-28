@@ -93,6 +93,7 @@
 		            		<li><a href="#" ng-click="cnCabecera.menuReglaPrincipal()">Reglas</a></li>
 				            <li><a href="#" ng-click="cnCabecera.menuAxiomaPrincipal()">Axioma</a></li>
 				            <li><a href="#" ng-click="cnCabecera.menuRelacionPrincipal()">Relaciones</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuRelacionDosPrincipal()">Modificar Relaciones</a></li>
 				            <li><a href="#" ng-click="cnCabecera.menuTaxonomiaPrincipal()">Taxonomia</a></li>
 				            <li><a href="#" ng-click="cnCabecera.menuConceptoPrincipal()">Concepto</a></li>
 				            <li><a href="#" ng-click="cnCabecera.menuInstanciaPrincipal()">Instancia</a></li>

@@ -44,11 +44,16 @@ function ControllerCabecera(
     	cnCabecera.menuReglaPrincipal = menuReglaPrincipal;
     	cnCabecera.menuAxiomaPrincipal = menuAxiomaPrincipal;
     	cnCabecera.menuRelacionPrincipal = menuRelacionPrincipal;
+    	cnCabecera.menuRelacionDosPrincipal = menuRelacionDosPrincipal;
     	cnCabecera.menuTaxonomiaPrincipal = menuTaxonomiaPrincipal;
     	cnCabecera.menuConceptoPrincipal = menuConceptoPrincipal;
     	cnCabecera.menuInstanciaPrincipal = menuInstanciaPrincipal;
     	cnCabecera.menuConstantePrincipal = menuConstantePrincipal;
 //fin funciones relacionadas con  visualisar ó tarea
+    	
+    	function menuRelacionDosPrincipal(){
+    		$rootScope.$broadcast('menuRelacionDosPrincipal');
+    	}
     	function menuConstantePrincipal(){
     		$rootScope.$broadcast('menuConstantePrincipal');
     	}

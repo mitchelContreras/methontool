@@ -80,20 +80,170 @@ public class JdbcRelacionDAO implements RelacionDAO {
 	@Override
 	public Relacion crearRelacion(int idProyecto, Relacion relacion) {
 		// TODO Auto-generated method stub
-		String sql;
-		return null;
+		String sqlInicio, sqlFin, sql;
+		sqlInicio = "  INSERT INTO relacion ("
+				+ "id_glosario_relacion "
+				+ ",id_glosario_origen "
+				+ ",id_glosario_destino "
+				+ ",id_proyecto ";
+		sqlFin = " VALUES (? ,? ,? ,? ";
+		if(relacion.getIdGlosarioRelacionInversa() != 0){
+			sqlInicio = sqlInicio + ",id_glosario_relacion_inversa ";
+			sqlFin = sqlFin + ",? ";
+		}
+		if(relacion.getCardinalidad() != null){
+			sqlInicio = sqlInicio + ",cardinalidad ";
+			sqlFin = sqlFin + ",? ";
+		}
+		sqlInicio = sqlInicio +") ";
+		sqlFin = sqlFin +")  RETURNING id_relacion;";
+		sql = sqlInicio + sqlFin;
+		
+		logger.trace("sql es "+sql);
+//		sql = "  INSERT INTO relacion ("
+//				+ "id_glosario_relacion, "
+//				+ "id_glosario_origen, "
+//				+ "id_glosario_destino, "
+//				+ "id_glosario_relacion_inversa, "
+//				+ "cardinalidad, "
+//				+ "id_proyecto) "
+//				+ "VALUES (?, ?, ?, ?, ?, ?) RETURNING id_relacion";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, relacion.getIdGlosarioRelacion());
+			ps.setInt(2, relacion.getIdGlosarioOrigen());
+			ps.setInt(3, relacion.getIdGlosarioDestino());
+			ps.setInt(4, idProyecto);
+			
+			if(relacion.getIdGlosarioRelacionInversa() != 0){
+				ps.setInt(5, relacion.getIdGlosarioRelacionInversa());
+				if(relacion.getCardinalidad() != null){
+					ps.setString(6, relacion.getCardinalidad());
+				}
+			}else{
+				if(relacion.getCardinalidad() != null){
+					ps.setString(5, relacion.getCardinalidad());
+				}
+			}
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				relacion.setIdRelacion(rs.getInt("id_relacion")); 
+			}
+			rs.close();
+			ps.close();
+			return relacion;	
+		} catch (SQLException e) {
+//			logger.info("SQLException "+e);
+			relacion.setIdRelacion(0); 
+			throw new RuntimeException(e);
+		} catch(Exception e) {
+			logger.info("error "+e.toString());
+			relacion.setIdRelacion(0); 
+			return relacion;	
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					relacion.setIdRelacion(0); 
+					return relacion;
+				}
+			}
+		}
 	}
 
 	@Override
 	public int eliminarRelacion(int idProyecto, int idRelacion) {
 		// TODO Auto-generated method stub
-		return 0;
+		String sql;
+		sql = "DELETE FROM relacion WHERE id_proyecto = ? and id_relacion = ?;";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1,idProyecto);
+			ps.setInt(2, idRelacion);
+
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				return 1;
+			}
+			rs.close();
+			ps.close();
+			return 1;	
+		} catch (SQLException e) {
+			logger.info("SQLException "+e);
+			return 0;
+//			throw new RuntimeException(e);
+		} catch(Exception e) {
+			logger.info("error "+e.toString());
+			return 0;	
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					return 0;
+				}
+			}
+		}
 	}
 
 	@Override
 	public Relacion actualizarRelacion(int idProyecto, Relacion relacion) {
 		// TODO Auto-generated method stub
-		return null;
+		
+//		UPDATE relacion set id_glosario_relacion_inversa = null, cardinalidad = null where id_relacion = 4;
+		String sql;
+		sql = "UPDATE relacion set "
+				+ "id_glosario_relacion_inversa = ?, "
+				+ "cardinalidad = ? where id_relacion = ?  and id_proyecto = ? RETURNING id_relacion;";
+				
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			if(relacion.getIdGlosarioRelacionInversa() != 0){
+				ps.setInt(1, relacion.getIdGlosarioRelacionInversa());
+			}else{
+				ps.setNull(1, java.sql.Types.INTEGER);
+			}
+			if(relacion.getCardinalidad() != null){
+				ps.setString(2, relacion.getCardinalidad());
+			}else{
+				ps.setNull(2, java.sql.Types.VARCHAR);
+			}
+			ps.setInt(3, relacion.getIdRelacion());
+			ps.setInt(4, idProyecto);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				relacion.setIdRelacion(rs.getInt("id_relacion")); 
+			}
+			rs.close();
+			ps.close();
+			return relacion;	
+		} catch (SQLException e) {
+			logger.info("SQLException "+e);
+			relacion.setIdRelacion(0); 
+			throw new RuntimeException(e);
+		} catch(Exception e) {
+			logger.info("error "+e.toString());
+			relacion.setIdRelacion(0); 
+			return relacion;	
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					relacion.setIdRelacion(0); 
+					return relacion;
+				}
+			}
+		}
 	}
 
 }

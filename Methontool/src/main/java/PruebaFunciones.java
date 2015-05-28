@@ -5,9 +5,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.ciensUCV.Methontool.dao.GlosarioDAO;
 import com.ciensUCV.Methontool.dao.ProyectoDAO;
+import com.ciensUCV.Methontool.dao.RelacionDAO;
 import com.ciensUCV.Methontool.dao.TaxonomiaDAO;
 import com.ciensUCV.Methontool.model.NivelFormalidad;
 import com.ciensUCV.Methontool.model.Proyecto;
+import com.ciensUCV.Methontool.model.Relacion;
 import com.ciensUCV.Methontool.model.Taxonomia;
 import com.ciensUCV.Methontool.rest.model.ElementoMensaje;
 import com.ciensUCV.Methontool.util.VariablesConfiguracion;
@@ -58,10 +60,24 @@ public class PruebaFunciones {
 //		
 		
 		logger.trace("En pruebaFunciones");
-		Taxonomia taxonomia = new Taxonomia(); 
-		TaxonomiaDAO taxonomiaDAO = (TaxonomiaDAO) context.getBean("taxonomiaDAO");
+//		Taxonomia taxonomia = new Taxonomia(); 
+//		TaxonomiaDAO taxonomiaDAO = (TaxonomiaDAO) context.getBean("taxonomiaDAO");
 		
-		taxonomia.setConceptoOrigen(1);
+		Relacion relacion;
+		RelacionDAO relacionDAO = (RelacionDAO) context.getBean("relacionDAO");
+		
+		relacion = new Relacion();
+		relacion.setIdGlosarioRelacion(13);
+		relacion.setIdGlosarioOrigen(6);
+		relacion.setIdGlosarioDestino(2);
+//		relacion.setCardinalidad("blaaaaa");
+//		relacion.setIdGlosarioRelacionInversa(2);
+		relacion.setIdRelacion(6);
+//		relacion = relacionDAO.crearRelacion(1, relacion);
+		relacion = relacionDAO.actualizarRelacion(1, relacion);
+		
+		
+//		taxonomia.setConceptoOrigen(1);
 //		taxonomia.getRelaciones().add("desDisjunta");
 //		taxonomia.getConceptosDestino().addToInnerArray(0, 4);
 //		taxonomia.getConceptosDestino().addToInnerArray(0, 6);
