@@ -23,6 +23,7 @@ ControllerRelacion.$inject = [
                               ,'$scope'
                               ];	
 
+
 function ControllerRelacion(
     	$rootScope
     	,InformacionPrincipalApp
