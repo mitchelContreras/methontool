@@ -152,7 +152,6 @@ function ControllerRelacion(
 		
 		
 		if(relacionBuscada != undefined){
-			console.log("relacionBuscada.cardinalidad "+relacionBuscada.cardinalidad);
 			if(relacionBuscada.cardinalidad){
 				var card = relacionBuscada.cardinalidad.split(";");
 				cnRelacion.varEdicion.origenCardinalidad = card[0];
@@ -167,10 +166,12 @@ function ControllerRelacion(
 			if(relacionBuscada.glosarioRelacionInversa.nombre != undefined){
 				cnRelacion.varEdicion.relacionInversaSelected.originalObject = relacionBuscada.glosarioRelacionInversa;
 				cnRelacion.varEdicion.relacionInversa = relacionBuscada.glosarioRelacionInversa;
+				console.log("relacionBuscada.glosarioRelacionInversa.nombre "+relacionBuscada.glosarioRelacionInversa.nombre);
+				$scope.$broadcast('angucomplete-alt:asignar-defoult', 'completeListaRelacionInversa', relacionBuscada.glosarioRelacionInversa.nombre);
 			}
 			else{
 				console.log("debo limpiar");
-				$scope.$broadcast('angucomplete-alt:clearInput');
+				$scope.$broadcast('angucomplete-alt:clearInput', 'completeListaRelacionInversa');
 			}
 		}
 		
@@ -188,7 +189,8 @@ function ControllerRelacion(
 		cnRelacion.varEdicion.cardinalidad = "";
 		cnRelacion.varEdicion.relacionInversa = {};
 		cnRelacion.varEdicion.idRelacion ="";
-		$scope.$broadcast('angucomplete-alt:clearInput');
+		$scope.$broadcast('angucomplete-alt:clearInput', 'completeListaGlosarioOrigenRelacion');
+		$scope.$broadcast('angucomplete-alt:clearInput', 'completeListaGlosarioDestinoRelacion');
 		
 		llenarListaGlosarioConceptoOrigen();
 		llenarListaGlosarioConceptoDestino();
@@ -252,7 +254,18 @@ function ControllerRelacion(
 		cnRelacion.modificar = false;
 	}
 	function modifiqueRelacion(){
-		cnRelacion.varEdicion.relacionInversa = cnRelacion.varEdicion.relacionInversaSelected.originalObject;
+		var auxIdRelacionInversa = "0";
+		try{
+			auxIdRelacionInversa = cnRelacion.varEdicion.relacionInversaSelected.originalObject.id;
+			console.log("entre en != undefined "+auxIdRelacionInversa);			
+		}catch(err){
+			console.log("no encuentro cnRelacion.varEdicion.relacionInversaSelected.originalObject");
+		}
+//		if(typeof cnRelacion.varEdicion.relacionInversaSelected.originalObject != "undefined"){
+//			auxIdRelacionInversa = cnRelacion.varEdicion.relacionInversaSelected.originalObject.id;
+//			console.log("entre en != undefined "+auxIdRelacionInversa);
+//		}
+		
 		
 		if((cnRelacion.varEdicion.origenCardinalidad == "" && cnRelacion.varEdicion.destinoCardinalidad !="") || 
 				(cnRelacion.varEdicion.origenCardinalidad != "" && cnRelacion.varEdicion.destinoCardinalidad =="")){
@@ -262,11 +275,11 @@ function ControllerRelacion(
 		if(cnRelacion.varEdicion.origenCardinalidad != ""){
 			auxCardinalidad = cnRelacion.varEdicion.origenCardinalidad+";"+cnRelacion.varEdicion.destinoCardinalidad;
 		}
-		console.log("cnRelacion.varEdicion.relacionInversa.id="+cnRelacion.varEdicion.relacionInversa.id+" cnRelacion.varEdicion.relacionInversa.nombre="+cnRelacion.varEdicion.relacionInversa.nombre);
+//		console.log("cnRelacion.varEdicion.relacionInversa.id="+cnRelacion.varEdicion.relacionInversa.id+" cnRelacion.varEdicion.relacionInversa.nombre="+cnRelacion.varEdicion.relacionInversa.nombre);
 		console.log("cardinalidad "+cnRelacion.varEdicion.origenCardinalidad+";"+cnRelacion.varEdicion.destinoCardinalidad);
-		console.log("cnRelacion.varEdicion.idRelacion "+cnRelacion.varEdicion.idRelacion);
+		console.log("auxIdRelacionInversa "+auxIdRelacionInversa);
 		var salida1;
-		salida1 = FactoryRelacion.actualizarElemento (cnRelacion.varEdicion.idRelacion, cnRelacion.varEdicion.relacionInversa.id, auxCardinalidad);
+		salida1 = FactoryRelacion.actualizarElemento (cnRelacion.varEdicion.idRelacion, auxIdRelacionInversa, auxCardinalidad);
 		$('#verModalactualizarRelacion').modal('hide');
 		FactoryMensajeCarga.abrirMensaje("Guardando");
 		salida1.then(

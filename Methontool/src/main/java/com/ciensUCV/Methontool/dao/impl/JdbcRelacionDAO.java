@@ -168,9 +168,6 @@ public class JdbcRelacionDAO implements RelacionDAO {
 			ps.setInt(2, idRelacion);
 
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
-				return 1;
-			}
 			rs.close();
 			ps.close();
 			return 1;	

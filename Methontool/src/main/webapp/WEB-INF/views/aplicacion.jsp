@@ -46,7 +46,7 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/angular-touch.min.js"></script>
 			
 		<!-- Angucomple-alt -->	
-		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/angucomplete-alt.min.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/angucomplete-alt.js"></script>
 		
 		<!-- JS -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/aplicacion.js"></script>
