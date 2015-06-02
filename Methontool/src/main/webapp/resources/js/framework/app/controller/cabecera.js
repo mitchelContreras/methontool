@@ -62,8 +62,7 @@ function ControllerCabecera(
     		console.log("instancia no se ha implementado");
     	}
     	function menuConceptoPrincipal(){
-    		//$rootScope.$broadcast('menuConceptoPrincipal');
-    		console.log("concepto no se ha implementado");
+    		$rootScope.$broadcast('menuConceptoPrincipal');
     	}
     	function menuTaxonomiaPrincipal(){
     		$rootScope.$broadcast('menuTaxonomiaPrincipal');

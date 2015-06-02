@@ -76,6 +76,8 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/regla.js"></script>
 		<!-- Taxonomia -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/taxonomia.js"></script>				
+		<!-- Concepto -->
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/concepto.js"></script>				
 		
 		<!-- factory -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/informacionPrincipalApp.js"></script>
@@ -84,7 +86,8 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryMensajeCarga.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryTaxonomia.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryRelacion.js"></script>
-		
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryConcepto.js"></script>
+				
 		
 		<!-- Modulos de AngularJS -->
 		<!-- Proyecto -->
@@ -104,7 +107,10 @@
 		
 		<!-- Relacion -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/relacion.js"></script>
-								
+		
+		<!-- Concepto -->	
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/concepto.js"></script>
+											
 	</head>
 	<body >
 		<div class="container" ng-controller="ControllerPrincipal as cnPrincipal">
@@ -129,7 +135,8 @@
 			<jsp:include page="componentesAplicacion/constante.jsp" />				
 			<jsp:include page="componentesAplicacion/axioma.jsp" />			
 			<jsp:include page="componentesAplicacion/regla.jsp" />		
-			<jsp:include page="componentesAplicacion/taxonomia.jsp" />								
+			<jsp:include page="componentesAplicacion/taxonomia.jsp" />
+			<jsp:include page="componentesAplicacion/concepto.jsp" />									
 <!-- 
 		idProyecto:{{proyecto.idProyecto}}<br>
 		nombre:{{proyecto.nombre}}<br>
