@@ -57,6 +57,42 @@ function ControllerConcepto(
 	cnConcepto.modificarConcepto = modificarConcepto;
 	cnConcepto.modifiqueConcepto = modifiqueConcepto;
 	cnConcepto.cancelarModificarConcepto = cancelarModificarConcepto;
+	cnConcepto.eliminarConcepto = eliminarConcepto;
+	cnConcepto.agregarConcepto = agregarConcepto;
+	
+	function agregarConcepto(lista){
+		switch(lista){
+		case 'relacion':
+			console.log("relacion");
+			break;
+		case 'instancia':
+			console.log("instancia");
+			break;
+		case 'atributoClase':
+			console.log("atributoClase");
+			break;	
+		case 'atributoInstancia':
+			console.log("atributoInstancia");
+			break;		
+		}
+	}
+	
+	function eliminarConcepto(index, lista){
+		switch(lista){
+		case 'relacion':
+			cnConcepto.ConceptoActual.relaciones.splice(index, 1);
+			break;
+		case 'instancia':
+			cnConcepto.ConceptoActual.instancias.splice(index, 1);
+			break;
+		case 'atributoClase':
+			cnConcepto.ConceptoActual.atributosClase.splice(index, 1);
+			break;	
+		case 'atributoInstancia':
+			cnConcepto.ConceptoActual.atributosInstancia.splice(index, 1);
+			break;		
+		}
+	}
 	
 	function cancelarModificarConcepto(){
 		cnConcepto.disabled = true;
@@ -95,6 +131,30 @@ function ControllerConcepto(
 	                if(aux.succes){
 	                	console.log("consultar es true");
 
+	                	
+	                	var i;
+	                	
+	                	cnConcepto.ConceptoActual.relaciones = [];
+	                	for(i=0;i<aux.elemento.relaciones.length;i++){
+	                		cnConcepto.ConceptoActual.relaciones.push(FactoryGlosario.consultarElemento(aux.elemento.relaciones[i].idGlosarioRelacion));
+	                	}
+	                	
+	                	cnConcepto.ConceptoActual.instancias = [];
+	                	for(i=0;i<aux.elemento.instancias.length;i++){
+	                		cnConcepto.ConceptoActual.instancias.push(FactoryGlosario.consultarElemento(aux.elemento.instancias[i].idGlosario));
+	                	}
+	                	
+	                	cnConcepto.ConceptoActual.atributosClase = [];
+	                	for(i=0;i<aux.elemento.atributosClase.length;i++){
+	                		cnConcepto.ConceptoActual.atributosClase.push(FactoryGlosario.consultarElemento(aux.elemento.atributosClase[i].idGlosario));
+	                	}
+	                	
+	                	cnConcepto.ConceptoActual.atributosInstancia = [];
+	                	for(i=0;i<aux.elemento.atributosInstancia.length;i++){
+	                		cnConcepto.ConceptoActual.atributosInstancia.push(FactoryGlosario.consultarElemento(aux.elemento.atributosInstancia[i].idGlosario));
+	                	}
+	                	
+              	
 	                	FactoryMensajeCarga.cerrarMensaje();
 	                }else{
 	                	

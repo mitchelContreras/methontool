@@ -111,19 +111,19 @@
 						</div>	
 						<div class="form-group">
 							<div class="col-xs-4 control-label" >
-								<label>Sub-Clase de:</label>
+								<label>Relaciones:</label>
 							</div>
 							<div class="col-xs-5">
-								<div class="row" ng-repeat="concepto in cnTaxonomia.varEdicion.listaSubClase track by $index" id="{{$index}}">
+								<div class="row" ng-repeat="concepto in cnConcepto.ConceptoActual.relaciones track by $index" id="{{$index}}">
 									<div class="col-xs-9 ">
 										<input class="form-control" ng-model="concepto.nombre" ng-disabled="true">
 									</div>
 									<div class="col-xs-1">
-										<a class="btn"  ng-class="{'disabled': cnTaxonomia.disabled == true}" ng-show="cnTaxonomia.modificar" ng-click="cnTaxonomia.eliminarConceptoTaxonomia({{$index}}, '1')" ><i class="glyphicon glyphicon-trash"></i></a>							
+										<a class="btn"  ng-class="{'disabled': cnConcepto.disabled == true}" ng-show="cnConcepto.modificar" ng-click="cnConcepto.eliminarConcepto({{$index}}, 'relacion')" ><i class="glyphicon glyphicon-trash"></i></a>							
 									</div>										
 								</div>	
 								<div>
-									<button ng-click="cnTaxonomia.agregarConceptoRelacion('1')" class="btn btn-link " ng-class="{'disabled': cnTaxonomia.disabled == true}" ng-show="cnTaxonomia.modificar" aria-label="Center Align" type="button">
+									<button ng-click="cnConcepto.agregarConcepto('relacion')" class="btn btn-link " ng-class="{'disabled': cnConcepto.disabled == true}" ng-show="cnConcepto.modificar" aria-label="Center Align" type="button">
 									    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 									</button>							
 								</div>
@@ -131,19 +131,19 @@
 						</div>
 						<div class="form-group">
 							<div class="col-xs-4 control-label" >
-								<label>Descomposición Disjunta:</label>
+								<label>Instancias:</label>
 							</div>
 							<div class="col-xs-5">
-								<div class="row" ng-repeat="concepto in cnTaxonomia.varEdicion.listaDisjunta track by $index" id="{{$index}}">
+								<div class="row" ng-repeat="concepto in cnConcepto.ConceptoActual.instancias track by $index" id="{{$index}}">
 									<div class="col-xs-9 ">
 										<input class="form-control" ng-model="concepto.nombre" ng-disabled="true">
 									</div>
 									<div class="col-xs-1">
-										<a class="btn"  ng-class="{'disabled': cnTaxonomia.disabled == true}" ng-show="cnTaxonomia.modificar" ng-click="cnTaxonomia.eliminarConceptoTaxonomia({{$index}}, '2')" ><i class="glyphicon glyphicon-trash"></i></a>							
+										<a class="btn"  ng-class="{'disabled': cnConcepto.disabled == true}" ng-show="cnConcepto.modificar" ng-click="cnConcepto.eliminarConcepto({{$index}}, 'instancia')" ><i class="glyphicon glyphicon-trash"></i></a>							
 									</div>										
 								</div>	
 								<div>
-									<button ng-click="cnTaxonomia.agregarConceptoRelacion('2')" class="btn btn-link " ng-class="{'disabled': cnTaxonomia.disabled == true}" ng-show="cnTaxonomia.modificar" aria-label="Center Align" type="button">
+									<button ng-click="cnConcepto.agregarConcepto('instancia')" class="btn btn-link " ng-class="{'disabled': cnConcepto.disabled == true}" ng-show="cnConcepto.modificar" aria-label="Center Align" type="button">
 									    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 									</button>							
 								</div>
@@ -151,19 +151,19 @@
 						</div>
 						<div class="form-group">
 							<div class="col-xs-4 control-label" >
-								<label>Descomposición Exhaustiva:</label>
+								<label>Atributos de clase:</label>
 							</div>
 							<div class="col-xs-5">
-								<div class="row" ng-repeat="concepto in cnTaxonomia.varEdicion.listaExhustiva track by $index" id="{{$index}}">
+								<div class="row" ng-repeat="concepto in cnConcepto.ConceptoActual.atributosClase track by $index" id="{{$index}}">
 									<div class="col-xs-9 ">
 										<input class="form-control" ng-model="concepto.nombre" ng-disabled="true">
 									</div>
 									<div class="col-xs-1">
-										<a class="btn"  ng-class="{'disabled': cnTaxonomia.disabled == true}" ng-show="cnTaxonomia.modificar" ng-click="cnTaxonomia.eliminarConceptoTaxonomia({{$index}}, '3')" ><i class="glyphicon glyphicon-trash"></i></a>							
+										<a class="btn"  ng-class="{'disabled': cnConcepto.disabled == true}" ng-show="cnConcepto.modificar" ng-click="cnConcepto.eliminarConcepto({{$index}}, 'atributoClase')" ><i class="glyphicon glyphicon-trash"></i></a>							
 									</div>										
 								</div>	
 								<div>
-									<button ng-click="cnTaxonomia.agregarConceptoRelacion('3')" class="btn btn-link " ng-class="{'disabled': cnTaxonomia.disabled == true}" ng-show="cnTaxonomia.modificar" aria-label="Center Align" type="button">
+									<button ng-click="cnConcepto.agregarConcepto('atributoClase')" class="btn btn-link " ng-class="{'disabled': cnConcepto.disabled == true}" ng-show="cnConcepto.modificar" aria-label="Center Align" type="button">
 									    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 									</button>							
 								</div>
@@ -171,19 +171,19 @@
 						</div>
 						<div class="form-group">
 							<div class="col-xs-4 control-label" >
-								<label>Partición:</label>
+								<label>Atributos de instancia:</label>
 							</div>
 							<div class="col-xs-5">
-								<div class="row" ng-repeat="concepto in cnTaxonomia.varEdicion.listaParticion track by $index" id="{{$index}}">
+								<div class="row" ng-repeat="concepto in cnConcepto.ConceptoActual.atributosInstancia track by $index" id="{{$index}}">
 									<div class="col-xs-9 ">
 										<input class="form-control" ng-model="concepto.nombre" ng-disabled="true">
 									</div>
 									<div class="col-xs-1">
-										<a class="btn"  ng-class="{'disabled': cnTaxonomia.disabled == true}" ng-show="cnTaxonomia.modificar" ng-click="cnTaxonomia.eliminarConceptoTaxonomia({{$index}}, '4')" ><i class="glyphicon glyphicon-trash"></i></a>							
+										<a class="btn"  ng-class="{'disabled': cnConcepto.disabled == true}" ng-show="cnConcepto.modificar" ng-click="cnConcepto.eliminarConcepto({{$index}}, 'atributoInstancia')" ><i class="glyphicon glyphicon-trash"></i></a>							
 									</div>										
 								</div>	
 								<div>
-									<button ng-click="cnTaxonomia.agregarConceptoRelacion('4')" class="btn btn-link " ng-class="{'disabled': cnTaxonomia.disabled == true}" ng-show="cnTaxonomia.modificar" aria-label="Center Align" type="button">
+									<button ng-click="cnConcepto.agregarConcepto('atributoInstancia')" class="btn btn-link " ng-class="{'disabled': cnConcepto.disabled == true}" ng-show="cnConcepto.modificar" aria-label="Center Align" type="button">
 									    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 									</button>							
 								</div>

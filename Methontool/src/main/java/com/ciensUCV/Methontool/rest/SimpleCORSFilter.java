@@ -29,7 +29,6 @@ public class SimpleCORSFilter implements Filter {
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
-
 	}
 	/* (non-Javadoc)
 	 * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)
