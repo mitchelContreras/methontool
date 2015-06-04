@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ciensUCV.Methontool.dao.AtributoClaseDAO;
+import com.ciensUCV.Methontool.dao.AtributoInstanciaDAO;
+import com.ciensUCV.Methontool.dao.InstanciaDAO;
+import com.ciensUCV.Methontool.dao.RelacionDAO;
 import com.ciensUCV.Methontool.model.Concepto;
 import com.ciensUCV.Methontool.rest.model.ElementoMensaje;
 import com.ciensUCV.Methontool.util.VariablesConfiguracion;
@@ -28,9 +32,30 @@ public class ConceptoRest {
 			,@PathVariable("idGlosarioConcepto") int idGlosarioConcepto){
 		
 		ElementoMensaje<Concepto> elementoMensaje = new ElementoMensaje<Concepto> ();
+		elementoMensaje.setElemento(new Concepto());
+		elementoMensaje.getElemento().setIdGlosario(idGlosarioConcepto);
 		logger.trace("*** verConcepto ");
 		logger.trace("idProyecto "+idProyecto);
 		logger.trace("idGlosarioConcepto "+idGlosarioConcepto);
+		
+		try {
+			RelacionDAO relacionDAO = (RelacionDAO) context.getBean("relacionDAO");
+			AtributoClaseDAO atributoClaseDAO = (AtributoClaseDAO) context.getBean("atributoClaseDAO");
+			AtributoInstanciaDAO atributoInstanciaDAO = (AtributoInstanciaDAO) context.getBean("atributoInstanciaDAO");
+			InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
+			
+			elementoMensaje.getElemento().setAtributosClase(atributoClaseDAO.listarAtributoClaseDadoIdGlosarioConcepto(elementoMensaje.getElemento().getIdGlosario()));
+			elementoMensaje.getElemento().setAtributosInstancia(atributoInstanciaDAO.listarAtributoInstanciaDadoIdGlosarioConcepto(elementoMensaje.getElemento().getIdGlosario()));
+			elementoMensaje.getElemento().setInstancias(instanciaDAO.listaInstanciaDadoIdGlosarioConcepto(elementoMensaje.getElemento().getIdGlosario()));
+			elementoMensaje.getElemento().setRelaciones(relacionDAO.listarRelacionDadoIdGlosarioConcepto(elementoMensaje.getElemento().getIdGlosario()));
+			elementoMensaje.setSucces(true);
+		} catch (Exception e) {
+			// TODO: handle exception
+			elementoMensaje.setSucces(false);
+		}
+
+		
+		
 		
 		return elementoMensaje;
 	}

@@ -17,6 +17,8 @@ ControllerConcepto.$inject = [
                               '$rootScope' 
                               ,'InformacionPrincipalApp'
                               ,'FactoryGlosario'
+                              ,'FactoryConcepto'
+                              ,'FactoryMensajeCarga'
                               ];	
 
 
@@ -24,6 +26,8 @@ function ControllerConcepto(
     	$rootScope
     	,InformacionPrincipalApp
     	,FactoryGlosario
+    	,FactoryConcepto
+    	,FactoryMensajeCarga
     ){
 	
 	console.log("Entro en ControllerConcepto");
@@ -82,6 +86,21 @@ function ControllerConcepto(
 		}
 		cnConcepto.alertNegativa = false;
 		
+		
+		var salida;
+		salida = FactoryConcepto.consultarElemento(elemento.id);
+		FactoryMensajeCarga.abrirMensaje("Cargando");
+		salida.then(
+	            function(aux) {
+	                if(aux.succes){
+	                	console.log("consultar es true");
+
+	                	FactoryMensajeCarga.cerrarMensaje();
+	                }else{
+	                	
+	                }
+	            }
+	        );
 	}
 
 

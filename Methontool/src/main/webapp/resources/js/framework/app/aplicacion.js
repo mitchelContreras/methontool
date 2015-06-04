@@ -20,6 +20,7 @@
         ,'modTipoGlosario'
         ,'modTaxonomia'
         ,'modRelacion'
+        ,'modConcepto'
         ])
     
 })();
