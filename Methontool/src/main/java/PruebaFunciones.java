@@ -1,12 +1,20 @@
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.ciensUCV.Methontool.dao.AtributoClaseDAO;
+import com.ciensUCV.Methontool.dao.AtributoInstanciaDAO;
 import com.ciensUCV.Methontool.dao.GlosarioDAO;
+import com.ciensUCV.Methontool.dao.InstanciaDAO;
 import com.ciensUCV.Methontool.dao.ProyectoDAO;
 import com.ciensUCV.Methontool.dao.RelacionDAO;
 import com.ciensUCV.Methontool.dao.TaxonomiaDAO;
+import com.ciensUCV.Methontool.model.AtributoClase;
+import com.ciensUCV.Methontool.model.AtributoInstancia;
+import com.ciensUCV.Methontool.model.Instancia;
 import com.ciensUCV.Methontool.model.NivelFormalidad;
 import com.ciensUCV.Methontool.model.Proyecto;
 import com.ciensUCV.Methontool.model.Relacion;
@@ -74,8 +82,21 @@ public class PruebaFunciones {
 //		relacion.setIdGlosarioRelacionInversa(2);
 		relacion.setIdRelacion(6);
 //		relacion = relacionDAO.crearRelacion(1, relacion);
-		relacion = relacionDAO.actualizarRelacion(1, relacion);
+//		relacion = relacionDAO.actualizarRelacion(1, relacion);
+//		ArrayList<Relacion> prueba = relacionDAO.listarRelacionDadoIdGlosarioConcepto(15);
+//		logger.trace("longitud de lista es"+prueba.size());
 		
+		AtributoClaseDAO atributoClaseDAO = (AtributoClaseDAO) context.getBean("atributoClaseDAO");
+		ArrayList<AtributoClase> prueba = atributoClaseDAO.listarAtributoClaseDadoIdGlosarioConcepto(7);
+		logger.trace("prueba "+prueba.size());
+		
+		AtributoInstanciaDAO atributoInstanciaDAO = (AtributoInstanciaDAO) context.getBean("atributoInstanciaDAO");
+		ArrayList<AtributoInstancia> prueba1 = atributoInstanciaDAO.listarAtributoInstanciaDadoIdGlosarioConcepto(7);
+		logger.trace("prueba "+prueba1.size());
+		
+		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
+		ArrayList<Instancia> prueba2 = instanciaDAO.listaInstanciaDadoIdGlosarioConcepto(7);
+		logger.trace("prueba2 "+prueba2.size());
 		
 //		taxonomia.setConceptoOrigen(1);
 //		taxonomia.getRelaciones().add("desDisjunta");

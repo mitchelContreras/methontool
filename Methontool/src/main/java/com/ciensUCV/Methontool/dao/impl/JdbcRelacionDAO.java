@@ -242,5 +242,52 @@ public class JdbcRelacionDAO implements RelacionDAO {
 			}
 		}
 	}
+	@Override
+	public ArrayList<Relacion> listarRelacionDadoIdGlosarioConcepto(
+			int idGLosarioProyecto) {
+		// TODO Auto-generated method stub
+		String sql;
+		sql = "select id_relacion, id_glosario_relacion "
+				+ "from relacion where "
+				+ "id_glosario_origen = ? "
+				+ "or id_glosario_destino = ? "
+				+ "and id_glosario_origen != id_glosario_destino;";
+
+		Connection conn = null;
+		Relacion relacion = null;
+		ArrayList<Relacion> arrayList = new ArrayList<Relacion>();
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idGLosarioProyecto);
+			ps.setInt(2, idGLosarioProyecto);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				relacion = new Relacion();
+				relacion.setIdGlosarioRelacion(rs.getInt("id_relacion"));
+				relacion.setIdGlosarioRelacion(rs.getInt("id_glosario_relacion"));
+				logger.trace(relacion.toString());
+				arrayList.add(relacion);
+			}
+			rs.close();
+			ps.close();
+			return arrayList;	
+		} catch (SQLException e) {
+			logger.info("SQLException "+e);
+			throw new RuntimeException(e);
+		} catch(Exception e) {
+			logger.info("error "+e.toString());
+			return arrayList;	
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					return arrayList;
+				}
+			}
+		}
+	}
 
 }

@@ -9,4 +9,5 @@ public interface RelacionDAO {
 	public Relacion crearRelacion (int idProyecto, Relacion relacion);
 	public int eliminarRelacion (int idProyecto, int idRelacion);
 	public Relacion actualizarRelacion (int idProyecto, Relacion relacion);
+	public ArrayList<Relacion> listarRelacionDadoIdGlosarioConcepto(int idGLosarioProyecto);
 }
