@@ -17,4 +17,5 @@
 	<import resource="beanDataBase/Spring-Instancia.xml" />
 	<import resource="beanDataBase/Spring-AtributoClase.xml" />
 	<import resource="beanDataBase/Spring-AtributoInstancia.xml" />
+	<import resource="beanDataBase/Spring-Concepto.xml" />
 </beans>

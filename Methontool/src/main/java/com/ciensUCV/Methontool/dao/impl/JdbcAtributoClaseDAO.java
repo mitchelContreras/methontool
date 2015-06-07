@@ -63,5 +63,47 @@ public class JdbcAtributoClaseDAO implements AtributoClaseDAO {
 			}
 		}
 	}
+	@Override
+	public ArrayList<AtributoClase> listarAtributoClaseSinConceptoAsociado() {
+		// TODO Auto-generated method stub
+		String sql;
+		sql = "select glo.id_glosario "
+				+ "from glosario as glo "
+				+ "left join atributo_clase as clase on glo.id_glosario =  clase.id_glosario_atributo "
+				+ "where tipo_glosario = 4 "
+				+ "and clase.id_glosario_atributo is null";
+
+		Connection conn = null;
+		AtributoClase atributoClase = null;
+		ArrayList<AtributoClase> arrayList = new ArrayList<AtributoClase>();
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				atributoClase = new AtributoClase();
+				atributoClase.setIdGlosario(rs.getInt("id_glosario"));
+				arrayList.add(atributoClase);
+			}
+			rs.close();
+			ps.close();
+			return arrayList;	
+		} catch (SQLException e) {
+			logger.info("SQLException "+e);
+			throw new RuntimeException(e);
+		} catch(Exception e) {
+			logger.info("error "+e.toString());
+			return arrayList;	
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					return arrayList;
+				}
+			}
+		}
+	}
 
 }

@@ -7,4 +7,5 @@ import com.ciensUCV.Methontool.model.Instancia;
 public interface InstanciaDAO {
 
 	public ArrayList<Instancia> listaInstanciaDadoIdGlosarioConcepto(int idGlosarioConcepto);
+	public ArrayList<Instancia> listarInstanciaSinConceptoAsociado();
 }
