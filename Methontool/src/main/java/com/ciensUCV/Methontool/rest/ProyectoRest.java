@@ -125,7 +125,7 @@ public class ProyectoRest {
 	}
 	
 	@RequestMapping(value="/api/proyecto", method = RequestMethod.POST,
-			consumes = "application/x-www-form-urlencoded",
+//			consumes = "application/x-www-form-urlencoded",
 			params = {"nombre", "fuenteConocimiento", "dominio", "proposito", "alcance", "preguntasCompetencia", "fecha", "idNivelFormalidad","idUsuario"}
 			)
 	public @ResponseBody ProyectoMensaje crear3Proyecto(

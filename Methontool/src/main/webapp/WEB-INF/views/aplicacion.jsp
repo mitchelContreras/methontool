@@ -54,29 +54,17 @@
 		<!-- Controller -->
 		<!-- Cabecera -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/cabecera.js"></script>
-		<!-- Principal -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/principal.js"></script>
-		<!-- Proyecto -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/proyecto.js"></script>
-		<!-- Editar -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/editar.js"></script>
-		<!-- Glosario -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/glosario.js"></script>
-		<!-- Relacion -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/relacion.js"></script>
-		<!-- Atributo de instancia -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/atributoInstancia.js"></script>
-		<!--  Atributo de clase -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/atributoClase.js"></script>
-		<!-- Constante -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/constante.js"></script>
-		<!-- Axioma -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/axioma.js"></script>
-		<!-- Reglas -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/regla.js"></script>
-		<!-- Taxonomia -->
-		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/taxonomia.js"></script>				
-		<!-- Concepto -->
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/taxonomia.js"></script>	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/concepto.js"></script>				
 		
 		<!-- factory -->
@@ -87,29 +75,23 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryTaxonomia.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryRelacion.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryConcepto.js"></script>
-				
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryAtributoClase.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryAtributoInstancia.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryInstancia.js"></script>						
 		
 		<!-- Modulos de AngularJS -->
 		<!-- Proyecto -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/proyecto.js"></script>
-
-		<!-- Nivel de formalidad -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/nivelFormalidad.js"></script>
-
-		<!-- Glosario -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/glosario.js"></script>
-
-		<!-- Tipo Glosario -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/tipoGlosario.js"></script>
-
-		<!-- Taxonomia -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/taxonomia.js"></script>
-		
-		<!-- Relacion -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/relacion.js"></script>
-		
-		<!-- Concepto -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/concepto.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/atributoClase.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/atributoInstancia.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/instancia.js"></script>
+
 											
 	</head>
 	<body >

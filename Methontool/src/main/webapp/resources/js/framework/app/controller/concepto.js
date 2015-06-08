@@ -19,6 +19,9 @@ ControllerConcepto.$inject = [
                               ,'FactoryGlosario'
                               ,'FactoryConcepto'
                               ,'FactoryMensajeCarga'
+                              ,'FactoryAtributoClase'
+                              ,'FactoryAtributoInstancia'
+                              ,'FactoryInstancia'
                               ];	
 
 
@@ -28,6 +31,9 @@ function ControllerConcepto(
     	,FactoryGlosario
     	,FactoryConcepto
     	,FactoryMensajeCarga
+    	,FactoryAtributoClase
+    	,FactoryAtributoInstancia
+    	,FactoryInstancia
     ){
 	
 	console.log("Entro en ControllerConcepto");
@@ -61,22 +67,67 @@ function ControllerConcepto(
 	cnConcepto.agregarConcepto = agregarConcepto;
 	
 	function agregarConcepto(lista){
+//		console.log("enro en cnConcepto.agregarConcepto");
 		switch(lista){
 		case 'relacion':
 			console.log("relacion");
 			break;
 		case 'instancia':
 			console.log("instancia");
+			var salida;
+			salida = FactoryInstancia.listarElementoSinConceptoAsociado();
+			FactoryMensajeCarga.abrirMensaje("Cargando");
+			salida.then(
+		            function(aux) {
+		                if(aux.succes){
+		                	console.log("consultar instancia es true");
+		                	FactoryMensajeCarga.cerrarMensaje();
+		                	$('#verAgregarInstanciaConcepto').modal('show');
+		                }else{
+		                	
+		                }
+		            }
+		        );
+			
 			break;
 		case 'atributoClase':
 			console.log("atributoClase");
+			var salida;
+			salida = FactoryAtributoClase.listarElementoSinConceptoAsociado();
+			FactoryMensajeCarga.abrirMensaje("Cargando");
+			salida.then(
+		            function(aux) {
+		                if(aux.succes){
+		                	console.log("consultar instancia es true");
+		                	FactoryMensajeCarga.cerrarMensaje();
+		                	$('#verAgregarAtributoClaseConcepto').modal('show');
+		                }else{
+		                	
+		                }
+		            }
+		        );
+			
 			break;	
 		case 'atributoInstancia':
 			console.log("atributoInstancia");
+			var salida;
+			salida = FactoryAtributoInstancia.listarElementoSinConceptoAsociado();
+			FactoryMensajeCarga.abrirMensaje("Cargando");
+			salida.then(
+		            function(aux) {
+		                if(aux.succes){
+		                	console.log("consultar instancia es true");
+		                	FactoryMensajeCarga.cerrarMensaje();
+		                	$('#verAgregarAtributoInstanciaConcepto').modal('show');
+		                }else{
+		                	
+		                }
+		            }
+		        );
+			
 			break;		
 		}
 	}
-	
 	function eliminarConcepto(index, lista){
 		switch(lista){
 		case 'relacion':
@@ -107,6 +158,7 @@ function ControllerConcepto(
 		cnConcepto.modificar = true;
 	}
 	function seleccioneGlosario(elemento, limpiar){
+		console.log("dentro de seleccioneGlosario");
 		console.log("Seleccione con id "+elemento.id+" codigo="+limpiar);
 		
 		cnConcepto.seleccionado = elemento.id;
@@ -196,7 +248,7 @@ function ControllerConcepto(
 
     $rootScope.$watch('actual.concepto', function (newValue, oldValue) {
     	if (newValue !== oldValue) {
-            console.log("cambio valor actual.concepto a '"+newValue+"'");
+            console.log("cambio valor actual.concepto a '"+newValue+"'");;
             cnConcepto.soyActual = InformacionPrincipalApp.soyVistaActual('Concepto');	//Indico al controlador actual si se debe mostrar
             listarGlosario(); 
     	}

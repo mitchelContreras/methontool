@@ -21,6 +21,9 @@
         ,'modTaxonomia'
         ,'modRelacion'
         ,'modConcepto'
+        ,'modInstancia'
+        ,'modAtributoClase'
+        ,'modAtributoInstancia'
         ])
     
 })();

@@ -64,14 +64,16 @@ public class JdbcAtributoClaseDAO implements AtributoClaseDAO {
 		}
 	}
 	@Override
-	public ArrayList<AtributoClase> listarAtributoClaseSinConceptoAsociado() {
+	public ArrayList<AtributoClase> listarAtributoClaseSinConceptoAsociado(int idProyecto) {
 		// TODO Auto-generated method stub
 		String sql;
 		sql = "select glo.id_glosario "
 				+ "from glosario as glo "
 				+ "left join atributo_clase as clase on glo.id_glosario =  clase.id_glosario_atributo "
+				+ "left join proyecto as proy on glo.id_proyecto = proy.id_proyecto "
 				+ "where tipo_glosario = 4 "
-				+ "and clase.id_glosario_atributo is null";
+				+ "and clase.id_glosario_atributo is null "
+				+ "and glo.id_proyecto = ?";
 
 		Connection conn = null;
 		AtributoClase atributoClase = null;
@@ -79,6 +81,7 @@ public class JdbcAtributoClaseDAO implements AtributoClaseDAO {
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idProyecto);
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()){

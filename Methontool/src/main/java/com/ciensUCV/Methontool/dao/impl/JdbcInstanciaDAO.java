@@ -65,14 +65,16 @@ public class JdbcInstanciaDAO implements InstanciaDAO {
 		}
 	}
 	@Override
-	public ArrayList<Instancia> listarInstanciaSinConceptoAsociado() {
+	public ArrayList<Instancia> listarInstanciaSinConceptoAsociado(int idProyecto) {
 		// TODO Auto-generated method stub
 		String sql;
 		sql = "select glo.id_glosario "
 				+ "from glosario as glo "
 				+ "left join instancia as inst on glo.id_glosario =  inst.id_glosario_instancia "
+				+ "left join proyecto as proy on glo.id_proyecto = proy.id_proyecto "
 				+ "where tipo_glosario = 8 "
-				+ "and inst.id_glosario_instancia is null";
+				+ "and inst.id_glosario_instancia is null "
+				+ "and glo.id_proyecto = ?";
 
 		Connection conn = null;
 		Instancia instancia = null;
@@ -80,11 +82,12 @@ public class JdbcInstanciaDAO implements InstanciaDAO {
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idProyecto);
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()){
 				instancia = new Instancia();
-				instancia.setIdGlosario(rs.getInt("id_glosario_instancia"));
+				instancia.setIdGlosario(rs.getInt("id_glosario"));
 				arrayList.add(instancia);
 			}
 			rs.close();
