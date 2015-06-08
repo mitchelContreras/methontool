@@ -221,23 +221,22 @@
 						</div>
 						<div class="col-xs-6 divCentrado formulario">
        						<div angucomplete-alt
-								 id="autoAgregarInstanciaConcepto" placeholder="Relación inversa"
+								 id="autoAgregarInstanciaConcepto" placeholder="Instancia"
 								  maxlength="50"
 								  pause="100"
-								  selected-object="cnRelacion.varEdicion.relacionInversaSelected" 
-								  local-data="cnRelacion.listaRelacionInversa" 
+								  selected-object="cnConcepto.AuxAgregar" 
+								  local-data="cnConcepto.ConceptoActual.agregarInstancia" 
 								  search-fields="nombre" 
 								  title-field="nombre"
 								  minlength="1" 
 								  input-class="form-control" 
-								  match-class="highlight"
-	 							  initial-value="{{cnRelacion.varEdicion.relacionInversa.nombre}}">
+								  match-class="highlight">
        						</div>
         				</div>
 					</div>						
 				</div>				
 				<div class="modal-footer">
-					<button class="btn btn-primary" type="button" ng-click="cnRelacion.modifiqueRelacion()">Agregar</button>
+					<button class="btn btn-primary" type="button" ng-click="cnConcepto.agregueConcepto('instancia')">Agregar</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 				</div>
 			</div>
@@ -262,20 +261,19 @@
 								 id="autoAgregarAtributoClaseConcepto" placeholder="Relación inversa"
 								  maxlength="50"
 								  pause="100"
-								  selected-object="cnRelacion.varEdicion.relacionInversaSelected" 
-								  local-data="cnRelacion.listaRelacionInversa" 
+								  selected-object="cnConcepto.AuxAgregar" 
+								  local-data="cnConcepto.ConceptoActual.agregarAtributosClase" 
 								  search-fields="nombre" 
 								  title-field="nombre"
 								  minlength="1" 
 								  input-class="form-control" 
-								  match-class="highlight"
-	 							  initial-value="{{cnRelacion.varEdicion.relacionInversa.nombre}}">
+								  match-class="highlight">
        						</div>
         				</div>
 					</div>						
 				</div>				
 				<div class="modal-footer">
-					<button class="btn btn-primary" type="button" ng-click="cnRelacion.modifiqueRelacion()">Agregar</button>
+					<button class="btn btn-primary" type="button" ng-click="cnConcepto.agregueConcepto('atributoClase')">Agregar</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 				</div>
 			</div>
@@ -293,27 +291,26 @@
 				<div class="inicioTexto" >				
 					<div class="row centered">
 						<div class="col-xs-2 divCentrado formulario" >
-							<label class="control-label col-xs-2">Instancia:</label>
+							<label class="control-label col-xs-2">Atributo instancia:</label>
 						</div>
 						<div class="col-xs-6 divCentrado formulario">
        						<div angucomplete-alt
-								 id="autoAgregarAtributoInstanciaConcepto" placeholder="Relación inversa"
+								 id="autoAgregarAtributoInstanciaConcepto" placeholder="Instancia"
 								  maxlength="50"
 								  pause="100"
-								  selected-object="cnRelacion.varEdicion.relacionInversaSelected" 
-								  local-data="cnRelacion.listaRelacionInversa" 
+								  selected-object="cnConcepto.AuxAgregar" 
+								  local-data="cnConcepto.ConceptoActual.agregarAtributosInstancia" 
 								  search-fields="nombre" 
 								  title-field="nombre"
 								  minlength="1" 
 								  input-class="form-control" 
-								  match-class="highlight"
-	 							  initial-value="{{cnRelacion.varEdicion.relacionInversa.nombre}}">
+								  match-class="highlight">
        						</div>
         				</div>
 					</div>						
 				</div>				
 				<div class="modal-footer">
-					<button class="btn btn-primary" type="button" ng-click="cnRelacion.modifiqueRelacion()">Agregar</button>
+					<button class="btn btn-primary" type="button" ng-click="cnConcepto.agregueConcepto('atributoInstancia')">Agregar</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 				</div>
 			</div>

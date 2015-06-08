@@ -222,7 +222,7 @@ function ControllerGlosario(
                 	FactoryGlosario.modificarElemento(aux.elemento);
                 	cnGlosario.listaGlosario = FactoryGlosario.getListaElemento();
                 	cnGlosario.alertPositiva = true;
-                	cnGlosario.mensajeAlertPositiva = "El Glosario ha sido modificado";
+                	cnGlosario.mensajeAlertPositiva = "El Glosario ha sido actualizado";
                 	seleccioneGlosario(aux.elemento,2);
                 }
              }

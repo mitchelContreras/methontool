@@ -22,6 +22,7 @@ ControllerConcepto.$inject = [
                               ,'FactoryAtributoClase'
                               ,'FactoryAtributoInstancia'
                               ,'FactoryInstancia'
+                              ,'$scope'
                               ];	
 
 
@@ -34,6 +35,7 @@ function ControllerConcepto(
     	,FactoryAtributoClase
     	,FactoryAtributoInstancia
     	,FactoryInstancia
+    	,$scope
     ){
 	
 	console.log("Entro en ControllerConcepto");
@@ -65,9 +67,43 @@ function ControllerConcepto(
 	cnConcepto.cancelarModificarConcepto = cancelarModificarConcepto;
 	cnConcepto.eliminarConcepto = eliminarConcepto;
 	cnConcepto.agregarConcepto = agregarConcepto;
+	cnConcepto.agregueConcepto = agregueConcepto;
+	
+	function agregueConcepto(lista){
+		switch(lista){
+		case 'relacion':
+			console.log("relacion");
+			break;
+		case 'instancia':
+			console.log("instancia");
+			console.log("cnConcepto.AuxAgregar "+cnConcepto.AuxAgregar.nombre+" "+cnConcepto.AuxAgregar.id);
+			cnConcepto.ConceptoActual.instancias.push(cnConcepto.AuxAgregar.originalObject);
+			$('#verAgregarInstanciaConcepto').modal('hide');
+			break;
+		case 'atributoClase':
+			console.log("atributoClase");
+			console.log("cnConcepto.AuxAgregar "+cnConcepto.AuxAgregar.nombre+" "+cnConcepto.AuxAgregar.id);
+			cnConcepto.ConceptoActual.atributosClase.push(cnConcepto.AuxAgregar.originalObject);
+			$('#verAgregarAtributoClaseConcepto').modal('hide');
+			break;	
+		case 'atributoInstancia':
+			console.log("atributoInstancia");
+			console.log("cnConcepto.AuxAgregar "+cnConcepto.AuxAgregar.nombre+" "+cnConcepto.AuxAgregar.id);
+			cnConcepto.ConceptoActual.atributosInstancia.push(cnConcepto.AuxAgregar.originalObject);
+			$('#verAgregarAtributoInstanciaConcepto').modal('hide');
+			break;		
+		}
+		cnConcepto.AuxAgregar = "";
+	}
 	
 	function agregarConcepto(lista){
 //		console.log("enro en cnConcepto.agregarConcepto");
+		
+		cnConcepto.ConceptoActual.agregarAtributosClase = [];
+		cnConcepto.ConceptoActual.agregarAtributosInstancia = [];
+		cnConcepto.ConceptoActual.agregarInstancia = [];
+		cnConcepto.AuxAgregar = "";
+		
 		switch(lista){
 		case 'relacion':
 			console.log("relacion");
@@ -81,8 +117,15 @@ function ControllerConcepto(
 		            function(aux) {
 		                if(aux.succes){
 		                	console.log("consultar instancia es true");
+		                	console.log("aux.elementos.length "+aux.elementos.length);
+		                	var i;
+		                	for(i=0;i<aux.elementos.length;i++){
+		                		cnConcepto.ConceptoActual.agregarInstancia.push(
+		                				FactoryGlosario.consultarElemento(aux.elementos[i].idGlosario));
+		                	} 
 		                	FactoryMensajeCarga.cerrarMensaje();
 		                	$('#verAgregarInstanciaConcepto').modal('show');
+		                	
 		                }else{
 		                	
 		                }
@@ -99,6 +142,12 @@ function ControllerConcepto(
 		            function(aux) {
 		                if(aux.succes){
 		                	console.log("consultar instancia es true");
+		                	console.log("aux.elementos.length "+aux.elementos.length);
+		                	var i;
+		                	for(i=0;i<aux.elementos.length;i++){
+		                		cnConcepto.ConceptoActual.agregarAtributosClase.push(
+		                				FactoryGlosario.consultarElemento(aux.elementos[i].idGlosario));
+		                	} 		                	
 		                	FactoryMensajeCarga.cerrarMensaje();
 		                	$('#verAgregarAtributoClaseConcepto').modal('show');
 		                }else{
@@ -117,6 +166,12 @@ function ControllerConcepto(
 		            function(aux) {
 		                if(aux.succes){
 		                	console.log("consultar instancia es true");
+		                	console.log("aux.elementos.length "+aux.elementos.length);
+		                	var i;
+		                	for(i=0;i<aux.elementos.length;i++){
+		                		cnConcepto.ConceptoActual.agregarAtributosInstancia.push(
+		                				FactoryGlosario.consultarElemento(aux.elementos[i].idGlosario));
+		                	} 		                	
 		                	FactoryMensajeCarga.cerrarMensaje();
 		                	$('#verAgregarAtributoInstanciaConcepto').modal('show');
 		                }else{
@@ -148,14 +203,33 @@ function ControllerConcepto(
 	function cancelarModificarConcepto(){
 		cnConcepto.disabled = true;
 		cnConcepto.modificar = false;
-		seleccioneGlosario({'id':cnGlosario.idGlosario},1); //Llamo con el id del seleccionado porque es su posicion en el arreglo lo que necesito y no su id en bd
+		seleccioneGlosario({'id':cnConcepto.ConceptoActual.id},true); //Llamo con el id del seleccionado porque es su posicion en el arreglo lo que necesito y no su id en bd
 	}
 	function modifiqueConcepto(){
-		
+		var salida;
+		salida = FactoryConcepto.actualizarElemento(cnConcepto.ConceptoActual.id
+				,cnConcepto.ConceptoActual.instancias
+				,cnConcepto.ConceptoActual.atributosClase
+				,cnConcepto.ConceptoActual.atributosInstancia);
+		salida.then(
+            function(aux) {
+                // success
+                if(aux.succes){
+                	console.log("actualizar es true");
+                	cnConcepto.alertPositiva = true;
+                	cnConcepto.mensajeAlertPositiva = "El Concepto ha sido actualizado";
+                	seleccioneGlosario({'id':cnConcepto.ConceptoActual.id},false);
+                	
+                }
+             }
+		);	
 	}
 	function modificarConcepto(){
 		cnConcepto.disabled = false;
 		cnConcepto.modificar = true;
+		$scope.$broadcast('angucomplete-alt:clearInput', 'verAgregarInstanciaConcepto');
+		$scope.$broadcast('angucomplete-alt:clearInput', 'verAgregarAtributoClaseConcepto');
+		$scope.$broadcast('angucomplete-alt:clearInput', 'verAgregarAtributoInstanciaConcepto');
 	}
 	function seleccioneGlosario(elemento, limpiar){
 		console.log("dentro de seleccioneGlosario");
