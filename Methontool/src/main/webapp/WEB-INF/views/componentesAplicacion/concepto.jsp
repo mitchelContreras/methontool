@@ -258,7 +258,7 @@
 						</div>
 						<div class="col-xs-6 divCentrado formulario">
        						<div angucomplete-alt
-								 id="autoAgregarAtributoClaseConcepto" placeholder="Relación inversa"
+								 id="autoAgregarAtributoClaseConcepto" placeholder="Atributo de clase"
 								  maxlength="50"
 								  pause="100"
 								  selected-object="cnConcepto.AuxAgregar" 
@@ -295,7 +295,7 @@
 						</div>
 						<div class="col-xs-6 divCentrado formulario">
        						<div angucomplete-alt
-								 id="autoAgregarAtributoInstanciaConcepto" placeholder="Instancia"
+								 id="autoAgregarAtributoInstanciaConcepto" placeholder="Atributo de instancia"
 								  maxlength="50"
 								  pause="100"
 								  selected-object="cnConcepto.AuxAgregar" 

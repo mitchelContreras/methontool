@@ -49,6 +49,9 @@ function ControllerConcepto(
 	
 //-------------------Variables de edicion---------------------
 
+	cnConcepto.eliminadoInstancia = [];
+	cnConcepto.eliminadoAtributoInstancia = [];
+	cnConcepto.eliminadoAtributoClase = [];
 
 //-------------------Variables----------------------------------
 	cnConcepto.seleccionado = -1;
@@ -102,6 +105,9 @@ function ControllerConcepto(
 		cnConcepto.ConceptoActual.agregarAtributosClase = [];
 		cnConcepto.ConceptoActual.agregarAtributosInstancia = [];
 		cnConcepto.ConceptoActual.agregarInstancia = [];
+		$scope.$broadcast('angucomplete-alt:asignar-defoult', 'autoAgregarInstanciaConcepto', "");
+		$scope.$broadcast('angucomplete-alt:asignar-defoult', 'autoAgregarAtributoClaseConcepto', "");
+		$scope.$broadcast('angucomplete-alt:asignar-defoult', 'autoAgregarAtributoInstanciaConcepto',"");
 		cnConcepto.AuxAgregar = "";
 		
 		switch(lista){
@@ -122,7 +128,14 @@ function ControllerConcepto(
 		                	for(i=0;i<aux.elementos.length;i++){
 		                		cnConcepto.ConceptoActual.agregarInstancia.push(
 		                				FactoryGlosario.consultarElemento(aux.elementos[i].idGlosario));
-		                	} 
+		                	}
+		                	
+		                	
+//		                	console.log("antes de la locura");
+//		                	console.log("cnConcepto.ConceptoActual.agregarInstancia.length "+cnConcepto.ConceptoActual.agregarInstancia.length);
+		                	unirParaAgregar(cnConcepto.ConceptoActual.agregarInstancia, cnConcepto.eliminadoInstancia, cnConcepto.ConceptoActual.instancias);
+//		                	console.log("cnConcepto.ConceptoActual.agregarInstancia.length fin "+cnConcepto.ConceptoActual.agregarInstancia.length);
+		                	
 		                	FactoryMensajeCarga.cerrarMensaje();
 		                	$('#verAgregarInstanciaConcepto').modal('show');
 		                	
@@ -147,7 +160,10 @@ function ControllerConcepto(
 		                	for(i=0;i<aux.elementos.length;i++){
 		                		cnConcepto.ConceptoActual.agregarAtributosClase.push(
 		                				FactoryGlosario.consultarElemento(aux.elementos[i].idGlosario));
-		                	} 		                	
+		                	} 	
+		                	
+		                	unirParaAgregar(cnConcepto.ConceptoActual.agregarAtributosClase, cnConcepto.eliminadoAtributoClase, cnConcepto.ConceptoActual.atributosClase);
+		                	
 		                	FactoryMensajeCarga.cerrarMensaje();
 		                	$('#verAgregarAtributoClaseConcepto').modal('show');
 		                }else{
@@ -171,7 +187,10 @@ function ControllerConcepto(
 		                	for(i=0;i<aux.elementos.length;i++){
 		                		cnConcepto.ConceptoActual.agregarAtributosInstancia.push(
 		                				FactoryGlosario.consultarElemento(aux.elementos[i].idGlosario));
-		                	} 		                	
+		                	} 	
+		                	
+		                	unirParaAgregar(cnConcepto.ConceptoActual.agregarAtributosInstancia, cnConcepto.eliminadoAtributoInstancia, cnConcepto.ConceptoActual.atributosInstancia);
+		                	
 		                	FactoryMensajeCarga.cerrarMensaje();
 		                	$('#verAgregarAtributoInstanciaConcepto').modal('show');
 		                }else{
@@ -189,12 +208,21 @@ function ControllerConcepto(
 			cnConcepto.ConceptoActual.relaciones.splice(index, 1);
 			break;
 		case 'instancia':
+			agregarArreglo(cnConcepto.eliminadoInstancia, cnConcepto.ConceptoActual.instancias[index]);
+//			cnConcepto.eliminadoInstancia.push(cnConcepto.ConceptoActual.instancias[index]);
+//			console.log("cnConcepto.eliminadoInstancia.length "+cnConcepto.eliminadoInstancia.length);
 			cnConcepto.ConceptoActual.instancias.splice(index, 1);
 			break;
 		case 'atributoClase':
+			agregarArreglo(	cnConcepto.eliminadoAtributoClase, cnConcepto.ConceptoActual.atributosClase[index]);
+//			cnConcepto.eliminadoAtributoClase.push(cnConcepto.ConceptoActual.atributosClase[index]);
+//			console.log("cnConcepto.eliminadoAtributoClase.length "+cnConcepto.eliminadoAtributoClase.length);
 			cnConcepto.ConceptoActual.atributosClase.splice(index, 1);
 			break;	
 		case 'atributoInstancia':
+			agregarArreglo(	cnConcepto.eliminadoAtributoInstancia, cnConcepto.ConceptoActual.atributosInstancia[index]);
+//			cnConcepto.eliminadoAtributoInstancia.push(cnConcepto.ConceptoActual.atributosInstancia[index]);
+//			console.log("cnConcepto.eliminadoAtributoInstancia.length "+cnConcepto.eliminadoAtributoInstancia.length);
 			cnConcepto.ConceptoActual.atributosInstancia.splice(index, 1);
 			break;		
 		}
@@ -227,9 +255,9 @@ function ControllerConcepto(
 	function modificarConcepto(){
 		cnConcepto.disabled = false;
 		cnConcepto.modificar = true;
-		$scope.$broadcast('angucomplete-alt:asignar-defoult', 'autoAgregarInstanciaConcepto', "");
-		$scope.$broadcast('angucomplete-alt:asignar-defoult', 'autoAgregarAtributoClaseConcepto', "");
-		$scope.$broadcast('angucomplete-alt:asignar-defoult', 'verAgregarAtributoInstanciaConcepto',"");
+		cnConcepto.eliminadoInstancia = [];
+		cnConcepto.eliminadoAtributoInstancia = [];
+		cnConcepto.eliminadoAtributoClase = [];
 	}
 	function seleccioneGlosario(elemento, limpiar){
 		console.log("dentro de seleccioneGlosario");
@@ -297,6 +325,59 @@ function ControllerConcepto(
 		cnConcepto.listaGlosario = FactoryGlosario.getListaElemento();
 	}
 
+//	retorna la posicion en el arreglo si existe sino -1
+//	la entrada es un arreglo de glosario
+	function posicionEnArreglo(arreglo, idBuscar){
+		var i, len;
+		len = arreglo.length;
+		if(len == 0){
+			return -1;
+		}
+		for(i=0;i<len;i++){
+			if(arreglo[i].id == idBuscar){
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+//	agregar a la lista sino existe
+	function agregarArreglo(arreglo, objeto){
+//		console.log("arreglo.length antes"+arreglo.length);
+		if(posicionEnArreglo(arreglo, objeto.id) == -1){
+			arreglo.push(objeto);
+		}
+//		console.log("arreglo.length despues"+arreglo.length);
+	}
+	
+//	une las lista actual+eliminada-actual
+//	con esto garantizo
+//	1. si ya esta en actual no puede mostrarse de nuevo
+//	2. si fue eliminada puedo volver a agregarla
+	function unirParaAgregar(consultada, eliminada, actual){
+		
+		var i;
+		
+//		consultada + eliminada
+//		console.log("consultada.length antes 1 "+consultada.length);
+		for(i=0;i<eliminada.length;i++){
+//			console.log("eliminada[i].nombre "+eliminada[i].nombre);
+			agregarArreglo(consultada, eliminada[i]);
+		}
+//		console.log("consultada.length despues 1 "+consultada.length);
+		
+//		consultada + eliminada - actual
+		var aux;
+		for(i=0;i<actual.length;i++){
+			aux = posicionEnArreglo(consultada, actual[i].id);
+//			console.log("actual[i].nombre "+actual[i].nombre);
+//			console.log("aux es "+aux);
+			if(aux != -1){
+				consultada.splice(aux, 1);
+			}
+		}
+//		console.log("consultada.length despues 1 "+consultada.length);
+	}
 
 
 //---------------------Watch variables de controller---------------------	

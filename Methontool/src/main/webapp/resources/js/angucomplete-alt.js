@@ -155,9 +155,8 @@
         });
 
 		scope.$on('angucomplete-alt:asignar-defoult', function (event, elementId, str) {
-			console.log("entre en asignar "+elementId);
             if (scope.id === elementId) {
-				console.log("el valor "+str);
+				console.log("entre en asignar con "+elementId+" el valor "+str);
 			  scope.searchStr = str;
               clearResults();
             }
