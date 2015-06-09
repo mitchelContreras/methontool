@@ -227,9 +227,9 @@ function ControllerConcepto(
 	function modificarConcepto(){
 		cnConcepto.disabled = false;
 		cnConcepto.modificar = true;
-		$scope.$broadcast('angucomplete-alt:clearInput', 'verAgregarInstanciaConcepto');
-		$scope.$broadcast('angucomplete-alt:clearInput', 'verAgregarAtributoClaseConcepto');
-		$scope.$broadcast('angucomplete-alt:clearInput', 'verAgregarAtributoInstanciaConcepto');
+		$scope.$broadcast('angucomplete-alt:asignar-defoult', 'autoAgregarInstanciaConcepto', "");
+		$scope.$broadcast('angucomplete-alt:asignar-defoult', 'autoAgregarAtributoClaseConcepto', "");
+		$scope.$broadcast('angucomplete-alt:asignar-defoult', 'verAgregarAtributoInstanciaConcepto',"");
 	}
 	function seleccioneGlosario(elemento, limpiar){
 		console.log("dentro de seleccioneGlosario");

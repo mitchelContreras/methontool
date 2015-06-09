@@ -95,7 +95,7 @@
 					<form class=" form-horizontal">
 						<div class="form-group">
 							<div class="col-xs-4 control-label" >
-								<label >Nombreeee:</label>
+								<label >Nombre:</label>
 							</div>
 							<div class="col-xs-5 ">
 								<input type="text" class="form-control" placeholder="Nombre" ng-disabled="true" ng-model="cnConcepto.ConceptoActual.nombre">
@@ -103,7 +103,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-xs-4 control-label" >
-								<span ng-show="cnGlosario.modificar">*&nbsp;</span><label>Descripcióooon:</label>
+								<span ng-show="cnGlosario.modificar">*&nbsp;</span><label>Descripción:</label>
 							</div>
 							<div class="col-xs-5">
 								<textarea class="form-control" rows="3" ng-disabled="true" ng-model="cnConcepto.ConceptoActual.descripcion"></textarea>
@@ -254,7 +254,7 @@
 				<div class="inicioTexto" >				
 					<div class="row centered">
 						<div class="col-xs-2 divCentrado formulario" >
-							<label class="control-label col-xs-2">Instancia:</label>
+							<label class="control-label col-xs-2">Atributo de clase:</label>
 						</div>
 						<div class="col-xs-6 divCentrado formulario">
        						<div angucomplete-alt
@@ -291,7 +291,7 @@
 				<div class="inicioTexto" >				
 					<div class="row centered">
 						<div class="col-xs-2 divCentrado formulario" >
-							<label class="control-label col-xs-2">Atributo instancia:</label>
+							<label class="control-label col-xs-2">Atributo de instancia:</label>
 						</div>
 						<div class="col-xs-6 divCentrado formulario">
        						<div angucomplete-alt
