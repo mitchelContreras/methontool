@@ -4,7 +4,7 @@ public class AtributoInstancia {
 
 	private int id;
 	private int idGlosario;
-	private int idGlosarioRelacion;
+	private int idGlosarioConcepto;
 	private TipoDeDato tipoDeDato;
 	private Medida medida;
 	private String precision;
@@ -14,14 +14,14 @@ public class AtributoInstancia {
 	private String value;
 	
 	
-	public AtributoInstancia(int id, int idGlosario, int idGlosarioRelacion,
+	public AtributoInstancia(int id, int idGlosario, int idGlosarioConcepto,
 			TipoDeDato tipoDeDato, Medida medida, String precision,
 			String rangoValores, String cardinalidadMin,
 			String cardinalidadMax, String value) {
 		super();
 		this.id = id;
 		this.idGlosario = idGlosario;
-		this.idGlosarioRelacion = idGlosarioRelacion;
+		this.idGlosarioConcepto = idGlosarioConcepto;
 		this.tipoDeDato = tipoDeDato;
 		this.medida = medida;
 		this.precision = precision;
@@ -39,7 +39,7 @@ public class AtributoInstancia {
 	@Override
 	public String toString() {
 		return "AtributoInstancia [id=" + id + ", idGlosario=" + idGlosario
-				+ ", idGlosarioRelacion=" + idGlosarioRelacion
+				+ ", idGlosarioConcepto=" + idGlosarioConcepto
 				+ ", tipoDeDato=" + tipoDeDato + ", medida=" + medida
 				+ ", precision=" + precision + ", rangoValores=" + rangoValores
 				+ ", cardinalidadMin=" + cardinalidadMin + ", cardinalidadMax="
@@ -58,11 +58,11 @@ public class AtributoInstancia {
 	public void setIdGlosario(int idGlosario) {
 		this.idGlosario = idGlosario;
 	}
-	public int getIdGlosarioRelacion() {
-		return idGlosarioRelacion;
+	public int getIdGlosarioConcepto() {
+		return idGlosarioConcepto;
 	}
-	public void setIdGlosarioRelacion(int idGlosarioRelacion) {
-		this.idGlosarioRelacion = idGlosarioRelacion;
+	public void setIdGlosarioConcepto(int idGlosarioConcepto) {
+		this.idGlosarioConcepto = idGlosarioConcepto;
 	}
 	public TipoDeDato getTipoDeDato() {
 		return tipoDeDato;

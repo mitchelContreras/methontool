@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ciensUCV.Methontool.dao.AtributoInstanciaDAO;
 import com.ciensUCV.Methontool.model.AtributoInstancia;
+import com.ciensUCV.Methontool.rest.model.ElementoMensaje;
 import com.ciensUCV.Methontool.rest.model.ElementosMensaje;
 import com.ciensUCV.Methontool.util.LeerConfig;
 
@@ -35,6 +36,23 @@ public class AtributoInstanciaRest {
 		elementosMensaje.setElementos(atributoInstanciaDAO.listarAtributoInstanciaSinConceptoAsociado(idProyecto));
 		elementosMensaje.setSucces(true);
 		return elementosMensaje;
+	}
+	
+	@RequestMapping(value="/api/proyecto/{idProyecto}/atributoInstancia/{idGlosarioAtributo}", method = RequestMethod.GET)
+	public @ResponseBody ElementoMensaje<AtributoInstancia> verAtributoInstancia(
+			@PathVariable("idProyecto") int idProyecto
+			,@PathVariable("idGlosarioAtributo") int idGlosarioAtributo
+			){
+		logger.trace("***verAtributoInstancia");
+		logger.trace("el idProyecto es "+idProyecto);
+		logger.trace("el idGlosarioAtributo es "+idGlosarioAtributo);
+		
+		ElementoMensaje<AtributoInstancia> elementoMensaje = new ElementoMensaje<AtributoInstancia> ();
+		
+		AtributoInstanciaDAO atributoInstanciaDAO = (AtributoInstanciaDAO) context.getBean("atributoInstanciaDAO");
+		elementoMensaje.setElemento(atributoInstanciaDAO.verAtributoInstancia(idProyecto, idGlosarioAtributo));
+		elementoMensaje.setSucces(true);
+		return elementoMensaje;
 	}
 
 }

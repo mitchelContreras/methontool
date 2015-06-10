@@ -10,9 +10,11 @@ import com.ciensUCV.Methontool.dao.AtributoInstanciaDAO;
 import com.ciensUCV.Methontool.dao.ConceptoDAO;
 import com.ciensUCV.Methontool.dao.GlosarioDAO;
 import com.ciensUCV.Methontool.dao.InstanciaDAO;
+import com.ciensUCV.Methontool.dao.MedidaDAO;
 import com.ciensUCV.Methontool.dao.ProyectoDAO;
 import com.ciensUCV.Methontool.dao.RelacionDAO;
 import com.ciensUCV.Methontool.dao.TaxonomiaDAO;
+import com.ciensUCV.Methontool.dao.TipoDeDatoDAO;
 import com.ciensUCV.Methontool.model.AtributoClase;
 import com.ciensUCV.Methontool.model.AtributoInstancia;
 import com.ciensUCV.Methontool.model.Instancia;
@@ -90,11 +92,12 @@ public class PruebaFunciones {
 //		AtributoClaseDAO atributoClaseDAO = (AtributoClaseDAO) context.getBean("atributoClaseDAO");
 //		ArrayList<AtributoClase> prueba = atributoClaseDAO.listarAtributoClaseDadoIdGlosarioConcepto(7);
 //		logger.trace("prueba "+prueba.size());
+//		logger.trace("salida de atributo clase es "+atributoClaseDAO.verAtributoClase(1, 19).getIdGlosario());
 //		
 //		AtributoInstanciaDAO atributoInstanciaDAO = (AtributoInstanciaDAO) context.getBean("atributoInstanciaDAO");
 //		ArrayList<AtributoInstancia> prueba1 = atributoInstanciaDAO.listarAtributoInstanciaDadoIdGlosarioConcepto(7);
 //		logger.trace("prueba "+prueba1.size());
-//		
+//		logger.trace("salida de atributoInstancia "+atributoInstanciaDAO.verAtributoInstancia(1, 23).getCardinalidadMax());
 //		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
 //		ArrayList<Instancia> prueba2 = instanciaDAO.listaInstanciaDadoIdGlosarioConcepto(7);
 //		logger.trace("prueba2 "+prueba2.size());
@@ -125,19 +128,24 @@ public class PruebaFunciones {
 //		taxonomia.getConceptosDestino().addToInnerArray(3, 6);	
 //		int salida = taxonomiaDAO.actualizarTaxonomia(1, taxonomia);
 		
-		ConceptoDAO conceptoDAO = (ConceptoDAO) context.getBean("conceptoDAO");
-		ArrayList<Integer> aux = new ArrayList<Integer>();
-		ArrayList<Integer> aux1 = new ArrayList<Integer>();
-		ArrayList<Integer> aux2 = new ArrayList<Integer>();
-		aux.add(1);
-		aux.add(2);
-		aux1.add(8);
-		aux1.add(9);
+//		ConceptoDAO conceptoDAO = (ConceptoDAO) context.getBean("conceptoDAO");
+//		ArrayList<Integer> aux = new ArrayList<Integer>();
+//		ArrayList<Integer> aux1 = new ArrayList<Integer>();
+//		ArrayList<Integer> aux2 = new ArrayList<Integer>();
+//		aux.add(1);
+//		aux.add(2);
+//		aux1.add(8);
+//		aux1.add(9);
 		
-		String salida;
-		salida = conceptoDAO.actualizarConcepto(aux, aux1, aux2, 7);
-		logger.trace("salida "+salida);
+//		String salida;
+//		salida = conceptoDAO.actualizarConcepto(aux, aux1, aux2, 7);
+//		logger.trace("salida "+salida);
 		
+		MedidaDAO medidaDAO = (MedidaDAO) context.getBean("medidaDAO");
+		logger.trace("total lista1 "+medidaDAO.listarMedida().get(0).getCodigo());
+		
+		TipoDeDatoDAO tipoDeDatoDAO = (TipoDeDatoDAO)  context.getBean("tipoDeDatoDAO");
+		logger.trace("total lista2 "+tipoDeDatoDAO.listarTipoDeDato().get(0).getCodigo());
 		
 	}
 

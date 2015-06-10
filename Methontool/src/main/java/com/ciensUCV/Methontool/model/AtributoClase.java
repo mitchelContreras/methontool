@@ -4,7 +4,7 @@ public class AtributoClase {
 
 	private int id;
 	private int idGlosario;
-	private int idGlosarioRelacion;
+	private int idGlosarioConcepto;
 	private TipoDeDato tipoDeDato;
 	private String value;
 	private String precision;
@@ -17,13 +17,13 @@ public class AtributoClase {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AtributoClase(int id, int idGlosario, int idGlosarioRelacion,
+	public AtributoClase(int id, int idGlosario, int idGlosarioConcepto,
 			TipoDeDato tipoDeDato, String value, String precision,
 			String rangoValores, String cardinalidadMin, String cardinalidadMax) {
 		super();
 		this.id = id;
 		this.idGlosario = idGlosario;
-		this.idGlosarioRelacion = idGlosarioRelacion;
+		this.idGlosarioConcepto = idGlosarioConcepto;
 		this.tipoDeDato = tipoDeDato;
 		this.value = value;
 		this.precision = precision;
@@ -35,7 +35,7 @@ public class AtributoClase {
 	@Override
 	public String toString() {
 		return "AtributoClase [id=" + id + ", idGlosario=" + idGlosario
-				+ ", idGlosarioRelacion=" + idGlosarioRelacion
+				+ ", idGlosarioConcepto=" + idGlosarioConcepto
 				+ ", tipoDeDato=" + tipoDeDato + ", value=" + value
 				+ ", precision=" + precision + ", rangoValores=" + rangoValores
 				+ ", cardinalidadMin=" + cardinalidadMin + ", cardinalidadMax="
@@ -58,12 +58,12 @@ public class AtributoClase {
 		this.idGlosario = idGlosario;
 	}
 
-	public int getIdGlosarioRelacion() {
-		return idGlosarioRelacion;
+	public int getIdGlosarioConcepto() {
+		return idGlosarioConcepto;
 	}
 
-	public void setIdGlosarioRelacion(int idGlosarioRelacion) {
-		this.idGlosarioRelacion = idGlosarioRelacion;
+	public void setIdGlosarioConcepto(int idGlosarioConcepto) {
+		this.idGlosarioConcepto = idGlosarioConcepto;
 	}
 
 	public TipoDeDato getTipoDeDato() {
