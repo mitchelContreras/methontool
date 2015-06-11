@@ -18,10 +18,12 @@ import com.ciensUCV.Methontool.dao.TipoDeDatoDAO;
 import com.ciensUCV.Methontool.model.AtributoClase;
 import com.ciensUCV.Methontool.model.AtributoInstancia;
 import com.ciensUCV.Methontool.model.Instancia;
+import com.ciensUCV.Methontool.model.Medida;
 import com.ciensUCV.Methontool.model.NivelFormalidad;
 import com.ciensUCV.Methontool.model.Proyecto;
 import com.ciensUCV.Methontool.model.Relacion;
 import com.ciensUCV.Methontool.model.Taxonomia;
+import com.ciensUCV.Methontool.model.TipoDeDato;
 import com.ciensUCV.Methontool.rest.model.ElementoMensaje;
 import com.ciensUCV.Methontool.util.VariablesConfiguracion;
 
@@ -94,14 +96,44 @@ public class PruebaFunciones {
 //		logger.trace("prueba "+prueba.size());
 //		logger.trace("salida de atributo clase es "+atributoClaseDAO.verAtributoClase(1, 19).getIdGlosario());
 //		
-//		AtributoInstanciaDAO atributoInstanciaDAO = (AtributoInstanciaDAO) context.getBean("atributoInstanciaDAO");
+		AtributoInstanciaDAO atributoInstanciaDAO = (AtributoInstanciaDAO) context.getBean("atributoInstanciaDAO");
 //		ArrayList<AtributoInstancia> prueba1 = atributoInstanciaDAO.listarAtributoInstanciaDadoIdGlosarioConcepto(7);
 //		logger.trace("prueba "+prueba1.size());
 //		logger.trace("salida de atributoInstancia "+atributoInstanciaDAO.verAtributoInstancia(1, 23).getCardinalidadMax());
 //		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
 //		ArrayList<Instancia> prueba2 = instanciaDAO.listaInstanciaDadoIdGlosarioConcepto(7);
 //		logger.trace("prueba2 "+prueba2.size());
+//		AtributoInstancia atributoInstancia = new AtributoInstancia ();
+//		atributoInstancia.setCardinalidadMax("CardMAx");
+//		atributoInstancia.setCardinalidadMin("CardMin");
+//		atributoInstancia.setIdGlosario(24);
+//		atributoInstancia.setIdGlosarioConcepto(7);
+//		Medida medida = new Medida ();
+//		medida.setCodigo("mtrs");
+//		atributoInstancia.setMedida(medida);
+//		atributoInstancia.setPrecision("precision");
+//		atributoInstancia.setRangoValores("rango valores");
+//		TipoDeDato tipoDeDato = new TipoDeDato ();
+//		tipoDeDato.setCodigo("int");
+//		atributoInstancia.setTipoDeDato(tipoDeDato);
+//		atributoInstancia.setValue("valooor");
+//		AtributoInstancia salida = atributoInstanciaDAO.actualizarAtributoInstancia(1, atributoInstancia);
+//		logger.trace("el id_atributo es "+salida.getId());
 		
+		AtributoClaseDAO atributoClaseDAO = (AtributoClaseDAO) context.getBean("atributoClaseDAO");
+		AtributoClase atributoClase = new AtributoClase();
+		atributoClase.setCardinalidadMax("maxCard");
+		atributoClase.setCardinalidadMin("cardMin");
+		atributoClase.setIdGlosario(20);
+		atributoClase.setIdGlosarioConcepto(7);
+		atributoClase.setPrecision("pres pres");
+		atributoClase.setRangoValores("rango de vooolres");
+		TipoDeDato tipoDeDato = new TipoDeDato ();
+		tipoDeDato.setCodigo("int");
+		atributoClase.setTipoDeDato(tipoDeDato);
+		atributoClase.setValue("valuandoooo");
+		AtributoClase salida = atributoClaseDAO.actualizarAtributoClase(1, atributoClase);
+		logger.trace("id atributo es "+salida.getId());
 //		taxonomia.setConceptoOrigen(1);
 //		taxonomia.getRelaciones().add("desDisjunta");
 //		taxonomia.getConceptosDestino().addToInnerArray(0, 4);
@@ -141,11 +173,11 @@ public class PruebaFunciones {
 //		salida = conceptoDAO.actualizarConcepto(aux, aux1, aux2, 7);
 //		logger.trace("salida "+salida);
 		
-		MedidaDAO medidaDAO = (MedidaDAO) context.getBean("medidaDAO");
-		logger.trace("total lista1 "+medidaDAO.listarMedida().get(0).getCodigo());
-		
-		TipoDeDatoDAO tipoDeDatoDAO = (TipoDeDatoDAO)  context.getBean("tipoDeDatoDAO");
-		logger.trace("total lista2 "+tipoDeDatoDAO.listarTipoDeDato().get(0).getCodigo());
+//		MedidaDAO medidaDAO = (MedidaDAO) context.getBean("medidaDAO");
+//		logger.trace("total lista1 "+medidaDAO.listarMedida().get(0).getCodigo());
+//		
+//		TipoDeDatoDAO tipoDeDatoDAO = (TipoDeDatoDAO)  context.getBean("tipoDeDatoDAO");
+//		logger.trace("total lista2 "+tipoDeDatoDAO.listarTipoDeDato().get(0).getCodigo());
 		
 	}
 

@@ -169,7 +169,58 @@ public class JdbcAtributoClaseDAO implements AtributoClaseDAO {
 	public AtributoClase actualizarAtributoClase(int idProyecto,
 			AtributoClase atributoClase) {
 		// TODO Auto-generated method stub
-		return null;
+		String sql;
+		sql = "UPDATE atributo_clase set "
+				+ " cod_dato = ?,"
+				+ " valor = ?, "
+				+ " precision = ?,"
+				+ " rango_valores = ?,"
+				+ " cardinalidad_minimo = ?,"
+				+ " cardinalidad_maximo = ?"
+				+ "where id_glosario_atributo = ? "
+				+ "and id_glosario_concepto = ? RETURNING id_atributo ;";
+		logger.trace("sql "+sql);
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			if(atributoClase.getTipoDeDato().getCodigo() != null && atributoClase.getTipoDeDato().getCodigo().equalsIgnoreCase("")){
+				ps.setNull(1, java.sql.Types.VARCHAR);
+			}else{
+				ps.setString(1, atributoClase.getTipoDeDato().getCodigo());
+			}
+			
+			ps.setString(2, atributoClase.getValue());
+			ps.setString(3, atributoClase.getPrecision());
+			ps.setString(4, atributoClase.getRangoValores());
+			ps.setString(5, atributoClase.getCardinalidadMin());
+			ps.setString(6, atributoClase.getCardinalidadMax());
+			ps.setInt(7, atributoClase.getIdGlosario());
+			ps.setInt(8, atributoClase.getIdGlosarioConcepto());
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				logger.trace("entro en rs");
+				atributoClase.setId(rs.getInt("id_atributo"));
+			}
+			rs.close();
+			ps.close();
+			return atributoClase;	
+		} catch (SQLException e) {
+			logger.info("SQLException "+e);
+			throw new RuntimeException(e);
+		} catch(Exception e) {
+			logger.info("error "+e.toString());
+			return atributoClase;	
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					return atributoClase;
+				}
+			}
+		}
 	}
 
 }

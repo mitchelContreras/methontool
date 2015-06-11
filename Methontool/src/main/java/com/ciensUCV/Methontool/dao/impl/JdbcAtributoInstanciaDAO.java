@@ -173,7 +173,67 @@ public class JdbcAtributoInstanciaDAO implements AtributoInstanciaDAO {
 	public AtributoInstancia actualizarAtributoInstancia(int idProyecto,
 			AtributoInstancia atributoInstancia) {
 		// TODO Auto-generated method stub
-		return null;
+		String sql;
+		sql = "UPDATE atributo_instancia set "
+				+ " cod_dato = ?,"
+				+ " cod_medida = ?,"
+				+ " precision = ?,"
+				+ " rango_valores = ?,"
+				+ " cardinalidad_minimo = ?,"
+				+ " cardinalidad_maximo = ?,"
+				+ " valor_defecto = ? "
+				+ "where id_glosario_atributo = ? "
+				+ "and id_glosario_concepto = ? RETURNING id_atributo ;";
+		logger.trace("sql "+sql);
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			if(atributoInstancia.getTipoDeDato().getCodigo() != null && atributoInstancia.getTipoDeDato().getCodigo().equalsIgnoreCase("")){
+				ps.setNull(1, java.sql.Types.VARCHAR);
+			}else{
+				ps.setString(1, atributoInstancia.getTipoDeDato().getCodigo());
+			}
+			
+			
+			if(atributoInstancia.getTipoDeDato().getCodigo() != null && atributoInstancia.getTipoDeDato().getCodigo().equalsIgnoreCase("")){
+				ps.setNull(2, java.sql.Types.VARCHAR);
+			}else{
+				ps.setString(2, atributoInstancia.getMedida().getCodigo());
+			}
+			
+			
+			ps.setString(3, atributoInstancia.getPrecision());
+			ps.setString(4, atributoInstancia.getRangoValores());
+			ps.setString(5, atributoInstancia.getCardinalidadMin());
+			ps.setString(6, atributoInstancia.getCardinalidadMax());
+			ps.setString(7, atributoInstancia.getValue());
+			ps.setInt(8, atributoInstancia.getIdGlosario());
+			ps.setInt(9, atributoInstancia.getIdGlosarioConcepto());
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				logger.trace("entro en rs");
+				atributoInstancia.setId(rs.getInt("id_atributo"));
+			}
+			rs.close();
+			ps.close();
+			return atributoInstancia;	
+		} catch (SQLException e) {
+			logger.info("SQLException "+e);
+			throw new RuntimeException(e);
+		} catch(Exception e) {
+			logger.info("error "+e.toString());
+			return atributoInstancia;	
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					return atributoInstancia;
+				}
+			}
+		}
 	}
 
 }
