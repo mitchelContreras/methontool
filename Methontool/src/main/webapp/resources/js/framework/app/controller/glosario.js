@@ -18,6 +18,8 @@ ControllerGlosario.$inject = ['$rootScope'
                               ,'FactoryTipoGlosario'
                               ,'FactoryGlosario'
                               ,'$scope'
+                              ,'FactoryTipoDato'
+                              ,'FactoryMedida'
                               ];	
 
 function ControllerGlosario(
@@ -26,9 +28,17 @@ function ControllerGlosario(
     	,$listarGlosario
     	,FactoryTipoGlosario
     	,FactoryGlosario
-    	,$scope
+       	,$scope
+    	,FactoryTipoDato
+    	,FactoryMedida
+ 
     ){
 	console.log("Entro en ControllerGlosario");
+	
+	FactoryTipoGlosario.getListaElemento();
+	FactoryMedida.getListaElemento();
+	FactoryTipoDato.getListaElemento();
+	
 	var cnGlosario = this;
 	
 	

@@ -17,32 +17,23 @@ angular.module('methontool')
 ControllerAtributoClase.$inject = ['$rootScope', 
                                        'InformacionPrincipalApp',
                                        '$http'
+                                       ,'FactoryGlosario'
+                                       ,'FactoryTipoDato'
+                                       ,'FactoryAtributoClase'
+                                       ,'FactoryMensajeCarga'
                                        ];	
 
 function ControllerAtributoClase($rootScope,
 		InformacionPrincipalApp,
 		$http
+		,FactoryGlosario
+		,FactoryTipoDato
+		,FactoryAtributoClase
+		,FactoryMensajeCarga
 		){
 	
 	console.log("Entro en ControllerAtributoClase");
 	var cnAtributoClase = this;
-	
-	cnAtributoClase.concepto1 = [
-	     	                      	{"id": 1, "nombre":"Arbol"},
-	     	                      	{"id": 2, "nombre":"Agua"},
-	     	                      	{"id": 3, "nombre":"Casa"},
-	     	                      	{"id": 4, "nombre":"Cocina"},
-	     	                      	{"id": 5, "nombre":"Ventana"},
-	     	                      	{"id": 6, "nombre":"Mesa"},
-	     	                      	{"id": 7, "nombre":"Nevera"},
-	     	                      	{"id": 8, "nombre":"Antena"},
-	     	                      	{"id": 9, "nombre":"Computadora"},
-	     	                      	{"id": 10, "nombre":"Cama"},
-	     	                      	{"id": 11, "nombre":"Microhonda"},
-	     	                      	{"id": 12, "nombre":"Familia"},
-	     	                      	{"id": 13, "nombre":"Ventilador"}
-	     	                          ];
-	cnAtributoClase.selectedConcepto = {"id": 3, "nombre":"Casa"};
 	
 	cnAtributoClase.soyActual = false; //debo cambiarlo a false al terminar el desarrollo 
 	cnAtributoClase.disabled = true;  //variable usada para bloquear los campos de edicion 
@@ -50,11 +41,23 @@ function ControllerAtributoClase($rootScope,
 	cnAtributoClase.enBlanco = true;	    //mostrar seccion en blanco
 	
 	//-------------------Variables de edicion---------------------
-	cnAtributoClase.concepto = {};
-	cnAtributoClase.cardinalidad = "";
-	cnAtributoClase.tipoValor = "";
-	cnAtributoClase.valores = "";
-	cnAtributoClase.enGlosario = {};	
+	cnAtributoClase.varEdicion = {};
+	cnAtributoClase.varEdicion.glosarioAtributoClaseActual = {};
+	cnAtributoClase.varEdicion.glosarioConcepto = {};
+	cnAtributoClase.varEdicion.tipoDeDato = {};
+	cnAtributoClase.varEdicion.valor = "";		
+	cnAtributoClase.varEdicion.precision = "";
+	cnAtributoClase.varEdicion.rangoValores = "";
+	cnAtributoClase.varEdicion.minCardinalidad = "";
+	cnAtributoClase.varEdicion.maxCardinalidad = "";
+	
+//-------------------Variables----------------------------------
+	cnAtributoClase.listaGlosario = {};
+	cnAtributoClase.listaTipoDeDato = {};
+	cnAtributoClase.mensajeAlertPositiva = "";
+	cnAtributoClase.mensajeAlertNegativa = "";
+	cnAtributoClase.alertPositiva = false;
+	cnAtributoClase.alertNegativa = false;
 	
 //-------------------Funciones----------------------------------	
 	
@@ -63,6 +66,78 @@ function ControllerAtributoClase($rootScope,
 	cnAtributoClase.cancelaAtributoClase = cancelaAtributoClase;
 	cnAtributoClase.verDescripcionGlosario = verDescripcionGlosario;
 	cnAtributoClase.verConcepto = verConcepto;
+	cnAtributoClase.seleccioneGlosario = seleccioneGlosario;
+	
+	function seleccioneGlosario(elemento, limpiar){
+		cnAtributoClase.seleccionado = elemento.id;
+		cnAtributoClase.enBlanco = false;
+		cnAtributoClase.modificar = false;
+		cnAtributoClase.disabled = true;
+		
+//		limpio variables
+		cnAtributoClase.varEdicion = {};
+		cnAtributoClase.varEdicion.glosarioAtributoClaseActual = {};
+		cnAtributoClase.varEdicion.glosarioConcepto = {};
+		cnAtributoClase.varEdicion.tipoDeDato = {};
+		cnAtributoClase.varEdicion.valor = "";		
+		cnAtributoClase.varEdicion.precision = "";
+		cnAtributoClase.varEdicion.rangoValores = "";
+		cnAtributoClase.varEdicion.minCardinalidad = "";
+		cnAtributoClase.varEdicion.maxCardinalidad = "";
+		
+//		asigno la relacion con la que estoy trabajando
+		cnAtributoClase.varEdicion.glosarioAtributoClaseActual = elemento;
+		console.log("cnAtributoClase.varEdicion.glosarioAtributoClaseActual "+cnAtributoClase.varEdicion.glosarioAtributoClaseActual.id+" "+cnAtributoClase.varEdicion.glosarioAtributoClaseActual.nombre);
+		var salida;
+		salida = FactoryAtributoClase.verElemento(elemento.id);
+		FactoryMensajeCarga.abrirMensaje("Cargando");
+		salida.then(
+	            function(aux) {
+	                if(aux.succes){
+	                	console.log("consultar es true");
+//	                	asigno concepto
+	                	console.log("aux.elemento.idGlosarioConcepto "+aux.elemento.idGlosarioConcepto);
+	                	cnAtributoClase.varEdicion.glosarioConcepto
+	                		= FactoryGlosario.consultarElemento(aux.elemento.idGlosarioConcepto);
+	                	
+//	                	asigno tipo de dato
+	                	cnAtributoClase.varEdicion.tipoDeDato
+	                		=FactoryTipoDato.consultarElemento(aux.elemento.tipoDeDato.codigo);
+	                	
+//	                	asigno precision
+	                	cnAtributoClase.varEdicion.precision 
+	                		= aux.elemento.precision;
+	                	
+//	                	asigno rango de valores
+	                	cnAtributoClase.varEdicion.rangoValores
+	                		= aux.elemento.rangoValores;
+	                	
+//	                	asigno minCardinalidad
+	                	cnAtributoClase.varEdicion.minCardinalidad
+	                		= aux.elemento.cardinalidadMin;
+	                	
+//	                	asigno maxCardinalidad
+	                	cnAtributoClase.varEdicion.maxCardinalidad
+	                		= aux.elemento.cardinalidadMax;
+	                	
+//	                	asgino Value
+	                	cnAtributoClase.varEdicion.valorDefecto 
+	                		= aux.elemento.value;
+	                	console.log("cnAtributoClase.varEdicion.tipoDeDato "+cnAtributoClase.varEdicion.tipoDeDato);
+	                	console.log("cnAtributoClase.varEdicion.precision  "+cnAtributoClase.varEdicion.precision );
+	                	console.log("cnAtributoClase.varEdicion.rangoValores "+cnAtributoClase.varEdicion.rangoValores);
+	                	console.log("cnAtributoClase.varEdicion.minCardinalidad "+cnAtributoClase.varEdicion.minCardinalidad);
+	                	console.log("cnAtributoClase.varEdicion.maxCardinalidad "+cnAtributoClase.varEdicion.maxCardinalidad);
+	                	console.log("cnAtributoClase.varEdicion.valorDefecto "+cnAtributoClase.varEdicion.valorDefecto);
+	                	
+	                	FactoryMensajeCarga.cerrarMensaje();
+	                }else{
+	                	
+	                }
+	            }
+	        );
+		
+	}
 	
 	function modificarAtributoClase (){
 		cnAtributoClase.disabled = false;
@@ -74,6 +149,8 @@ function ControllerAtributoClase($rootScope,
 	function cancelaAtributoClase (){
 		cnAtributoClase.disabled = true;
 		cnAtributoClase.modificar = false;
+		cnAtributoClase.seleccioneGlosario (cnAtributoClase.varEdicion.glosarioAtributoClaseActual, true);
+
 	}
 	function verDescripcionGlosario(){
 		$('#verDescripcionGlosarioAtributoClaseModal').modal('show');
@@ -81,7 +158,12 @@ function ControllerAtributoClase($rootScope,
 	function verConcepto(){
 		$('#verConceptoAtributoClaseModal').modal('show');
 	}
-		
+	
+//-------------------Funciones complementarias---------------------------
+	function  listarGlosario(){
+		cnAtributoClase.listaGlosario = FactoryGlosario.getListaElemento();
+	}	
+//-------------------Funciones extranjeras-------------------------------			
     $rootScope.$on('menuAtributoClasePrincipal', function(event, data){
     	InformacionPrincipalApp.voyAvista("AtributoClase");	//Indico a las otras secciones que esta es la actual
     	//Inicio los valores por si han sido modificados anteriormente
@@ -94,6 +176,8 @@ function ControllerAtributoClase($rootScope,
     	if (newValue !== oldValue) {
             console.log("cambio valor actual.atributoClase a '"+newValue+"'");
             cnAtributoClase.soyActual = InformacionPrincipalApp.soyVistaActual('AtributoClase');	//Indico al controlador actual si se debe mostrar
+            listarGlosario(); 
+            cnAtributoClase.listaTipoDeDato = FactoryTipoDato.getListaElemento();
     	}
     }, false);
 	

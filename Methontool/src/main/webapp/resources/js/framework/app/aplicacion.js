@@ -24,6 +24,8 @@
         ,'modInstancia'
         ,'modAtributoClase'
         ,'modAtributoInstancia'
+        ,'modMedida'
+        ,'modTipoDeDato'
         ])
     
 })();

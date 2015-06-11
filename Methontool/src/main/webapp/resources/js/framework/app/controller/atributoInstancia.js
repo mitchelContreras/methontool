@@ -17,44 +17,55 @@ angular.module('methontool')
 ControllerAtributoInstancia.$inject = ['$rootScope', 
                                        'InformacionPrincipalApp',
                                        '$http'
+                                       ,'FactoryGlosario'
+                                       ,'FactoryMensajeCarga'
+                                       ,'FactoryAtributoInstancia'
+                                       ,'FactoryTipoDato'
+                                       ,'FactoryMedida'
                                        ];	
 
 function ControllerAtributoInstancia($rootScope,
 		InformacionPrincipalApp,
 		$http
+		,FactoryGlosario
+		,FactoryMensajeCarga
+		,FactoryAtributoInstancia
+    	,FactoryTipoDato
+    	,FactoryMedida		
 		){
 	
 	console.log("Entro en ControllerAtributoInstancia");
 	var cnAtributoInstancia = this;
-	
-	cnAtributoInstancia.concepto1 = [
-	                      	{"id": 1, "nombre":"Arbol"},
-	                      	{"id": 2, "nombre":"Agua"},
-	                      	{"id": 3, "nombre":"Casa"},
-	                      	{"id": 4, "nombre":"Cocina"},
-	                      	{"id": 5, "nombre":"Ventana"},
-	                      	{"id": 6, "nombre":"Mesa"},
-	                      	{"id": 7, "nombre":"Nevera"},
-	                      	{"id": 8, "nombre":"Antena"},
-	                      	{"id": 9, "nombre":"Computadora"},
-	                      	{"id": 10, "nombre":"Cama"},
-	                      	{"id": 11, "nombre":"Microhonda"},
-	                      	{"id": 12, "nombre":"Familia"},
-	                      	{"id": 13, "nombre":"Ventilador"}
-	                          ];
-	cnAtributoInstancia.selectedConcepto = {"id": 3, "nombre":"Casa"};
 	
 	cnAtributoInstancia.soyActual = false; //debo cambiarlo a false al terminar el desarrollo
 	cnAtributoInstancia.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnAtributoInstancia.modificar = false; //si se permite modificar los valores 
 	cnAtributoInstancia.enBlanco = true;	    //mostrar seccion en blanco
 	
-	//-------------------Variables de edicion---------------------
+//-------------------Variables de edicion---------------------
 	cnAtributoInstancia.concepto = {};
 	cnAtributoInstancia.cardinalidad = "";
 	cnAtributoInstancia.tipoValor = "";
 	cnAtributoInstancia.rangoValor = "";
-	cnAtributoInstancia.enGlosario = {};	
+	cnAtributoInstancia.varEdicion = {};
+	cnAtributoInstancia.varEdicion.glosarioAtributoInstanciaActual = {};
+	cnAtributoInstancia.varEdicion.glosarioConcepto = {};
+	cnAtributoInstancia.varEdicion.tipoDeDato = {};
+	cnAtributoInstancia.varEdicion.medida = {};
+	cnAtributoInstancia.varEdicion.precision = "";
+	cnAtributoInstancia.varEdicion.rangoValores = "";
+	cnAtributoInstancia.varEdicion.minCardinalidad = "";
+	cnAtributoInstancia.varEdicion.maxCardinalidad = "";
+	cnAtributoInstancia.varEdicion.valorDefecto = "";
+
+//-------------------Variables----------------------------------
+	cnAtributoInstancia.listaGlosario = {};
+	cnAtributoInstancia.listaMedida = {};
+	cnAtributoInstancia.listaTipoDeDato = {};
+	cnAtributoInstancia.mensajeAlertPositiva = "";
+	cnAtributoInstancia.mensajeAlertNegativa = "";
+	cnAtributoInstancia.alertPositiva = false;
+	cnAtributoInstancia.alertNegativa = false;
 	
 //-------------------Funciones----------------------------------	
 	
@@ -63,6 +74,84 @@ function ControllerAtributoInstancia($rootScope,
 	cnAtributoInstancia.cancelaAtributoInstancia = cancelaAtributoInstancia;
 	cnAtributoInstancia.verDescripcionGlosario = verDescripcionGlosario;
 	cnAtributoInstancia.verConcepto = verConcepto;
+	cnAtributoInstancia.seleccioneGlosario = seleccioneGlosario;
+	
+	function seleccioneGlosario(elemento, limpiar){
+		cnAtributoInstancia.seleccionado = elemento.id;
+		cnAtributoInstancia.enBlanco = false;
+		cnAtributoInstancia.modificar = false;
+		cnAtributoInstancia.disabled = true;
+		
+//		limpio variables
+		cnAtributoInstancia.varEdicion = {};
+		cnAtributoInstancia.varEdicion.glosarioAtributoInstanciaActual = {};
+		cnAtributoInstancia.varEdicion.glosarioConcepto = {};
+		cnAtributoInstancia.varEdicion.tipoDeDato = {};
+		cnAtributoInstancia.varEdicion.medida = {};
+		cnAtributoInstancia.varEdicion.precision = "";
+		cnAtributoInstancia.varEdicion.rangoValores = "";
+		cnAtributoInstancia.varEdicion.minCardinalidad = "";
+		cnAtributoInstancia.varEdicion.maxCardinalidad = "";
+		cnAtributoInstancia.varEdicion.valorDefecto = "";
+
+		
+		
+//		asigno la relacion con la que estoy trabajando
+		cnAtributoInstancia.varEdicion.glosarioAtributoInstanciaActual = elemento;
+		console.log("cnAtributoInstancia.varEdicion.glosarioAtributoInstanciaActual "+cnAtributoInstancia.varEdicion.glosarioAtributoInstanciaActual.id+" "+cnAtributoInstancia.varEdicion.glosarioAtributoInstanciaActual.nombre);
+		var salida;
+		salida = FactoryAtributoInstancia.verElemento(elemento.id);
+		FactoryMensajeCarga.abrirMensaje("Cargando");
+		salida.then(
+	            function(aux) {
+	                if(aux.succes){
+	                	console.log("consultar es true");
+//	                	asigno concepto
+	                	cnAtributoInstancia.varEdicion.glosarioConcepto
+	                		= FactoryGlosario.consultarElemento(aux.elemento.idGlosarioConcepto);
+	                	
+//	                	asigno tipo de dato
+	                	cnAtributoInstancia.varEdicion.tipoDeDato
+	                		=FactoryTipoDato.consultarElemento(aux.elemento.tipoDeDato.codigo);
+//	                	asigno medida
+	                	cnAtributoInstancia.varEdicion.medida
+	                		=FactoryMedida.consultarElemento(aux.elemento.medida.codigo);
+//	                	asigno precision
+	                	cnAtributoInstancia.varEdicion.precision 
+	                		= aux.elemento.precision;
+	                	
+//	                	asigno rango de valores
+	                	cnAtributoInstancia.varEdicion.rangoValores
+	                		= aux.elemento.rangoValores;
+	                	
+//	                	asigno minCardinalidad
+	                	cnAtributoInstancia.varEdicion.minCardinalidad
+	                		= aux.elemento.cardinalidadMin;
+	                	
+//	                	asigno maxCardinalidad
+	                	cnAtributoInstancia.varEdicion.maxCardinalidad
+	                		= aux.elemento.cardinalidadMax;
+	                	
+//	                	asgino Value
+	                	cnAtributoInstancia.varEdicion.valorDefecto 
+	                		= aux.elemento.value;
+	                	console.log("cnAtributoInstancia.varEdicion.tipoDeDato "+cnAtributoInstancia.varEdicion.tipoDeDato);
+	                	console.log("cnAtributoInstancia.varEdicion.medida "+cnAtributoInstancia.varEdicion.medida);
+	                	console.log("cnAtributoInstancia.varEdicion.precision  "+cnAtributoInstancia.varEdicion.precision );
+	                	console.log("cnAtributoInstancia.varEdicion.rangoValores "+cnAtributoInstancia.varEdicion.rangoValores);
+	                	console.log("cnAtributoInstancia.varEdicion.minCardinalidad "+cnAtributoInstancia.varEdicion.minCardinalidad);
+	                	console.log("cnAtributoInstancia.varEdicion.maxCardinalidad "+cnAtributoInstancia.varEdicion.maxCardinalidad);
+	                	console.log("cnAtributoInstancia.varEdicion.valorDefecto "+cnAtributoInstancia.varEdicion.valorDefecto);
+	                	
+	                	FactoryMensajeCarga.cerrarMensaje();
+	                }else{
+	                	
+	                }
+	            }
+	        );
+		
+		
+	}
 	function modificarAtributoInstancia (){
 		cnAtributoInstancia.disabled = false;
 		cnAtributoInstancia.modificar = true;
@@ -73,6 +162,7 @@ function ControllerAtributoInstancia($rootScope,
 	function cancelaAtributoInstancia (){
 		cnAtributoInstancia.disabled = true;
 		cnAtributoInstancia.modificar = false;
+		cnAtributoInstancia.seleccioneGlosario (cnAtributoInstancia.varEdicion.glosarioAtributoInstanciaActual, true);
 	}
 	function verDescripcionGlosario(){
 		$('#verDescripcionGlosarioAtributoInstanciaModal').modal('show');
@@ -81,6 +171,13 @@ function ControllerAtributoInstancia($rootScope,
 		$('#verConceptoAtributoInstanciaModal').modal('show');
 	}
 	
+//-------------------Funciones complementarias---------------------------
+	function  listarGlosario(){
+		cnAtributoInstancia.listaGlosario = FactoryGlosario.getListaElemento();
+	}
+	
+
+//-------------------Funciones extranjeras-------------------------------		
     $rootScope.$on('menuAtributoInstanciaPrincipal', function(event, data){
     	InformacionPrincipalApp.voyAvista("AtributoInstancia");	//Indico a las otras secciones que esta es la actual
     	//Inicio los valores por si han sido modificados anteriormente
@@ -93,6 +190,9 @@ function ControllerAtributoInstancia($rootScope,
     	if (newValue !== oldValue) {
             console.log("cambio valor actual.atributoInstancia a '"+newValue+"'");
             cnAtributoInstancia.soyActual = InformacionPrincipalApp.soyVistaActual('AtributoInstancia');	//Indico al controlador actual si se debe mostrar
+            listarGlosario(); 
+    		cnAtributoInstancia.listaMedida = FactoryMedida.getListaElemento();
+    		cnAtributoInstancia.listaTipoDeDato = FactoryTipoDato.getListaElemento();
     	}
     }, false);	
 	

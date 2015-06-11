@@ -15,6 +15,7 @@ public class AtributoClase {
 	public AtributoClase() {
 		super();
 		// TODO Auto-generated constructor stub
+		this.tipoDeDato = new TipoDeDato();
 	}
 
 	public AtributoClase(int id, int idGlosario, int idGlosarioConcepto,

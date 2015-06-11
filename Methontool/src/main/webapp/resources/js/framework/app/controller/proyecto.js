@@ -88,8 +88,9 @@ angular.module('methontool')
 		                }
 		        );
 	    		
-	    		FactoryTipoGlosario.getListaElemento();
-
+//	    		FactoryTipoGlosario.getListaElemento();
+		
+	    		
 	    		FactoryMensajeCarga.cerrarMensaje();
 	    	}
 	    	

@@ -12,19 +12,31 @@ angular.module('methontool')
 
 	FactoryAtributoClase.$inject = ['InformacionPrincipalApp'
 	                                ,'$listarAtributoClaseSinConceptoAsociado'
+	                                ,'$verAtributoClase'
 	                           ];
 
 	function FactoryAtributoClase (
 			InformacionPrincipalApp
 			,$listarAtributoClaseSinConceptoAsociado
+			,$verAtributoClase
 			){
 		
 		var funcion = {
 //				busca elemento en servicio rest
 				listarElementoSinConceptoAsociado: function (){
 					return listarElementoSinConceptoAsociado();
+				},
+				verElemento: function (idGlosarioAtributo){
+					return verElemento(idGlosarioAtributo);
 				}
 			};
+		
+		function verElemento (idGlosarioAtributo){
+			return $verAtributoClase.get({
+				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
+				,idGlosarioAtributo: idGlosarioAtributo
+			},{}).$promise;
+		}
 		
 		function listarElementoSinConceptoAsociado(){
 			return 	$listarAtributoClaseSinConceptoAsociado.get({

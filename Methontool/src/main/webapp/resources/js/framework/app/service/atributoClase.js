@@ -17,5 +17,12 @@
             get: {method: 'GET', params: {idProyecto: '@idProyecto'}, isArray:false}
             });
     });
+    
+    proy.factory('$verAtributoClase',function($resource){
+    	var urlConsultar = urlProyecto+"/api/proyecto/:idProyecto/atributoClase/:idGlosarioAtributo";
+         return $resource(urlConsultar,{},{
+            get: {method: 'GET', params: {idProyecto: '@idProyecto', idGlosarioAtributo:'@idGlosarioAtributo'}, isArray:false}
+            });
+    });
 
 })();

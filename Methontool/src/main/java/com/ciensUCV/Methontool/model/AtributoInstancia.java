@@ -34,6 +34,8 @@ public class AtributoInstancia {
 	public AtributoInstancia() {
 		super();
 		// TODO Auto-generated constructor stub
+		this.tipoDeDato = new TipoDeDato();
+		this.medida = new Medida();
 	}
 
 	@Override
