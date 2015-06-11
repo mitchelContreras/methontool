@@ -25,4 +25,10 @@
             });
     });
 
+    proy.factory('$actualizarAtributoClase',function($resource){
+    	var urlConsultar = urlProyecto+"/api/proyecto/:idProyecto/atributoClase/:idGlosarioAtributo";
+         return $resource(urlConsultar,{},{
+            put: {method: 'put', params: {idProyecto: '@idProyecto', idGlosarioAtributo:'@idGlosarioAtributo'}, isArray:false}
+            });
+    });
 })();

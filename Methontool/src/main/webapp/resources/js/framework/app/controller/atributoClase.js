@@ -85,6 +85,14 @@ function ControllerAtributoClase($rootScope,
 		cnAtributoClase.varEdicion.minCardinalidad = "";
 		cnAtributoClase.varEdicion.maxCardinalidad = "";
 		
+		if(limpiar == 'true'){
+			//Si selecciono desde la lista quiero quitar el mensaje positivo
+			console.log("limpiar en select");
+			cnAtributoClase.alertPositiva = false;
+		}
+		cnAtributoClase.alertNegativa = false;
+		
+		
 //		asigno la relacion con la que estoy trabajando
 		cnAtributoClase.varEdicion.glosarioAtributoClaseActual = elemento;
 		console.log("cnAtributoClase.varEdicion.glosarioAtributoClaseActual "+cnAtributoClase.varEdicion.glosarioAtributoClaseActual.id+" "+cnAtributoClase.varEdicion.glosarioAtributoClaseActual.nombre);
@@ -99,6 +107,15 @@ function ControllerAtributoClase($rootScope,
 	                	console.log("aux.elemento.idGlosarioConcepto "+aux.elemento.idGlosarioConcepto);
 	                	cnAtributoClase.varEdicion.glosarioConcepto
 	                		= FactoryGlosario.consultarElemento(aux.elemento.idGlosarioConcepto);
+	                	
+	                	if(aux.elemento.idGlosarioConcepto == 0){
+	                		console.log("es 0 glosario");
+	                		cnAtributoClase.conceptoAsociado = false;
+	                		cnAtributoClase.alertNegativa = true;
+	                		cnAtributoClase.mensajeAlertNegativa = "Debe asociar un concepto a este atributo de clase";
+	                	}else{
+	                		cnAtributoClase.conceptoAsociado = true;
+	                	}
 	                	
 //	                	asigno tipo de dato
 	                	cnAtributoClase.varEdicion.tipoDeDato
@@ -144,7 +161,28 @@ function ControllerAtributoClase($rootScope,
 		cnAtributoClase.modificar = true;
 	}
 	function modifiqueAtributoClase (){
-		
+		var salida;
+		salida = FactoryAtributoClase.actualizarElemento(
+				cnAtributoClase.varEdicion.glosarioAtributoClaseActual.id
+				,cnAtributoClase.varEdicion.maxCardinalidad
+				,cnAtributoClase.varEdicion.minCardinalidad
+				,cnAtributoClase.varEdicion.glosarioConcepto.id
+				,cnAtributoClase.varEdicion.tipoDeDato.codigo
+				,cnAtributoClase.varEdicion.precision
+				,cnAtributoClase.varEdicion.rangoValores
+				,cnAtributoClase.varEdicion.valorDefecto
+				);
+		salida.then(
+            function(aux) {
+                // success
+                if(aux.succes){
+                	console.log("actualizar es true");
+                	cnAtributoClase.alertPositiva = true;
+                	cnAtributoClase.mensajeAlertPositiva = "El Atributo de clase ha sido actualizado";
+                	cnAtributoClase.seleccioneGlosario (cnAtributoClase.varEdicion.glosarioAtributoClaseActual, false);
+                }
+             }
+		);	
 	}
 	function cancelaAtributoClase (){
 		cnAtributoClase.disabled = true;

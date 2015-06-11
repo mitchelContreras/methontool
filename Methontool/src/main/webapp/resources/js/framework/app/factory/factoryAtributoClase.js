@@ -13,12 +13,14 @@ angular.module('methontool')
 	FactoryAtributoClase.$inject = ['InformacionPrincipalApp'
 	                                ,'$listarAtributoClaseSinConceptoAsociado'
 	                                ,'$verAtributoClase'
+	                                ,'$actualizarAtributoClase'
 	                           ];
 
 	function FactoryAtributoClase (
 			InformacionPrincipalApp
 			,$listarAtributoClaseSinConceptoAsociado
 			,$verAtributoClase
+			,$actualizarAtributoClase
 			){
 		
 		var funcion = {
@@ -28,9 +30,57 @@ angular.module('methontool')
 				},
 				verElemento: function (idGlosarioAtributo){
 					return verElemento(idGlosarioAtributo);
+				},
+				actualizarElemento: function (idGlosarioAtributo, 
+						cardinalidadMax, 
+						cardinalidadMin, 
+						idGlosarioConcepto, 
+						cod_tipoDato, 
+						precision, 
+						rangoValores, 
+						valueDefecto){
+					return actualizarElemento (idGlosarioAtributo, 
+							cardinalidadMax, 
+							cardinalidadMin, 
+							idGlosarioConcepto, 
+							cod_tipoDato, 
+							precision, 
+							rangoValores, 
+							valueDefecto);
 				}
 			};
 		
+		function actualizarElemento(idGlosarioAtributo, 
+				cardinalidadMax, 
+				cardinalidadMin, 
+				idGlosarioConcepto, 
+				cod_tipoDato, 
+				precision, 
+				rangoValores, 
+				valueDefecto){
+			console.log("idGlosarioAtributo "+idGlosarioAtributo);
+			console.log("cardinalidadMax "+cardinalidadMax);
+			console.log("cardinalidadMin "+cardinalidadMin);
+			console.log("idGlosarioConcepto "+idGlosarioConcepto);
+			console.log("cod_tipoDato "+cod_tipoDato);
+			console.log("precision "+precision);
+			console.log("rangoValores "+rangoValores);
+			console.log("valueDefecto "+valueDefecto);
+			return $actualizarAtributoClase.put({
+				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
+				,idGlosarioAtributo: idGlosarioAtributo
+				,'cardinalidadMax' : cardinalidadMax
+				,'cardinalidadMin' : cardinalidadMin
+				,'idGlosarioConcepto' : idGlosarioConcepto
+				,'precision' : precision
+				,'rangoValores' : rangoValores
+				,'cod_tipoDato' : cod_tipoDato
+				,'value' : valueDefecto
+			},{}).$promise;
+		}
+	
+		
+        
 		function verElemento (idGlosarioAtributo){
 			return $verAtributoClase.get({
 				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto

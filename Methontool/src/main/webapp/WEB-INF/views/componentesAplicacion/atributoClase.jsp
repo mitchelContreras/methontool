@@ -86,6 +86,12 @@
 			</div>
 			<div class="col-md-8 cuerpoDos" ng-show="!cnAtributoClase.enBlanco">
 				<div class="inicioTexto">
+					<div align="center" class="alert alert-success alert-dismissible" ng-if="cnAtributoClase.alertPositiva">
+				   		 {{cnAtributoClase.mensajeAlertPositiva}}
+					</div> 
+					<div align="center" class="alert alert-danger alert-dismissible" ng-if="cnAtributoClase.alertNegativa">
+				   		 <strong>Error!</strong> {{cnAtributoClase.mensajeAlertNegativa}}
+					</div>				
 					<form class=" form-horizontal">
 						<div class="form-group">
 							<div class="col-xs-4 control-label" >
@@ -153,7 +159,7 @@
 								<input type="text" class="form-control" placeholder="Valor" ng-disabled="cnAtributoClase.disabled" ng-model="cnAtributoClase.varEdicion.valorDefecto">
 							</div>
 						</div>									
-						<div class="form-group" ng-show="!cnAtributoClase.modificar">
+						<div class="form-group" ng-show="!cnAtributoClase.modificar && cnAtributoClase.conceptoAsociado">
 							<div class="col-xs-offset-4 col-xs-5">
 								<button type="submit" class="btn btn-primary" ng-click="cnAtributoClase.modificarAtributoClase()">Modificar</button>
 							</div>

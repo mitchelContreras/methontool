@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ciensUCV.Methontool.dao.AtributoClaseDAO;
+import com.ciensUCV.Methontool.dao.AtributoInstanciaDAO;
 import com.ciensUCV.Methontool.model.AtributoClase;
+import com.ciensUCV.Methontool.model.AtributoInstancia;
 import com.ciensUCV.Methontool.model.TipoDeDato;
 import com.ciensUCV.Methontool.rest.model.ElementoMensaje;
 import com.ciensUCV.Methontool.rest.model.ElementosMensaje;
@@ -40,8 +42,25 @@ public class AtributoClaseRest {
 		return elementosMensaje;
 	}
 	
-	@RequestMapping(value="/api/proyecto/{idProyecto}/atributoClase/{idGlosarioAtributo}", method = RequestMethod.POST)
+	@RequestMapping(value="/api/proyecto/{idProyecto}/atributoClase/{idGlosarioAtributo}", method = RequestMethod.GET)
 	public @ResponseBody ElementoMensaje<AtributoClase> verAtributoClase(
+			@PathVariable("idProyecto") int idProyecto
+			,@PathVariable("idGlosarioAtributo") int idGlosarioAtributo
+			){
+		logger.trace("***verAtributoClase");
+		logger.trace("el idProyecto es "+idProyecto);
+		logger.trace("el idGlosarioAtributo es "+idGlosarioAtributo);
+		
+		ElementoMensaje<AtributoClase> elementoMensaje = new ElementoMensaje<AtributoClase> ();
+		
+		AtributoClaseDAO atributoclaseDAO = (AtributoClaseDAO) context.getBean("atributoClaseDAO");
+		elementoMensaje.setElemento(atributoclaseDAO.verAtributoClase(idProyecto, idGlosarioAtributo));
+		elementoMensaje.setSucces(true);
+		return elementoMensaje;
+	}
+	
+	@RequestMapping(value="/api/proyecto/{idProyecto}/atributoClase/{idGlosarioAtributo}", method = RequestMethod.PUT)
+	public @ResponseBody ElementoMensaje<AtributoClase> actualizarAtributoClase(
 			@PathVariable("idProyecto") int idProyecto
 			,@PathVariable("idGlosarioAtributo") int idGlosarioAtributo
 			,@RequestParam(value = "cardinalidadMax") String cardinalidadMax
@@ -62,7 +81,7 @@ public class AtributoClaseRest {
 		logger.trace("el cod_tipoDato es "+cod_tipoDato);
 		logger.trace("el value es "+value);
 		logger.trace("el idGlosarioConcepto es "+idGlosarioConcepto);
-		
+//		http://localhost:8080/Methontool/api/proyecto/1/atributoClase/18?cardinalidadMax=max&cardinalidadMin=min&cod_tipoDato=int&idGlosarioConcepto=7&precision=presciciooon&rangoValores=ranguitooo&valueDefecto=valooor
 //		http://localhost:8080/Methontool/api/proyecto/1/atributoClase/19?cardinalidadMax=cardinalidadMax&cardinalidadMin=cardinalidadMin&idGlosarioConcepto=7&precision=precision&rangoValores=rangoValores&cod_tipoDato=int&value=valuuue
 		ElementoMensaje<AtributoClase> elementoMensaje = new ElementoMensaje<AtributoClase> ();
 		AtributoClase atributoClase = new AtributoClase();

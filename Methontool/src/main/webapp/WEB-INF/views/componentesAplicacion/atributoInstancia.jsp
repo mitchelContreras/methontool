@@ -86,12 +86,12 @@
 			</div>
 			<div class="col-md-8 cuerpoDos" ng-show="!cnAtributoInstancia.enBlanco">
 				<div class="inicioTexto">
-					<div align="center" class="alert alert-success alert-dismissible" ng-if="cnAtributInstancia.alertPositiva">
-				   		 {{cnAtributInstancia.mensajeAlertPositiva}}
+					<div align="center" class="alert alert-success alert-dismissible" ng-if="cnAtributoInstancia.alertPositiva">
+				   		 {{cnAtributoInstancia.mensajeAlertPositiva}}
 					</div>
-					<div align="center" class="alert alert-danger alert-dismissible" ng-if="cnAtributInstancia.alertNegativa">
-				   		 <strong>Error!</strong> {{cnAtributInstancia.mensajeAlertNegativa}}
-					</div>					
+					<div align="center" class="alert alert-danger alert-dismissible" ng-if="cnAtributoInstancia.alertNegativa">
+				   		 <strong>Error!</strong> {{cnAtributoInstancia.mensajeAlertNegativa}}
+					</div>			
 					<form class=" form-horizontal">
 						<div class="form-group">
 							<div class="col-xs-4 control-label" >
@@ -170,7 +170,7 @@
 								<input type="text" class="form-control" placeholder="Valor" ng-disabled="cnAtributoInstancia.disabled" ng-model="cnAtributoInstancia.varEdicion.valorDefecto">
 							</div>
 						</div>								
-						<div class="form-group" ng-show="!cnAtributoInstancia.modificar">
+						<div class="form-group" ng-show="!cnAtributoInstancia.modificar && cnAtributoInstancia.conceptoAsociado">
 							<div class="col-xs-offset-4 col-xs-5">
 								<button type="submit" class="btn btn-primary" ng-click="cnAtributoInstancia.modificarAtributoInstancia()">Modificar</button>
 							</div>

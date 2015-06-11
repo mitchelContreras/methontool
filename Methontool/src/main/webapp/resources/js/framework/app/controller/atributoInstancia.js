@@ -93,7 +93,12 @@ function ControllerAtributoInstancia($rootScope,
 		cnAtributoInstancia.varEdicion.minCardinalidad = "";
 		cnAtributoInstancia.varEdicion.maxCardinalidad = "";
 		cnAtributoInstancia.varEdicion.valorDefecto = "";
-
+		if(limpiar == 'true'){
+			//Si selecciono desde la lista quiero quitar el mensaje positivo
+			console.log("limpiar en select");
+			cnAtributoInstancia.alertPositiva = false;
+		}
+		cnAtributoInstancia.alertNegativa = false;
 		
 		
 //		asigno la relacion con la que estoy trabajando
@@ -109,6 +114,15 @@ function ControllerAtributoInstancia($rootScope,
 //	                	asigno concepto
 	                	cnAtributoInstancia.varEdicion.glosarioConcepto
 	                		= FactoryGlosario.consultarElemento(aux.elemento.idGlosarioConcepto);
+	                	
+	                	if(aux.elemento.idGlosarioConcepto == 0){
+	                		console.log("es 0 glosario");
+	                		cnAtributoInstancia.conceptoAsociado = false;
+	                		cnAtributoInstancia.alertNegativa = true;
+	                		cnAtributoInstancia.mensajeAlertNegativa = "Debe asociar un concepto a este atributo de instancia";
+	                	}else{
+	                		cnAtributoInstancia.conceptoAsociado = true;
+	                	}
 	                	
 //	                	asigno tipo de dato
 	                	cnAtributoInstancia.varEdicion.tipoDeDato
@@ -157,12 +171,35 @@ function ControllerAtributoInstancia($rootScope,
 		cnAtributoInstancia.modificar = true;
 	}
 	function modifiqueAtributoInstancia (){
-		
+		console.log("entre en modifiqueAtributoInstancia");
+		var salida;
+		salida = FactoryAtributoInstancia.actualizarElemento(
+				cnAtributoInstancia.varEdicion.glosarioAtributoInstanciaActual.id
+				,cnAtributoInstancia.varEdicion.maxCardinalidad
+				,cnAtributoInstancia.varEdicion.minCardinalidad
+				,cnAtributoInstancia.varEdicion.glosarioConcepto.id
+				,cnAtributoInstancia.varEdicion.medida.codigo
+				,cnAtributoInstancia.varEdicion.precision
+				,cnAtributoInstancia.varEdicion.rangoValores
+				,cnAtributoInstancia.varEdicion.tipoDeDato.codigo
+				,cnAtributoInstancia.varEdicion.valorDefecto
+				);
+		salida.then(
+            function(aux) {
+                // success
+                if(aux.succes){
+                	console.log("actualizar es true");
+                	cnAtributoInstancia.alertPositiva = true;
+                	cnAtributoInstancia.mensajeAlertPositiva = "El Atributo de instancia ha sido actualizado";
+                	cnAtributoInstancia.seleccioneGlosario (cnAtributoInstancia.varEdicion.glosarioAtributoInstanciaActual, 'false');
+                }
+             }
+		);	
 	}
 	function cancelaAtributoInstancia (){
 		cnAtributoInstancia.disabled = true;
 		cnAtributoInstancia.modificar = false;
-		cnAtributoInstancia.seleccioneGlosario (cnAtributoInstancia.varEdicion.glosarioAtributoInstanciaActual, true);
+		cnAtributoInstancia.seleccioneGlosario (cnAtributoInstancia.varEdicion.glosarioAtributoInstanciaActual, 'true');
 	}
 	function verDescripcionGlosario(){
 		$('#verDescripcionGlosarioAtributoInstanciaModal').modal('show');

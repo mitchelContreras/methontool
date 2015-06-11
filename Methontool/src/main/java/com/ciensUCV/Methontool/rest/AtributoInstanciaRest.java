@@ -58,7 +58,7 @@ public class AtributoInstanciaRest {
 		return elementoMensaje;
 	}
 	
-	@RequestMapping(value="/api/proyecto/{idProyecto}/atributoInstancia/{idGlosarioAtributo}", method = RequestMethod.POST)
+	@RequestMapping(value="/api/proyecto/{idProyecto}/atributoInstancia/{idGlosarioAtributo}", method = RequestMethod.PUT)
 	public @ResponseBody ElementoMensaje<AtributoInstancia> actualizarAtributoInstancia(
 			@PathVariable("idProyecto") int idProyecto
 			,@PathVariable("idGlosarioAtributo") int idGlosarioAtributo
@@ -83,7 +83,7 @@ public class AtributoInstanciaRest {
 		logger.trace("el cod_tipoDato es "+cod_tipoDato);
 		logger.trace("el valueDefecto es "+valueDefecto);
 		logger.trace("el idGlosarioConcepto es "+idGlosarioConcepto);
-		
+//		http://localhost:8080/Methontool/api/proyecto/1/atributoInstancia/22?cod_medida=&cod_tipoDato=&idGlosarioConcepto=0
 //		http://localhost:8080/Methontool/api/proyecto/1/atributoInstancia/25?cardinalidadMax=cardinalidadMax&cardinalidadMin=cardinalidadMin&idGlosarioConcepto=7&cod_medida=mtrs&precision=precision&rangoValores=rangoValores&cod_tipoDato=int&valueDefecto=valuuue
 		
 		ElementoMensaje<AtributoInstancia> elementoMensaje = new ElementoMensaje<AtributoInstancia> ();

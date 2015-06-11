@@ -25,4 +25,10 @@
             });
     });
 
+    proy.factory('$actualizarAtributoInstancia',function($resource){
+    	var urlConsultar = urlProyecto+"/api/proyecto/:idProyecto/atributoInstancia/:idGlosarioAtributo";
+         return $resource(urlConsultar,{},{
+            put: {method: 'PUT', params: {idProyecto: '@idProyecto', idGlosarioAtributo:'@idGlosarioAtributo'}, isArray:false}
+            });
+    });
 })();
