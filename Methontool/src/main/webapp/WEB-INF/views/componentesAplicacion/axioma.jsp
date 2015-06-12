@@ -2,8 +2,85 @@
  <div ng-show="cnAxioma.soyActual"> 	
 		<div class="row CampoTrabajo">
 			<div class="col-md-4 cuerpoUno">	
-				<p> UNO Axioma </p>
-				<button  class="btn btn-primary" ng-click="cnAxioma.enBlanco = !cnAxioma.enBlanco" >cambiar en blanco</button>
+				<div class="inicioTexto">
+					<div class="form-group">
+						<div class="row">
+							<div class="btn-group col-xs-10">
+								<span><strong>Buscar por:</strong></span>
+							</div>						
+						</div>
+						<div class="row">
+							<div class="btn-group col-xs-6 form-group" ng-init="filtroAxioma.buscarPor='seleccione'">
+								<select ng-model="filtroAxioma.buscarPor" class="form-control" style="padding-right: -15px">
+									<option value="seleccione">[SELECCIONE]</option>
+									<option value="nombre">Nombre</option>
+									<option value="sinonimo">Sinónimo</option>
+									<option value="acronimo">Acrónimo</option>
+								</select> 
+							</div>
+							<div ng-if="filtroAxioma.buscarPor == 'nombre'">
+								<div class="col-xs-6 form-group" style="padding-left: -15px">
+									<input type="text" ng-model="filtroAxioma.nombre" class="form-control" placeholder="Buscar" ng-disabled="false">
+								</div>
+							</div>
+							<div ng-if="filtroAxioma.buscarPor == 'sinonimo'">
+								<div class="col-xs-6 form-group" style="padding-left: -15px">
+									<input type="text" ng-model="filtroAxioma.sinonimo" class="form-control" placeholder="Buscar" ng-disabled="false">
+								</div>
+							</div>
+							<div ng-if="filtroAxioma.buscarPor == 'acronimo'">
+								<div class="col-xs-6 form-group" style="padding-left: -15px">
+									<input type="text" ng-model="filtroAxioma.acronimo" class="form-control" placeholder="Buscar" ng-disabled="false">
+								</div>
+							</div>
+						</div>
+						<div ng-if="filtroAxioma.buscarPor == 'nombre'">
+							<div class="list-group">
+								<div ng-repeat="glosario in cnAxioma.listaGlosario | orderBy: 'nombre' | filter:{nombre: filtroAxioma.nombre}">
+									<div ng-if="glosario.tipoGlosario.id == 6">
+										<a href="#" class="list-group-item" 
+										ng-class="{active: cnAxioma.seleccionado == glosario.id}"
+										ng-click="cnAxioma.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>									
+									</div>
+								</div>
+							</div>	
+						
+						</div>
+						<div ng-if="filtroAxioma.buscarPor == 'sinonimo'">
+							<div class="list-group ">
+								<div ng-repeat="glosario in cnAxioma.listaGlosario | orderBy: 'nombre' | filter:{sinonimos: filtroAxioma.sinonimo}">
+									<div ng-if="glosario.tipoGlosario.id == 6">
+										<a href="#" class="list-group-item" 
+										ng-class="{active: cnAxioma.seleccionado == glosario.id}"
+										ng-click="cnAxioma.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>									
+									</div>
+								</div>
+							</div>
+						</div>
+						<div ng-if="filtroAxioma.buscarPor == 'acronimo'">
+							<div class="list-group">
+								<div ng-repeat="glosario in cnAxioma.listaGlosario | orderBy: 'nombre' | filter:{acronimos: filtroAxioma.acronimo}">
+									<div ng-if="glosario.tipoGlosario.id == 6">
+										<a href="#" class="list-group-item" 
+										ng-class="{active: cnAxioma.seleccionado == glosario.id}"
+										ng-click="cnAxioma.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>									
+									</div>
+								</div>
+							</div>
+						</div>
+						<div ng-if="filtroAxioma.buscarPor == 'seleccione'">
+							<div class="list-group">
+								<div ng-repeat="glosario in cnAxioma.listaGlosario | orderBy: 'nombre' ">
+									<div ng-if="glosario.tipoGlosario.id == 3">
+										<a href="#" class="list-group-item" 
+										ng-class="{active: cnAxioma.seleccionado == glosario.id}"
+										ng-click="cnAxioma.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>									
+									</div>
+								</div>
+							</div>					
+						</div>		
+					</div>							
+				</div>			
 			</div>
 			<div class="col-md-8 cuerpoDos" ng-show="cnAxioma.enBlanco">
 				<p> DOS Axioma </p>

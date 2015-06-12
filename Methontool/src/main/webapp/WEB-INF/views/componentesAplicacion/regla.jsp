@@ -2,8 +2,85 @@
  <div ng-show="cnRegla.soyActual"> 	
 		<div class="row CampoTrabajo">
 			<div class="col-md-4 cuerpoUno">	
-				<p> UNO Regla </p>
-				<button type="submit" class="btn btn-primary" ng-click="cnRegla.enBlanco = !cnRegla.enBlanco" >enBlanco</button>
+							<div class="inicioTexto">
+					<div class="form-group">
+						<div class="row">
+							<div class="btn-group col-xs-10">
+								<span><strong>Buscar por:</strong></span>
+							</div>						
+						</div>
+						<div class="row">
+							<div class="btn-group col-xs-6 form-group" ng-init="filtroRegla.buscarPor='seleccione'">
+								<select ng-model="filtroRegla.buscarPor" class="form-control" style="padding-right: -15px">
+									<option value="seleccione">[SELECCIONE]</option>
+									<option value="nombre">Nombre</option>
+									<option value="sinonimo">Sinónimo</option>
+									<option value="acronimo">Acrónimo</option>
+								</select> 
+							</div>
+							<div ng-if="filtroRegla.buscarPor == 'nombre'">
+								<div class="col-xs-6 form-group" style="padding-left: -15px">
+									<input type="text" ng-model="filtroRegla.nombre" class="form-control" placeholder="Buscar" ng-disabled="false">
+								</div>
+							</div>
+							<div ng-if="filtroRegla.buscarPor == 'sinonimo'">
+								<div class="col-xs-6 form-group" style="padding-left: -15px">
+									<input type="text" ng-model="filtroRegla.sinonimo" class="form-control" placeholder="Buscar" ng-disabled="false">
+								</div>
+							</div>
+							<div ng-if="filtroRegla.buscarPor == 'acronimo'">
+								<div class="col-xs-6 form-group" style="padding-left: -15px">
+									<input type="text" ng-model="filtroRegla.acronimo" class="form-control" placeholder="Buscar" ng-disabled="false">
+								</div>
+							</div>
+						</div>
+						<div ng-if="filtroRegla.buscarPor == 'nombre'">
+							<div class="list-group">
+								<div ng-repeat="glosario in cnRegla.listaGlosario | orderBy: 'nombre' | filter:{nombre: filtroRegla.nombre}">
+									<div ng-if="glosario.tipoGlosario.id == 7">
+										<a href="#" class="list-group-item" 
+										ng-class="{active: cnRegla.seleccionado == glosario.id}"
+										ng-click="cnRegla.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>									
+									</div>
+								</div>
+							</div>	
+						
+						</div>
+						<div ng-if="filtroRegla.buscarPor == 'sinonimo'">
+							<div class="list-group ">
+								<div ng-repeat="glosario in cnRegla.listaGlosario | orderBy: 'nombre' | filter:{sinonimos: filtroRegla.sinonimo}">
+									<div ng-if="glosario.tipoGlosario.id == 3">
+										<a href="#" class="list-group-item" 
+										ng-class="{active: cnAtributoInstancia.seleccionado == glosario.id}"
+										ng-click="cnAtributoInstancia.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>									
+									</div>
+								</div>
+							</div>
+						</div>
+						<div ng-if="filtroRegla.buscarPor == 'acronimo'">
+							<div class="list-group">
+								<div ng-repeat="glosario in cnRegla.listaGlosario | orderBy: 'nombre' | filter:{acronimos: filtroRegla.acronimo}">
+									<div ng-if="glosario.tipoGlosario.id == 3">
+										<a href="#" class="list-group-item" 
+										ng-class="{active: cnRegla.seleccionado == glosario.id}"
+										ng-click="cnRegla.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>									
+									</div>
+								</div>
+							</div>
+						</div>
+						<div ng-if="filtroRegla.buscarPor == 'seleccione'">
+							<div class="list-group">
+								<div ng-repeat="glosario in cnRegla.listaGlosario | orderBy: 'nombre' ">
+									<div ng-if="glosario.tipoGlosario.id == 3">
+										<a href="#" class="list-group-item" 
+										ng-class="{active: cnRegla.seleccionado == glosario.id}"
+										ng-click="cnRegla.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>									
+									</div>
+								</div>
+							</div>					
+						</div>		
+					</div>							
+				</div>
 			</div>
 			<div class="col-md-8 cuerpoDos" ng-show="cnRegla.enBlanco">
 				<p> DOS Regla </p>
