@@ -71,7 +71,7 @@
 						<div ng-if="filtroAxioma.buscarPor == 'seleccione'">
 							<div class="list-group">
 								<div ng-repeat="glosario in cnAxioma.listaGlosario | orderBy: 'nombre' ">
-									<div ng-if="glosario.tipoGlosario.id == 3">
+									<div ng-if="glosario.tipoGlosario.id == 6">
 										<a href="#" class="list-group-item" 
 										ng-class="{active: cnAxioma.seleccionado == glosario.id}"
 										ng-click="cnAxioma.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>									

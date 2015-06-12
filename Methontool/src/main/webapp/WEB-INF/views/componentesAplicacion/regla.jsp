@@ -49,10 +49,10 @@
 						<div ng-if="filtroRegla.buscarPor == 'sinonimo'">
 							<div class="list-group ">
 								<div ng-repeat="glosario in cnRegla.listaGlosario | orderBy: 'nombre' | filter:{sinonimos: filtroRegla.sinonimo}">
-									<div ng-if="glosario.tipoGlosario.id == 3">
+									<div ng-if="glosario.tipoGlosario.id == 7">
 										<a href="#" class="list-group-item" 
-										ng-class="{active: cnAtributoInstancia.seleccionado == glosario.id}"
-										ng-click="cnAtributoInstancia.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>									
+										ng-class="{active: cnRegla.seleccionado == glosario.id}"
+										ng-click="cnRegla.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>									
 									</div>
 								</div>
 							</div>
@@ -60,7 +60,7 @@
 						<div ng-if="filtroRegla.buscarPor == 'acronimo'">
 							<div class="list-group">
 								<div ng-repeat="glosario in cnRegla.listaGlosario | orderBy: 'nombre' | filter:{acronimos: filtroRegla.acronimo}">
-									<div ng-if="glosario.tipoGlosario.id == 3">
+									<div ng-if="glosario.tipoGlosario.id == 7">
 										<a href="#" class="list-group-item" 
 										ng-class="{active: cnRegla.seleccionado == glosario.id}"
 										ng-click="cnRegla.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>									
@@ -71,7 +71,7 @@
 						<div ng-if="filtroRegla.buscarPor == 'seleccione'">
 							<div class="list-group">
 								<div ng-repeat="glosario in cnRegla.listaGlosario | orderBy: 'nombre' ">
-									<div ng-if="glosario.tipoGlosario.id == 3">
+									<div ng-if="glosario.tipoGlosario.id == 7">
 										<a href="#" class="list-group-item" 
 										ng-class="{active: cnRegla.seleccionado == glosario.id}"
 										ng-click="cnRegla.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>									

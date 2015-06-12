@@ -17,11 +17,13 @@ angular.module('methontool')
 ControllerRegla.$inject = ['$rootScope', 
                        'InformacionPrincipalApp',
                        '$http'
+                       ,'FactoryGlosario'
                        ];	
 
 function ControllerRegla($rootScope,
 		InformacionPrincipalApp,
 		$http
+		,FactoryGlosario
 		){
 	
 	console.log("Entro en ControllerRegla");
@@ -137,6 +139,7 @@ function ControllerRegla($rootScope,
     	if (newValue !== oldValue) {
     		console.log("cambio valor actual.regla a '"+newValue+"'");
     		cnRegla.soyActual = InformacionPrincipalApp.soyVistaActual('Regla');	//Indico al controlador actual si se debe mostrar
+    		cnRegla.listaGlosario = FactoryGlosario.getListaElemento();
     	}
     }, false);
 	
