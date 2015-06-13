@@ -93,10 +93,7 @@
 								<label >Nombre:</label>
 							</div>
 							<div class="col-xs-5 ">
-								<input type="text" class="form-control" placeholder="Nombre" ng-disabled="true" ng-model="cnRegla.enGlosario.nombre">
-							</div>
-							<div class="col-xs-1">
-								<a class="btn"ng-click="cnRegla.verDescripcionGlosario()" ><i class="glyphicon glyphicon-zoom-in"></i></a>							
+								<input type="text" class="form-control" placeholder="Nombre" ng-disabled="true" ng-model="cnRegla.varEdicion.glosarioReglaActual.nombre">
 							</div>
 						</div>
 						<div class="form-group">
@@ -104,7 +101,7 @@
 								<label >Descripción:</label>
 							</div>
 							<div class="col-xs-5 ">
-								<input type="text" class="form-control" placeholder="Descripción" ng-disabled="true" ng-model="cnRegla.enGlosario.descripcion">
+								<input type="text" class="form-control" placeholder="Descripción" ng-disabled="true" ng-model="cnRegla.varEdicion.glosarioReglaActual.descripcion">
 							</div>
 						</div>
 						<div class="form-group">

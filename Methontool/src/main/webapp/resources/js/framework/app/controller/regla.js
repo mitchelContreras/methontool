@@ -29,88 +29,67 @@ function ControllerRegla($rootScope,
 	console.log("Entro en ControllerRegla");
 	var cnRegla = this;
 
-	
-	cnRegla.concepto1 = [
-	                      	{"id": 1, "nombre":"Arbol"},
-	                      	{"id": 2, "nombre":"Agua"},
-	                      	{"id": 3, "nombre":"Casa"},
-	                      	{"id": 4, "nombre":"Cocina"},
-	                      	{"id": 5, "nombre":"Ventana"},
-	                      	{"id": 6, "nombre":"Mesa"},
-	                      	{"id": 7, "nombre":"Nevera"},
-	                      	{"id": 8, "nombre":"Antena"},
-	                      	{"id": 9, "nombre":"Computadora"},
-	                      	{"id": 10, "nombre":"Cama"},
-	                      	{"id": 11, "nombre":"Microhonda"},
-	                      	{"id": 12, "nombre":"Familia"},
-	                      	{"id": 13, "nombre":"Ventilador"}
-	                          ];
-	cnRegla.relaciones = [
-	   	                      	{"id": 1, "nombre":"Parte de"},
-	   	                      	{"id": 2, "nombre":"Pertenece a"},
-	   	                      	{"id": 3, "nombre":"Incluido en"}
-	   	                          ];
-	
-	cnRegla.atributos = [
- 	                      	{"id": 1, "nombre":"atirbuto prueba"},
- 	                      	{"id": 2, "nombre":"Atributo 2"},
- 	                      	{"id": 3, "nombre":"Atributo 3"}
- 	                          ];
-	   	
 	cnRegla.soyActual = false; //debo cambiarlo a false al terminar el desarrollo 
 	cnRegla.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnRegla.modificar = false; //si se permite modificar los valores 
 	
 	//-------------------Variables de edicion---------------------
-	cnRegla.variables = "";
-	cnRegla.expresion = "";
-	cnRegla.enGlosario = {};	
-	cnRegla.listaConceptos = [{"id": 1, "nombre":"Arbol"}];
-	cnRegla.listaRelaciones = [{"id": 1, "nombre":"Parte de"}];
-	cnRegla.listaAtributo = [{"id": 1, "nombre":"atirbuto prueba"}];
+	cnRegla.varEdicion = {};
+	cnRegla.varEdicion.glosarioReglaActual = {};
 	
 //-------------------Funciones----------------------------------	
 	
 	cnRegla.modificarRegla = modificarRegla;
 	cnRegla.modifiqueRegla = modifiqueRegla;
 	cnRegla.cancelaRegla = cancelaRegla;
-	cnRegla.verDescripcionGlosario = verDescripcionGlosario;
-	cnRegla.verConceptoRegla = verConceptoRegla;
 	cnRegla.eliminarConceptoRegla = eliminarConceptoRegla;
 	cnRegla.agregarConceptoRegla = agregarConceptoRegla;
-	cnRegla.verRelacionRegla = verRelacionRegla;
 	cnRegla.eliminarRelacionRegla = eliminarRelacionRegla; 
 	cnRegla.agregarRelacionRegla = agregarRelacionRegla;
-	cnRegla.verAtributoRegla = verAtributoRegla;
 	cnRegla.eliminarAtributoRegla = eliminarAtributoRegla; 
 	cnRegla.agregarAtributoRegla = agregarAtributoRegla;
-	
+	cnRegla.seleccioneGlosario = seleccioneGlosario;
+
+	function seleccioneGlosario(elemento, limpiar){
+		cnRegla.seleccionado = elemento.id;
+		cnRegla.enBlanco = false;
+		cnRegla.modificar = false;
+		cnRegla.disabled = true;
+		
+//		limpio variables
+		cnRegla.varEdicion = {};
+		cnRegla.varEdicion.glosarioReglaActual = {};
+		
+		if(limpiar == 'true'){
+			//Si selecciono desde la lista quiero quitar el mensaje positivo
+			console.log("limpiar en select");
+			cnRegla.alertPositiva = false;
+		}
+		cnRegla.alertNegativa = false;
+		
+		
+//		asigno la relacion con la que estoy trabajando
+		cnRegla.varEdicion.glosarioReglaActual = elemento;
+		console.log("cnRegla.varEdicion.glosarioReglaActual "+cnRegla.varEdicion.glosarioReglaActual.id+" "+cnRegla.varEdicion.glosarioReglaActual.nombre);
+	}
 	function agregarAtributoRegla(){
 		$('#verAtributoReglaModal').modal('show');
 	}
 	function eliminarAtributoRegla (id){
 		
 	}
-	function verAtributoRegla(id){
-		$('#verAtributoReglaModal').modal('show');
-	}
+
 	function agregarRelacionRegla (){
 		$('#verAgregarRelacionReglaModal').modal('show');
 	}
 	function eliminarRelacionRegla (id){
 		
 	}
-	function verRelacionRegla (id){
-		$('#verRelacionReglaModal').modal('show');
-	}
 	function agregarConceptoRegla (){
 		$('#verAgregarConceptoReglaModal').modal('show');
 	}
 	function eliminarConceptoRegla(id){
 		
-	}
-	function verConceptoRegla(id){
-		$('#verConceptoReglaModal').modal('show');
 	}
 	function modificarRegla (){
 		cnRegla.disabled = false;
@@ -122,9 +101,6 @@ function ControllerRegla($rootScope,
 	function cancelaRegla (){
 		cnRegla.disabled = true;
 		cnRegla.modificar = false;
-	}
-	function verDescripcionGlosario(){
-		$('#verDescripcionGlosarioReglaModal').modal('show');
 	}
 	
     $rootScope.$on('menuReglaPrincipal', function(event, data){

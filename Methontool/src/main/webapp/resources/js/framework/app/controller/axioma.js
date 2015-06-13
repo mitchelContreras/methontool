@@ -29,28 +29,7 @@ function ControllerAxioma($rootScope,
 	console.log("Entro en ControllerAxioma");
 	var cnAxioma = this;
 
-	
-	cnAxioma.concepto1 = [
-	                      	{"id": 1, "nombre":"Arbol"},
-	                      	{"id": 2, "nombre":"Agua"},
-	                      	{"id": 3, "nombre":"Casa"},
-	                      	{"id": 4, "nombre":"Cocina"},
-	                      	{"id": 5, "nombre":"Ventana"},
-	                      	{"id": 6, "nombre":"Mesa"},
-	                      	{"id": 7, "nombre":"Nevera"},
-	                      	{"id": 8, "nombre":"Antena"},
-	                      	{"id": 9, "nombre":"Computadora"},
-	                      	{"id": 10, "nombre":"Cama"},
-	                      	{"id": 11, "nombre":"Microhonda"},
-	                      	{"id": 12, "nombre":"Familia"},
-	                      	{"id": 13, "nombre":"Ventilador"}
-	                          ];
-	cnAxioma.relaciones = [
-	   	                      	{"id": 1, "nombre":"Parte de"},
-	   	                      	{"id": 2, "nombre":"Pertenece a"},
-	   	                      	{"id": 3, "nombre":"Incluido en"}
-	   	                          ];
-	   	
+
 	cnAxioma.soyActual = false; //debo cambiarlo a false al terminar el desarrollo
 	cnAxioma.disabled = true;  //variable usada para bloquear los campos de edicion 
 	cnAxioma.modificar = false; //si se permite modificar los valores 
@@ -75,7 +54,30 @@ function ControllerAxioma($rootScope,
 	cnAxioma.verRelacionAxioma = verRelacionAxioma;
 	cnAxioma.eliminarRelacionAxioma = eliminarRelacionAxioma; 
 	cnAxioma.agregarRelacionAxioma = agregarRelacionAxioma;
+	cnAxioma.seleccioneGlosario = seleccioneGlosario;
 	
+	function seleccioneGlosario(elemento, limpiar){
+		cnAxioma.seleccionado = elemento.id;
+		cnAxioma.enBlanco = false;
+		cnAxioma.modificar = false;
+		cnAxioma.disabled = true;
+		
+//		limpio variables
+		cnAxioma.varEdicion = {};
+		cnAxioma.varEdicion.glosarioAxiomaActual = {};
+		
+		if(limpiar == 'true'){
+			//Si selecciono desde la lista quiero quitar el mensaje positivo
+			console.log("limpiar en select");
+			cnAxioma.alertPositiva = false;
+		}
+		cnAxioma.alertNegativa = false;
+		
+		
+//		asigno la relacion con la que estoy trabajando
+		cnAxioma.varEdicion.glosarioAxiomaActual = elemento;
+		console.log("cnAxioma.varEdicion.glosarioAxiomaActual "+cnAxioma.varEdicion.glosarioAxiomaActual.id+" "+cnAxioma.varEdicion.glosarioAxiomaActual.nombre);
+	}
 	function agregarRelacionAxioma (){
 		$('#verAgregarRelacionAxiomaModal').modal('show');
 	}

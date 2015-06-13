@@ -93,10 +93,7 @@
 								<label >Nombre:</label>
 							</div>
 							<div class="col-xs-5 ">
-								<input type="text" class="form-control" placeholder="Nombre" ng-disabled="true" ng-model="cnAxioma.enGlosario.nombre">
-							</div>
-							<div class="col-xs-1">
-								<a class="btn"ng-click="cnAxioma.verDescripcionGlosario()" ><i class="glyphicon glyphicon-zoom-in"></i></a>							
+								<input type="text" class="form-control" placeholder="Nombre" ng-disabled="true" ng-model="cnAxioma.varEdicion.glosarioAxiomaActual.nombre">
 							</div>
 						</div>
 						<div class="form-group">
@@ -104,7 +101,7 @@
 								<label >Descripción:</label>
 							</div>
 							<div class="col-xs-5 ">
-								<input type="text" class="form-control" placeholder="Descripción" ng-disabled="true" ng-model="cnAxioma.enGlosario.descripcion">
+								<input type="text" class="form-control" placeholder="Descripción" ng-disabled="true" ng-model="cnAxioma.varEdicion.glosarioAxiomaActual.descripcion">
 							</div>
 						</div>
 						<div class="form-group">
@@ -126,18 +123,7 @@
 									</div>
 									<div class="col-xs-1">
 										<a class="btn"  ng-click="cnAxioma.verConceptoAxioma({{$index}})" ><i class="glyphicon glyphicon-zoom-in"></i></a>							
-									</div>
-									<div class="col-xs-1">
-										<a class="btn"  ng-class="{'disabled': cnAxioma.disabled == true}" ng-show="cnAxioma.modificar" ng-click="eliminarConceptoAxioma({{$index}})" ><i class="glyphicon glyphicon-trash"></i></a>							
-									</div>										
-<!-- 
-									<div class="col-xs-1">
-										<a class="btn" ng-disabled="false" ng-click="cnAxioma.verConceptoAxioma({{$index}})" ><i class="glyphicon glyphicon-zoom-in"></i></a>							
-									</div>
-									<div class="col-xs-1">
-										<a class="btn"  ng-class="{'disabled': cnAxioma.disabled == true}" ng-show="cnAxioma.modificar" ng-click="eliminarConceptoAxioma({{$index}})" ><i class="glyphicon glyphicon-trash"></i></a>							
-									</div>	
- -->																		
+									</div>								
 								</div>	
 								<div>
 									<button ng-click="cnAxioma.agregarConceptoAxioma()" class="btn btn-link " ng-class="{'disabled': cnAxioma.disabled == true}" ng-show="cnAxioma.modificar" aria-label="Center Align" type="button">
