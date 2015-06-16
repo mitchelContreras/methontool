@@ -1,33 +1,34 @@
 package com.ciensUCV.Methontool.model;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+import com.ciensUCV.Methontool.util.LeerConfig;
 
 public class Axioma {
 	
 	private int id;
-	private Glosario idGlosarioAxioma;
+	private int idGlosarioAxioma;
 	private String expresion;
 	private ArrayList<String> variables;
-	private ArrayList<Glosario> conceptos;
-	private ArrayList<Relacion> relaciones;
-	private ArrayList<AtributoClase> atributosClase;
-	private ArrayList<AtributoInstancia> atributoInstancia;
+	private ArrayList<Integer> conceptos;
+	private ArrayList<Integer> relaciones;
+	private ArrayList<Integer> atributosClase;
+	private ArrayList<Integer> atributoInstancia;
 	
 	public Axioma() {
 		super();
 		// TODO Auto-generated constructor stub
 		variables = new  ArrayList<String>();
-		conceptos = new ArrayList<Glosario>();
-		relaciones = new  ArrayList<Relacion>();
-		atributosClase = new ArrayList<AtributoClase>();
-		atributoInstancia = new ArrayList<AtributoInstancia> ();
+		conceptos = new ArrayList<Integer>();
+		relaciones = new ArrayList<Integer>();
+		atributosClase = new ArrayList<Integer>();
+		atributoInstancia = new ArrayList<Integer>();
 	}
-
-	public Axioma(int id, Glosario idGlosarioAxioma, String expresion,
-			ArrayList<String> variables, ArrayList<Glosario> conceptos,
-			ArrayList<Relacion> relaciones,
-			ArrayList<AtributoClase> atributosClase,
-			ArrayList<AtributoInstancia> atributoInstancia) {
+	public Axioma(int id, int idGlosarioAxioma, String expresion,
+			ArrayList<String> variables, ArrayList<Integer> conceptos,
+			ArrayList<Integer> relaciones, ArrayList<Integer> atributosClase,
+			ArrayList<Integer> atributoInstancia) {
 		super();
 		this.id = id;
 		this.idGlosarioAxioma = idGlosarioAxioma;
@@ -38,7 +39,6 @@ public class Axioma {
 		this.atributosClase = atributosClase;
 		this.atributoInstancia = atributoInstancia;
 	}
-
 	@Override
 	public String toString() {
 		return "Axioma [id=" + id + ", idGlosarioAxioma=" + idGlosarioAxioma
@@ -47,7 +47,27 @@ public class Axioma {
 				+ ", atributosClase=" + atributosClase + ", atributoInstancia="
 				+ atributoInstancia + "]";
 	}
-
+	public void variablesStringToArray(String entrada){
+		this.variables = new  ArrayList<String> ();
+		if(entrada != null){
+			StringTokenizer token = new StringTokenizer(entrada, LeerConfig.obtenerPropiedad("variable.separadorString"));
+			while(token.hasMoreTokens()){
+				this.variables.add(token.nextToken());
+			}
+		}
+	}
+	public String variablesArrayToString(){
+		String salida = "";
+		if(this.variables != null){
+			for(int i = 0; i <this.variables.size();i++ ){
+				salida = salida + this.variables.get(i);
+				if(i != this.variables.size()-1){
+					salida = salida+LeerConfig.obtenerPropiedad("variable.separadorString");
+				}
+			}
+		}
+		return salida;
+	}	
 	public int getId() {
 		return id;
 	}
@@ -56,11 +76,11 @@ public class Axioma {
 		this.id = id;
 	}
 
-	public Glosario getIdGlosarioAxioma() {
+	public int getIdGlosarioAxioma() {
 		return idGlosarioAxioma;
 	}
 
-	public void setIdGlosarioAxioma(Glosario idGlosarioAxioma) {
+	public void setIdGlosarioAxioma(int idGlosarioAxioma) {
 		this.idGlosarioAxioma = idGlosarioAxioma;
 	}
 
@@ -80,35 +100,35 @@ public class Axioma {
 		this.variables = variables;
 	}
 
-	public ArrayList<Glosario> getConceptos() {
+	public ArrayList<Integer> getConceptos() {
 		return conceptos;
 	}
 
-	public void setConceptos(ArrayList<Glosario> conceptos) {
+	public void setConceptos(ArrayList<Integer> conceptos) {
 		this.conceptos = conceptos;
 	}
 
-	public ArrayList<Relacion> getRelaciones() {
+	public ArrayList<Integer> getRelaciones() {
 		return relaciones;
 	}
 
-	public void setRelaciones(ArrayList<Relacion> relaciones) {
+	public void setRelaciones(ArrayList<Integer> relaciones) {
 		this.relaciones = relaciones;
 	}
 
-	public ArrayList<AtributoClase> getAtributosClase() {
+	public ArrayList<Integer> getAtributosClase() {
 		return atributosClase;
 	}
 
-	public void setAtributosClase(ArrayList<AtributoClase> atributosClase) {
+	public void setAtributosClase(ArrayList<Integer> atributosClase) {
 		this.atributosClase = atributosClase;
 	}
 
-	public ArrayList<AtributoInstancia> getAtributoInstancia() {
+	public ArrayList<Integer> getAtributoInstancia() {
 		return atributoInstancia;
 	}
 
-	public void setAtributoInstancia(ArrayList<AtributoInstancia> atributoInstancia) {
+	public void setAtributoInstancia(ArrayList<Integer> atributoInstancia) {
 		this.atributoInstancia = atributoInstancia;
 	}
 

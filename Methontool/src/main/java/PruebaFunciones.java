@@ -7,6 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.ciensUCV.Methontool.dao.AtributoClaseDAO;
 import com.ciensUCV.Methontool.dao.AtributoInstanciaDAO;
+import com.ciensUCV.Methontool.dao.AxiomaDAO;
 import com.ciensUCV.Methontool.dao.ConceptoDAO;
 import com.ciensUCV.Methontool.dao.ConstanteDAO;
 import com.ciensUCV.Methontool.dao.GlosarioDAO;
@@ -185,8 +186,8 @@ public class PruebaFunciones {
 //		int salida = constanteDAO.crearConstante(26);
 //		logger.trace("salida es "+salida);
 		
-		Constante constante = new Constante ();
-		constante.setIdGlosarioConstante(26);
+//		Constante constante = new Constante ();
+//		constante.setIdGlosarioConstante(26);
 //		constante.setMedida(new Medida(0, "mtrs", null, null));
 //		constante.setTipoDeDato(new TipoDeDato(0, "int", null, null));
 //		constante.setValor( "valor");
@@ -194,13 +195,15 @@ public class PruebaFunciones {
 //		constanteDAO.actualizarConstante(1, constante);
 //		logger.trace("id es "+constante.getId());
 		
-		constante = constanteDAO.verConstante(1, 26);
-		logger.trace("id es "+constante.getId());
-		logger.trace("valor "+constante.getValor());
-		logger.trace("glosario "+constante.getIdGlosarioConstante());
-		logger.trace("medida "+constante.getMedida().toString());
-		logger.trace("dato "+constante.getTipoDeDato().toString());
+//		constante = constanteDAO.verConstante(1, 26);
+//		logger.trace("id es "+constante.getId());
+//		logger.trace("valor "+constante.getValor());
+//		logger.trace("glosario "+constante.getIdGlosarioConstante());
+//		logger.trace("medida "+constante.getMedida().toString());
+//		logger.trace("dato "+constante.getTipoDeDato().toString());
 		
+		AxiomaDAO axiomaDAO = (AxiomaDAO) context.getBean("axiomaDAO");
+		logger.trace("longitud "+axiomaDAO.atrbInstanciaDadoAxioma(1, 30));
 	}
 
 }

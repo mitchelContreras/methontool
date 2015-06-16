@@ -21,4 +21,5 @@
 	<import resource="beanDataBase/Spring-TipoDeDato.xml" />
 	<import resource="beanDataBase/Spring-Medida.xml" />
 	<import resource="beanDataBase/Spring-Constante.xml" />
+		<import resource="beanDataBase/Spring-Axioma.xml" />
 </beans>
