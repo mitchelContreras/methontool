@@ -203,7 +203,8 @@ public class PruebaFunciones {
 //		logger.trace("dato "+constante.getTipoDeDato().toString());
 		
 		AxiomaDAO axiomaDAO = (AxiomaDAO) context.getBean("axiomaDAO");
-		logger.trace("longitud "+axiomaDAO.atrbInstanciaDadoAxioma(1, 30));
+//		logger.trace("longitud "+axiomaDAO.atrbInstanciaDadoAxioma(1, 30));
+		axiomaDAO.verAxioma(1, 30);
 	}
 
 }

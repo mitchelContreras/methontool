@@ -59,13 +59,13 @@ public class JdbcAxiomaDAO implements AxiomaDAO {
 			while(rs.next()){
 				axioma.setId(rs.getInt("id_axioma"));
 				axioma.setIdGlosarioAxioma(rs.getInt("id_glosario_axioma"));
-				axioma.setExpresion(rs.getString("id_glosario_axioma"));
+				axioma.setExpresion(rs.getString("expresion"));
 				axioma.variablesStringToArray(rs.getString("variables"));
 				axioma.setAtributoInstancia(atrbInstanciaDadoAxioma(idProyecto, axioma.getIdGlosarioAxioma()));
 				axioma.setAtributosClase(atrbClaseDadoAxioma(idProyecto, axioma.getIdGlosarioAxioma()));
 				axioma.setConceptos(conceptoDadoAxioma(idProyecto, axioma.getIdGlosarioAxioma()));
 				axioma.setRelaciones(relacionDadoAxioma(idProyecto, axioma.getIdGlosarioAxioma()));
-				
+				logger.trace("axioma.toString "+axioma);
 			}
 			rs.close();
 			ps.close();
