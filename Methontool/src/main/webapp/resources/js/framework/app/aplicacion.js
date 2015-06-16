@@ -26,6 +26,7 @@
         ,'modAtributoInstancia'
         ,'modMedida'
         ,'modTipoDeDato'
+        ,'modConstante'
         ])
     
 })();

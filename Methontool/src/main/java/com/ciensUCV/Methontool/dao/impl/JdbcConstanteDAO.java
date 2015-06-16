@@ -122,6 +122,7 @@ public class JdbcConstanteDAO implements ConstanteDAO {
 
 		Connection conn = null;
 		Constante constante = new Constante();
+		constante.setIdGlosarioConstante(idGlosarioConstante);
 		logger.trace("sql es "+sql);
 		try {
 			conn = dataSource.getConnection();

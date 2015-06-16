@@ -80,6 +80,7 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryInstancia.js"></script>						
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryMedida.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryTipoDeDato.js"></script>	
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryConstante.js"></script>	
 				
 		<!-- Modulos de AngularJS -->
 		<!-- Proyecto -->
@@ -95,6 +96,7 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/instancia.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/medida.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/tipoDeDato.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/constante.js"></script>
 
 											
 	</head>

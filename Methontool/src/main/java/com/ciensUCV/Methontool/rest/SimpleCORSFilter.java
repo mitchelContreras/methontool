@@ -58,5 +58,4 @@ public class SimpleCORSFilter implements Filter {
 		// TODO Auto-generated method stub
 	}
 	
-	
 }

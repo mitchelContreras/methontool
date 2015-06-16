@@ -62,7 +62,6 @@ angular.module('methontool')
 				rangoValores, 
 				cod_tipoDato, 
 				valueDefecto){
-			console.log("en otra function");
 			return $actualizarAtributoInstancia.put({
 				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
 				,idGlosarioAtributo: idGlosarioAtributo
