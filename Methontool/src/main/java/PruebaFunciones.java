@@ -8,6 +8,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.ciensUCV.Methontool.dao.AtributoClaseDAO;
 import com.ciensUCV.Methontool.dao.AtributoInstanciaDAO;
 import com.ciensUCV.Methontool.dao.ConceptoDAO;
+import com.ciensUCV.Methontool.dao.ConstanteDAO;
 import com.ciensUCV.Methontool.dao.GlosarioDAO;
 import com.ciensUCV.Methontool.dao.InstanciaDAO;
 import com.ciensUCV.Methontool.dao.MedidaDAO;
@@ -17,6 +18,7 @@ import com.ciensUCV.Methontool.dao.TaxonomiaDAO;
 import com.ciensUCV.Methontool.dao.TipoDeDatoDAO;
 import com.ciensUCV.Methontool.model.AtributoClase;
 import com.ciensUCV.Methontool.model.AtributoInstancia;
+import com.ciensUCV.Methontool.model.Constante;
 import com.ciensUCV.Methontool.model.Instancia;
 import com.ciensUCV.Methontool.model.Medida;
 import com.ciensUCV.Methontool.model.NivelFormalidad;
@@ -96,7 +98,7 @@ public class PruebaFunciones {
 //		logger.trace("prueba "+prueba.size());
 //		logger.trace("salida de atributo clase es "+atributoClaseDAO.verAtributoClase(1, 19).getIdGlosario());
 //		
-		AtributoInstanciaDAO atributoInstanciaDAO = (AtributoInstanciaDAO) context.getBean("atributoInstanciaDAO");
+//		AtributoInstanciaDAO atributoInstanciaDAO = (AtributoInstanciaDAO) context.getBean("atributoInstanciaDAO");
 //		ArrayList<AtributoInstancia> prueba1 = atributoInstanciaDAO.listarAtributoInstanciaDadoIdGlosarioConcepto(7);
 //		logger.trace("prueba "+prueba1.size());
 //		logger.trace("salida de atributoInstancia "+atributoInstanciaDAO.verAtributoInstancia(1, 23).getCardinalidadMax());
@@ -120,21 +122,21 @@ public class PruebaFunciones {
 //		AtributoInstancia salida = atributoInstanciaDAO.actualizarAtributoInstancia(1, atributoInstancia);
 //		logger.trace("el id_atributo es "+salida.getId());
 		
-		AtributoClaseDAO atributoClaseDAO = (AtributoClaseDAO) context.getBean("atributoClaseDAO");
-		AtributoClase atributoClase = new AtributoClase();
-		atributoClase.setCardinalidadMax("maxCard");
-		atributoClase.setCardinalidadMin("cardMin");
-		atributoClase.setIdGlosario(20);
-		atributoClase.setIdGlosarioConcepto(7);
-		atributoClase.setPrecision("pres pres");
-		atributoClase.setRangoValores("rango de vooolres");
-		TipoDeDato tipoDeDato = new TipoDeDato ();
-		tipoDeDato.setCodigo("int");
-		atributoClase.setTipoDeDato(tipoDeDato);
-		atributoClase.setValue("valuandoooo");
-		AtributoClase salida = atributoClaseDAO.actualizarAtributoClase(1, atributoClase);
-		logger.trace("id atributo es "+salida.getId());
-//		taxonomia.setConceptoOrigen(1);
+//		AtributoClaseDAO atributoClaseDAO = (AtributoClaseDAO) context.getBean("atributoClaseDAO");
+//		AtributoClase atributoClase = new AtributoClase();
+//		atributoClase.setCardinalidadMax("maxCard");
+//		atributoClase.setCardinalidadMin("cardMin");
+//		atributoClase.setIdGlosario(20);
+//		atributoClase.setIdGlosarioConcepto(7);
+//		atributoClase.setPrecision("pres pres");
+//		atributoClase.setRangoValores("rango de vooolres");
+//		TipoDeDato tipoDeDato = new TipoDeDato ();
+//		tipoDeDato.setCodigo("int");
+//		atributoClase.setTipoDeDato(tipoDeDato);
+//		atributoClase.setValue("valuandoooo");
+//		AtributoClase salida = atributoClaseDAO.actualizarAtributoClase(1, atributoClase);
+//		logger.trace("id atributo es "+salida.getId());
+////		taxonomia.setConceptoOrigen(1);
 //		taxonomia.getRelaciones().add("desDisjunta");
 //		taxonomia.getConceptosDestino().addToInnerArray(0, 4);
 //		taxonomia.getConceptosDestino().addToInnerArray(0, 6);
@@ -178,6 +180,26 @@ public class PruebaFunciones {
 //		
 //		TipoDeDatoDAO tipoDeDatoDAO = (TipoDeDatoDAO)  context.getBean("tipoDeDatoDAO");
 //		logger.trace("total lista2 "+tipoDeDatoDAO.listarTipoDeDato().get(0).getCodigo());
+		
+		ConstanteDAO constanteDAO = (ConstanteDAO) context.getBean("constanteDAO");
+//		int salida = constanteDAO.crearConstante(26);
+//		logger.trace("salida es "+salida);
+		
+		Constante constante = new Constante ();
+		constante.setIdGlosarioConstante(26);
+//		constante.setMedida(new Medida(0, "mtrs", null, null));
+//		constante.setTipoDeDato(new TipoDeDato(0, "int", null, null));
+//		constante.setValor( "valor");
+//		
+//		constanteDAO.actualizarConstante(1, constante);
+//		logger.trace("id es "+constante.getId());
+		
+		constante = constanteDAO.verConstante(1, 26);
+		logger.trace("id es "+constante.getId());
+		logger.trace("valor "+constante.getValor());
+		logger.trace("glosario "+constante.getIdGlosarioConstante());
+		logger.trace("medida "+constante.getMedida().toString());
+		logger.trace("dato "+constante.getTipoDeDato().toString());
 		
 	}
 
