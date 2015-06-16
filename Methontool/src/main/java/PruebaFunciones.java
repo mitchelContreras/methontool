@@ -205,6 +205,7 @@ public class PruebaFunciones {
 		AxiomaDAO axiomaDAO = (AxiomaDAO) context.getBean("axiomaDAO");
 //		logger.trace("longitud "+axiomaDAO.atrbInstanciaDadoAxioma(1, 30));
 		axiomaDAO.verAxioma(1, 30);
+		
 	}
 
 }
