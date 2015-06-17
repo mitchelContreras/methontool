@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ciensUCV.Methontool.dao.AxiomaDAO;
 import com.ciensUCV.Methontool.model.Axioma;
+import com.ciensUCV.Methontool.model.Constante;
 import com.ciensUCV.Methontool.rest.model.ElementoMensaje;
 import com.ciensUCV.Methontool.util.VariablesConfiguracion;
 
@@ -30,8 +32,14 @@ public class AxiomaRest {
 		logger.trace("idProyecto "+idProyecto);
 		logger.trace("idGosarioAxioma "+idGosarioAxioma);
 		
+		ElementoMensaje<Axioma> elementoMensaje = new ElementoMensaje<Axioma>();
+		elementoMensaje.setElemento(new Axioma());
+		elementoMensaje.getElemento().setIdGlosarioAxioma(idGosarioAxioma);
 		
-		return null;
+		AxiomaDAO axiomaDAO = (AxiomaDAO) context.getBean("axiomaDAO");
+		elementoMensaje.setElemento(axiomaDAO.verAxioma(idProyecto, idGosarioAxioma));
+		elementoMensaje.setSucces(true);
+		return elementoMensaje;
 	}
 	
 	@RequestMapping(value="/api/proyecto/{idProyecto}/axioma/{idGosarioAxioma}", method = RequestMethod.PUT)

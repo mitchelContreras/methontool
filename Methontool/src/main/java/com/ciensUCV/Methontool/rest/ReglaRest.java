@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ciensUCV.Methontool.dao.AxiomaDAO;
+import com.ciensUCV.Methontool.dao.ReglaDAO;
+import com.ciensUCV.Methontool.model.Axioma;
 import com.ciensUCV.Methontool.model.Regla;
 import com.ciensUCV.Methontool.rest.model.ElementoMensaje;
 import com.ciensUCV.Methontool.util.VariablesConfiguracion;
@@ -30,8 +33,14 @@ public class ReglaRest {
 		logger.trace("idProyecto "+idProyecto);
 		logger.trace("idGosarioAxioma "+idGosarioRegla);
 		
+		ElementoMensaje<Regla> elementoMensaje = new ElementoMensaje<Regla>();
+		elementoMensaje.setElemento(new Regla());
+		elementoMensaje.getElemento().setIdGlosarioRegla(idGosarioRegla);
 		
-		return null;
+		ReglaDAO reglaDAO = (ReglaDAO) context.getBean("reglaDAO");
+		elementoMensaje.setElemento(reglaDAO.verRegla(idProyecto, idGosarioRegla));
+		elementoMensaje.setSucces(true);
+		return elementoMensaje;
 	}
 	
 	@RequestMapping(value="/api/proyecto/{idProyecto}/regla/{idGosarioRegla}", method = RequestMethod.PUT)

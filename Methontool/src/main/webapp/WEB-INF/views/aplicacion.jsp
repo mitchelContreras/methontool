@@ -81,7 +81,9 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryMedida.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryTipoDeDato.js"></script>	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryConstante.js"></script>	
-				
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryAxioma.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryRegla.js"></script>				
+		
 		<!-- Modulos de AngularJS -->
 		<!-- Proyecto -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/proyecto.js"></script>
@@ -97,7 +99,8 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/medida.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/tipoDeDato.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/constante.js"></script>
-
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/axioma.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/regla.js"></script>		
 											
 	</head>
 	<body >
