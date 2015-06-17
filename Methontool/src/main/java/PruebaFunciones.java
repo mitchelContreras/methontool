@@ -14,6 +14,7 @@ import com.ciensUCV.Methontool.dao.GlosarioDAO;
 import com.ciensUCV.Methontool.dao.InstanciaDAO;
 import com.ciensUCV.Methontool.dao.MedidaDAO;
 import com.ciensUCV.Methontool.dao.ProyectoDAO;
+import com.ciensUCV.Methontool.dao.ReglaDAO;
 import com.ciensUCV.Methontool.dao.RelacionDAO;
 import com.ciensUCV.Methontool.dao.TaxonomiaDAO;
 import com.ciensUCV.Methontool.dao.TipoDeDatoDAO;
@@ -204,8 +205,16 @@ public class PruebaFunciones {
 		
 		AxiomaDAO axiomaDAO = (AxiomaDAO) context.getBean("axiomaDAO");
 //		logger.trace("longitud "+axiomaDAO.atrbInstanciaDadoAxioma(1, 30));
-		axiomaDAO.verAxioma(1, 30);
+//		axiomaDAO.verAxioma(1, 30);
+		axiomaDAO.crearAxioma(1, 1);
 		
+		ReglaDAO reglaDAO = (ReglaDAO) context.getBean("reglaDAO");
+//		logger.trace("concepto "+reglaDAO.conceptoDadoRegla(1, 34));
+//		logger.trace("relacion "+reglaDAO.relacionDadoRegla(1, 34));
+//		logger.trace("clase "+reglaDAO.atrbClaseDadoRegla(1, 34));
+//		logger.trace("instancia "+reglaDAO.atrbInstanciaDadoRegla(1, 34));
+		logger.trace(reglaDAO.verRegla(1, 34).toString());
+		reglaDAO.crearRegla(1, 1);
 	}
 
 }

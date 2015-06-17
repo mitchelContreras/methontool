@@ -33,12 +33,42 @@ public class JdbcAxiomaDAO implements AxiomaDAO {
 	@Override
 	public int crearAxioma(int idProyecto, int idGlosarioAxioma) {
 		// TODO Auto-generated method stub
-		return 0;
+		String sql;
+		sql = " INSERT INTO axioma (id_glosario_axioma)"
+				+ " VALUES (?) RETURNING id_axioma;";
+
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idGlosarioAxioma);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				return rs.getInt("id_axioma");
+			}
+			rs.close();
+			ps.close();
+			return 0;	
+		} catch (SQLException e) {
+			logger.info("SQLException "+e);
+			throw new RuntimeException(e);
+		} catch(Exception e) {
+			logger.info("error "+e.toString());
+			return 0;	
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					return 0;
+				}
+			}
+		}
 	}
 
 	@Override
 	public Axioma verAxioma(int idProyecto, int idGlosarioAxioma) {
-		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 		String sql;
 		sql = "select id_axioma "
@@ -65,7 +95,6 @@ public class JdbcAxiomaDAO implements AxiomaDAO {
 				axioma.setAtributosClase(atrbClaseDadoAxioma(idProyecto, axioma.getIdGlosarioAxioma()));
 				axioma.setConceptos(conceptoDadoAxioma(idProyecto, axioma.getIdGlosarioAxioma()));
 				axioma.setRelaciones(relacionDadoAxioma(idProyecto, axioma.getIdGlosarioAxioma()));
-				logger.trace("axioma.toString "+axioma);
 			}
 			rs.close();
 			ps.close();
