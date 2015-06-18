@@ -83,10 +83,15 @@
 				</div>			
 			</div>
 			<div class="col-md-8 cuerpoDos" ng-show="cnAxioma.enBlanco">
-				<p> DOS Axioma </p>
 			</div>
 			<div class="col-md-8 cuerpoDos" ng-show="!cnAxioma.enBlanco">
 				<div class="inicioTexto">
+					<div align="center" class="alert alert-success alert-dismissible" ng-if="cnAxioma.alertPositiva">
+				   		 {{cnAxioma.mensajeAlertPositiva}}
+					</div> 
+					<div align="center" class="alert alert-danger alert-dismissible" ng-if="cnAxioma.alertNegativa">
+				   		 <strong>Error!</strong> {{cnAxioma.mensajeAlertNegativa}}
+					</div>	
 					<form class=" form-horizontal">
 						<div class="form-group">
 							<div class="col-xs-4 control-label" >

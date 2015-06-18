@@ -8,7 +8,7 @@ import com.ciensUCV.Methontool.model.Glosario;
 public interface AxiomaDAO {
 
 	public int crearAxioma (int idProyecto, int idGlosarioAxioma);
-	public Axioma actualizarAxioma (int idProyecto, Axioma Axioma);
+	public int actualizarAxioma (int idProyecto, Axioma Axioma);
 	public Axioma verAxioma  (int idProyecto, int idGlosarioAxioma);
 	public ArrayList<Integer> conceptoDadoAxioma (int idProyecto, int idGlosarioAxioma);
 	public ArrayList<Integer> relacionDadoAxioma (int idProyecto, int idGlosarioAxioma);

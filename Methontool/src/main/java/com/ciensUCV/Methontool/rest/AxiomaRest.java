@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ciensUCV.Methontool.dao.AxiomaDAO;
+import com.ciensUCV.Methontool.dao.ConstanteDAO;
 import com.ciensUCV.Methontool.model.Axioma;
 import com.ciensUCV.Methontool.model.Constante;
+import com.ciensUCV.Methontool.model.Medida;
+import com.ciensUCV.Methontool.model.TipoDeDato;
 import com.ciensUCV.Methontool.rest.model.ElementoMensaje;
 import com.ciensUCV.Methontool.util.VariablesConfiguracion;
 
@@ -64,7 +67,36 @@ public class AxiomaRest {
 		logger.trace("relacion "+relacion);
 		
 //		http://localhost:8080/Methontool/api/proyecto/1/axioma/23?expresion=expresion&variables=variables&atrbClase=atrbClase&atrbInstancia=atrbInstancia&concepto=concepto&relacion=relacion
-		return null;
+		ElementoMensaje<Axioma> elementoMensaje = new ElementoMensaje<Axioma>();
+		elementoMensaje.setElemento(new Axioma());
+		AxiomaDAO axiomaDAO = (AxiomaDAO) context.getBean("axiomaDAO");
+		Axioma axioma = new Axioma ();
+		
+		try {
+			axioma = axiomaDAO.verAxioma(idProyecto, idGlosarioAxioma);
+			if(axioma.getId() == 0){
+				int salida = axiomaDAO.crearAxioma(idProyecto, idGlosarioAxioma);
+				logger.trace("creo con id "+salida);
+			}
+			axioma = new Axioma ();
+			axioma.setIdGlosarioAxioma(idGlosarioAxioma);
+			axioma.setExpresion(expresion);
+			axioma.variablesStringToArray(variables);
+			axioma.atributoClaseStringToArray(atrbClase);
+			axioma.atributoInstanciaStringToArray(atrbInstancia);
+			axioma.conceptoStringToArray(concepto);
+			axioma.relacionesStringToArray(relacion);
+			if(axiomaDAO.actualizarAxioma(idProyecto, axioma) == 1){
+				elementoMensaje.setElemento(axioma);
+				elementoMensaje.setSucces(true);			
+			}else{
+				elementoMensaje.setSucces(false);			
+			}			
+		} catch (Exception e) {
+			// TODO: handle exception
+			elementoMensaje.setSucces(false);	
+		}
+		return elementoMensaje;
 	}
 	
 }

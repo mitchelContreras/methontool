@@ -1,5 +1,6 @@
 package com.ciensUCV.Methontool.dao.impl;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,9 +26,73 @@ public class JdbcAxiomaDAO implements AxiomaDAO {
 	}
 	
 	@Override
-	public Axioma actualizarAxioma(int idProyecto, Axioma Axioma) {
+	public int actualizarAxioma(int idProyecto, Axioma axioma) {
 		// TODO Auto-generated method stub
-		return null;
+		String sql;
+		sql = " SELECT sp_actualizar_axioma(?, ?, ?, ?, ?, ?, ?);";
+
+		
+//				+ "1 (varidglosarioaxioma integer,"
+//				+ " 2 varexpresion character varying,"
+//				+ " 3 varvariables character varying,"
+//				+ " 4 varconceptos integer[],"
+//				+ " 5 varrelaciones integer[],"
+//				+ " 6 varatrbclase integer[],"
+//				+ " 7 varatrbinstancia integer[]);";
+				
+		Connection conn = null;
+		Array array;
+		Object[] arrayOb;	
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, axioma.getIdGlosarioAxioma());
+			ps.setString(2, axioma.getExpresion());
+			ps.setString(3, axioma.variablesArrayToString());
+			arrayOb = axioma.getConceptos().toArray();
+			array = conn.createArrayOf("integer", arrayOb);
+			ps.setArray(4, array);
+			
+			arrayOb = axioma.getRelaciones().toArray();
+			array = conn.createArrayOf("integer", arrayOb);
+			ps.setArray(5, array);
+			
+			arrayOb = axioma.getAtributosClase().toArray();
+			array = conn.createArrayOf("integer", arrayOb);
+			ps.setArray(6, array);
+			
+			arrayOb = axioma.getAtributoInstancia().toArray();
+			array = conn.createArrayOf("integer", arrayOb);
+			ps.setArray(7, array);
+			
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				String salida =  rs.getString("sp_actualizar_axioma");
+				if(salida.equalsIgnoreCase("exito")){
+					return 1;
+				}else{
+					return 0; 
+				}
+			}		
+			
+		} catch (SQLException e) {
+			logger.info("SQLException "+e.toString());
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					logger.error(e.toString());
+					return 0;
+				} catch(Exception e){
+					logger.info(e.toString());
+				}
+			}
+		}
+		
+		return 0;
 	}
 	
 	@Override

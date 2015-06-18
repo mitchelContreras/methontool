@@ -266,10 +266,25 @@ function ControllerAxioma($rootScope,
 		cnAxioma.modificar = true;
 	}
 	function modifiqueAxioma (){
-
+		
+//		http://localhost:8080/Methontool/api/proyecto/1/axioma/30?
+//			atrbClase=18&
+//			atrbInstancia=22&
+//			concepto=6&
+//			relacion=2%7C%7C%7C%7C11%7C%7C%7C%7C8&
+//			variables=undefined
+				
+		console.log("cnAxioma.varEdicion.glosarioAxiomaActual.id "+cnAxioma.varEdicion.glosarioAxiomaActual.id);
+		console.log("cnAxioma.varEdicion.expresion "+cnAxioma.varEdicion.expresion);
+		console.log("cnAxioma.varEdicion.variables "+cnAxioma.varEdicion.variables.length);
+		console.log("cnAxioma.varEdicion.atributosClase "+cnAxioma.varEdicion.atributosClase.length);
+		console.log("cnAxioma.varEdicion.atributoInstancia "+cnAxioma.varEdicion.atributoInstancia.length);
+		console.log("cnAxioma.varEdicion.conceptos "+cnAxioma.varEdicion.conceptos.length);
+		console.log("cnAxioma.varEdicion.relaciones "+cnAxioma.varEdicion.relaciones.length);
+		
 		var salida;
 		salida = FactoryAxioma.actualizarElemento (cnAxioma.varEdicion.glosarioAxiomaActual.id, 
-				cnAxioma.varEdicion.glosarioAxiomaActual.expresion, 
+				cnAxioma.varEdicion.expresion, 
 				cnAxioma.varEdicion.variables, 
 				cnAxioma.varEdicion.atributosClase,
 				cnAxioma.varEdicion.atributoInstancia,
@@ -280,6 +295,9 @@ function ControllerAxioma($rootScope,
 	            function(aux) {
 	                if(aux.succes){
 	                	console.log("actualizar axioma es true");
+	                	cnAxioma.alertPositiva = true;
+	                	cnAxioma.mensajeAlertPositiva = "El axioma ha sido actualizado";
+	                	cnAxioma.seleccioneGlosario (cnAxioma.varEdicion.glosarioAxiomaActual, 'false');
 	                	FactoryMensajeCarga.cerrarMensaje();
 	                }else{
 	                	
