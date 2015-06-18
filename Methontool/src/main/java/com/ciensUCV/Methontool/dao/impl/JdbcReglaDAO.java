@@ -1,5 +1,6 @@
 package com.ciensUCV.Methontool.dao.impl;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -59,9 +60,64 @@ public class JdbcReglaDAO implements ReglaDAO {
 	}
 
 	@Override
-	public Regla actualizarRegla(int idProyecto, Regla regla) {
+	public int actualizarRegla(int idProyecto, Regla regla) {
 		// TODO Auto-generated method stub
-		return null;
+		String sql;
+		sql = " SELECT sp_actualizar_regla(?, ?, ?, ?, ?, ?, ?);";
+
+		Connection conn = null;
+		Array array;
+		Object[] arrayOb;	
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, regla.getIdGlosarioRegla());
+			ps.setString(2, regla.getExpresion());
+			ps.setString(3, regla.variablesArrayToString());
+			arrayOb = regla.getConceptos().toArray();
+			array = conn.createArrayOf("integer", arrayOb);
+			ps.setArray(4, array);
+			
+			arrayOb = regla.getRelaciones().toArray();
+			array = conn.createArrayOf("integer", arrayOb);
+			ps.setArray(5, array);
+			
+			arrayOb = regla.getAtributosClase().toArray();
+			array = conn.createArrayOf("integer", arrayOb);
+			ps.setArray(6, array);
+			
+			arrayOb = regla.getAtributoInstancia().toArray();
+			array = conn.createArrayOf("integer", arrayOb);
+			ps.setArray(7, array);
+			
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				String salida =  rs.getString("sp_actualizar_regla");
+				if(salida.equalsIgnoreCase("exito")){
+					return 1;
+				}else{
+					return 0; 
+				}
+			}		
+			
+		} catch (SQLException e) {
+			logger.info("SQLException "+e.toString());
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					logger.error(e.toString());
+					return 0;
+				} catch(Exception e){
+					logger.info(e.toString());
+				}
+			}
+		}
+		
+		return 0;
 	}
 
 	@Override

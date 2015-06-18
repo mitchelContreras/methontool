@@ -60,7 +60,96 @@ public class Regla {
 			}
 		}
 		return salida;
-	}	
+	}
+
+	public void atributoClaseStringToArray(String entrada){
+		this.atributosClase = new  ArrayList<Integer> ();
+		if(entrada != null){
+			StringTokenizer token = new StringTokenizer(entrada, LeerConfig.obtenerPropiedad("variable.separadorString"));
+			while(token.hasMoreTokens()){
+				this.atributosClase.add(Integer.parseInt(token.nextToken()));
+			}
+		}
+	}
+	public String atributoClaseArrayToString(){
+		String salida = "";
+		if(this.atributosClase != null){
+			for(int i = 0; i <this.atributosClase.size();i++ ){
+				salida = salida + this.atributosClase.get(i);
+				if(i != this.atributosClase.size()-1){
+					salida = salida+LeerConfig.obtenerPropiedad("variable.separadorString");
+				}
+			}
+		}
+		return salida;
+	}
+	
+	public void atributoInstanciaStringToArray(String entrada){
+		this.atributoInstancia = new  ArrayList<Integer> ();
+		if(entrada != null){
+			StringTokenizer token = new StringTokenizer(entrada, LeerConfig.obtenerPropiedad("variable.separadorString"));
+			while(token.hasMoreTokens()){
+				this.atributoInstancia.add(Integer.parseInt(token.nextToken()));
+			}
+		}
+	}
+	public String atributoInstanciaArrayToString(){
+		String salida = "";
+		if(this.atributoInstancia != null){
+			for(int i = 0; i <this.atributoInstancia.size();i++ ){
+				salida = salida + this.atributoInstancia.get(i);
+				if(i != this.atributoInstancia.size()-1){
+					salida = salida+LeerConfig.obtenerPropiedad("variable.separadorString");
+				}
+			}
+		}
+		return salida;
+	}
+	
+	
+	public void relacionesStringToArray(String entrada){
+		this.relaciones = new  ArrayList<Integer> ();
+		if(entrada != null){
+			StringTokenizer token = new StringTokenizer(entrada, LeerConfig.obtenerPropiedad("variable.separadorString"));
+			while(token.hasMoreTokens()){
+				this.relaciones.add(Integer.parseInt(token.nextToken()));
+			}
+		}
+	}
+	public String relacionesArrayToString(){
+		String salida = "";
+		if(this.relaciones != null){
+			for(int i = 0; i <this.relaciones.size();i++ ){
+				salida = salida + this.relaciones.get(i);
+				if(i != this.relaciones.size()-1){
+					salida = salida+LeerConfig.obtenerPropiedad("variable.separadorString");
+				}
+			}
+		}
+		return salida;
+	}
+	
+	public void conceptoStringToArray(String entrada){
+		this.conceptos = new  ArrayList<Integer> ();
+		if(entrada != null){
+			StringTokenizer token = new StringTokenizer(entrada, LeerConfig.obtenerPropiedad("variable.separadorString"));
+			while(token.hasMoreTokens()){
+				this.conceptos.add(Integer.parseInt(token.nextToken()));
+			}
+		}
+	}
+	public String conceptoArrayToString(){
+		String salida = "";
+		if(this.conceptos != null){
+			for(int i = 0; i <this.conceptos.size();i++ ){
+				salida = salida + this.conceptos.get(i);
+				if(i != this.conceptos.size()-1){
+					salida = salida+LeerConfig.obtenerPropiedad("variable.separadorString");
+				}
+			}
+		}
+		return salida;
+	}
 	@Override
 	public String toString() {
 		return "Regla [id=" + id + ", idGlosarioRegla=" + idGlosarioRegla

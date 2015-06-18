@@ -45,8 +45,6 @@ function ControllerAxioma($rootScope,
 	cnAxioma.variables = "";
 	cnAxioma.expresion = "";
 	cnAxioma.enGlosario = {};	
-	cnAxioma.listaConceptos = [{"id": 1, "nombre":"Arbol"}];
-	cnAxioma.listaRelaciones = [{"id": 1, "nombre":"Parte de"}];
 	
 //-------------------Funciones----------------------------------	
 	

@@ -65,6 +65,35 @@ public class ReglaRest {
 		logger.trace("relacion "+relacion);
 		
 //		http://localhost:8080/Methontool/api/proyecto/1/regla/23?expresion=expresion&variables=variables&atrbClase=atrbClase&atrbInstancia=atrbInstancia&concepto=concepto&relacion=relacion
-		return null;
+		ElementoMensaje<Regla> elementoMensaje = new ElementoMensaje<Regla>();
+		elementoMensaje.setElemento(new Regla());
+		ReglaDAO reglaDAO = (ReglaDAO) context.getBean("reglaDAO");
+		Regla regla = new Regla ();
+		
+		try {
+			regla = reglaDAO.verRegla(idProyecto, idGlosarioRegla);
+			if(regla.getId() == 0){
+				int salida = reglaDAO.crearRegla(idProyecto, idGlosarioRegla);
+				logger.trace("creo con id "+salida);
+			}
+			regla = new Regla ();
+			regla.setIdGlosarioRegla(idGlosarioRegla);
+			regla.setExpresion(expresion);
+			regla.variablesStringToArray(variables);
+			regla.atributoClaseStringToArray(atrbClase);
+			regla.atributoInstanciaStringToArray(atrbInstancia);
+			regla.conceptoStringToArray(concepto);
+			regla.relacionesStringToArray(relacion);
+			if(reglaDAO.actualizarRegla(idProyecto, regla) == 1){
+				elementoMensaje.setElemento(regla);
+				elementoMensaje.setSucces(true);			
+			}else{
+				elementoMensaje.setSucces(false);			
+			}			
+		} catch (Exception e) {
+			// TODO: handle exception
+			elementoMensaje.setSucces(false);	
+		}
+		return elementoMensaje;
 	}
 }

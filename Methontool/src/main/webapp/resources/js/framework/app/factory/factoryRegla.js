@@ -34,13 +34,12 @@ angular.module('methontool')
 						relacion
 						){
 					return actualizarElemento (idGlosarioRegla, 
-							expresion, 
-							variables, 
-							atrbClase,
-							atrbInstancia,
-							concepto,
-							relacion
-							);
+							expresion,  
+							llevarListStringAString(variables), 
+							llevarListGlosarioAString(atrbClase),
+							llevarListGlosarioAString(atrbInstancia),
+							llevarListGlosarioAString(concepto),
+							llevarListGlosarioAString(relacion));
 				}
 			};
 		
@@ -84,6 +83,32 @@ angular.module('methontool')
 		var existeError = false;
 		var yaConsulte = false;
 
+		function llevarListStringAString (lista){
+			var salida= "";
+			var i;
+			for (i in lista) {
+				salida = salida + lista[i]; 
+				if(i != (lista.length-1) ){
+					salida = salida  + '||||';
+				}
+			}
+//			console.log("salida "+salida);
+			return salida;
+		}
+		
+		function llevarListGlosarioAString (lista){
+			var salida= "";
+			var i;
+			for (i in lista) {
+				salida = salida + lista[i].id; 
+				if(i != (lista.length-1) ){
+					salida = salida  + '||||';
+				}
+			}
+//			console.log("salida "+salida);
+			return salida;
+		}
+		
 		return funcion;
 	}; // fin de factory
 
