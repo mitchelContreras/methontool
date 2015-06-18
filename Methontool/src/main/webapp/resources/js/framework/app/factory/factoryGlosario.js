@@ -55,9 +55,22 @@ angular.module('methontool')
 				},
 				modificarElemento: function (glosario){
 					modificarElemento (glosario);
+				},
+				getGlosarioDadoTipoGlosario : function (idTipoGlosario){
+					return getGlosarioDadoTipoGlosario (idTipoGlosario);
 				}
 			};
 		
+		function getGlosarioDadoTipoGlosario (idTipoGlosario){
+			var salida = [];
+			var i;
+			for (i = 0; i<listaObjeto.length;i++){
+				if(listaObjeto[i].tipoGlosario.id == idTipoGlosario){
+					salida.push(listaObjeto[i]);
+				}
+			}
+			return salida;
+		}
 		function modificarElemento (glosario){
 			var i = 0;
 			for (i = 0; i<listaObjeto.length;i++){

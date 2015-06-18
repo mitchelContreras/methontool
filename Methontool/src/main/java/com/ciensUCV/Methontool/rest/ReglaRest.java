@@ -24,29 +24,29 @@ public class ReglaRest {
 	ApplicationContext context = 
     		new ClassPathXmlApplicationContext(VariablesConfiguracion.rutaArchivoSpringDaoImpl);
 	
-	@RequestMapping(value="/api/proyecto/{idProyecto}/regla/{idGosarioRegla}", method = RequestMethod.GET)
+	@RequestMapping(value="/api/proyecto/{idProyecto}/regla/{idGlosarioRegla}", method = RequestMethod.GET)
 	public @ResponseBody ElementoMensaje<Regla> verRegla(
 			@PathVariable("idProyecto") int idProyecto
-			,@PathVariable("idGosarioRegla") int idGosarioRegla
+			,@PathVariable("idGlosarioRegla") int idGlosarioRegla
 			){
 		logger.trace("*** verRegla");
 		logger.trace("idProyecto "+idProyecto);
-		logger.trace("idGosarioAxioma "+idGosarioRegla);
+		logger.trace("idGlosarioRegla "+idGlosarioRegla);
 		
 		ElementoMensaje<Regla> elementoMensaje = new ElementoMensaje<Regla>();
 		elementoMensaje.setElemento(new Regla());
-		elementoMensaje.getElemento().setIdGlosarioRegla(idGosarioRegla);
+		elementoMensaje.getElemento().setIdGlosarioRegla(idGlosarioRegla);
 		
 		ReglaDAO reglaDAO = (ReglaDAO) context.getBean("reglaDAO");
-		elementoMensaje.setElemento(reglaDAO.verRegla(idProyecto, idGosarioRegla));
+		elementoMensaje.setElemento(reglaDAO.verRegla(idProyecto, idGlosarioRegla));
 		elementoMensaje.setSucces(true);
 		return elementoMensaje;
 	}
 	
-	@RequestMapping(value="/api/proyecto/{idProyecto}/regla/{idGosarioRegla}", method = RequestMethod.PUT)
+	@RequestMapping(value="/api/proyecto/{idProyecto}/regla/{idGlosarioRegla}", method = RequestMethod.PUT)
 	public @ResponseBody ElementoMensaje<Regla> crearActualizarRegla(
 			@PathVariable("idProyecto") int idProyecto
-			,@PathVariable("idGosarioRegla") int idGosarioRegla
+			,@PathVariable("idGlosarioRegla") int idGlosarioRegla
 	        ,@RequestParam(value = "expresion") String expresion
 	        ,@RequestParam(value = "variables") String variables
 	        ,@RequestParam(value = "atrbClase") String atrbClase
@@ -56,7 +56,7 @@ public class ReglaRest {
 			){
 		logger.trace("*** crearActualizarAxioma");
 		logger.trace("idProyecto "+idProyecto);
-		logger.trace("idGosarioRegla "+idGosarioRegla);
+		logger.trace("idGlosarioRegla "+idGlosarioRegla);
 		logger.trace("expresion "+expresion);
 		logger.trace("variables "+variables);
 		logger.trace("atrbClase "+atrbClase);

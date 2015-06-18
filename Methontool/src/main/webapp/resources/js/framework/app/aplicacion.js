@@ -27,6 +27,8 @@
         ,'modMedida'
         ,'modTipoDeDato'
         ,'modConstante'
+        ,'modAxioma'
+        ,'modRegla'
         ])
     
 })();

@@ -23,29 +23,29 @@ public class AxiomaRest {
 	ApplicationContext context = 
     		new ClassPathXmlApplicationContext(VariablesConfiguracion.rutaArchivoSpringDaoImpl);
 	
-	@RequestMapping(value="/api/proyecto/{idProyecto}/axioma/{idGosarioAxioma}", method = RequestMethod.GET)
+	@RequestMapping(value="/api/proyecto/{idProyecto}/axioma/{idGlosarioAxioma}", method = RequestMethod.GET)
 	public @ResponseBody ElementoMensaje<Axioma> verAxioma(
 			@PathVariable("idProyecto") int idProyecto
-			,@PathVariable("idGosarioAxioma") int idGosarioAxioma
+			,@PathVariable("idGlosarioAxioma") int idGlosarioAxioma
 			){
 		logger.trace("*** verAxioma");
 		logger.trace("idProyecto "+idProyecto);
-		logger.trace("idGosarioAxioma "+idGosarioAxioma);
+		logger.trace("idGlosarioAxioma "+idGlosarioAxioma);
 		
 		ElementoMensaje<Axioma> elementoMensaje = new ElementoMensaje<Axioma>();
 		elementoMensaje.setElemento(new Axioma());
-		elementoMensaje.getElemento().setIdGlosarioAxioma(idGosarioAxioma);
+		elementoMensaje.getElemento().setIdGlosarioAxioma(idGlosarioAxioma);
 		
 		AxiomaDAO axiomaDAO = (AxiomaDAO) context.getBean("axiomaDAO");
-		elementoMensaje.setElemento(axiomaDAO.verAxioma(idProyecto, idGosarioAxioma));
+		elementoMensaje.setElemento(axiomaDAO.verAxioma(idProyecto, idGlosarioAxioma));
 		elementoMensaje.setSucces(true);
 		return elementoMensaje;
 	}
 	
-	@RequestMapping(value="/api/proyecto/{idProyecto}/axioma/{idGosarioAxioma}", method = RequestMethod.PUT)
+	@RequestMapping(value="/api/proyecto/{idProyecto}/axioma/{idGlosarioAxioma}", method = RequestMethod.PUT)
 	public @ResponseBody ElementoMensaje<Axioma> crearActualizarAxioma(
 			@PathVariable("idProyecto") int idProyecto
-			,@PathVariable("idGosarioAxioma") int idGosarioAxioma
+			,@PathVariable("idGlosarioAxioma") int idGlosarioAxioma
 	        ,@RequestParam(value = "expresion") String expresion
 	        ,@RequestParam(value = "variables") String variables
 	        ,@RequestParam(value = "atrbClase") String atrbClase
@@ -55,7 +55,7 @@ public class AxiomaRest {
 			){
 		logger.trace("*** crearActualizarAxioma");
 		logger.trace("idProyecto "+idProyecto);
-		logger.trace("idGosarioAxioma "+idGosarioAxioma);
+		logger.trace("idGosarioAxioma "+idGlosarioAxioma);
 		logger.trace("expresion "+expresion);
 		logger.trace("variables "+variables);
 		logger.trace("atrbClase "+atrbClase);
