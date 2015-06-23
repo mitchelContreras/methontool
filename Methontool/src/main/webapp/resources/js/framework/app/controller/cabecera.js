@@ -49,8 +49,11 @@ function ControllerCabecera(
     	cnCabecera.menuConceptoPrincipal = menuConceptoPrincipal;
     	cnCabecera.menuInstanciaPrincipal = menuInstanciaPrincipal;
     	cnCabecera.menuConstantePrincipal = menuConstantePrincipal;
+    	cnCabecera.menuInstanciaDosPrincipal = menuInstanciaDosPrincipal;
 //fin funciones relacionadas con  visualisar ó tarea
-    	
+    	function menuInstanciaDosPrincipal(){
+    		$rootScope.$broadcast('menuInstanciaDosPrincipal');
+    	}
     	function menuRelacionDosPrincipal(){
     		$rootScope.$broadcast('menuRelacionDosPrincipal');
     	}
@@ -58,8 +61,8 @@ function ControllerCabecera(
     		$rootScope.$broadcast('menuConstantePrincipal');
     	}
     	function menuInstanciaPrincipal(){
-    		//$rootScope.$broadcast('menuInstanciaPrincipal');
-    		console.log("instancia no se ha implementado");
+    		$rootScope.$broadcast('menuInstanciaPrincipal');
+//    		console.log("instancia no se ha implementado");
     	}
     	function menuConceptoPrincipal(){
     		$rootScope.$broadcast('menuConceptoPrincipal');

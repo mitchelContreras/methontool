@@ -65,7 +65,9 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/axioma.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/regla.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/taxonomia.js"></script>	
-		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/concepto.js"></script>				
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/concepto.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/instancia.js"></script>	
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/instanciaDos.js"></script>					
 		
 		<!-- factory -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/informacionPrincipalApp.js"></script>
@@ -85,7 +87,6 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/factory/factoryRegla.js"></script>				
 		
 		<!-- Modulos de AngularJS -->
-		<!-- Proyecto -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/proyecto.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/nivelFormalidad.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/service/glosario.js"></script>
@@ -127,7 +128,9 @@
 			<jsp:include page="componentesAplicacion/axioma.jsp" />			
 			<jsp:include page="componentesAplicacion/regla.jsp" />		
 			<jsp:include page="componentesAplicacion/taxonomia.jsp" />
-			<jsp:include page="componentesAplicacion/concepto.jsp" />									
+			<jsp:include page="componentesAplicacion/concepto.jsp" />	
+			<jsp:include page="componentesAplicacion/instancia.jsp" />	
+			<jsp:include page="componentesAplicacion/instanciaDos.jsp" />									
 <!-- 
 		idProyecto:{{proyecto.idProyecto}}<br>
 		nombre:{{proyecto.nombre}}<br>

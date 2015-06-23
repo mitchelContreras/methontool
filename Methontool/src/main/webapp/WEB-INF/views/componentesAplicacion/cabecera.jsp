@@ -96,8 +96,9 @@
 				            <li><a href="#" ng-click="cnCabecera.menuRelacionDosPrincipal()">Modificar Relaciones</a></li>
 				            <li><a href="#" ng-click="cnCabecera.menuTaxonomiaPrincipal()">Taxonomia</a></li>
 				            <li><a href="#" ng-click="cnCabecera.menuConceptoPrincipal()">Concepto</a></li>
-				            <li><a href="#" ng-click="cnCabecera.menuInstanciaPrincipal()">Instancia</a></li>
-				            <li><a href="#" ng-click="cnCabecera.menuConstantePrincipal()">Constante</a></li>			            
+				            <li><a href="#" ng-click="cnCabecera.menuInstanciaPrincipal()">Instancia uno</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuConstantePrincipal()">Constante</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuInstanciaDosPrincipal()">Instancia dos</a></li>		            
 		         		 </ul>
 		        	</li>
 		        	<li class="dropdown">
