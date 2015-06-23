@@ -30,10 +30,14 @@ public class ProyectoRest {
 	
 	@RequestMapping(value="/api/usuario/{id}/proyecto", method = RequestMethod.GET)
 	public @ResponseBody ProyectosMensaje listarProyectos(@PathVariable("id") int idUsuario){
+		
+		logger.trace("***listarProyectos ");
+		logger.trace("idUsuario "+idUsuario);
 		ProyectosMensaje proyectosMensaje = new ProyectosMensaje ();
 		ProyectoDAO proyectoDAO = (ProyectoDAO) context.getBean("proyectoDAO");
 		try {
 			proyectosMensaje.setProyectos(proyectoDAO.listarProyectos(idUsuario));
+			logger.trace("cantidad de proyectos son "+proyectosMensaje.getProyectos().size());
 			proyectosMensaje.setSucces(true);
 		} catch (Exception e) {
 			// TODO: handle exception

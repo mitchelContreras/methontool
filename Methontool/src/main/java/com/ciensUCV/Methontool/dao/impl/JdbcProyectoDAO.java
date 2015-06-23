@@ -42,9 +42,10 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 				",nivel.nombre "+
 				",nivel.descripcion "+
 				"from proyecto as p "+
-				"join puede_ver as ver on p.id_proyecto = ver.id_proyecto "+
-				"join nivel_formalidad as nivel on p.id_nivel_formalidad = nivel.id_nivel_formalidad "+
-				"and ver.id_usuario = ? ";
+				"left join puede_ver as ver on p.id_proyecto = ver.id_proyecto "+
+				"left join nivel_formalidad as nivel on p.id_nivel_formalidad = nivel.id_nivel_formalidad "+
+				"where ver.id_usuario = ? ";
+		
 		
 		Connection conn = null;
 		Proyecto proyecto = null;
