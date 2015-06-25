@@ -27,7 +27,8 @@ angular.module('methontool')
 		
 		var funcion = {
 				getListaElemento: function (){
-					return getListaElemento();
+//					return getListaElemento();
+					return listaObjeto;
 				},
 				setListaElemento: function (entrada){
 					listaObjeto = entrada;
@@ -58,7 +59,13 @@ angular.module('methontool')
 				},
 				getGlosarioDadoTipoGlosario : function (idTipoGlosario){
 					return getGlosarioDadoTipoGlosario (idTipoGlosario);
-				}
+				},
+				actualizarLista: function (){
+					console.log("dentro de actualizar");
+					return $listarGlosario.get
+					({id: InformacionPrincipalApp.getProyecto().idProyecto})
+					.$promise;
+				} 
 			};
 		
 		function getGlosarioDadoTipoGlosario (idTipoGlosario){
@@ -121,18 +128,16 @@ angular.module('methontool')
 				},{}).$promise;
 		}
 		
-		function getListaElemento(){
-			console.log("en getListaElemento Glosario");
-			if (yaConsulte){
-				console.log("Ya tengo el valor de Glosario");
-				return listaObjeto;
-			}else{
-				console.log("antes del rest");
-				return $listarGlosario.get
-				({id: InformacionPrincipalApp.getProyecto().idProyecto})
-				.$promise;
-			} 
-		}
+//		function getListaElemento(){
+//			console.log("en getListaElemento Glosario");
+//			if (yaConsulte){
+//				console.log("Ya tengo el valor de Glosario");
+//				
+//			}else{
+//				console.log("antes del rest");
+//
+//			} 
+//		}
 		function eliminarElemento (id){
 			return true;
 		}

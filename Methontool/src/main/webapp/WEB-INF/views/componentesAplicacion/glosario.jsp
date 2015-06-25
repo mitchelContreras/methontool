@@ -21,7 +21,7 @@
 						<div class="row">
 							<div class="btn-group col-xs-6" ng-init="filtroGlosario.buscarPor='seleccione'">
 								<select ng-model="filtroGlosario.buscarPor" class="form-control" style="padding-right: -15px"
-								ng-change=" filtroGlosario.nombre = '', filtroGlosario.sinonimo='', filtroGlosario.acronimo= '' ">
+								ng-change=" filtroGlosario.nombre = ''; filtroGlosario.sinonimo=''; filtroGlosario.acronimo= '' ">
 									<option value="seleccione">[SELECCIONE]</option>
 									<option value="nombre">Nombre</option>
 									<option value="sinonimo">Sinónimo</option>
