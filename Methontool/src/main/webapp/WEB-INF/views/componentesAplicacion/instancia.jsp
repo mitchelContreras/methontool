@@ -91,6 +91,25 @@
 								<input type="text" class="form-control" placeholder="Nombre" ng-disabled="true" ng-model="cnInstancia.varEdicion.glosarioInstanciaActual.nombre">
 							</div>
 						</div>
+						<div class="form-group">
+							<div class="col-xs-4 control-label" >
+								<label >Concepto:</label>
+							</div>
+							<div class="col-xs-5 ">
+								<input type="text" class="form-control" placeholder="Nombre" ng-disabled="true" ng-model="cnInstancia.varEdicion.glosarioInstanciaActual.concepto.nombre">
+							</div>
+							<div class="col-xs-2 ">
+								<div class="btn-group">
+									<button ng-click="cnInstancia.cambiarConcepto()" 
+									class="btn btn-link " 
+									ng-class="{'disabled':cnInstancia.disabled == true}" 
+									ng-show="cnInstancia.modificar" aria-label="Center Align" type="button"
+									data-toggle="tooltip" data-placement="top" title="Modifcar concepto">
+									    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+									</button>
+								</div>		
+							</div>
+						</div>							
 						<div class="form-group" ng-show="!cnInstancia.modificar">
 							<div class="col-xs-offset-4 col-xs-5">
 								<button type="submit" class="btn btn-primary" ng-click="cnInstancia.modificarInstancia()">Modificar</button>
@@ -107,4 +126,44 @@
 			</div>
 		</div>
 	</div>
+	
+	
+		<!-- Modal actualizar Concepto-->
+	<div class="modal fade" id="verModalactualizarConceptoInstancia1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Actualizar Concepto</h4>
+				</div>
+				<div class="inicioTexto" >					
+					<div class="row centered">
+						<div class="col-xs-2 divCentrado formulario" >
+							<label class="control-label col-xs-2">Concepto:</label>
+						</div>
+						<div class="col-xs-6 divCentrado formulario">
+       						<div angucomplete-alt
+								 id="completeListaConceptoInstancia1" placeholder="Concepto"
+								  maxlength="50"
+								  pause="100"
+								  selected-object="cnInstancia.varEdicion.conceptoSelected" 
+								  local-data="cnInstancia.listaConcepto" 
+								  search-fields="nombre" 
+								  title-field="nombre"
+								  minlength="1" 
+								  input-class="form-control" 
+								  match-class="highlight">
+       						</div>
+        				</div>
+					</div>						
+				</div>				
+				<div class="modal-footer">
+					<button class="btn btn-primary" type="button" ng-click="cnInstancia.cambieConcepto()">Guardar</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				</div>
+				
+			</div>
+		</div>
+	</div>	
+	
 </div>

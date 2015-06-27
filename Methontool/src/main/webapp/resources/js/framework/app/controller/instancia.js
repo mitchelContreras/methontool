@@ -17,12 +17,14 @@ ControllerInstancia.$inject = ['$rootScope',
                        'InformacionPrincipalApp'
                        ,'FactoryGlosario'
                        ,'FactoryMensajeCarga'
+                       ,'$scope'
                        ];	
 
 function ControllerInstancia($rootScope,
 		InformacionPrincipalApp
 		,FactoryGlosario
 		,FactoryMensajeCarga
+		,$scope
 		){
 	
 	console.log("Entro en ControllerInstancia");
@@ -45,14 +47,89 @@ function ControllerInstancia($rootScope,
 	cnInstancia.alertPositiva = false;
 	cnInstancia.alertNegativa = false;
 	
+	cnInstancia.varEdicion.atributos =
+		[
+			{
+			  "listaAtributo": ["uno", "dos","tres"]
+			  ,"CardinalidadOrigen": "origen"
+			  ,"CardinalidadDestino":"destino"
+			  ,"Nombre":"Atributo Uno"
+			  ,"tipoAributo":"1"
+			  ,"idAtributo":"12"
+			}
+			,{
+			  "listaAtributo": ["cuatro", "cinco","seis"]
+			  ,"CardinalidadOrigen": "M"
+			  ,"CardinalidadDestino":"N"
+			  ,"Nombre":"Atributo Dos"
+			  ,"tipoAributo":"2"
+			  ,"idAtributo":"113"
+			}
+			,{
+			  "listaAtributo": ["siete", "ocho","nueve"]
+			  ,"CardinalidadOrigen": "A"
+			  ,"CardinalidadDestino":"B"
+			  ,"Nombre":"Atributo Tres"
+			  ,"tipoAributo":"3"
+			  ,"idAtributo":"14"
+			}
+		];
+	
+	
+//	{
+//		  "array": [
+//		    {
+//		      "listaAtributo": ["uno", "dos","tres"]
+//		      ,"CardinalidadOrigen": "origen"
+//		      ,"CardinalidadDestino":"destino"
+//		      ,"Nombre":"Atributo Uno"
+//		      ,"tipoAributo":"1"
+//		      ,"idAtributo":"12"
+//		    }
+//		    ,{
+//		      "listaAtributo": ["cuatro", "cinco","seis"]
+//		      ,"CardinalidadOrigen": "M"
+//		      ,"CardinalidadDestino":"N"
+//		      ,"Nombre":"Atributo Dos"
+//		      ,"tipoAributo":"2"
+//		      ,"idAtributo":"113"
+//		    }
+//		    ,{
+//		      "listaAtributo": ["siete", "ocho","nueve"]
+//		      ,"CardinalidadOrigen": "A"
+//		      ,"CardinalidadDestino":"B"
+//		      ,"Nombre":"Atributo Tres"
+//		      ,"tipoAributo":"3"
+//		      ,"idAtributo":"14"
+//		    }
+//		  ]
+//		}
+	
+	
 //-------------------Funciones----------------------------------	
 	
 	cnInstancia.modificarInstancia = modificarInstancia;
 	cnInstancia.modifiqueInstancia = modifiqueInstancia;
 	cnInstancia.cancelaInstancia = cancelaInstancia;
-	cnInstancia.verDescripcionGlosario = verDescripcionGlosario;
+//	cnInstancia.verDescripcionGlosario = verDescripcionGlosario;
 	cnInstancia.seleccioneGlosario = seleccioneGlosario;
+	cnInstancia.cambiarConcepto = cambiarConcepto;
+	cnInstancia.cambieConcepto = cambieConcepto;
 	
+	function cambieConcepto(){
+		console.log("cambie concepto");
+//		cnInstancia.varEdicion.conceptoSelected;
+//		cnRelacion.varEdicion.glosarioOrigen = cnRelacion.varEdicion.glosarioOrigenSelected.originalObject;
+		cnInstancia.varEdicion.glosarioInstanciaActual.concepto = 
+			cnInstancia.varEdicion.conceptoSelected.originalObject;
+		console.log("nuevo concepto "+cnInstancia.varEdicion.conceptoSelected.originalObject.nombre+" "+cnInstancia.varEdicion.conceptoSelected.originalObject.id);
+		$('#verModalactualizarConceptoInstancia1').modal('hide');
+	}
+	function cambiarConcepto(){
+		console.log("Dentro de cambiar concepto");
+		$scope.$broadcast('angucomplete-alt:clearInput', 'completeListaConceptoInstancia1');
+		$('#verModalactualizarConceptoInstancia1').modal('show');
+	}
 	function seleccioneGlosario(elemento, limpiar){
 		cnInstancia.seleccionado = elemento.id;
 		cnInstancia.enBlanco = false;
@@ -124,9 +201,9 @@ function ControllerInstancia($rootScope,
 		cnInstancia.disabled = true;
 		cnInstancia.modificar = false;
 	}
-	function verDescripcionGlosario(){
-		$('#verDescripcionGlosarioInstanciaModal').modal('show');
-	}
+//	function verDescripcionGlosario(){
+//		$('#verDescripcionGlosarioInstanciaModal').modal('show');
+//	}
 	
 	
 

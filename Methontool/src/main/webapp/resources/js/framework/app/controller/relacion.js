@@ -82,7 +82,7 @@ function ControllerRelacion(
 	cnRelacion.creadaRelacion = creadaRelacion;
 	
 	function creadaRelacion(){
-		cnRelacion.varEdicion.glosarioOrigen = cnRelacion.varEdicion.glosarioOrigenSelected.originalObject;
+//		cnRelacion.varEdicion.glosarioOrigen = cnRelacion.varEdicion.glosarioOrigenSelected.originalObject;
 		cnRelacion.varEdicion.glosarioDestino = cnRelacion.varEdicion.glosarioDestinoSelected.originalObject;
 		
 		console.log("cnRelacion.glosarioRelacionActual.id "+cnRelacion.glosarioRelacionActual.id);
