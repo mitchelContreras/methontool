@@ -47,33 +47,7 @@ function ControllerInstancia($rootScope,
 	cnInstancia.alertPositiva = false;
 	cnInstancia.alertNegativa = false;
 	
-	cnInstancia.varEdicion.atributos =
-		[
-			{
-			  "listaAtributo": ["uno", "dos","tres"]
-			  ,"CardinalidadOrigen": "origen"
-			  ,"CardinalidadDestino":"destino"
-			  ,"Nombre":"Atributo Uno"
-			  ,"tipoAributo":"1"
-			  ,"idAtributo":"12"
-			}
-			,{
-			  "listaAtributo": ["cuatro", "cinco","seis"]
-			  ,"CardinalidadOrigen": "M"
-			  ,"CardinalidadDestino":"N"
-			  ,"Nombre":"Atributo Dos"
-			  ,"tipoAributo":"2"
-			  ,"idAtributo":"113"
-			}
-			,{
-			  "listaAtributo": ["siete", "ocho","nueve"]
-			  ,"CardinalidadOrigen": "A"
-			  ,"CardinalidadDestino":"B"
-			  ,"Nombre":"Atributo Tres"
-			  ,"tipoAributo":"3"
-			  ,"idAtributo":"14"
-			}
-		];
+
 	
 	
 //	{
@@ -115,7 +89,40 @@ function ControllerInstancia($rootScope,
 	cnInstancia.seleccioneGlosario = seleccioneGlosario;
 	cnInstancia.cambiarConcepto = cambiarConcepto;
 	cnInstancia.cambieConcepto = cambieConcepto;
+	cnInstancia.verAtributoLista = verAtributoLista;
+	cnInstancia.eliminarAtributoLista = eliminarAtributoLista;
+	cnInstancia.agregarAtributoLista = agregarAtributoLista;
+	cnInstancia.confirmoAgregarAtributoLista = confirmoAgregarAtributoLista;
 	
+	function confirmoAgregarAtributoLista(){
+		console.log("confirmoAgregarAtributoLista");
+		$('#verModalAlertaAgregarNuevoValorListaInstancia1').modal('hide');
+		$('#verModalagregarNuevoValorListaInstancia1').modal('show');
+	}
+	function agregarAtributoLista (atributo){
+		console.log("agregarAtributoLista");
+		$('#verModalAlertaAgregarNuevoValorListaInstancia1').modal('show');
+	}
+	function eliminarAtributoLista(posicion, atributo){
+		console.log("eliminarAtributoLista");
+	}
+	function verAtributoLista(atributo){
+		console.log("verAtributoLista");
+		cnInstancia.auxAtributo = {};
+		cnInstancia.auxAtributo.nombre = atributo;
+		cnInstancia.auxAtributo.cardMin = atributo.CardinalidadOrigen;
+		cnInstancia.auxAtributo.carMax = atributo.CardinalidadDestino;
+		cnInstancia.auxAtributo.tipoAtributo = atributo.tipoAributo;
+		cnInstancia.auxAtributo.descripcion = atributo.descripcion;
+//		  "listaAtributo": ["uno", "dos","tres"]
+//		  ,"CardinalidadOrigen": "origen"
+//		  ,"CardinalidadDestino":"destino"
+//		  ,"Nombre":"Atributo Uno"
+//		  ,"tipoAributo":"1"
+//		  ,"idAtributo":"12"
+//		  ,"descripcion":"describiendote"	  
+		$('#verModaldescripcionAtributoInstancia1').modal('show');
+	}
 	function cambieConcepto(){
 		console.log("cambie concepto");
 //		cnInstancia.varEdicion.conceptoSelected;
@@ -131,6 +138,8 @@ function ControllerInstancia($rootScope,
 		$('#verModalactualizarConceptoInstancia1').modal('show');
 	}
 	function seleccioneGlosario(elemento, limpiar){
+		
+	
 		cnInstancia.seleccionado = elemento.id;
 		cnInstancia.enBlanco = false;
 		cnInstancia.modificar = false;
@@ -172,6 +181,39 @@ function ControllerInstancia($rootScope,
 //	                }
 //	            }
 //	        );
+		
+		
+		cnInstancia.varEdicion.atributos =
+			[
+				{
+				  "listaAtributo": ["uno", "dos","tres"]
+				  ,"CardinalidadOrigen": "origen"
+				  ,"CardinalidadDestino":"destino"
+				  ,"Nombre":"Atributo Uno"
+				  ,"tipoAributo":"1"
+				  ,"idAtributo":"12"
+				  ,"descripcion":"describiendote"	  
+				}
+				,{
+				  "listaAtributo": ["cuatro", "cinco","seis"]
+				  ,"CardinalidadOrigen": "M"
+				  ,"CardinalidadDestino":"N"
+				  ,"Nombre":"Atributo Dos"
+				  ,"tipoAributo":"2"
+				  ,"idAtributo":"113"
+					  ,"descripcion":"describiendote"	
+				}
+				,{
+				  "listaAtributo": ["siete", "ocho","nueve"]
+				  ,"CardinalidadOrigen": "A"
+				  ,"CardinalidadDestino":"B"
+				  ,"Nombre":"Atributo Tres"
+				  ,"tipoAributo":"3"
+				  ,"idAtributo":"14"
+					  ,"descripcion":"describiendote"	
+				}
+			];
+
 	}
 	function modificarInstancia (){
 		cnInstancia.disabled = false;
