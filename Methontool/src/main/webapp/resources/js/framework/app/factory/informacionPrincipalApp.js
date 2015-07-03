@@ -74,7 +74,7 @@ InformacionPrincipalApp.$inject = ['$rootScope'];
 			$rootScope.actual.revisarOntologia = revisarOntologia;
 			$rootScope.actual.exportar = exportar;
 			$rootScope.actual.relacionDos = relacionDos;
-			$rootScope.actual.relacionDos = instanciaDos;
+			$rootScope.actual.instanciaDos = instanciaDos;
 		};		
 		
 		

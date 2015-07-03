@@ -116,18 +116,15 @@
 			<div ng-repeat="atributo in cnInstancia.varEdicion.atributos">
 			
 				<div class="form-group">
-					<div class="col-xs-2">
+					<div class="col-xs-4 control-label" >
 						<div class="btn-group">
 							<button ng-click="cnInstancia.verAtributoLista(atributo)" 
 							class="btn btn-link " 
-							ng-class="{'disabled': cnInstancia.disabled == true}" 
-							ng-show="cnInstancia.modificar" aria-label="Center Align" type="button"
+							aria-label="Center Align" type="button"
 							data-toggle="tooltip" data-placement="top" title="Ver descripción atirbuto">
-							    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+							    <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
 							</button>
-						</div>									
-					</div>
-					<div class="col-xs-4 control-label" >
+						</div>
 						<label>{{atributo.Nombre}}:</label>
 					</div>
 					<div class="col-xs-5">
@@ -227,43 +224,43 @@
 				</div>
 				<div class="inicioTexto">
 					<div class="row centered">
-						<div class="col-xs-2 divCentrado formulario" >
-							<label class="control-label col-xs-2">Nombre:</label>
+						<div class="col-xs-4 divCentrado formulario" >
+							<label class="control-label col-xs-12">Nombre:</label>
 						</div>
-						<div class="col-xs-6 divCentrado formulario">
-							<input type="text" class="form-control" placeholder="Nombre" ng-model="cnInstancia.auxAtributo.nombre">
-						</div>
-					</div>
-					<div class="row centered">
-						<div class="col-xs-2 divCentrado formulario" >
-							<label class="control-label col-xs-2">Descripción:</label>
-						</div>
-						<div class="col-xs-6 divCentrado formulario">
-							<input type="text" class="form-control" placeholder="Nombre" ng-model="cnInstancia.auxAtributo.descripcion">
+						<div class="col-xs-5 divCentrado formulario">
+							<input ng-disabled="true" type="text" class="form-control" placeholder="Nombre" ng-model="cnInstancia.auxAtributo.nombre">
 						</div>
 					</div>
 					<div class="row centered">
-						<div class="col-xs-2 divCentrado formulario" >
-							<label class="control-label col-xs-2">Cardinalidad Min:</label>
+						<div class="col-xs-4 divCentrado formulario" >
+							<label class="control-label col-xs-12">Descripción:</label>
 						</div>
-						<div class="col-xs-6 divCentrado formulario">
-							<input type="text" class="form-control" placeholder="Nombre" ng-model="cnInstancia.auxAtributo.cardMin">
+						<div class="col-xs-5 divCentrado formulario">
+							<input ng-disabled="true" type="text" class="form-control" placeholder="Nombre" ng-model="cnInstancia.auxAtributo.descripcion">
 						</div>
 					</div>
 					<div class="row centered">
-						<div class="col-xs-2 divCentrado formulario" >
-							<label class="control-label col-xs-2">Cardinalidad MAx:</label>
+						<div class="col-xs-4 divCentrado formulario" >
+							<label class="control-label col-xs-12">Cardinalidad Min:</label>
 						</div>
-						<div class="col-xs-6 divCentrado formulario">
-							<input type="text" class="form-control" placeholder="Nombre" ng-model="cnInstancia.auxAtributo.carMax">
+						<div class="col-xs-5 divCentrado formulario">
+							<input ng-disabled="true" type="text" class="form-control" placeholder="Nombre" ng-model="cnInstancia.auxAtributo.cardMin">
+						</div>
+					</div>
+					<div class="row centered">
+						<div class="col-xs-4 divCentrado formulario" >
+							<label class="control-label col-xs-12">Cardinalidad MAx:</label>
+						</div>
+						<div class="col-xs-5 divCentrado formulario">
+							<input ng-disabled="true" type="text" class="form-control" placeholder="Nombre" ng-model="cnInstancia.auxAtributo.carMax">
 						</div>
 					</div>					
 					<div class="row centered">
-						<div class="col-xs-2 divCentrado formulario" >
-							<label class="control-label col-xs-2">Atributo de :</label>
+						<div class="col-xs-4 divCentrado formulario" >
+							<label class="control-label col-xs-12">Atributo de :</label>
 						</div>
-						<div class="col-xs-6 divCentrado formulario">
-							<input type="text" class="form-control" placeholder="Nombre" ng-model="cnInstancia.auxAtributo.tipoAtributo">
+						<div class="col-xs-5 divCentrado formulario">
+							<input ng-disabled="true" type="text" class="form-control" placeholder="Nombre" ng-model="cnInstancia.auxAtributo.tipoAtributo">
 						</div>
 					</div>
 				</div>			
@@ -276,33 +273,22 @@
 	</div>	
 	
 	<!-- Modal alerta de nuevo valor-->
-	<div class="modal fade" id="verModalAlertaAgregarNuevoValorListaInstancia1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="verModalagregarNuevoValorListaInstancia1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Actualizar Concepto</h4>
+					<h4 class="modal-title" id="myModalLabel">Agregar valor</h4>
 				</div>
 				<div class="inicioTexto" >					
 					<div class="row centered">
 						<div class="col-xs-2 divCentrado formulario" >
-							<label class="control-label col-xs-2">Concepto:</label>
+							<label class="control-label col-xs-2">Valor:</label>
 						</div>
 						<div class="col-xs-6 divCentrado formulario">
-       						<div angucomplete-alt
-								 id="completeListaConceptoInstancia1" placeholder="Concepto"
-								  maxlength="50"
-								  pause="100"
-								  selected-object="cnInstancia.varEdicion.conceptoSelected" 
-								  local-data="cnInstancia.listaConcepto" 
-								  search-fields="nombre" 
-								  title-field="nombre"
-								  minlength="1" 
-								  input-class="form-control" 
-								  match-class="highlight">
-       						</div>
-        				</div>
-					</div>						
+							<input type="text" class="form-control" placeholder="Nombre" ng-model="cnGlosario.nuevoAcronimo">
+						</div>
+					</div>					
 				</div>				
 				<div class="modal-footer">
 					<button class="btn btn-primary" type="button" ng-click="cnInstancia.cambieConcepto()">Guardar</button>
@@ -314,36 +300,30 @@
 	</div>
 		
 	<!-- Modal agregar nuevo valor-->
-	<div class="modal fade" id="verModalagregarNuevoValorListaInstancia1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="verModalAlertaAgregarNuevoValorListaInstancia1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Actualizar Concepto</h4>
+					<h4 class="modal-title" id="myModalLabel">Alerta</h4>
 				</div>
 				<div class="inicioTexto" >					
 					<div class="row centered">
-						<div class="col-xs-2 divCentrado formulario" >
-							<label class="control-label col-xs-2">Concepto:</label>
+						<div class="col-xs-10 divCentrado formulario" >
+							El atributo <b>{{cnInstancia.atributoAuxiliar.Nombre}}</b> posee una cardinalidad
+							 <b>[{{cnInstancia.atributoAuxiliar.CardinalidadOrigen}}:{{cnInstancia.atributoAuxiliar.CardinalidadDestino}}]</b>, el agregar un nuevo
+							 registro puede romper la regla. 
 						</div>
-						<div class="col-xs-6 divCentrado formulario">
-       						<div angucomplete-alt
-								 id="completeListaConceptoInstancia1" placeholder="Concepto"
-								  maxlength="50"
-								  pause="100"
-								  selected-object="cnInstancia.varEdicion.conceptoSelected" 
-								  local-data="cnInstancia.listaConcepto" 
-								  search-fields="nombre" 
-								  title-field="nombre"
-								  minlength="1" 
-								  input-class="form-control" 
-								  match-class="highlight">
-       						</div>
-        				</div>
-					</div>						
+					</div>
+					<div class="row centered">
+						<div class="col-xs-10 divCentrado formulario" >
+							¿Seguro que desea continuar?
+						</div>
+					</div>												
 				</div>				
 				<div class="modal-footer">
-					<button class="btn btn-primary" type="button" ng-click="cnInstancia.cambieConcepto()">Guardar</button>
+					
+					<button class="btn btn-primary" type="button" ng-click="cnInstancia.confirmoAgregarAtributoLista()">Aceptar</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 				</div>
 				

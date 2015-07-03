@@ -101,15 +101,18 @@ function ControllerInstancia($rootScope,
 	}
 	function agregarAtributoLista (atributo){
 		console.log("agregarAtributoLista");
+		cnInstancia.atributoAuxiliar = atributo;
 		$('#verModalAlertaAgregarNuevoValorListaInstancia1').modal('show');
 	}
 	function eliminarAtributoLista(posicion, atributo){
-		console.log("eliminarAtributoLista");
+		console.log("eliminarAtributoLista "+posicion+" atributo.listaAtributo.length: "+atributo.listaAtributo.length);
+		atributo.listaAtributo.splice(posicion, 1);
+		console.log("atributo.listaAtributo.length: "+atributo.listaAtributo.length);
 	}
 	function verAtributoLista(atributo){
 		console.log("verAtributoLista");
 		cnInstancia.auxAtributo = {};
-		cnInstancia.auxAtributo.nombre = atributo;
+		cnInstancia.auxAtributo.nombre = atributo.Nombre;
 		cnInstancia.auxAtributo.cardMin = atributo.CardinalidadOrigen;
 		cnInstancia.auxAtributo.carMax = atributo.CardinalidadDestino;
 		cnInstancia.auxAtributo.tipoAtributo = atributo.tipoAributo;
