@@ -1,5 +1,7 @@
 package com.ciensUCV.Methontool.model;
 
+import java.util.ArrayList;
+
 public class AtributoInstancia {
 
 	private int id;
@@ -12,6 +14,7 @@ public class AtributoInstancia {
 	private String cardinalidadMin;
 	private String cardinalidadMax;
 	private String value;
+	private ArrayList<String> arrValue;
 	
 	
 	public AtributoInstancia(int id, int idGlosario, int idGlosarioConcepto,
@@ -29,6 +32,7 @@ public class AtributoInstancia {
 		this.cardinalidadMin = cardinalidadMin;
 		this.cardinalidadMax = cardinalidadMax;
 		this.value = value;
+		arrValue = new ArrayList<String> ();
 	}
 
 	public AtributoInstancia() {
@@ -36,6 +40,7 @@ public class AtributoInstancia {
 		// TODO Auto-generated constructor stub
 		this.tipoDeDato = new TipoDeDato();
 		this.medida = new Medida();
+		arrValue = new ArrayList<String> ();
 	}
 
 	@Override

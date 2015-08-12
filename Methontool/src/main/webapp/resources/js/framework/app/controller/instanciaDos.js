@@ -37,6 +37,7 @@ function ControllerInstanciaDos($rootScope,
 	cnInstanciaDos.varEdicion = {};
 	cnInstanciaDos.varEdicion.glosarioConceptoActual = {};
 	
+
 //-------------------Variables----------------------------------
 	cnInstanciaDos.listaInstancia = {};
 	cnInstanciaDos.listaConcepto = {};
@@ -44,6 +45,80 @@ function ControllerInstanciaDos($rootScope,
 	cnInstanciaDos.mensajeAlertNegativa = "";
 	cnInstanciaDos.alertPositiva = false;
 	cnInstanciaDos.alertNegativa = false;
+	
+	
+//	nombre:
+//	tipoValor:
+//	precision:
+//	rangoValores:
+//	cardinalidadOrigen:
+//	cardinalidadDestino:
+//	valor: 		
+	
+	cnInstanciaDos.varEdicion.atributosClase =
+		[
+			{
+			  "nombre": "nombreUno"
+			  ,"cardinalidadOrigen": "origen"
+			  ,"cardinalidadDestino":"destino"
+			  ,"tipoValor":"tipo valor 1"
+			  ,"precision":"precionando"
+			  ,"rangoValores":"rango valorcito"
+			  ,"valor":"valororores"	  
+			}
+			,{
+					"nombre": "nombreDos"
+					  ,"cardinalidadOrigen": "origen3"
+					  ,"cardinalidadDestino":"destino3"
+					  ,"tipoValor":"tipo valor 123"
+					  ,"precision":"precionando"
+					  ,"rangoValores":"rango valorcito"
+					  ,"valor":"valororores"	  
+			},{
+				  "nombre": "nombreTres"
+					  ,"cardinalidadOrigen": "origen2"
+					  ,"cardinalidadDestino":"destino2"
+					  ,"tipoValor":"tipo valor 431"
+					  ,"precision":"precionando"
+					  ,"rangoValores":"rango valorcito"
+					  ,"valor":"valororores"	  
+			}
+		];
+
+
+	cnInstanciaDos.varEdicion.atributosInstancia =
+		[
+			{
+			  "nombre": "nombreUno"
+			  ,"cardinalidadOrigen": "origen"
+			  ,"cardinalidadDestino":"destino"
+			  ,"tipoValor":"tipo valor 1"
+			  ,"precision":"precionando"
+			  ,"rangoValores":"rango valorcito"
+			  ,"valorDefecto":"valororores"	  
+			  ,"medida":"medias"
+			}
+			,{
+					"nombre": "nombreDos"
+					  ,"cardinalidadOrigen": "origen3"
+					  ,"cardinalidadDestino":"destino3"
+					  ,"tipoValor":"tipo valor 123"
+					  ,"precision":"precionando"
+					  ,"rangoValores":"rango valorcito"
+					  ,"valorDefecto":"valororores"	  
+					  ,"medida":"medias"	  
+			},{
+				  "nombre": "nombreTres"
+					  ,"cardinalidadOrigen": "origen2"
+					  ,"cardinalidadDestino":"destino2"
+					  ,"tipoValor":"tipo valor 431"
+					  ,"precision":"precionando"
+					  ,"rangoValores":"rango valorcito"
+					  ,"valorDefecto":"valororores"	  
+					  ,"medida":"medias"  
+			}
+		];
+	
 	
 //-------------------Funciones----------------------------------	
 	
@@ -66,7 +141,7 @@ function ControllerInstanciaDos($rootScope,
 			console.log("limpiar en select");
 			cnInstanciaDos.alertPositiva = false;
 		}
-		cnInstanciaDos.varEdicion = {};
+//		cnInstanciaDos.varEdicion = {};
 		cnInstanciaDos.varEdicion.glosarioConceptoActual = {};
 		
 //		asigno la relacion con la que estoy trabajando

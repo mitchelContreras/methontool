@@ -91,6 +91,55 @@
 								<input type="text" class="form-control" placeholder="Nombre" ng-disabled="true" ng-model="cnInstanciaDos.varEdicion.glosarioConceptoActual.nombre">
 							</div>
 						</div>
+					<h3>Atributo de Clase</h3>		
+					<table class="table table-hover">
+					    <thead>
+					      <tr>
+					        <th>Nombre</th>
+					        <th>Tipo valor</th>
+					        <th>Precisión</th>
+					        <th>Rango valores</th>
+					        <th>Cardinalidad</th>
+					        <th>Valor</th>
+					      </tr>
+					    </thead>
+    					<tbody>
+    						<tr ng-repeat="row in cnInstanciaDos.varEdicion.atributosClase">
+    							<td>{{row.nombre}}</td>
+					        	<td>{{row.tipoValor}}</td>
+					       		<td>{{row.precision}}</td> 
+    							<td>{{row.rangoValores}}</td>
+					        	<td>[{{row.cardinalidadOrigen}}:{{cardinalidadDestino}}]</td>
+					       		<td>{{row.valor}}</td>
+    						</tr>
+    					</tbody>
+    				</table>	
+					<h3>Atributo de Instancia</h3>			
+					<table class="table table-hover">
+					    <thead>
+					      <tr>
+					        <th>Nombre</th>
+					        <th>Tipo valor</th>
+					        <th>Precisión</th>
+					        <th>Medida</th>
+					        <th>Rango valores</th>
+					        <th>Cardinalidad</th>
+					        <th>Valor por defecto</th>
+					      </tr>
+					    </thead>
+    					<tbody>
+    						<tr ng-repeat="row in cnInstanciaDos.varEdicion.atributosInstancia">
+    							<td>{{row.nombre}}</td>
+					        	<td>{{row.tipoValor}}</td>
+					       		<td>{{row.precision}}</td> 
+					       		<td>{{row.medida}}</td> 
+    							<td>{{row.rangoValores}}</td>
+					        	<td>[{{row.cardinalidadOrigen}}:{{cardinalidadDestino}}]</td>
+					       		<td>{{row.valorDefecto}}</td>
+    						</tr>
+    					</tbody>
+    				</table>					
+    									
 						<div class="form-group" ng-show="!cnInstanciaDos.modificar">
 							<div class="col-xs-offset-4 col-xs-5">
 								<button type="submit" class="btn btn-primary" ng-click="cnInstanciaDos.modificarInstanciaDos()">Modificar</button>

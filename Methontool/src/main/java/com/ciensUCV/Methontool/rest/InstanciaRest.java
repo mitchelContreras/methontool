@@ -42,6 +42,18 @@ public class InstanciaRest {
 		elementosMensaje.setSucces(true);
 		return elementosMensaje;
 	}
+	
+	@RequestMapping(value="/api/proyecto/{idProyecto}/instancia/{idInstancia}", method = RequestMethod.GET)
+	public @ResponseBody ElementoMensaje<Instancia> verInstancia(
+			@PathVariable("idProyecto") int idProyecto,
+			@PathVariable("idInstancia") int idInstancia
+			){
+		logger.trace("verInstancia");
+		logger.trace("idProyecto "+idProyecto);
+		logger.trace("idInstancia "+idInstancia);
+		ElementoMensaje<Instancia> elementoMensaje = null;
+		return elementoMensaje;
+	}
 
-
+	
 }

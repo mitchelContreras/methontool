@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import com.ciensUCV.Methontool.dao.ConceptoDAO;
 import com.ciensUCV.Methontool.dao.ConstanteDAO;
 import com.ciensUCV.Methontool.dao.GlosarioDAO;
 import com.ciensUCV.Methontool.dao.InstanciaDAO;
+import com.ciensUCV.Methontool.dao.InstanciadoDAO;
 import com.ciensUCV.Methontool.dao.MedidaDAO;
 import com.ciensUCV.Methontool.dao.ProyectoDAO;
 import com.ciensUCV.Methontool.dao.ReglaDAO;
@@ -22,6 +25,7 @@ import com.ciensUCV.Methontool.model.AtributoClase;
 import com.ciensUCV.Methontool.model.AtributoInstancia;
 import com.ciensUCV.Methontool.model.Constante;
 import com.ciensUCV.Methontool.model.Instancia;
+import com.ciensUCV.Methontool.model.Instanciado;
 import com.ciensUCV.Methontool.model.Medida;
 import com.ciensUCV.Methontool.model.NivelFormalidad;
 import com.ciensUCV.Methontool.model.Proyecto;
@@ -30,6 +34,9 @@ import com.ciensUCV.Methontool.model.Taxonomia;
 import com.ciensUCV.Methontool.model.TipoDeDato;
 import com.ciensUCV.Methontool.rest.model.ElementoMensaje;
 import com.ciensUCV.Methontool.util.VariablesConfiguracion;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 
 
@@ -183,7 +190,7 @@ public class PruebaFunciones {
 //		TipoDeDatoDAO tipoDeDatoDAO = (TipoDeDatoDAO)  context.getBean("tipoDeDatoDAO");
 //		logger.trace("total lista2 "+tipoDeDatoDAO.listarTipoDeDato().get(0).getCodigo());
 		
-		ConstanteDAO constanteDAO = (ConstanteDAO) context.getBean("constanteDAO");
+//		ConstanteDAO constanteDAO = (ConstanteDAO) context.getBean("constanteDAO");
 //		int salida = constanteDAO.crearConstante(26);
 //		logger.trace("salida es "+salida);
 		
@@ -203,18 +210,60 @@ public class PruebaFunciones {
 //		logger.trace("medida "+constante.getMedida().toString());
 //		logger.trace("dato "+constante.getTipoDeDato().toString());
 		
-		AxiomaDAO axiomaDAO = (AxiomaDAO) context.getBean("axiomaDAO");
+//		AxiomaDAO axiomaDAO = (AxiomaDAO) context.getBean("axiomaDAO");
 //		logger.trace("longitud "+axiomaDAO.atrbInstanciaDadoAxioma(1, 30));
 //		axiomaDAO.verAxioma(1, 30);
-		axiomaDAO.crearAxioma(1, 1);
+//		axiomaDAO.crearAxioma(1, 1);
 		
-		ReglaDAO reglaDAO = (ReglaDAO) context.getBean("reglaDAO");
+//		ReglaDAO reglaDAO = (ReglaDAO) context.getBean("reglaDAO");
 //		logger.trace("concepto "+reglaDAO.conceptoDadoRegla(1, 34));
 //		logger.trace("relacion "+reglaDAO.relacionDadoRegla(1, 34));
 //		logger.trace("clase "+reglaDAO.atrbClaseDadoRegla(1, 34));
 //		logger.trace("instancia "+reglaDAO.atrbInstanciaDadoRegla(1, 34));
-		logger.trace(reglaDAO.verRegla(1, 34).toString());
-		reglaDAO.crearRegla(1, 1);
+		//logger.trace(reglaDAO.verRegla(1, 34).toString());
+		//reglaDAO.crearRegla(1, 1);
+		
+//		Instanciado instanciado = new Instanciado ();
+//		Instancia instancia = new Instancia ();
+//		instancia.setId(31);
+//		instancia.setIdGlosario(1);
+//		instancia.setIdGlosarioConceptoRelacion(1);
+//		instanciado.setInstancia(instancia);
+//		Gson definicion;
+//		definicion = new Gson();
+//		definicion.toJson("{\"username\":\"robert\",\"posts\":100122,\"emailaddress\":\"robert@omniti.com\"}");
+//		logger.trace("definicion "+definicion.toString());
+////		logger.trace("definicion "+definicion.toJson(jsonElement));
+//		JsonParser parser = new JsonParser();
+//		JsonObject o = (JsonObject)parser.parse("{\"a\": \"A\"}");
+//		JsonObject b = (JsonObject)parser.parse("{\"username\":\"robert\",\"posts\":100122,\"emailaddress\":[\"robert@omniti.com\",\"robert@omniti.com\",\"robert@omniti.com\",\"robert@omniti.com\"]}");
+//		logger.trace("o "+o.toString());
+//		logger.trace("b "+b.toString());
+//		o = (JsonObject)parser.parse(b.toString());
+//		logger.trace("o "+o.toString());
+//		//instanciado.setDefinicion(o);
+		InstanciadoDAO instanciadoDAO = (InstanciadoDAO) context.getBean("instanciadoDAO");
+//		//logger.trace("salida es "+instanciadoDAO.crearInstanciado(instanciado, 1));
+//		//instanciado.setId(1);
+//		//logger.trace("modificar "+instanciadoDAO.actualizarInstanciado(instanciado, 1));
+//		logger.trace("ver "+instanciadoDAO.verInstanciado(instanciado, 1));
+		
+//		***********************************
+		Instanciado instanciado = new Instanciado ();
+		Instancia instancia = new Instancia ();
+		instancia.setId(32);
+		instancia.setIdGlosarioConceptoRelacion(1);
+		JsonParser parser = new JsonParser();
+		JsonObject b = (JsonObject)parser.parse("{\"username\":\"robert\",\"posts\":100122,\"emailaddress\":[\"robert@omniti.com\",\"robert@omniti.com\",\"robert@omniti.com\",\"robert@omniti.com\"]}");
+		instanciado.setInstancia(instancia);
+//		instanciado.setDefinicion(b);
+//		logger.trace("salida es "+instanciadoDAO.crearInstanciado(instanciado, 1));
+		JsonObject o = (JsonObject)parser.parse("{\"a\": \"A\"}");
+//		instanciado.setDefinicion(o);
+//		instanciado.setId(7);
+//		logger.trace("modificar "+instanciadoDAO.actualizarInstanciado(instanciado, 1));
+		logger.trace("ver "+instanciadoDAO.verInstanciado(instanciado, 1));
+		
 	}
 
 }

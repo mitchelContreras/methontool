@@ -47,9 +47,9 @@ java.lang.NullPointerException
 		</dependency>
 		<!--postgresql-->
 		<dependency>
-			<groupId>postgresql</groupId>
+			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>9.1-901-1.jdbc4</version>
+			<version>9.4-1201-jdbc41</version>
 		</dependency>
 		<!-- Necesario para REst y JSON -->
 		<dependency>
@@ -150,7 +150,14 @@ java.lang.NullPointerException
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
-		</dependency>        
+		</dependency>
+		
+		<!-- Para Json en JAVA --> 
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>       
 	</dependencies>
     <build>
         <plugins>

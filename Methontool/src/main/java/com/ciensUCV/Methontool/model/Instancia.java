@@ -34,6 +34,13 @@ public class Instancia {
 	public void setIdGlosarioConceptoRelacion(int idGlosarioConceptoRelacion) {
 		this.idGlosarioConceptoRelacion = idGlosarioConceptoRelacion;
 	}
+
+	@Override
+	public String toString() {
+		return "Instancia [id=" + id + ", idGlosario=" + idGlosario
+				+ ", idGlosarioConceptoRelacion=" + idGlosarioConceptoRelacion
+				+ "]";
+	}
 	
 
 }
