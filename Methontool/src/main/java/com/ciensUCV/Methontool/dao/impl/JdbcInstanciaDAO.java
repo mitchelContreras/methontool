@@ -109,5 +109,48 @@ public class JdbcInstanciaDAO implements InstanciaDAO {
 			}
 		}
 	}
+	@Override
+	public Instancia verInstanciaDadoIdInstancia(int idInstancia) {
+		// TODO Auto-generated method stub
+		String sql;
+		sql = "select id_instancia "
+				+ ",id_glosario_instancia "
+				+ ", id_glosario_concepto"
+				+ " from instancia"
+				+ " where id_instancia = ?";
+		
+		Instancia instancia = new Instancia();
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idInstancia);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				instancia = new Instancia();
+				instancia.setId(rs.getInt("id_instancia"));
+				instancia.setIdGlosario(rs.getInt("id_glosario_instancia"));
+				instancia.setIdGlosarioConceptoRelacion(rs.getInt("id_glosario_concepto"));
+			}
+			rs.close();
+			ps.close();
+			return instancia;	
+		} catch (SQLException e) {
+			logger.info("SQLException "+e);
+			throw new RuntimeException(e);
+		} catch(Exception e) {
+			logger.info("error "+e.toString());
+			return instancia;	
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					return instancia;
+				}
+			}
+		}
+	}
 
 }

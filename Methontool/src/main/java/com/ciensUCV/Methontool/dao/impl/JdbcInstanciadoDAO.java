@@ -38,7 +38,7 @@ public class JdbcInstanciadoDAO implements InstanciadoDAO {
 			ps.setInt(1,idProyecto);
 			ps.setInt(2, instanciado.getInstancia().getIdGlosarioConceptoRelacion());
 			ps.setInt(3, instanciado.getInstancia().getId());
-			ps.setString(4, instanciado.getDefinicion().toString());
+			ps.setString(4, instanciado.getDefinicion());
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				instanciado.setId(rs.getInt("id_instanciado"));
@@ -80,7 +80,7 @@ public class JdbcInstanciadoDAO implements InstanciadoDAO {
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, instanciado.getDefinicion().toString());
+			ps.setString(1, instanciado.getDefinicion());
 			ps.setInt(2, idProyecto);
 			ps.setInt(3, instanciado.getInstancia().getIdGlosarioConceptoRelacion());
 			ps.setInt(4, instanciado.getInstancia().getId());
@@ -134,7 +134,7 @@ public class JdbcInstanciadoDAO implements InstanciadoDAO {
 	            dataObject.setType("json");
 	            dataObject = (PGobject)rs.getObject("definicion");
 	            jsonObject = (JsonObject) parser.parse(dataObject.toString());
-				instanciado.setDefinicion(jsonObject);
+				instanciado.setDefinicion(jsonObject.toString());
 				instanciado.getInstancia().setIdGlosarioConceptoRelacion(rs.getInt("id_concepto"));
 				instanciado.setId(rs.getInt("id_instanciado"));
 			}
@@ -145,7 +145,7 @@ public class JdbcInstanciadoDAO implements InstanciadoDAO {
 			logger.info("SQLException "+e);
 			throw new RuntimeException(e);
 		} catch(Exception e) {
-			logger.info("error "+e.toString());
+			logger.info("Exception "+e);
 			return instanciado;	
 		} finally {
 			if (conn != null) {

@@ -29,9 +29,21 @@ public class JdbcAtributoInstanciaDAO implements AtributoInstanciaDAO {
 			int idGlosarioConcepto) {
 		// TODO Auto-generated method stub
 		String sql;
-		sql = "select id_glosario_atributo"
-				+ " from atributo_instancia"
-				+ " where id_glosario_concepto = ?";
+		sql = "select id_atributo, "
+				+ "id_glosario_atributo, "
+				+ "id_glosario_concepto, "
+				+ "cod_dato, "
+				+ "cod_medida, "
+				+ "precision, "
+				+ "rango_valores, "
+				+ "cardinalidad_minimo, "
+				+ "cardinalidad_maximo, "
+				+ "valor_defecto "
+				+ "from atributo_instancia "
+				+ "where id_glosario_concepto = ? ";		
+//		sql = "select id_glosario_atributo"
+//				+ " from atributo_instancia"
+//				+ " where id_glosario_concepto = ?";
 
 		Connection conn = null;
 		AtributoInstancia atributoInstancia = null;
@@ -44,7 +56,17 @@ public class JdbcAtributoInstanciaDAO implements AtributoInstanciaDAO {
 			
 			while(rs.next()){
 				atributoInstancia = new AtributoInstancia();
+//				atributoInstancia.setIdGlosario(rs.getInt("id_glosario_atributo"));
+				atributoInstancia.setId(rs.getInt("id_atributo"));
 				atributoInstancia.setIdGlosario(rs.getInt("id_glosario_atributo"));
+				atributoInstancia.setIdGlosarioConcepto(rs.getInt("id_glosario_concepto"));
+				atributoInstancia.setTipoDeDato(new TipoDeDato(0, rs.getString("cod_dato"), null, null));
+				atributoInstancia.setMedida(new Medida(0, rs.getString("cod_medida"), null, null));
+				atributoInstancia.setPrecision(rs.getString("precision"));
+				atributoInstancia.setRangoValores(rs.getString("rango_valores"));
+				atributoInstancia.setCardinalidadMin(rs.getString("cardinalidad_minimo"));
+				atributoInstancia.setCardinalidadMax(rs.getString("cardinalidad_maximo"));
+				atributoInstancia.setValue(rs.getString("valor_defecto"));
 				arrayList.add(atributoInstancia);
 			}
 			rs.close();

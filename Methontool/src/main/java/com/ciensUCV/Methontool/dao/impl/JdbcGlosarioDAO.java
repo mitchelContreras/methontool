@@ -78,7 +78,53 @@ public class JdbcGlosarioDAO implements GlosarioDAO {
 	@Override
 	public Glosario verGlosario(int idProyecto, int idGlosario) {
 		// TODO Auto-generated method stub
-		return null;
+		String sql;
+		sql = "select "
+				+ "glo.id_glosario "
+				+ ",glo.nombre "
+				+ ",glo.acronimos "
+				+ ",glo.tipo_glosario "
+				+ ",glo.descripcion "
+				+ ",glo.sinonimo "
+				+ ",glo.id_proyecto "
+				+ "from glosario as glo "
+				+ "where glo.id_Proyecto = ? and "
+				+ "glo.id_glosario = ?";
+		Connection conn = null;
+		Glosario glosario = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idProyecto);
+			ps.setInt(2, idGlosario);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				glosario = new Glosario();
+				glosario.setId(rs.getString("id_glosario"));
+				glosario.setNombre(rs.getString("nombre"));
+				glosario.sinonimosStringToArray(rs.getString("sinonimo"));
+				glosario.acronimosStringToArray(rs.getString("acronimos"));
+				glosario.setTipoGlosario(new TipoGlosario (rs.getInt("tipo_glosario"), null, null, null));
+				glosario.setDescripcion (rs.getString("descripcion"));
+			}
+			rs.close();
+			ps.close();
+			return glosario;	
+		} catch (SQLException e) {
+			logger.info("SQLException "+e);
+			throw new RuntimeException(e);
+		} catch(Exception e) {
+			logger.info("error "+e.toString());
+			return glosario;	
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					return glosario;
+				}
+			}
+		}
 	}
 
 	@Override

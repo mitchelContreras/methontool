@@ -7,18 +7,24 @@ public class Instanciado {
 	
 	private int id;
 	private Instancia instancia;
-	private JsonObject definicion;
+	private String definicion;
 	
 	public Instanciado() {
 		super();
 		// TODO Auto-generated constructor stub
 		instancia = new Instancia();
-		definicion = new JsonObject();
 	}
 	public Instanciado(int id, Instancia instancia, JsonObject definicion) {
 		super();
 		instancia = new Instancia();
 		definicion = new JsonObject();		
+		this.id = id;
+		this.instancia = instancia;
+		this.definicion = definicion.getAsString();
+	}
+	public Instanciado(int id, Instancia instancia, String definicion) {
+		super();
+		instancia = new Instancia();	
 		this.id = id;
 		this.instancia = instancia;
 		this.definicion = definicion;
@@ -35,10 +41,13 @@ public class Instanciado {
 	public void setInstancia(Instancia instancia) {
 		this.instancia = instancia;
 	}
-	public JsonObject getDefinicion() {
+	public String getDefinicion() {
 		return definicion;
 	}
 	public void setDefinicion(JsonObject definicion) {
+		this.definicion = definicion.getAsString();
+	}
+	public void setDefinicion(String definicion) {
 		this.definicion = definicion;
 	}
 	@Override

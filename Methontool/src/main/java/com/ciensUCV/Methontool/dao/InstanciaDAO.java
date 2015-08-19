@@ -8,4 +8,5 @@ public interface InstanciaDAO {
 
 	public ArrayList<Instancia> listaInstanciaDadoIdGlosarioConcepto(int idGlosarioConcepto);
 	public ArrayList<Instancia> listarInstanciaSinConceptoAsociado(int idProyecto);
+	public Instancia verInstanciaDadoIdInstancia(int idInstancia);
 }
