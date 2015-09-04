@@ -18,6 +18,7 @@ ControllerInstancia.$inject = ['$rootScope',
                        ,'FactoryGlosario'
                        ,'FactoryMensajeCarga'
                        ,'$scope'
+                       ,'FactoryInstancia'
                        ];	
 
 function ControllerInstancia($rootScope,
@@ -25,6 +26,7 @@ function ControllerInstancia($rootScope,
 		,FactoryGlosario
 		,FactoryMensajeCarga
 		,$scope
+		,FactoryInstancia
 		){
 	
 	console.log("Entro en ControllerInstancia");
@@ -161,14 +163,19 @@ function ControllerInstancia($rootScope,
 //		asigno la relacion con la que estoy trabajando
 		cnInstancia.varEdicion.glosarioInstanciaActual = elemento;
 		
-//		var salida;
-//		salida = FactoryInstancia.verElemento(elemento.id);
-//		FactoryMensajeCarga.abrirMensaje("Cargando");
-//		salida.then(
-//	            function(aux) {
-//	                if(aux.succes){
-//	                	console.log("consultar Instancia es true");
-//
+		var salida;
+		console.log("antes");
+		salida = FactoryInstancia.salida;
+		console.log("Mitchell paso por aqui "+salida);
+		salida = FactoryInstancia.verElemento(elemento.id);
+		FactoryMensajeCarga.abrirMensaje("Cargando");
+		salida.then(
+	            function(aux) {
+	            	console.log("entro en salida");
+	            	console.log("aux es "+JSON.stringify(aux));
+	                if(aux.succes){
+	                	console.log("consultar Instancia es true");
+
 //	            		cnInstancia.varEdicion.tipoDeDato 
 //	            			= FactoryTipoDato.consultarElemento(aux.elemento.tipoDeDato.codigo);
 //	            		
@@ -177,45 +184,45 @@ function ControllerInstancia($rootScope,
 //	            		
 //	            		cnInstancia.varEdicion.medida
 //	                		= FactoryMedida.consultarElemento(aux.elemento.medida.codigo);
-//	                	
-//	                	FactoryMensajeCarga.cerrarMensaje();
-//	                }else{
-//	                	
-//	                }
-//	            }
-//	        );
+	                	
+	                	FactoryMensajeCarga.cerrarMensaje();
+	                }else{
+	                	
+	                }
+	            }
+	        );
 		
 		
-		cnInstancia.varEdicion.atributos =
-			[
-				{
-				  "listaAtributo": ["uno", "dos","tres"]
-				  ,"CardinalidadOrigen": "origen"
-				  ,"CardinalidadDestino":"destino"
-				  ,"Nombre":"Atributo Uno"
-				  ,"tipoAributo":"1"
-				  ,"idAtributo":"12"
-				  ,"descripcion":"describiendote"	  
-				}
-				,{
-				  "listaAtributo": ["cuatro", "cinco","seis"]
-				  ,"CardinalidadOrigen": "M"
-				  ,"CardinalidadDestino":"N"
-				  ,"Nombre":"Atributo Dos"
-				  ,"tipoAributo":"2"
-				  ,"idAtributo":"113"
-					  ,"descripcion":"describiendote"	
-				}
-				,{
-				  "listaAtributo": ["siete", "ocho","nueve"]
-				  ,"CardinalidadOrigen": "A"
-				  ,"CardinalidadDestino":"B"
-				  ,"Nombre":"Atributo Tres"
-				  ,"tipoAributo":"3"
-				  ,"idAtributo":"14"
-					  ,"descripcion":"describiendote"	
-				}
-			];
+//		cnInstancia.varEdicion.atributos =
+//			[
+//				{
+//				  "listaAtributo": ["uno", "dos","tres"]
+//				  ,"CardinalidadOrigen": "origen"
+//				  ,"CardinalidadDestino":"destino"
+//				  ,"Nombre":"Atributo Uno"
+//				  ,"tipoAributo":"1"
+//				  ,"idAtributo":"12"
+//				  ,"descripcion":"describiendote"	  
+//				}
+//				,{
+//				  "listaAtributo": ["cuatro", "cinco","seis"]
+//				  ,"CardinalidadOrigen": "M"
+//				  ,"CardinalidadDestino":"N"
+//				  ,"Nombre":"Atributo Dos"
+//				  ,"tipoAributo":"2"
+//				  ,"idAtributo":"113"
+//					  ,"descripcion":"describiendote"	
+//				}
+//				,{
+//				  "listaAtributo": ["siete", "ocho","nueve"]
+//				  ,"CardinalidadOrigen": "A"
+//				  ,"CardinalidadDestino":"B"
+//				  ,"Nombre":"Atributo Tres"
+//				  ,"tipoAributo":"3"
+//				  ,"idAtributo":"14"
+//					  ,"descripcion":"describiendote"	
+//				}
+//			];
 
 	}
 	function modificarInstancia (){

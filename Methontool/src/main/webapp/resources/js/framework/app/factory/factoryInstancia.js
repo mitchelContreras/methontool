@@ -12,17 +12,21 @@ angular.module('methontool')
 
 	FactoryInstancia.$inject = ['InformacionPrincipalApp'
 	                                ,'$listarInstanciaSinConceptoAsociado'
+	                                ,'$verInstancia'
 	                           ];
 
 	function FactoryInstancia (
 			InformacionPrincipalApp
 			,$listarInstanciaSinConceptoAsociado
+			,$verInstancia
 			){
 		
 		var funcion = {
-//				busca elemento en servicio rest
 				listarElementoSinConceptoAsociado: function (){
 					return listarElementoSinConceptoAsociado();
+				},
+				verElemento: function (idInstancia){
+					return verElemento(idInstancia);
 				}
 			};
 		
@@ -31,12 +35,15 @@ angular.module('methontool')
 				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
 				},{}).$promise;
 		}
-
-		var listaObjeto = [];
-		var listaErrores = [];
-		var existeError = false;
-		var yaConsulte = false;
-
+		
+		function verElemento(idInstancia){
+			console.log("entre en verElemento con "+idInstancia);
+			return 	$verInstancia.get({
+				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto,
+				idInstancia: idInstancia
+				},{}).$promise;
+		}
+		
 		return funcion;
 	}; // fin de factory
 

@@ -17,5 +17,12 @@
             get: {method: 'GET', params: {idProyecto: '@idProyecto'}, isArray:false}
             });
     });
+    
+    proy.factory('$verInstancia',function ($resource){
+    	var urlConsultar = urlProyecto+"/api/proyecto/:idProyecto/instanciado/:idInstancia";
+        return $resource(urlConsultar,{},{
+            get: {method: 'GET', params: {idProyecto: '@idProyecto', idInstancia:'@idInstancia' }, isArray:false}
+            });
+    });
 
 })();

@@ -30,8 +30,7 @@ angular.module('methontool')
 				},
 				verElemento: function (idGlosarioAtributo){
 					return verElemento(idGlosarioAtributo);
-				}
-				,
+				},
 				actualizarElemento: function (idGlosarioAtributo, 
 						cardinalidadMax, 
 						cardinalidadMin, 
