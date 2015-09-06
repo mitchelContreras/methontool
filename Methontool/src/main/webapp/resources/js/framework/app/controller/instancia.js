@@ -39,7 +39,8 @@ function ControllerInstancia($rootScope,
 	
 	//-------------------Variables de edicion---------------------
 	cnInstancia.varEdicion = {};
-	cnInstancia.varEdicion.glosarioInstanciaActual = {};
+	cnInstancia.varAuxiliarDefinicion = [];
+	
 	
 //-------------------Variables----------------------------------
 	cnInstancia.listaInstancia = {};
@@ -174,8 +175,15 @@ function ControllerInstancia($rootScope,
 	            	console.log("entro en salida");
 	            	console.log("aux es "+JSON.stringify(aux));
 	                if(aux.succes){
-	                	console.log("consultar Instancia es true");
-
+	                	console.log("consultar Instancia es true1");
+	                	cnInstancia.varEdicion = aux.elemento;
+	                	//var definicion = aux.elemento.definicion;
+	                	console.log("1 cnInstancia.varEdicion.definicion es "+cnInstancia.varEdicion.definicion);
+	                	cnInstancia.varEdicion.definicion = JSON.parse(cnInstancia.varEdicion.definicion);
+	                	console.log("cnInstancia.varEdicion.definicion.atributoInstancia.length es "+cnInstancia.varEdicion.definicion.atributoInstancia.length);
+	                	cnInstancia.varAuxiliarDefinicion = cnInstancia.varEdicion.definicion.atributoInstancia;
+	                	console.log("cnInstancia.varAuxiliarDefinicion[0] "+JSON.stringify(cnInstancia.varAuxiliarDefinicion[0]));
+	                	//console.log("jsonDef.length "+jsonDef.atributoInstancia.length);
 //	            		cnInstancia.varEdicion.tipoDeDato 
 //	            			= FactoryTipoDato.consultarElemento(aux.elemento.tipoDeDato.codigo);
 //	            		
