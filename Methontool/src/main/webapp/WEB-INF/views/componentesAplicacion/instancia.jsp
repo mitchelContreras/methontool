@@ -88,32 +88,27 @@
 								<label >Nombre:</label>
 							</div>
 							<div class="col-xs-5 ">
-								<input type="text" class="form-control" placeholder="Nombre" ng-disabled="true" ng-model="cnInstancia.varEdicion.glosarioInstanciaActual.nombre">
+								<input type="text" class="form-control" placeholder="Nombre" ng-disabled="true" ng-model="cnInstancia.varEdicion.glosarioInstancia.nombre">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-xs-4 control-label" >
+							<div class="btn-group">
+								<button ng-click="cnInstancia.verConceptoAsociado()" 
+								class="btn btn-link " 
+								aria-label="Center Align" type="button"
+								data-toggle="tooltip" data-placement="top" title="Ver concepto asociado">
+								    <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+								</button>
+							</div>							
 								<label >Concepto:</label>
 							</div>
 							<div class="col-xs-5 ">
-								<div class="col-xs-9">
-									<input type="text" class="form-control" placeholder="Nombre" ng-disabled="true" ng-model="cnInstancia.varEdicion.glosarioInstanciaActual.concepto.nombre">
-								</div>
-								<div class="col-xs-3 ">
-									<div class="btn-group">
-										<button ng-click="cnInstancia.cambiarConcepto()" 
-										class="btn btn-link " 
-										ng-class="{'disabled':cnInstancia.disabled == true}" 
-										ng-show="cnInstancia.modificar" aria-label="Center Align" type="button"
-										data-toggle="tooltip" data-placement="top" title="Modifcar concepto">
-										    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-										</button>
-									</div>		
-								</div>
+								<input type="text" class="form-control" placeholder="Nombre" ng-disabled="true" ng-model="cnInstancia.varEdicion.conceptoAsociado.nombre">
 							</div>
 						</div>		
 									
-			<div ng-repeat="atributo in cnInstancia.varEdicion.atributos">
+			<div ng-repeat="atributo in cnInstancia.varAuxiliarDefinicion">
 			
 				<div class="form-group">
 					<div class="col-xs-4 control-label" >
@@ -125,10 +120,10 @@
 							    <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
 							</button>
 						</div>
-						<label>{{atributo.Nombre}}:</label>
+						<label>{{atributo.nombre}}:</label>
 					</div>
 					<div class="col-xs-5">
-						<div class="row" ng-repeat="valores in atributo.listaAtributo track by $index" id="{{$index}}">
+						<div class="row" ng-repeat="valores in atributo.valores track by $index" id="{{$index}}">
 							<div class="col-xs-9">
 								<input class="form-control" ng-model="valores" ng-disabled="cnInstancia.disabled"></input>
 							</div>
@@ -175,7 +170,52 @@
 		</div>
 	</div>
 	
-	
+	<!--Modal conpceto asociado -->
+	<div class="modal fade" id="verModalverConceptoAsociado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Información Concepto Asociado</h4>
+				</div>
+				<div class="inicioTexto">
+					<div class="row centered">
+						<div class="col-xs-4 divCentrado formulario" >
+							<label class="control-label col-xs-12">Nombre:</label>
+						</div>
+						<div class="col-xs-5 divCentrado formulario">
+							<input ng-disabled="true" type="text" class="form-control" placeholder="" ng-model="cnInstancia.varEdicion.conceptoAsociado.nombre">
+						</div>
+					</div>
+					<div class="row centered">
+						<div class="col-xs-4 divCentrado formulario" >
+							<label class="control-label col-xs-12">Descripción:</label>
+						</div>
+						<div class="col-xs-5 divCentrado formulario">
+							<textarea ng-disabled="true" type="text" class="form-control" placeholder="" ng-model="cnInstancia.varEdicion.conceptoAsociado.descripcion"></textarea>
+						</div>
+					</div>
+					<div class="row centered">
+						<div class="col-xs-4 divCentrado formulario" >
+							<label class="control-label col-xs-12">Sinonimo:</label>
+						</div>
+						<div class="col-xs-5 divCentrado formulario">
+							<div  class="row" ng-repeat="sinonimo in cnInstancia.varEdicion.conceptoAsociado.sinonimos">
+								<div class="col-xs-12">
+										<input ng-disabled="true" type="text" class="form-control" placeholder="" ng-model="sinonimo">
+								</div>
+							</div>	
+						</div>
+					</div>						
+				</div>			
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				</div>
+				
+			</div>
+		</div>
+	</div>	
+		
 		<!-- Modal actualizar Concepto-->
 	<div class="modal fade" id="verModalactualizarConceptoInstancia1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -228,7 +268,7 @@
 							<label class="control-label col-xs-12">Nombre:</label>
 						</div>
 						<div class="col-xs-5 divCentrado formulario">
-							<input ng-disabled="true" type="text" class="form-control" placeholder="Nombre" ng-model="cnInstancia.auxAtributo.nombre">
+							<input ng-disabled="true" type="text" class="form-control" placeholder="" ng-model="cnInstancia.auxAtributo.nombre">
 						</div>
 					</div>
 					<div class="row centered">
@@ -236,7 +276,7 @@
 							<label class="control-label col-xs-12">Descripción:</label>
 						</div>
 						<div class="col-xs-5 divCentrado formulario">
-							<input ng-disabled="true" type="text" class="form-control" placeholder="Nombre" ng-model="cnInstancia.auxAtributo.descripcion">
+							<input ng-disabled="true" type="text" class="form-control" placeholder="" ng-model="cnInstancia.auxAtributo.descripcion">
 						</div>
 					</div>
 					<div class="row centered">
@@ -244,7 +284,7 @@
 							<label class="control-label col-xs-12">Cardinalidad Min:</label>
 						</div>
 						<div class="col-xs-5 divCentrado formulario">
-							<input ng-disabled="true" type="text" class="form-control" placeholder="Nombre" ng-model="cnInstancia.auxAtributo.cardMin">
+							<input ng-disabled="true" type="text" class="form-control" placeholder="" ng-model="cnInstancia.auxAtributo.cardinalidadMinima">
 						</div>
 					</div>
 					<div class="row centered">
@@ -252,17 +292,25 @@
 							<label class="control-label col-xs-12">Cardinalidad MAx:</label>
 						</div>
 						<div class="col-xs-5 divCentrado formulario">
-							<input ng-disabled="true" type="text" class="form-control" placeholder="Nombre" ng-model="cnInstancia.auxAtributo.carMax">
+							<input ng-disabled="true" type="text" class="form-control" placeholder="" ng-model="cnInstancia.auxAtributo.cardinaliadMaxima">
 						</div>
 					</div>					
 					<div class="row centered">
 						<div class="col-xs-4 divCentrado formulario" >
-							<label class="control-label col-xs-12">Atributo de :</label>
+							<label class="control-label col-xs-12">Precisión:</label>
 						</div>
 						<div class="col-xs-5 divCentrado formulario">
-							<input ng-disabled="true" type="text" class="form-control" placeholder="Nombre" ng-model="cnInstancia.auxAtributo.tipoAtributo">
+							<input ng-disabled="true" type="text" class="form-control" placeholder="" ng-model="cnInstancia.auxAtributo.precision">
 						</div>
 					</div>
+					<div class="row centered">
+						<div class="col-xs-4 divCentrado formulario" >
+							<label class="control-label col-xs-12">Rango de valores:</label>
+						</div>
+						<div class="col-xs-5 divCentrado formulario">
+							<input ng-disabled="true" type="text" class="form-control" placeholder="" ng-model="cnInstancia.auxAtributo.rangoValores">
+						</div>
+					</div>					
 				</div>			
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -310,8 +358,8 @@
 				<div class="inicioTexto" >					
 					<div class="row centered">
 						<div class="col-xs-10 divCentrado formulario" >
-							El atributo <b>{{cnInstancia.atributoAuxiliar.Nombre}}</b> posee una cardinalidad
-							 <b>[{{cnInstancia.atributoAuxiliar.CardinalidadOrigen}}:{{cnInstancia.atributoAuxiliar.CardinalidadDestino}}]</b>, el agregar un nuevo
+							El atributo <b>{{cnInstancia.atributoAuxiliar.nombre}}</b> posee una cardinalidad
+							 <b>[{{cnInstancia.atributoAuxiliar.cardinalidadMinima}}:{{cnInstancia.atributoAuxiliar.cardinaliadMaxima}}]</b>, el agregar un nuevo
 							 registro puede romper la regla. 
 						</div>
 					</div>

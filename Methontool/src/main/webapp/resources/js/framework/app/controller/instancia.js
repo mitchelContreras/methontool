@@ -96,6 +96,11 @@ function ControllerInstancia($rootScope,
 	cnInstancia.eliminarAtributoLista = eliminarAtributoLista;
 	cnInstancia.agregarAtributoLista = agregarAtributoLista;
 	cnInstancia.confirmoAgregarAtributoLista = confirmoAgregarAtributoLista;
+	cnInstancia.verConceptoAsociado = verConceptoAsociado;
+	
+	function verConceptoAsociado(){
+		$('#verModalverConceptoAsociado').modal('show');
+	}
 	
 	function confirmoAgregarAtributoLista(){
 		console.log("confirmoAgregarAtributoLista");
@@ -114,19 +119,8 @@ function ControllerInstancia($rootScope,
 	}
 	function verAtributoLista(atributo){
 		console.log("verAtributoLista");
-		cnInstancia.auxAtributo = {};
-		cnInstancia.auxAtributo.nombre = atributo.Nombre;
-		cnInstancia.auxAtributo.cardMin = atributo.CardinalidadOrigen;
-		cnInstancia.auxAtributo.carMax = atributo.CardinalidadDestino;
-		cnInstancia.auxAtributo.tipoAtributo = atributo.tipoAributo;
-		cnInstancia.auxAtributo.descripcion = atributo.descripcion;
-//		  "listaAtributo": ["uno", "dos","tres"]
-//		  ,"CardinalidadOrigen": "origen"
-//		  ,"CardinalidadDestino":"destino"
-//		  ,"Nombre":"Atributo Uno"
-//		  ,"tipoAributo":"1"
-//		  ,"idAtributo":"12"
-//		  ,"descripcion":"describiendote"	  
+		cnInstancia.auxAtributo = atributo; 
+		console.log("verAtributo "+JSON.stringify(cnInstancia.auxAtributo));
 		$('#verModaldescripcionAtributoInstancia1').modal('show');
 	}
 	function cambieConcepto(){
@@ -177,12 +171,18 @@ function ControllerInstancia($rootScope,
 	                if(aux.succes){
 	                	console.log("consultar Instancia es true1");
 	                	cnInstancia.varEdicion = aux.elemento;
+	                	console.log("cnInstancia.varEdicion.instancia.idGlosarioConceptoRelacion "+cnInstancia.varEdicion.instancia.idGlosarioConceptoRelacion);
+	                	cnInstancia.varEdicion.conceptoAsociado = FactoryGlosario.consultarElemento(cnInstancia.varEdicion.instancia.idGlosarioConceptoRelacion);
+	                	cnInstancia.varEdicion.glosarioInstancia = FactoryGlosario.consultarElemento(cnInstancia.varEdicion.instancia.id);
+	                	console.log("cnInstancia.varEdicion.glosarioInstancia "+JSON.stringify(cnInstancia.varEdicion.glosarioInstancia));
+	                	console.log("cnInstancia.varEdicion.conceptoAsociado "+JSON.stringify(cnInstancia.varEdicion.conceptoAsociado));
 	                	//var definicion = aux.elemento.definicion;
 	                	console.log("1 cnInstancia.varEdicion.definicion es "+cnInstancia.varEdicion.definicion);
 	                	cnInstancia.varEdicion.definicion = JSON.parse(cnInstancia.varEdicion.definicion);
 	                	console.log("cnInstancia.varEdicion.definicion.atributoInstancia.length es "+cnInstancia.varEdicion.definicion.atributoInstancia.length);
 	                	cnInstancia.varAuxiliarDefinicion = cnInstancia.varEdicion.definicion.atributoInstancia;
 	                	console.log("cnInstancia.varAuxiliarDefinicion[0] "+JSON.stringify(cnInstancia.varAuxiliarDefinicion[0]));
+	                	console.log("cnInstancia.varEdicion "+JSON.stringify(cnInstancia.varEdicion));
 	                	//console.log("jsonDef.length "+jsonDef.atributoInstancia.length);
 //	            		cnInstancia.varEdicion.tipoDeDato 
 //	            			= FactoryTipoDato.consultarElemento(aux.elemento.tipoDeDato.codigo);
