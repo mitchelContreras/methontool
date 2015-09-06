@@ -101,7 +101,8 @@ public class InstanciadoRest {
 							,arrayAtributoInstancia.get(i).getCardinalidadMin()
 							,arrayAtributoInstancia.get(i).getCardinalidadMax()
 							,glosario.getNombre()
-							,valor);
+							,valor
+							,glosario.getDescripcion());
 				}
 				instanciado.setDefinicion(json);
 				instanciado = instanciadoDAO.crearInstanciado(instanciado, idProyecto);
@@ -153,7 +154,8 @@ public class InstanciadoRest {
 			,String cardinalidadMinima
 			,String cardinaliadMaxima
 			,String nombre
-			,String valores){
+			,String valores
+			,String descripcion){
 		
 		String salida;
 		salida = "{\"id\": "+id+","+
@@ -163,6 +165,7 @@ public class InstanciadoRest {
 				"\"cardinalidadMinima\":\""+cardinalidadMinima+"\","+
 				"\"cardinaliadMaxima\":\""+cardinaliadMaxima+"\","+
 				"\"nombre\":\""+nombre+"\","+
+				"\"descripcion\":\""+descripcion+"\","+
 				"\"valores\":[\""+valores+"\"]}";
 		return salida;
 	}
@@ -174,7 +177,8 @@ public class InstanciadoRest {
 			,String cardinalidadMinima
 			,String cardinaliadMaxima
 			,String nombre
-			,String valores){
+			,String valores
+			,String descripcion){
 		if(msj.equalsIgnoreCase("")){
 			msj = "{\"atributoInstancia\": ["+
 					crearJsonAtributoInstancia(id
@@ -184,7 +188,8 @@ public class InstanciadoRest {
 					,cardinalidadMinima
 					,cardinaliadMaxima
 					,nombre
-					,valores)+"]}";
+					,valores
+					,descripcion)+"]}";
 		}else{
 			int posUlCor = msj.lastIndexOf("]");
 			msj = msj.substring(0, posUlCor);
@@ -196,7 +201,8 @@ public class InstanciadoRest {
 					,cardinalidadMinima
 					,cardinaliadMaxima
 					,nombre
-					,valores)+"]}";
+					,valores
+					,descripcion)+"]}";
 		}
 		return msj;
 	}

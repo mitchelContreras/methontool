@@ -276,7 +276,7 @@
 							<label class="control-label col-xs-12">Descripción:</label>
 						</div>
 						<div class="col-xs-5 divCentrado formulario">
-							<input ng-disabled="true" type="text" class="form-control" placeholder="" ng-model="cnInstancia.auxAtributo.descripcion">
+							<textarea ng-disabled="true" type="text" class="form-control" placeholder="" ng-model="cnInstancia.auxAtributo.descripcion"></textarea>
 						</div>
 					</div>
 					<div class="row centered">
