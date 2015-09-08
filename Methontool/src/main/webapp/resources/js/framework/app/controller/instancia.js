@@ -199,24 +199,32 @@ function ControllerInstancia($rootScope,
 		cnInstancia.modificar = true;
 	}
 	function modifiqueInstancia (){
-//		var salida;
-//		salida = FactoryInstancia.actualizarElemento(
-//				cnInstancia.varEdicion.glosarioInstanciaActual.id
-//				,cnInstancia.varEdicion.medida.codigo
-//				,cnInstancia.varEdicion.tipoDeDato.codigo
-//				,cnInstancia.varEdicion.valor
-//				);
-//		salida.then(
-//            function(aux) {
-//                // success
-//                if(aux.succes){
-//                	console.log("actualizar es true");
-//                	cnInstancia.alertPositiva = true;
-//                	cnInstancia.mensajeAlertPositiva = "La Instancia ha sido actualizado";
-//                	cnInstancia.seleccioneGlosario (cnInstancia.varEdicion.glosarioInstanciaActual, 'false');
-//                }
-//             }
-//		);	
+		var salida;
+		var auxDefinicion = {};
+
+		console.log("cnInstancia.varEdicion.instancia.id=idInstancia "+cnInstancia.varEdicion.instancia.id);
+		console.log("cnInstancia.varEdicion.instancia.idGlosarioConceptoRelacion=idConcepto "+cnInstancia.varEdicion.instancia.idGlosarioConceptoRelacion);
+		console.log("cnInstancia.varEdicion.id=idInstanciado "+cnInstancia.varEdicion.id);
+		auxDefinicion.atributoInstancia = cnInstancia.varAuxiliarDefinicion;
+		console.log("auxDefinicion.atributoInstancia "+JSON.stringify(auxDefinicion));
+//		idInstancia ,idConcepto ,idInstanciado ,definicion
+		salida = FactoryInstancia.actualizarElemento(
+				cnInstancia.varEdicion.instancia.id
+				,cnInstancia.varEdicion.instancia.idGlosarioConceptoRelacion
+				,cnInstancia.varEdicion.id
+				,JSON.stringify(auxDefinicion)
+				);
+		salida.then(
+            function(aux) {
+                // success
+                if(aux.succes){
+                	console.log("actualizar es true");
+                	cnInstancia.alertPositiva = true;
+                	cnInstancia.mensajeAlertPositiva = "La Instancia ha sido actualizado";
+                	cnInstancia.seleccioneGlosario (cnInstancia.varEdicion.instancia, 'false');
+                }
+             }
+		);	
 	}
 	function cancelaInstancia (){
 		seleccioneGlosario(cnInstancia.varEdicion.instancia, 'true');

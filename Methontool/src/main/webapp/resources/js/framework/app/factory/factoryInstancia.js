@@ -13,12 +13,14 @@ angular.module('methontool')
 	FactoryInstancia.$inject = ['InformacionPrincipalApp'
 	                                ,'$listarInstanciaSinConceptoAsociado'
 	                                ,'$verInstancia'
+	                                ,'$actualizarInstancia'
 	                           ];
 
 	function FactoryInstancia (
 			InformacionPrincipalApp
 			,$listarInstanciaSinConceptoAsociado
 			,$verInstancia
+			,$actualizarInstancia
 			){
 		
 		var funcion = {
@@ -27,8 +29,21 @@ angular.module('methontool')
 				},
 				verElemento: function (idInstancia){
 					return verElemento(idInstancia);
+				},
+				actualizarElemento: function (idInstancia ,idConcepto ,idInstanciado ,definicion){
+					return actualizarElemento(idInstancia ,idConcepto ,idInstanciado ,definicion);
 				}
 			};
+		
+		function actualizarElemento(idInstancia ,idConcepto ,idInstanciado ,definicion){
+			return $actualizarInstancia.put({
+				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
+				,idInstancia: idInstancia
+				,'idConcepto' : idConcepto
+				,'idInstanciado' : idInstanciado
+				,'definicion' : definicion
+				},{}).$promise;
+		}
 		
 		function listarElementoSinConceptoAsociado(){
 			return 	$listarInstanciaSinConceptoAsociado.get({

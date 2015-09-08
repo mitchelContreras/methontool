@@ -1,5 +1,6 @@
 package com.ciensUCV.Methontool.rest;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ciensUCV.Methontool.dao.AtributoInstanciaDAO;
@@ -124,27 +126,44 @@ public class InstanciadoRest {
 			}
 		}
 	}
-	
-	@RequestMapping(value="/api/proyecto/{idProyecto}/instanciado", method = RequestMethod.POST)
-	public @ResponseBody ElementosMensaje<Instancia> crearInstanciado(
-			@PathVariable("idProyecto") int idProyecto
-			){
-		logger.trace("***crearInstanciado");
-		logger.trace("idProyecto "+idProyecto);
-	
-		return null;
-	}
-	
+		
 	@RequestMapping(value="/api/proyecto/{idProyecto}/instanciado/{idInstancia}", method = RequestMethod.PUT)
-	public @ResponseBody ElementosMensaje<Instancia> actualizarInstanciado(
+	public @ResponseBody ElementoMensaje<Instanciado> actualizarInstanciado(
 			@PathVariable("idProyecto") int idProyecto
 			,@PathVariable("idInstancia") int idInstancia
+			,@RequestParam(value = "idConcepto") int idConcepto
+			,@RequestParam(value = "idInstanciado") int idInstanciado
+			,@RequestParam(value = "definicion") String definicion
 			){
 		logger.trace("***actualizarInstanciado");
 		logger.trace("idProyecto "+idProyecto);
 		logger.trace("idInstancia "+idInstancia);
+		logger.trace("idConcepto "+idConcepto);
+		logger.trace("idInstanciado "+idInstanciado);
+		logger.trace("definicion "+definicion);
 		
-		return null;
+		//Objeto de salida
+		ElementoMensaje<Instanciado> elementoMensaje = new ElementoMensaje<Instanciado>(); 
+		//Consulto instanciado
+		InstanciadoDAO instanciadoDAO = (InstanciadoDAO) context.getBean("instanciadoDAO");
+		
+		Instanciado instanciado = new Instanciado();
+		Instancia instancia = new Instancia();
+		
+		instancia.setId(idInstancia);
+		instancia.setIdGlosarioConceptoRelacion(idConcepto);
+		instanciado.setInstancia(instancia);
+		instanciado.setId(idInstanciado);
+		instanciado.setDefinicion(definicion);
+		logger.trace("El instancaido a guardar es "+instanciado);
+		instanciado = instanciadoDAO.actualizarInstanciado(instanciado, idProyecto);
+		elementoMensaje.setElemento(instanciado);
+		if(instanciado.getId() != 0){
+			elementoMensaje.setSucces(true);
+		}else{
+			elementoMensaje.setSucces(false);
+		}
+		return elementoMensaje;
 	}
 
 	private String crearJsonAtributoInstancia(String id

@@ -24,5 +24,12 @@
             get: {method: 'GET', params: {idProyecto: '@idProyecto', idInstancia:'@idInstancia' }, isArray:false}
             });
     });
+    
+    proy.factory('$actualizarInstancia',function ($resource){
+    	var urlConsultar = urlProyecto+"/api/proyecto/:idProyecto/instanciado/:idInstancia";
+        return $resource(urlConsultar,{},{
+            put: {method: 'PUT', params: {idProyecto: '@idProyecto', idInstancia:'@idInstancia' }, isArray:false}
+            });
+    });
 
 })();
