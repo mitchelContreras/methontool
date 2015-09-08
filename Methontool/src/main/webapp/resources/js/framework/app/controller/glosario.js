@@ -193,13 +193,13 @@ function ControllerGlosario(
 		cnGlosario.alertNegativa = false;
 		
 		//lleno los valores de la vista
-		
-		cnGlosario.varNombre =	cnGlosario.listaGlosario[id].nombre;
-		cnGlosario.varTipo = cnGlosario.listaGlosario[id].tipoGlosario;
-		cnGlosario.descripcion = cnGlosario.listaGlosario[id].descripcion;
-		cnGlosario.listaSinonimo =  cnGlosario.listaGlosario[id].sinonimos.slice();
-		cnGlosario.listaAcronimo =  cnGlosario.listaGlosario[id].acronimos.slice();
-		cnGlosario.idGlosario = cnGlosario.listaGlosario[id].id;
+		var consultar = FactoryGlosario.consultarElemento (cnGlosario.seleccionado);
+		cnGlosario.varNombre =	consultar.nombre;
+		cnGlosario.varTipo = consultar.tipoGlosario;
+		cnGlosario.descripcion = consultar.descripcion;
+		cnGlosario.listaSinonimo =  consultar.sinonimos.slice();
+		cnGlosario.listaAcronimo =  consultar.acronimos.slice();
+		cnGlosario.idGlosario = consultar.id;
 	}
 	function cancelarModificarGlosario(){
 		cnGlosario.disabled = true;
