@@ -108,51 +108,48 @@
 							</div>
 						</div>		
 									
-			<div ng-repeat="atributo in cnInstancia.varAuxiliarDefinicion">
-			
-				<div class="form-group">
-					<div class="col-xs-4 control-label" >
-						<div class="btn-group">
-							<button ng-click="cnInstancia.verAtributoLista(atributo)" 
-							class="btn btn-link " 
-							aria-label="Center Align" type="button"
-							data-toggle="tooltip" data-placement="top" title="Ver descripción atirbuto">
-							    <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
-							</button>
-						</div>
-						<label>{{atributo.nombre}}:</label>
-					</div>
-					<div class="col-xs-5">
-						<div class="row" ng-repeat="valores in atributo.valores track by $index" id="{{$index}}">
-							<div class="col-xs-9">
-								<input class="form-control" ng-model="valores" ng-disabled="cnInstancia.disabled"></input>
-							</div>
-							<div class="col-xs-3">
-								<div class="btn-group">
-									<button ng-click="cnInstancia.eliminarAtributoLista($index, atributo)" 
-									class="btn btn-link " 
-									ng-class="{'disabled': cnInstancia.disabled == true}" 
-									ng-show="cnInstancia.modificar" aria-label="Center Align" type="button"
-									data-toggle="tooltip" data-placement="top" title="Eliminar valor">
-									    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-									</button>
-								</div>									
-							</div>
-						</div>
-						<div>
-							<button ng-click="cnInstancia.agregarAtributoLista(atributo)" class="btn btn-link " 
-							ng-class="{'disabled': cnInstancia.disabled == true}" 
-							ng-show="cnInstancia.modificar" aria-label="Center Align" type="button"
-							data-toggle="tooltip" data-placement="top" title="Agregar Valor">
-							    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-							</button>							
-						</div>
-					</div>
-				</div>
-			</div>							
-							
+						<div ng-repeat="atributo in cnInstancia.varAuxiliarDefinicion">
 						
-												
+							<div class="form-group">
+								<div class="col-xs-4 control-label" >
+									<div class="btn-group">
+										<button ng-click="cnInstancia.verAtributoLista(atributo)" 
+										class="btn btn-link " 
+										aria-label="Center Align" type="button"
+										data-toggle="tooltip" data-placement="top" title="Ver descripción atirbuto">
+										    <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+										</button>
+									</div>
+									<label>{{atributo.nombre}}:</label>
+								</div>
+								<div class="col-xs-5">
+									<div class="row" ng-repeat="valores in atributo.valores track by $index" id="{{$index}}">
+										<div class="col-xs-9">
+											<input class="form-control" ng-model="valores" ng-disabled="cnInstancia.disabled"></input>
+										</div>
+										<div class="col-xs-3">
+											<div class="btn-group">
+												<button ng-click="cnInstancia.eliminarAtributoLista($index, atributo)" 
+												class="btn btn-link " 
+												ng-class="{'disabled': cnInstancia.disabled == true}" 
+												ng-show="cnInstancia.modificar" aria-label="Center Align" type="button"
+												data-toggle="tooltip" data-placement="top" title="Eliminar valor">
+												    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+												</button>
+											</div>									
+										</div>
+									</div>
+									<div>
+										<button ng-click="cnInstancia.agregarAtributoLista(atributo)" class="btn btn-link " 
+										ng-class="{'disabled': cnInstancia.disabled == true}" 
+										ng-show="cnInstancia.modificar" aria-label="Center Align" type="button"
+										data-toggle="tooltip" data-placement="top" title="Agregar Valor">
+										    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+										</button>							
+									</div>
+								</div>
+							</div>
+						</div>						
 						<div class="form-group" ng-show="!cnInstancia.modificar">
 							<div class="col-xs-offset-4 col-xs-5">
 								<button type="submit" class="btn btn-primary" ng-click="cnInstancia.modificarInstancia()">Modificar</button>
@@ -215,45 +212,7 @@
 			</div>
 		</div>
 	</div>	
-		
-		<!-- Modal actualizar Concepto-->
-	<div class="modal fade" id="verModalactualizarConceptoInstancia1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Actualizar Concepto</h4>
-				</div>
-				<div class="inicioTexto" >					
-					<div class="row centered">
-						<div class="col-xs-2 divCentrado formulario" >
-							<label class="control-label col-xs-2">Concepto:</label>
-						</div>
-						<div class="col-xs-6 divCentrado formulario">
-       						<div angucomplete-alt
-								 id="completeListaConceptoInstancia1" placeholder="Concepto"
-								  maxlength="50"
-								  pause="100"
-								  selected-object="cnInstancia.varEdicion.conceptoSelected" 
-								  local-data="cnInstancia.listaConcepto" 
-								  search-fields="nombre" 
-								  title-field="nombre"
-								  minlength="1" 
-								  input-class="form-control" 
-								  match-class="highlight">
-       						</div>
-        				</div>
-					</div>						
-				</div>				
-				<div class="modal-footer">
-					<button class="btn btn-primary" type="button" ng-click="cnInstancia.cambieConcepto()">Guardar</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				</div>
-				
-			</div>
-		</div>
-	</div>	
-	
+			
 	<!-- Modal ver descripcion atributo-->
 	<div class="modal fade" id="verModaldescripcionAtributoInstancia1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -334,15 +293,14 @@
 							<label class="control-label col-xs-2">Valor:</label>
 						</div>
 						<div class="col-xs-6 divCentrado formulario">
-							<input type="text" class="form-control" placeholder="Nombre" ng-model="cnGlosario.nuevoAcronimo">
+							<input type="text" class="form-control" placeholder="" ng-model="cnInstancia.nuevoValor">
 						</div>
 					</div>					
 				</div>				
 				<div class="modal-footer">
-					<button class="btn btn-primary" type="button" ng-click="cnInstancia.cambieConcepto()">Guardar</button>
+					<button class="btn btn-primary" type="button" ng-click="cnInstancia.guardarNuevoValor()">Guardar</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 				</div>
-				
 			</div>
 		</div>
 	</div>
@@ -358,8 +316,8 @@
 				<div class="inicioTexto" >					
 					<div class="row centered">
 						<div class="col-xs-10 divCentrado formulario" >
-							El atributo <b>{{cnInstancia.atributoAuxiliar.nombre}}</b> posee una cardinalidad
-							 <b>[{{cnInstancia.atributoAuxiliar.cardinalidadMinima}}:{{cnInstancia.atributoAuxiliar.cardinaliadMaxima}}]</b>, el agregar un nuevo
+							El atributo <b>{{cnInstancia.atributoAuxiliarLista.nombre}}</b> posee una cardinalidad
+							 <b>[{{cnInstancia.atributoAuxiliarLista.cardinalidadMinima}}:{{cnInstancia.atributoAuxiliarLista.cardinaliadMaxima}}]</b>, el agregar un nuevo
 							 registro puede romper la regla. 
 						</div>
 					</div>

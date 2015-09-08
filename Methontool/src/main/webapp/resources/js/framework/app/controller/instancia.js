@@ -97,6 +97,13 @@ function ControllerInstancia($rootScope,
 	cnInstancia.agregarAtributoLista = agregarAtributoLista;
 	cnInstancia.confirmoAgregarAtributoLista = confirmoAgregarAtributoLista;
 	cnInstancia.verConceptoAsociado = verConceptoAsociado;
+	cnInstancia.guardarNuevoValor = guardarNuevoValor;
+	
+	function guardarNuevoValor(){
+		$('#verModalagregarNuevoValorListaInstancia1').modal('hide');
+		cnInstancia.atributoAuxiliarLista.valores.push(cnInstancia.nuevoValor);		
+		cnInstancia.nuevoValor = "";
+	}
 	
 	function verConceptoAsociado(){
 		$('#verModalverConceptoAsociado').modal('show');
@@ -109,24 +116,19 @@ function ControllerInstancia($rootScope,
 	}
 	function agregarAtributoLista (atributo){
 		console.log("agregarAtributoLista");
-		cnInstancia.atributoAuxiliar = atributo;
+		cnInstancia.atributoAuxiliarLista = atributo;
 		$('#verModalAlertaAgregarNuevoValorListaInstancia1').modal('show');
 	}
 	function eliminarAtributoLista(posicion, atributo){
-		console.log("eliminarAtributoLista "+posicion+" atributo.listaAtributo.length: "+atributo.listaAtributo.length);
-		atributo.listaAtributo.splice(posicion, 1);
-		console.log("atributo.listaAtributo.length: "+atributo.listaAtributo.length);
+		atributo.valores.splice(posicion, 1);
 	}
 	function verAtributoLista(atributo){
 		console.log("verAtributoLista");
 		cnInstancia.auxAtributo = atributo; 
-		console.log("verAtributo "+JSON.stringify(cnInstancia.auxAtributo));
 		$('#verModaldescripcionAtributoInstancia1').modal('show');
 	}
 	function cambieConcepto(){
 		console.log("cambie concepto");
-//		cnInstancia.varEdicion.conceptoSelected;
-//		cnRelacion.varEdicion.glosarioOrigen = cnRelacion.varEdicion.glosarioOrigenSelected.originalObject;
 		cnInstancia.varEdicion.glosarioInstanciaActual.concepto = 
 			cnInstancia.varEdicion.conceptoSelected.originalObject;
 		console.log("nuevo concepto "+cnInstancia.varEdicion.conceptoSelected.originalObject.nombre+" "+cnInstancia.varEdicion.conceptoSelected.originalObject.id);
@@ -138,13 +140,10 @@ function ControllerInstancia($rootScope,
 		$('#verModalactualizarConceptoInstancia1').modal('show');
 	}
 	function seleccioneGlosario(elemento, limpiar){
-		
-	
 		cnInstancia.seleccionado = elemento.id;
 		cnInstancia.enBlanco = false;
 		cnInstancia.modificar = false;
 		cnInstancia.disabled = true;
-		
 		
 //		limpio variables
 		if(limpiar == 'true'){
@@ -153,15 +152,9 @@ function ControllerInstancia($rootScope,
 			cnInstancia.alertPositiva = false;
 		}
 		cnInstancia.varEdicion = {};
-		cnInstancia.varEdicion.glosarioInstanciaActual = {};
-		
-//		asigno la relacion con la que estoy trabajando
-		cnInstancia.varEdicion.glosarioInstanciaActual = elemento;
+		cnInstancia.varAuxiliarDefinicion = [];
 		
 		var salida;
-		console.log("antes");
-		salida = FactoryInstancia.salida;
-		console.log("Mitchell paso por aqui "+salida);
 		salida = FactoryInstancia.verElemento(elemento.id);
 		FactoryMensajeCarga.abrirMensaje("Cargando");
 		salida.then(
@@ -169,20 +162,12 @@ function ControllerInstancia($rootScope,
 	            	console.log("entro en salida");
 	            	console.log("aux es "+JSON.stringify(aux));
 	                if(aux.succes){
-	                	console.log("consultar Instancia es true1");
 	                	cnInstancia.varEdicion = aux.elemento;
-	                	console.log("cnInstancia.varEdicion.instancia.idGlosarioConceptoRelacion "+cnInstancia.varEdicion.instancia.idGlosarioConceptoRelacion);
 	                	cnInstancia.varEdicion.conceptoAsociado = FactoryGlosario.consultarElemento(cnInstancia.varEdicion.instancia.idGlosarioConceptoRelacion);
 	                	cnInstancia.varEdicion.glosarioInstancia = FactoryGlosario.consultarElemento(cnInstancia.varEdicion.instancia.id);
-	                	console.log("cnInstancia.varEdicion.glosarioInstancia "+JSON.stringify(cnInstancia.varEdicion.glosarioInstancia));
-	                	console.log("cnInstancia.varEdicion.conceptoAsociado "+JSON.stringify(cnInstancia.varEdicion.conceptoAsociado));
-	                	//var definicion = aux.elemento.definicion;
-	                	console.log("1 cnInstancia.varEdicion.definicion es "+cnInstancia.varEdicion.definicion);
 	                	cnInstancia.varEdicion.definicion = JSON.parse(cnInstancia.varEdicion.definicion);
-	                	console.log("cnInstancia.varEdicion.definicion.atributoInstancia.length es "+cnInstancia.varEdicion.definicion.atributoInstancia.length);
-	                	cnInstancia.varAuxiliarDefinicion = cnInstancia.varEdicion.definicion.atributoInstancia;
-	                	console.log("cnInstancia.varAuxiliarDefinicion[0] "+JSON.stringify(cnInstancia.varAuxiliarDefinicion[0]));
-	                	console.log("cnInstancia.varEdicion "+JSON.stringify(cnInstancia.varEdicion));
+//	                	cnInstancia.varAuxiliarDefinicion = cnInstancia.varEdicion.definicion.atributoInstancia.slice();
+	                	copyArrayOfObject(cnInstancia.varEdicion.definicion.atributoInstancia, cnInstancia.varAuxiliarDefinicion);
 	                	//console.log("jsonDef.length "+jsonDef.atributoInstancia.length);
 //	            		cnInstancia.varEdicion.tipoDeDato 
 //	            			= FactoryTipoDato.consultarElemento(aux.elemento.tipoDeDato.codigo);
@@ -199,40 +184,16 @@ function ControllerInstancia($rootScope,
 	                }
 	            }
 	        );
-		
-		
-//		cnInstancia.varEdicion.atributos =
-//			[
-//				{
-//				  "listaAtributo": ["uno", "dos","tres"]
-//				  ,"CardinalidadOrigen": "origen"
-//				  ,"CardinalidadDestino":"destino"
-//				  ,"Nombre":"Atributo Uno"
-//				  ,"tipoAributo":"1"
-//				  ,"idAtributo":"12"
-//				  ,"descripcion":"describiendote"	  
-//				}
-//				,{
-//				  "listaAtributo": ["cuatro", "cinco","seis"]
-//				  ,"CardinalidadOrigen": "M"
-//				  ,"CardinalidadDestino":"N"
-//				  ,"Nombre":"Atributo Dos"
-//				  ,"tipoAributo":"2"
-//				  ,"idAtributo":"113"
-//					  ,"descripcion":"describiendote"	
-//				}
-//				,{
-//				  "listaAtributo": ["siete", "ocho","nueve"]
-//				  ,"CardinalidadOrigen": "A"
-//				  ,"CardinalidadDestino":"B"
-//				  ,"Nombre":"Atributo Tres"
-//				  ,"tipoAributo":"3"
-//				  ,"idAtributo":"14"
-//					  ,"descripcion":"describiendote"	
-//				}
-//			];
-
 	}
+	function copyArrayOfObject(arrayIn, arrayOut){
+		var i;
+		for (i=0;i<arrayIn.length;i++){
+			var arrayObject = JSON.stringify(arrayIn[i]);
+			arrayObject = JSON.parse(arrayObject);
+			arrayOut.push(arrayObject);
+		}
+	}
+	
 	function modificarInstancia (){
 		cnInstancia.disabled = false;
 		cnInstancia.modificar = true;
@@ -258,12 +219,10 @@ function ControllerInstancia($rootScope,
 //		);	
 	}
 	function cancelaInstancia (){
+		seleccioneGlosario(cnInstancia.varEdicion.instancia, 'true');
 		cnInstancia.disabled = true;
 		cnInstancia.modificar = false;
 	}
-//	function verDescripcionGlosario(){
-//		$('#verDescripcionGlosarioInstanciaModal').modal('show');
-//	}
 	
 	
 

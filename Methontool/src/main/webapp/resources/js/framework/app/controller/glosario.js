@@ -193,6 +193,7 @@ function ControllerGlosario(
 		cnGlosario.alertNegativa = false;
 		
 		//lleno los valores de la vista
+		
 		cnGlosario.varNombre =	cnGlosario.listaGlosario[id].nombre;
 		cnGlosario.varTipo = cnGlosario.listaGlosario[id].tipoGlosario;
 		cnGlosario.descripcion = cnGlosario.listaGlosario[id].descripcion;
