@@ -57,6 +57,13 @@ java.lang.NullPointerException
 			<artifactId>jena-core</artifactId>
 			<version>3.0.0</version>
 		</dependency>
+		<!-- OWl with owlapi -->
+		<dependency>
+			<groupId>net.sourceforge.owlapi</groupId>
+			<artifactId>owlapi-distribution</artifactId>
+			<version>4.0.2</version>
+		</dependency>
+		
 		<!-- Necesario para REst y JSON -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
