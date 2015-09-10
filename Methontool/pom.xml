@@ -51,6 +51,12 @@ java.lang.NullPointerException
 			<artifactId>postgresql</artifactId>
 			<version>9.4-1201-jdbc41</version>
 		</dependency>
+		<!-- JEna para OWL y RDF -->
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>jena-core</artifactId>
+			<version>3.0.0</version>
+		</dependency>
 		<!-- Necesario para REst y JSON -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -118,6 +124,8 @@ java.lang.NullPointerException
 			<scope>runtime</scope>
 		</dependency>
 
+
+		
 		<!-- @Inject -->
 		<dependency>
 			<groupId>javax.inject</groupId>
