@@ -21,9 +21,11 @@ import com.ciensUCV.Methontool.dao.ReglaDAO;
 import com.ciensUCV.Methontool.dao.RelacionDAO;
 import com.ciensUCV.Methontool.dao.TaxonomiaDAO;
 import com.ciensUCV.Methontool.dao.TipoDeDatoDAO;
+import com.ciensUCV.Methontool.export.ExportarOWL;
 import com.ciensUCV.Methontool.model.AtributoClase;
 import com.ciensUCV.Methontool.model.AtributoInstancia;
 import com.ciensUCV.Methontool.model.Constante;
+import com.ciensUCV.Methontool.model.Glosario;
 import com.ciensUCV.Methontool.model.Instancia;
 import com.ciensUCV.Methontool.model.Instanciado;
 import com.ciensUCV.Methontool.model.Medida;
@@ -265,6 +267,10 @@ public class PruebaFunciones {
 ////		logger.trace("modificar "+instanciadoDAO.actualizarInstanciado(instanciado, 1));
 //		logger.trace("ver "+instanciadoDAO.verInstanciado(instanciado, 1));
 		
+		logger.trace("prueba de generar archivo OWL con owlapi");
+		
+		ExportarOWL exportarOWL = new ExportarOWL(1, "salidaMitchell");
+		exportarOWL.crearOntologia();
 	}
 
 }
