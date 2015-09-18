@@ -18,6 +18,7 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLException;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
@@ -57,23 +58,84 @@ public class ExportarOWL {
 	private int idProyecto;
 	private String nameDocumentoSalida;
 	private IRI iriOntology;
-	
-	public ExportarOWL (int idProyecto, String nameDocumentoSalida){
+	private OWLOntologyManager manager;
+	private OWLOntology ontology;
+	private OWLDataFactory datafactory;
+
+    public void createFile(){
+        File fileformated = new File("/home/mitchell/Desktop/salidaPrueba1.owl");
+        //Save the ontology in a different format
+        OWLDocumentFormat format = manager.getOntologyFormat(ontology);
+        OWLXMLDocumentFormat owlxmlFormat = new OWLXMLDocumentFormat();
+        if (format.isPrefixOWLOntologyFormat()) { 
+          owlxmlFormat.copyPrefixesFrom(format.asPrefixOWLOntologyFormat()); 
+        }
+        try {
+			manager.saveOntology(ontology, owlxmlFormat, IRI.create(fileformated.toURI()));
+		} catch (OWLOntologyStorageException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.trace("Exploto con el metodo save");
+		}
+        logger.trace("Genero archivo salida");
+    }
+    
+	public ExportarOWL (int idProyecto, String nameDocumentoSalida) throws OWLOntologyCreationException{
 		logger.trace("dentro de constructor");
 		this.idProyecto = idProyecto;
 		this.nameDocumentoSalida = nameDocumentoSalida;
+		logger.trace("idProyecto "+this.idProyecto);
+		logger.trace("nameDocumentoSalida "+this.nameDocumentoSalida);
+		
+//		Variables de OWLAPI
+		
+//		nameDocumentoSalida puedo traerlo de bd ojo con eso
 		this.iriOntology = IRI.create(LeerConfig.obtenerPropiedad("OWLAPI.iri")
 				+ nameDocumentoSalida
 				+ LeerConfig.obtenerPropiedad("OWLAPI.extensionOWL"));
-		logger.trace("idProyecto "+this.idProyecto);
-		logger.trace("nameDocumentoSalida "+this.nameDocumentoSalida);
-		logger.trace("iriOntology "+this.iriOntology.toString());
+		logger.trace("iriOntology "+this.iriOntology.toString());		
+		manager = OWLManager.createOWLOntologyManager();
+		ontology = manager.createOntology(this.iriOntology);
+		datafactory = manager.getOWLDataFactory();
 	}
 	
 	public void crearOntologia(){
 		GlosarioDAO glosarioDAO = (GlosarioDAO) context.getBean("glosarioDAO");
 		ArrayList<Glosario> listaGlosario = glosarioDAO.listarGlosario(idProyecto);
 		logger.trace("listaGlosario "+listaGlosario.size());
+			
+//		variables
+		OWLClass owlClass;
+		OWLAxiom axiom;
+		AddAxiom addAxiom;
+		OWLObjectPropertyExpression objectPropertyExpression; 
+//		Un concepto es una OWLClass
+		
+//      Add Class
+		for(int i = 0; i < listaGlosario.size(); i++){
+			if(listaGlosario.get(i).getTipoGlosario().getId() == 2){
+				owlClass = datafactory.getOWLClass(IRI.create(this.iriOntology + "#" + listaGlosario.get(i).getNombre()));
+				axiom = datafactory.getOWLDeclarationAxiom(owlClass);
+				addAxiom = new AddAxiom(ontology, axiom);
+				manager.applyChange(addAxiom);
+
+			}
+		}
+		
+		
+//		private void addProperty( OWLObjectPropertyExpression property, Set<OWLClass> classes) {
+//			Set<OWLClass> existingClasses = restrictedProperties.get(property);
+//			if (existingClasses != null) {
+//				classes.addAll(existingClasses);
+//			}
+//			restrictedProperties.put(property, classes);
+//		}
+//		
+		
+		
+
+		
+		createFile();
 	}
 	
 	

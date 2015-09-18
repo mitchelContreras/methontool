@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -269,8 +270,15 @@ public class PruebaFunciones {
 		
 		logger.trace("prueba de generar archivo OWL con owlapi");
 		
-		ExportarOWL exportarOWL = new ExportarOWL(1, "salidaMitchell");
-		exportarOWL.crearOntologia();
+		ExportarOWL exportarOWL;
+		try {
+			exportarOWL = new ExportarOWL(1, "salidaMitchell");
+			exportarOWL.crearOntologia();
+		} catch (OWLOntologyCreationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.trace("error coño");
+		}
 	}
 
 }
