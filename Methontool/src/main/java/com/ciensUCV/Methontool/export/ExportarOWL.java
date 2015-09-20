@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.HashSet;
 
 import javax.annotation.Nonnull;
 
@@ -24,6 +25,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyIRIMapper;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLClassAtom;
 import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
@@ -37,8 +39,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.ciensUCV.Methontool.dao.GlosarioDAO;
+import com.ciensUCV.Methontool.dao.TaxonomiaDAO;
 import com.ciensUCV.Methontool.model.Glosario;
+import com.ciensUCV.Methontool.model.Taxonomia;
 import com.ciensUCV.Methontool.util.LeerConfig;
+import com.ciensUCV.Methontool.util.TwoDimentionalArrayList;
 import com.ciensUCV.Methontool.util.VariablesConfiguracion;
 
 public class ExportarOWL {
@@ -99,19 +104,38 @@ public class ExportarOWL {
 		datafactory = manager.getOWLDataFactory();
 	}
 	
+	private Glosario buscarEnListaGlosario(ArrayList<Glosario> listaGlosario, int elemento){
+		
+		for(Glosario glosario : listaGlosario){
+			if(Integer.parseInt(glosario.getId()) == elemento){
+				return glosario;
+			}
+		}
+		return null;
+		
+	}
+	
 	public void crearOntologia(){
 		GlosarioDAO glosarioDAO = (GlosarioDAO) context.getBean("glosarioDAO");
+		TaxonomiaDAO taxonomiaDAO = (TaxonomiaDAO) context.getBean("taxonomiaDAO");
 		ArrayList<Glosario> listaGlosario = glosarioDAO.listarGlosario(idProyecto);
+		
+		
 		logger.trace("listaGlosario "+listaGlosario.size());
 			
 //		variables
-		OWLClass owlClass;
+		OWLClass owlClass, owlClass1;
 		OWLAxiom axiom;
 		AddAxiom addAxiom;
 		OWLObjectPropertyExpression objectPropertyExpression; 
+		OWLSubClassOfAxiom subClassOfAxiom;
+		Taxonomia taxonomia;
+		Glosario glosario1, glosario2;
+		Set<OWLAxiom> axioms = new HashSet<OWLAxiom>();
 //		Un concepto es una OWLClass
 		
 //      Add Class
+		
 		for(int i = 0; i < listaGlosario.size(); i++){
 			if(listaGlosario.get(i).getTipoGlosario().getId() == 2){
 				owlClass = datafactory.getOWLClass(IRI.create(this.iriOntology + "#" + listaGlosario.get(i).getNombre()));
@@ -122,7 +146,89 @@ public class ExportarOWL {
 			}
 		}
 		
+//		Add taxonomias
+		Set<OWLClass> conceptosSet = ontology.getClassesInSignature();		
+		OWLClass conceptosArr [] = new OWLClass[conceptosSet.size()];		
 		
+		for(Glosario aux : listaGlosario){
+			if(aux.getTipoGlosario().getId() == 2){
+				logger.trace("aux.getNombre() "+aux.getNombre());
+				taxonomia = taxonomiaDAO.verTaxonomia(idProyecto, Integer.parseInt(aux.getId()));
+				
+//				relaciones.add("desDisjunta");
+//				relaciones.add("desExhaustiva");
+//				relaciones.add("particion");
+//				relaciones.add("subClase");
+				
+//				Add subclass
+				logger.trace("add subClass");
+				
+				for(int j = 0;j<taxonomia.getConceptosDestino().get(3).size();j++){
+					glosario1 = null;
+					glosario2 = null;
+					
+					logger.trace("taxonomia.getConceptosDestino().get(i).get(j) "+taxonomia.getConceptosDestino().get(3).get(j));
+					glosario1 = buscarEnListaGlosario(listaGlosario, taxonomia.getConceptoOrigen());
+					glosario2 = buscarEnListaGlosario(listaGlosario, taxonomia.getConceptosDestino().get(3).get(j));
+					
+					if(glosario1 != null && glosario2 != null){
+						owlClass = datafactory.getOWLClass(IRI.create(this.iriOntology +"#"+glosario1.getNombre()));
+						owlClass1 = datafactory.getOWLClass(IRI.create(this.iriOntology +"#"+glosario2.getNombre()));
+						axioms.add(datafactory.getOWLSubClassOfAxiom(owlClass, owlClass1));			
+					}else{
+						logger.trace("Alguna de las dos es null");
+						if(glosario1 == null)
+							logger.trace("owlClass ");
+						if(glosario2 == null)
+						logger.trace("owlClass ");
+					}
+
+				}
+				
+			}
+		}
+		manager.addAxioms(ontology, axioms);
+		
+//		owlClass = datafactory.getOWLClass(IRI.create(this.iriOntology + "#b"));
+//		owlClass1 = datafactory.getOWLClass(IRI.create(this.iriOntology + "#a"));
+//		axiom = datafactory.getOWLDeclarationAxiom(owlClass);
+//		addAxiom = new AddAxiom(ontology, axiom);
+//		manager.applyChange(addAxiom);
+//		
+//		axiom = datafactory.getOWLDeclarationAxiom(owlClass1);
+//		addAxiom = new AddAxiom(ontology, axiom);
+//		manager.applyChange(addAxiom);
+//		
+//		Set<OWLClass> verga = ontology.getClassesInSignature();
+//		OWLClass ordenado [] = new OWLClass[verga.size()];
+//		verga.toArray(ordenado);
+//		for(OWLClass aux : ordenado ){
+//			logger.trace("** aux.getIRI() "+aux.toString());
+//			if(aux.getIRI().equals(IRI.create(this.iriOntology + "#b"))){
+//				logger.trace("encontre a b");
+//			}
+//		}	
+//		
+//		OWLClass uno, dos;
+//		uno = ordenado[0];
+//		dos = ordenado[1];
+//		subClassOfAxiom = datafactory.getOWLSubClassOfAxiom(uno, dos);
+//		addAxiom = new AddAxiom(ontology, subClassOfAxiom);
+//		manager.applyChange(addAxiom);
+		
+//		logger.trace("ordenado "+ordenado.length);
+//		logger.trace("verga "+verga.size());
+//		for(OWLClass aux : verga ){
+//			
+//			logger.trace("aux.getIRI() "+aux.toString());
+//		}
+		//subClassOfAxiom = datafactory.getOWLSubClassOfAxiom(arg0, arg1);
+		
+		
+//        OWLClass adult = df.getOWLClass(IRI.create(EXAMPLE_IRI + "#Adult"));
+//        OWLSubClassOfAxiom ax = df.getOWLSubClassOfAxiom(adult, adultDefinition);
+//        m.applyChange(new AddAxiom(o, ax));
+//        
 //		private void addProperty( OWLObjectPropertyExpression property, Set<OWLClass> classes) {
 //			Set<OWLClass> existingClasses = restrictedProperties.get(property);
 //			if (existingClasses != null) {

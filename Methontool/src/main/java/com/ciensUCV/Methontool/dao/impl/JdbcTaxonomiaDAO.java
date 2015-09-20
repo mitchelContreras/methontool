@@ -48,8 +48,6 @@ public class JdbcTaxonomiaDAO implements TaxonomiaDAO {
 		int i;
 		for(i=0; i<taxonomia.getRelaciones().size();i++){
 			try {
-				logger.trace("Iteracion i="+i);
-				logger.trace("relacion "+taxonomia.getRelaciones().get(i));
 				conn = dataSource.getConnection();
 				PreparedStatement ps = conn.prepareStatement(sql);
 				ps.setInt(1, idProyecto);
