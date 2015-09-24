@@ -13,11 +13,17 @@ import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.formats.OWLXMLDocumentFormat;
 import org.semanticweb.owlapi.model.AddAxiom;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotation;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
+import org.semanticweb.owlapi.model.OWLAnnotationValue;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLException;
+import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -26,12 +32,14 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyIRIMapper;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
+import org.semanticweb.owlapi.model.PrefixManager;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLClassAtom;
 import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.semanticweb.owlapi.model.SWRLVariable;
 import org.semanticweb.owlapi.util.AutoIRIMapper;
+import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.util.PriorityCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +74,7 @@ public class ExportarOWL {
 	private OWLOntologyManager manager;
 	private OWLOntology ontology;
 	private OWLDataFactory datafactory;
+	private PrefixManager prefixManager;
 
     public void createFile(){
         File fileformated = new File("/home/mitchell/Desktop/salidaPrueba1.owl");
@@ -99,9 +108,14 @@ public class ExportarOWL {
 				+ nameDocumentoSalida
 				+ LeerConfig.obtenerPropiedad("OWLAPI.extensionOWL"));
 		logger.trace("iriOntology "+this.iriOntology.toString());		
+		this.prefixManager = new DefaultPrefixManager(
+				LeerConfig.obtenerPropiedad("OWLAPI.iri")
+				+ nameDocumentoSalida
+				+"#");
 		manager = OWLManager.createOWLOntologyManager();
 		ontology = manager.createOntology(this.iriOntology);
 		datafactory = manager.getOWLDataFactory();
+		
 	}
 	
 	private Glosario buscarEnListaGlosario(ArrayList<Glosario> listaGlosario, int elemento){
@@ -132,17 +146,33 @@ public class ExportarOWL {
 		Taxonomia taxonomia;
 		Glosario glosario1, glosario2;
 		Set<OWLAxiom> axioms = new HashSet<OWLAxiom>();
+		OWLDataProperty dataProperty;
+		OWLDatatype dataType;
+		OWLLiteral literal;
+		OWLAnnotationProperty annotationProperty;
+		OWLAnnotationValue annotationValue;
+		OWLAnnotation annotation;
 //		Un concepto es una OWLClass
 		
-//      Add Class
-		
+//      Add Class		
+//			Add descripcion
+//				dataProperty = datafactory.getOWLDataProperty(IRI.create(this.iriOntology + "#" + LeerConfig.obtenerPropiedad("OWLAPI.classDescripcion")));
 		for(int i = 0; i < listaGlosario.size(); i++){
 			if(listaGlosario.get(i).getTipoGlosario().getId() == 2){
-				owlClass = datafactory.getOWLClass(IRI.create(this.iriOntology + "#" + listaGlosario.get(i).getNombre()));
+				owlClass = datafactory.getOWLClass(IRI.create(this.iriOntology +"#" + listaGlosario.get(i).getNombre()));
 				axiom = datafactory.getOWLDeclarationAxiom(owlClass);
 				addAxiom = new AddAxiom(ontology, axiom);
 				manager.applyChange(addAxiom);
-
+				if(!listaGlosario.get(i).getDescripcion().equalsIgnoreCase("")){
+					dataType = datafactory.getOWLDatatype("xsd:string", prefixManager);
+//					literal= datafactory.getOWLLiteral(listaGlosario.get(i).getDescripcion(), dataType);
+					annotationProperty = datafactory.getOWLAnnotationProperty(IRI.create(prefixManager + LeerConfig.obtenerPropiedad("OWLAPI.classDescripcion")));
+					annotationValue = datafactory.getOWLLiteral(listaGlosario.get(i).getDescripcion(), dataType);
+					annotation = datafactory.getOWLAnnotation(annotationProperty,annotationValue);
+					axiom = datafactory.getOWLAnnotationAssertionAxiom(owlClass.getIRI(),annotation);
+					addAxiom = new AddAxiom(ontology, axiom);
+					manager.applyChange(addAxiom);					
+				}
 			}
 		}
 		
@@ -160,12 +190,10 @@ public class ExportarOWL {
 //				relaciones.add("particion");
 //				relaciones.add("subClase");
 				
-//				Add subclass
-				logger.trace("add subClass");
-				
+//				Add subClase
+				logger.trace("add subClase");
 				for(int j = 0;j<taxonomia.getConceptosDestino().get(3).size();j++){
-					glosario1 = null;
-					glosario2 = null;
+					glosario1 = null; glosario2 = null;
 					
 					logger.trace("taxonomia.getConceptosDestino().get(i).get(j) "+taxonomia.getConceptosDestino().get(3).get(j));
 					glosario1 = buscarEnListaGlosario(listaGlosario, taxonomia.getConceptoOrigen());
@@ -182,9 +210,30 @@ public class ExportarOWL {
 						if(glosario2 == null)
 						logger.trace("owlClass ");
 					}
-
 				}
 				
+//				Add desDisjunta
+				for(int j = 0;j<taxonomia.getConceptosDestino().get(3).size();j++){
+					glosario1 = null; glosario2 = null;
+					
+					logger.trace("taxonomia.getConceptosDestino().get(i).get(j) "+taxonomia.getConceptosDestino().get(3).get(j));
+					glosario1 = buscarEnListaGlosario(listaGlosario, taxonomia.getConceptoOrigen());
+					glosario2 = buscarEnListaGlosario(listaGlosario, taxonomia.getConceptosDestino().get(3).get(j));
+					
+					if(glosario1 != null && glosario2 != null){
+						owlClass = datafactory.getOWLClass(IRI.create(this.iriOntology +"#"+glosario1.getNombre()));
+						owlClass1 = datafactory.getOWLClass(IRI.create(this.iriOntology +"#"+glosario2.getNombre()));
+						axioms.add(datafactory.getOWLDisjointClassesAxiom(owlClass, owlClass1));
+					}else{
+						logger.trace("Alguna de las dos es null");
+						if(glosario1 == null)
+							logger.trace("owlClass ");
+						if(glosario2 == null)
+						logger.trace("owlClass ");
+					}
+				}		
+//				Add desExhaustiva
+//				Add particion
 			}
 		}
 		manager.addAxioms(ontology, axioms);
