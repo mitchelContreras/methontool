@@ -18,11 +18,13 @@ import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAnnotationValue;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLException;
+import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
@@ -47,8 +49,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.ciensUCV.Methontool.dao.GlosarioDAO;
+import com.ciensUCV.Methontool.dao.InstanciaDAO;
+import com.ciensUCV.Methontool.dao.InstanciadoDAO;
+import com.ciensUCV.Methontool.dao.RelacionDAO;
 import com.ciensUCV.Methontool.dao.TaxonomiaDAO;
 import com.ciensUCV.Methontool.model.Glosario;
+import com.ciensUCV.Methontool.model.Instancia;
+import com.ciensUCV.Methontool.model.Instanciado;
+import com.ciensUCV.Methontool.model.Relacion;
 import com.ciensUCV.Methontool.model.Taxonomia;
 import com.ciensUCV.Methontool.util.LeerConfig;
 import com.ciensUCV.Methontool.util.TwoDimentionalArrayList;
@@ -132,8 +140,14 @@ public class ExportarOWL {
 	public void crearOntologia(){
 		GlosarioDAO glosarioDAO = (GlosarioDAO) context.getBean("glosarioDAO");
 		TaxonomiaDAO taxonomiaDAO = (TaxonomiaDAO) context.getBean("taxonomiaDAO");
-		ArrayList<Glosario> listaGlosario = glosarioDAO.listarGlosario(idProyecto);
+		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
+		RelacionDAO relacionDAO = (RelacionDAO) context.getBean("relacionDAO");
+		InstanciadoDAO instanciadoDAO = (InstanciadoDAO) context.getBean("instanciadoDAO");
 		
+		ArrayList<Glosario> listaGlosario = glosarioDAO.listarGlosario(idProyecto);
+		ArrayList<Instanciado> listaInstanciado = instanciadoDAO.listarInstanciado(idProyecto);
+		logger.trace("total de listaInstnaciado "+listaInstanciado.size());
+		ArrayList<Relacion> listaRelacion;
 		
 		logger.trace("listaGlosario "+listaGlosario.size());
 			
@@ -152,28 +166,110 @@ public class ExportarOWL {
 		OWLAnnotationProperty annotationProperty;
 		OWLAnnotationValue annotationValue;
 		OWLAnnotation annotation;
+		OWLObjectProperty objectProperty;
+		OWLIndividual owlIndividual;
+		Instancia instancia;
+		Glosario glosario;
+		OWLClassAssertionAxiom owlClassAssertionAxion;
+		ArrayList<Instanciado> listaInstanciadoAux1;
+		ArrayList<Instanciado> listaInstanciadoAux2;
+		
 //		Un concepto es una OWLClass
 		
 //      Add Class		
 //			Add descripcion
 //				dataProperty = datafactory.getOWLDataProperty(IRI.create(this.iriOntology + "#" + LeerConfig.obtenerPropiedad("OWLAPI.classDescripcion")));
 		for(int i = 0; i < listaGlosario.size(); i++){
-			if(listaGlosario.get(i).getTipoGlosario().getId() == 2){
+			switch(listaGlosario.get(i).getTipoGlosario().getId()){
+			case 1:
+//	            OWLIndividual john = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#John"));
+//	            OWLIndividual mary = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#Mary"));
+//				objectProperty = datafactory.getOWLObjectProperty(IRI.create(this.iriOntology +"#" + listaGlosario.get(i).getNombre()));
+//				OWLAxiom axiom2 = factory.getOWLObjectPropertyAssertionAxiom(hasSon, john, bill);
+//				manager.applyChange(new AddAxiom(ont, axiom2));
+				 
+//				Dado concepto listar todas las instancias
+//				A y B
+//				todos los de A con B
+//				listaGlosarioAux1; //isntancias de origen
+//				listaGlosarioAux2; //instancias de destino
+				
+				listaRelacion = relacionDAO.listarRelacion(idProyecto, Integer.parseInt(listaGlosario.get(i).getId()));
+				for (Relacion aux : listaRelacion){
+					listaInstanciadoAux1 = listaInstanciaDadoIDGlosarioConcepto(listaInstanciado, aux.getIdGlosarioOrigen());
+					logger.trace("aux.getIdGlosarioOrigen()="+aux.getIdGlosarioOrigen()+" listaInstanciadoAux1="+listaInstanciadoAux1.size());
+					listaInstanciadoAux2 = listaInstanciaDadoIDGlosarioConcepto(listaInstanciado, aux.getIdGlosarioDestino());
+					logger.trace("aux.getIdGlosarioDestino()="+aux.getIdGlosarioDestino()+" listaInstanciadoAux2="+listaInstanciadoAux2.size());
+				}
+				
+				
+				
+				 
+				break;
+			case 2:
 				owlClass = datafactory.getOWLClass(IRI.create(this.iriOntology +"#" + listaGlosario.get(i).getNombre()));
 				axiom = datafactory.getOWLDeclarationAxiom(owlClass);
 				addAxiom = new AddAxiom(ontology, axiom);
 				manager.applyChange(addAxiom);
+				
 				if(!listaGlosario.get(i).getDescripcion().equalsIgnoreCase("")){
 					dataType = datafactory.getOWLDatatype("xsd:string", prefixManager);
-//					literal= datafactory.getOWLLiteral(listaGlosario.get(i).getDescripcion(), dataType);
 					annotationProperty = datafactory.getOWLAnnotationProperty(IRI.create(prefixManager + LeerConfig.obtenerPropiedad("OWLAPI.classDescripcion")));
 					annotationValue = datafactory.getOWLLiteral(listaGlosario.get(i).getDescripcion(), dataType);
 					annotation = datafactory.getOWLAnnotation(annotationProperty,annotationValue);
 					axiom = datafactory.getOWLAnnotationAssertionAxiom(owlClass.getIRI(),annotation);
 					addAxiom = new AddAxiom(ontology, axiom);
 					manager.applyChange(addAxiom);					
+				}						
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			case 7:
+				break;	
+			case 8:
+				owlIndividual = datafactory.getOWLNamedIndividual(IRI.create(this.iriOntology +"#" + listaGlosario.get(i).getNombre()));
+				instancia = new Instancia();
+				instancia.setId(Integer.parseInt(listaGlosario.get(i).getId()));
+				instancia = instanciaDAO.verInstanciaDadoIdInstancia(instancia.getId());
+				logger.trace("instancia.getIdGlosarioConceptoRelacion() "+instancia.getIdGlosarioConceptoRelacion()+" "+listaGlosario.get(i).getNombre());
+				if(instancia.getIdGlosarioConceptoRelacion() != 0){
+					glosario = buscarEnGlosarioPorID (listaGlosario, instancia.getIdGlosarioConceptoRelacion());
+					logger.trace("glosario es "+glosario);
+					if(glosario != null){
+						logger.trace("diferente de null");
+						owlClass = datafactory.getOWLClass(IRI.create(this.iriOntology +"#" + glosario.getNombre()));
+				        owlClassAssertionAxion = datafactory.getOWLClassAssertionAxiom(owlClass, owlIndividual);
+				        // Add this axiom to our ontology - with a convenience method
+				        manager.addAxiom(ontology, owlClassAssertionAxion);						
+					}else{
+						logger.trace("instancia.getIdGlosarioConceptoRelacion() "+instancia.getIdGlosarioConceptoRelacion()+" es null");
+					}
 				}
+				break;		
 			}
+			
+//			if(listaGlosario.get(i).getTipoGlosario().getId() == 2){
+//				owlClass = datafactory.getOWLClass(IRI.create(this.iriOntology +"#" + listaGlosario.get(i).getNombre()));
+//				axiom = datafactory.getOWLDeclarationAxiom(owlClass);
+//				addAxiom = new AddAxiom(ontology, axiom);
+//				manager.applyChange(addAxiom);
+//				if(!listaGlosario.get(i).getDescripcion().equalsIgnoreCase("")){
+//					dataType = datafactory.getOWLDatatype("xsd:string", prefixManager);
+////					literal= datafactory.getOWLLiteral(listaGlosario.get(i).getDescripcion(), dataType);
+//					annotationProperty = datafactory.getOWLAnnotationProperty(IRI.create(prefixManager + LeerConfig.obtenerPropiedad("OWLAPI.classDescripcion")));
+//					annotationValue = datafactory.getOWLLiteral(listaGlosario.get(i).getDescripcion(), dataType);
+//					annotation = datafactory.getOWLAnnotation(annotationProperty,annotationValue);
+//					axiom = datafactory.getOWLAnnotationAssertionAxiom(owlClass.getIRI(),annotation);
+//					addAxiom = new AddAxiom(ontology, axiom);
+//					manager.applyChange(addAxiom);					
+//				}
+//			}
 		}
 		
 //		Add taxonomias
@@ -285,14 +381,28 @@ public class ExportarOWL {
 //			}
 //			restrictedProperties.put(property, classes);
 //		}
-//		
-		
-		
-
-		
+//			
 		createFile();
 	}
 	
+	private Glosario buscarEnGlosarioPorID (ArrayList<Glosario> listaGlosario, int id){
+		
+		for(Glosario aux : listaGlosario){
+			if(aux.getId().equalsIgnoreCase(String.valueOf(id))){
+				return aux;
+			}
+		}
+		return null;
+	} 
 	
-    
+	private ArrayList<Instanciado> listaInstanciaDadoIDGlosarioConcepto(ArrayList<Instanciado> listaInstanciado, int id){
+		ArrayList<Instanciado> salida = new ArrayList<Instanciado>();
+		for (Instanciado aux : listaInstanciado){
+			if(aux.getInstancia().getId() == id){
+				salida.add(aux);
+			}
+		}
+		
+		return salida;
+	}
 }
