@@ -76,7 +76,7 @@ public class JdbcGlosarioDAO implements GlosarioDAO {
 	}
 
 	@Override
-	public Glosario verGlosario(int idProyecto, int idGlosario) {
+	public Glosario verGlosario(int idGlosario) {
 		// TODO Auto-generated method stub
 		String sql;
 		sql = "select "
@@ -88,15 +88,13 @@ public class JdbcGlosarioDAO implements GlosarioDAO {
 				+ ",glo.sinonimo "
 				+ ",glo.id_proyecto "
 				+ "from glosario as glo "
-				+ "where glo.id_Proyecto = ? and "
-				+ "glo.id_glosario = ?";
+				+ "where glo.id_glosario = ?";
 		Connection conn = null;
 		Glosario glosario = null;
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, idProyecto);
-			ps.setInt(2, idGlosario);
+			ps.setInt(1, idGlosario);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				glosario = new Glosario();

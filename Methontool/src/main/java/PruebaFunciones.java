@@ -114,8 +114,18 @@ public class PruebaFunciones {
 //		ArrayList<AtributoInstancia> prueba1 = atributoInstanciaDAO.listarAtributoInstanciaDadoIdGlosarioConcepto(7);
 //		logger.trace("prueba "+prueba1.size());
 //		logger.trace("salida de atributoInstancia "+atributoInstanciaDAO.verAtributoInstancia(1, 23).getCardinalidadMax());
+		
+		
+		
 		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
-		logger.trace("ver Instancia dado idInstancia "+instanciaDAO.verInstanciaDadoIdInstancia(31));
+//		logger.trace("ver Instancia dado idInstancia "+instanciaDAO.verInstanciaDadoIdInstancia(31));
+		Instancia instancia = new Instancia();
+		
+		instancia = instanciaDAO.verInstanciaDadoIdGlosarioInstancia(14);
+		logger.trace("** instancia "+instancia.toString());
+		instancia.actualizarAtributoInstancia();
+		
+		
 //		ArrayList<Instancia> prueba2 = instanciaDAO.listaInstanciaDadoIdGlosarioConcepto(7);
 //		logger.trace("prueba2 "+prueba2.size());
 //		AtributoInstancia atributoInstancia = new AtributoInstancia ();
@@ -268,17 +278,20 @@ public class PruebaFunciones {
 ////		logger.trace("modificar "+instanciadoDAO.actualizarInstanciado(instanciado, 1));
 //		logger.trace("ver "+instanciadoDAO.verInstanciado(instanciado, 1));
 		
-		logger.trace("prueba de generar archivo OWL con owlapi");
 		
-		ExportarOWL exportarOWL;
-		try {
-			exportarOWL = new ExportarOWL(1, "salidaMitchell");
-			exportarOWL.crearOntologia();
-		} catch (OWLOntologyCreationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			logger.trace("error coño");
-		}
+		
+		
+//		logger.trace("prueba de generar archivo OWL con owlapi");
+//		
+//		ExportarOWL exportarOWL;
+//		try {
+//			exportarOWL = new ExportarOWL(1, "salidaMitchell");
+//			exportarOWL.crearOntologia();
+//		} catch (OWLOntologyCreationException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			logger.trace("error coño");
+//		}
 	}
 
 }

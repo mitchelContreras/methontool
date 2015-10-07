@@ -57,7 +57,7 @@ public class GlosarioRest {
 		ElementoMensaje<Glosario> elementoMensaje = new ElementoMensaje<Glosario> ();
 		GlosarioDAO glosarioDAO = (GlosarioDAO) context.getBean("glosarioDAO");
 		try {
-			elementoMensaje.setElemento(glosarioDAO.verGlosario(idProyecto, idGlosario));
+			elementoMensaje.setElemento(glosarioDAO.verGlosario(idGlosario));
 			elementoMensaje.setSucces(true);
 		} catch (Exception e) {
 			// TODO: handle exception

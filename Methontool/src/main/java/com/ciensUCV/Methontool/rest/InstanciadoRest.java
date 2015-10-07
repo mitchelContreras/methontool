@@ -93,7 +93,7 @@ public class InstanciadoRest {
 				for (int i=0;i<arrayAtributoInstancia.size();i++){
 					GlosarioDAO glosarioDAO = (GlosarioDAO) context.getBean("glosarioDAO");
 					glosario = new Glosario();
-					glosario = glosarioDAO.verGlosario(idProyecto, arrayAtributoInstancia.get(i).getIdGlosario());
+					glosario = glosarioDAO.verGlosario(arrayAtributoInstancia.get(i).getIdGlosario());
 					valor = arrayAtributoInstancia.get(i).getValue();
 					json = jsonAtributoInstancia(json
 							,String.valueOf(arrayAtributoInstancia.get(i).getId())

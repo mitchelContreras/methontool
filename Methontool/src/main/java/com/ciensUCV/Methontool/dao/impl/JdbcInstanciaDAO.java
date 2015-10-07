@@ -8,12 +8,24 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
+import org.postgresql.util.PGobject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.ciensUCV.Methontool.dao.AtributoInstanciaDAO;
 import com.ciensUCV.Methontool.dao.InstanciaDAO;
 import com.ciensUCV.Methontool.model.AtributoClase;
+import com.ciensUCV.Methontool.model.AtributoInstancia;
+import com.ciensUCV.Methontool.model.AtributoInstanciaDesarrollo;
 import com.ciensUCV.Methontool.model.Instancia;
+import com.ciensUCV.Methontool.util.VariablesConfiguracion;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 public class JdbcInstanciaDAO implements InstanciaDAO {
 	private static final Logger logger = LoggerFactory.getLogger(JdbcInstanciaDAO.class);
@@ -22,6 +34,7 @@ public class JdbcInstanciaDAO implements InstanciaDAO {
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
+
 	@Override
 	public ArrayList<Instancia> listaInstanciaDadoIdGlosarioConcepto(
 			int idGlosarioConcepto) {
@@ -132,6 +145,76 @@ public class JdbcInstanciaDAO implements InstanciaDAO {
 				instancia.setId(rs.getInt("id_instancia"));
 				instancia.setIdGlosario(rs.getInt("id_glosario_instancia"));
 				instancia.setIdGlosarioConceptoRelacion(rs.getInt("id_glosario_concepto"));
+			}
+			rs.close();
+			ps.close();
+			return instancia;	
+		} catch (SQLException e) {
+			logger.info("SQLException "+e);
+			throw new RuntimeException(e);
+		} catch(Exception e) {
+			logger.info("error "+e.toString());
+			return instancia;	
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					return instancia;
+				}
+			}
+		}
+	}
+	@Override
+	public Instancia verInstanciaDadoIdGlosarioInstancia(int idGlosarioInstancia) {
+		// TODO Auto-generated method stub
+		
+		// TODO Auto-generated method stub
+		String sql;
+		sql = "select id_instancia "
+				+ "id_instancia"
+				+ ",id_glosario_instancia "
+				+ ",id_glosario_concepto "
+				+ ",definicion "
+				+ " from instancia"
+				+ " where id_glosario_instancia = ?";
+		
+//		OJO hacer arreglo para tomar el json definicion
+//		editar para agregar propiedades nuevas y eliminar las que no tienen relacion al concepto
+		
+		Instancia instancia = new Instancia();
+		Connection conn = null; 
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idGlosarioInstancia);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				instancia = new Instancia();
+				instancia.setId(rs.getInt("id_instancia"));
+				instancia.setIdGlosario(rs.getInt("id_glosario_instancia"));
+				instancia.setIdGlosarioConceptoRelacion(rs.getInt("id_glosario_concepto"));
+				
+				JsonArray jsonArray;
+				JsonParser parser = new JsonParser();
+	            PGobject dataObject = new PGobject();
+	            dataObject.setType("json");
+	            logger.debug("antes del error");
+	            dataObject = (PGobject)rs.getObject("definicion");
+	            jsonArray = (JsonArray) parser.parse(dataObject.toString());
+				String aux = jsonArray.toString();
+				instancia.setDefinicion(jsonArray);
+				logger.debug("instancia.getDefinicion().size() "+instancia.getDefinicion().size());
+				
+//				JsonObject jsonObject;
+//				JsonParser parser = new JsonParser();
+//	            PGobject dataObject = new PGobject();
+//	            dataObject.setType("json");
+//	            dataObject = (PGobject)rs.getObject("definicion");
+//	            jsonObject = (JsonObject) parser.parse(dataObject.toString());
+//	            instancia.setDefinicion(jsonObject.toString()); 
+				
 			}
 			rs.close();
 			ps.close();
