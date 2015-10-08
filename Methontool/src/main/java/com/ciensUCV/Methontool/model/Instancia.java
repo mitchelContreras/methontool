@@ -13,8 +13,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.ciensUCV.Methontool.dao.AtributoInstanciaDAO;
 import com.ciensUCV.Methontool.dao.GlosarioDAO;
+import com.ciensUCV.Methontool.dao.InstanciaDAO;
 import com.ciensUCV.Methontool.util.VariablesConfiguracion;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -174,9 +176,21 @@ public class Instancia {
     		}else{
     			actualizarValoresAtrbInstanciaEliminarNoExisteAgregarNuevos(listaActualAtributoInstancia);
     		}
+    		
+    		ApplicationContext context = 
+    				new ClassPathXmlApplicationContext(VariablesConfiguracion.rutaArchivoSpringDaoImpl);		
+    		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
+    		instanciaDAO.actualizarInstancia(this);
     	}
 	}
 
+
+	public String definicionToJsonString(){
+		String salida = null;
+		Gson gson = new GsonBuilder().create();
+		salida = gson.toJson(this.definicion);
+		return salida;
+	}
 
 	
 

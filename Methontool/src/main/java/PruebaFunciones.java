@@ -124,6 +124,7 @@ public class PruebaFunciones {
 		instancia = instanciaDAO.verInstanciaDadoIdGlosarioInstancia(14);
 		logger.trace("** instancia "+instancia.toString());
 		instancia.actualizarAtributoInstancia();
+		logger.trace("definicion as json"+instancia.definicionToJsonString());
 		
 		
 //		ArrayList<Instancia> prueba2 = instanciaDAO.listaInstanciaDadoIdGlosarioConcepto(7);

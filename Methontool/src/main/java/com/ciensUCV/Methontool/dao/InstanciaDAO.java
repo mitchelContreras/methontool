@@ -10,4 +10,5 @@ public interface InstanciaDAO {
 	public ArrayList<Instancia> listarInstanciaSinConceptoAsociado(int idProyecto);
 	public Instancia verInstanciaDadoIdInstancia(int idInstancia);
 	public Instancia verInstanciaDadoIdGlosarioInstancia (int idGlosarioInstancia);
+	public Instancia actualizarInstancia (Instancia instancia);
 }
