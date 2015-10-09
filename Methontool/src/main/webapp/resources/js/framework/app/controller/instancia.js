@@ -163,11 +163,12 @@ function ControllerInstancia($rootScope,
 	            	console.log("aux es "+JSON.stringify(aux));
 	                if(aux.succes){
 	                	cnInstancia.varEdicion = aux.elemento;
-	                	cnInstancia.varEdicion.conceptoAsociado = FactoryGlosario.consultarElemento(cnInstancia.varEdicion.instancia.idGlosarioConceptoRelacion);
-	                	cnInstancia.varEdicion.glosarioInstancia = FactoryGlosario.consultarElemento(cnInstancia.varEdicion.instancia.id);
-	                	cnInstancia.varEdicion.definicion = JSON.parse(cnInstancia.varEdicion.definicion);
+	                	cnInstancia.varEdicion.conceptoAsociado = FactoryGlosario.consultarElemento(cnInstancia.varEdicion.idGlosarioConceptoRelacion);
+	                	cnInstancia.varEdicion.glosarioInstancia = FactoryGlosario.consultarElemento(cnInstancia.varEdicion.idGlosario);
+	                	console.log("Mitchell cnInstancia.varEdicion.definicion "+JSON.stringify(cnInstancia.varEdicion.definicion));
+//	                	cnInstancia.varEdicion.definicion = JSON.parse(cnInstancia.varEdicion.definicion);
 //	                	cnInstancia.varAuxiliarDefinicion = cnInstancia.varEdicion.definicion.atributoInstancia.slice();
-	                	copyArrayOfObject(cnInstancia.varEdicion.definicion.atributoInstancia, cnInstancia.varAuxiliarDefinicion);
+	                	copyArrayOfObject(cnInstancia.varEdicion.definicion, cnInstancia.varAuxiliarDefinicion);
 	                	//console.log("jsonDef.length "+jsonDef.atributoInstancia.length);
 //	            		cnInstancia.varEdicion.tipoDeDato 
 //	            			= FactoryTipoDato.consultarElemento(aux.elemento.tipoDeDato.codigo);
@@ -202,26 +203,21 @@ function ControllerInstancia($rootScope,
 		var salida;
 		var auxDefinicion = {};
 
-		console.log("cnInstancia.varEdicion.instancia.id=idInstancia "+cnInstancia.varEdicion.instancia.id);
-		console.log("cnInstancia.varEdicion.instancia.idGlosarioConceptoRelacion=idConcepto "+cnInstancia.varEdicion.instancia.idGlosarioConceptoRelacion);
-		console.log("cnInstancia.varEdicion.id=idInstanciado "+cnInstancia.varEdicion.id);
-		auxDefinicion.atributoInstancia = cnInstancia.varAuxiliarDefinicion;
-		console.log("auxDefinicion.atributoInstancia "+JSON.stringify(auxDefinicion));
-//		idInstancia ,idConcepto ,idInstanciado ,definicion
+//		idInstancia ,idConcepto ,definicion
 		salida = FactoryInstancia.actualizarElemento(
-				cnInstancia.varEdicion.instancia.id
-				,cnInstancia.varEdicion.instancia.idGlosarioConceptoRelacion
-				,cnInstancia.varEdicion.id
-				,JSON.stringify(auxDefinicion)
+				cnInstancia.varEdicion.idGlosario
+				,cnInstancia.varEdicion.idGlosarioConceptoRelacion
+				,JSON.stringify(cnInstancia.varAuxiliarDefinicion)
 				);
 		salida.then(
             function(aux) {
                 // success
+            	console.log("aux es "+JSON.stringify(aux));
                 if(aux.succes){
                 	console.log("actualizar es true");
                 	cnInstancia.alertPositiva = true;
                 	cnInstancia.mensajeAlertPositiva = "La Instancia ha sido actualizado";
-                	cnInstancia.seleccioneGlosario (cnInstancia.varEdicion.instancia, 'false');
+                	cnInstancia.seleccioneGlosario (cnInstancia.varEdicion, 'false');
                 }
              }
 		);	

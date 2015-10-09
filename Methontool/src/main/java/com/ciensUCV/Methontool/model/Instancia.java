@@ -4,6 +4,7 @@ package com.ciensUCV.Methontool.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Arrays;
+import java.lang.reflect.Type;
 
 import org.postgresql.util.PGobject;
 import org.slf4j.Logger;
@@ -69,13 +70,23 @@ public class Instancia {
 	public void setDefinicion(ArrayList<AtributoInstanciaDesarrollo> definicion) {
 		this.definicion = definicion;
 	}
-	public void setDefinicion(JsonArray definicion) {
-		
+	public void setDefinicion(JsonArray definicion) {	
 //		new Gson().fromJson(jsonArray, AtributoInstanciaDesarrollo[].class
 		this.definicion = new ArrayList<AtributoInstanciaDesarrollo>(Arrays.asList(new Gson().fromJson(definicion, AtributoInstanciaDesarrollo[].class)));
+		logger.debug("this.definicion.size() "+this.definicion.size());
 	}
 
+	public void setDefinicion(String definion){
+		this.definicion = (ArrayList<AtributoInstanciaDesarrollo>) fromJson(definion,
+                new TypeToken<ArrayList<AtributoInstanciaDesarrollo>>() {
+                }.getType());
 
+	}
+
+	private Object fromJson(String jsonString, Type type) {
+	    return new Gson().fromJson(jsonString, type);
+	}
+	
 	@Override
 	public String toString() {
 		return "Instancia [id=" + id + ", idGlosario=" + idGlosario

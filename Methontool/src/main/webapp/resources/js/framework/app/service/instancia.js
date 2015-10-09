@@ -19,16 +19,16 @@
     });
     
     proy.factory('$verInstancia',function ($resource){
-    	var urlConsultar = urlProyecto+"/api/proyecto/:idProyecto/instanciado/:idInstancia";
+    	var urlConsultar = urlProyecto+"/api/proyecto/:idProyecto/instancia/:idGlosarioInstancia";
         return $resource(urlConsultar,{},{
-            get: {method: 'GET', params: {idProyecto: '@idProyecto', idInstancia:'@idInstancia' }, isArray:false}
+            get: {method: 'GET', params: {idProyecto: '@idProyecto', idGlosarioInstancia:'@idGlosarioInstancia' }, isArray:false}
             });
     });
     
     proy.factory('$actualizarInstancia',function ($resource){
-    	var urlConsultar = urlProyecto+"/api/proyecto/:idProyecto/instanciado/:idInstancia";
+    	var urlConsultar = urlProyecto+"/api/proyecto/:idProyecto/instancia/:idGlosarioInstancia";
         return $resource(urlConsultar,{},{
-            put: {method: 'PUT', params: {idProyecto: '@idProyecto', idInstancia:'@idInstancia' }, isArray:false}
+            put: {method: 'PUT', params: {idProyecto: '@idProyecto', idGlosarioInstancia:'@idGlosarioInstancia' }, isArray:false}
             });
     });
 

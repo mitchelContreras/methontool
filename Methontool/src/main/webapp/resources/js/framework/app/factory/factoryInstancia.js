@@ -36,15 +36,17 @@ angular.module('methontool')
 			};
 		
 		function actualizarElemento(idInstancia ,idConcepto ,idInstanciado ,definicion){
+			return actualizarElemento(idInstancia ,idConcepto ,definicion);
+		}
+		
+		function actualizarElemento(idInstancia ,idConcepto, definicion){
 			return $actualizarInstancia.put({
 				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
-				,idInstancia: idInstancia
+				,idGlosarioInstancia: idInstancia
 				,'idConcepto' : idConcepto
-				,'idInstanciado' : idInstanciado
 				,'definicion' : definicion
 				},{}).$promise;
 		}
-		
 		function listarElementoSinConceptoAsociado(){
 			return 	$listarInstanciaSinConceptoAsociado.get({
 				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
@@ -55,7 +57,7 @@ angular.module('methontool')
 			console.log("entre en verElemento con "+idInstancia);
 			return 	$verInstancia.get({
 				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto,
-				idInstancia: idInstancia
+				idGlosarioInstancia: idInstancia
 				},{}).$promise;
 		}
 		
