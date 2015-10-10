@@ -65,7 +65,7 @@ public class InstanciaRest {
 		
 		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
 		elementoMensaje.setElemento(instanciaDAO.verInstanciaDadoIdGlosarioInstancia(idGlosarioInstancia));
-		if(elementoMensaje.getElemento() == null){
+		if(elementoMensaje.getElemento().getIdGlosario() == 0){
 			elementoMensaje.setSucces(false);
 			ErrorEnviar errorEnviar = new ErrorEnviar();
 			errorEnviar.setMensaje("La instancia seleccionada no ha sido asociada a un concepto");

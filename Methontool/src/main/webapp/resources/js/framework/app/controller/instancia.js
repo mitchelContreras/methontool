@@ -151,6 +151,7 @@ function ControllerInstancia($rootScope,
 			console.log("limpiar en select");
 			cnInstancia.alertPositiva = false;
 		}
+		cnInstancia.alertNegativa = false;
 		cnInstancia.varEdicion = {};
 		cnInstancia.varAuxiliarDefinicion = [];
 		
@@ -181,7 +182,10 @@ function ControllerInstancia($rootScope,
 	                	
 	                	FactoryMensajeCarga.cerrarMensaje();
 	                }else{
-	                	
+	                	cnInstancia.varEdicion.glosarioInstancia = FactoryGlosario.consultarElemento(elemento.id);
+	                	cnInstancia.mensajeAlertNegativa = "La instancia no ha sido asociada a algún concepto";
+	                	cnInstancia.alertNegativa = true;
+	                	FactoryMensajeCarga.cerrarMensaje();
 	                }
 	            }
 	        );
