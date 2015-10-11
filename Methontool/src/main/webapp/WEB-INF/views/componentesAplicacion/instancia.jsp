@@ -8,6 +8,14 @@
 							<div class="btn-group col-xs-10">
 								<span><strong>Buscar por:</strong></span>
 							</div>
+							<div class="col-xs-2 ">
+								<button ng-click="cnInstancia.agregarInstanciaModal()"
+									class="btn btn-link " aria-label="Center Align" type="button"
+									data-toggle="tooltip" data-placement="top"
+									title="Agregar instancia">
+									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								</button>
+							</div>							
 						</div>
 						<div class="row">
 							<div class="btn-group col-xs-6 form-group"
@@ -402,4 +410,67 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal agregar instancia-->
+	<div class="modal fade"
+		id="verModalAgregarInstanciaenInstancia" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Agregar instancia</h4>
+				</div>				
+				<div class="inicioTexto">
+					<div align="center" class="alert alert-danger alert-dismissible"
+						ng-if="cnInstancia.crearErrorBoolean"
+						style="margin: 10px;">
+						<strong>Error!</strong> {{cnInstancia.crearErrorMensaje}}
+					</div>				
+					<div class="row centered">
+						<div class="col-xs-2 divCentrado formulario">
+							<label class="control-label col-xs-2"><span class="obligatorio">*&nbsp;</span>Instancia:</label>
+						</div>
+						<div class="col-xs-6 divCentrado formulario">
+							<input id="nuevaInstanciaNombre" type="text" class="form-control" 
+								ng-model="cnInstancia.nuevaInstancia.nombre">
+						</div>					
+					</div>
+					<div class="row centered">
+						<div class="col-xs-2 divCentrado formulario">
+							<label class="control-label col-xs-2"><span class="obligatorio">*&nbsp;</span>Concepto asociado:</label>
+						</div>
+						<div class="col-xs-6 divCentrado formulario">
+       						<div angucomplete-alt
+								 id="autoAgregarConceptoAsociadoInstancia" placeholder=""
+								  maxlength="50"
+								  pause="100"
+								  selected-object="cnInstancia.nuevaInstancia.conceptoAsociado" 
+								  local-data="cnInstancia.listaConcepto" 
+								  search-fields="nombre" 
+								  title-field="nombre"
+								  minlength="1" 
+								  input-class="form-control" 
+								  match-class="highlight">
+       						</div>
+        				</div>							
+					</div>	
+					<div class="row centered">
+						<div >
+							<span class="obligatorio" style="text-align: center;" >Los campos con (*) son obligatorios</span>				
+						</div>
+					</div>									
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" type="button"
+						ng-click="cnInstancia.guardarNuevaInstancia()">Guardar</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				</div>
+
+			</div>
+		</div>
+	</div>	
 </div>

@@ -26,6 +26,7 @@ import com.ciensUCV.Methontool.model.Glosario;
 import com.ciensUCV.Methontool.model.Instancia;
 import com.ciensUCV.Methontool.model.Instanciado;
 import com.ciensUCV.Methontool.model.Taxonomia;
+import com.ciensUCV.Methontool.model.TipoGlosario;
 import com.ciensUCV.Methontool.rest.model.ElementoMensaje;
 import com.ciensUCV.Methontool.rest.model.ElementosMensaje;
 import com.ciensUCV.Methontool.rest.model.ErrorEnviar;
@@ -114,5 +115,70 @@ public class InstanciaRest {
 		}
 		return elementoMensaje;
 	}
+	
+	@RequestMapping(value="/api/proyecto/{idProyecto}/instancia", method = RequestMethod.POST)
+	public @ResponseBody ElementoMensaje<Instancia> crearInstancia(
+			@PathVariable("idProyecto") int idProyecto
+			,@RequestParam(value = "nombreInstancia") String nombreInstancia
+			,@RequestParam(value = "idConcepto") int idConcepto
+			){
+		logger.trace("***crearInstancia");
+		logger.trace("idProyecto "+idProyecto);
+		logger.trace("idConcepto "+idConcepto);
+		logger.trace("nombreInstancia "+nombreInstancia);
+		
+		//Objeto de salida
+		ElementoMensaje<Instancia> elementoMensaje = new ElementoMensaje<Instancia>();
+		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
+		GlosarioDAO glosarioDAO = (GlosarioDAO) context.getBean("glosarioDAO");
+		Glosario glosario;
+		Instancia instancia = new Instancia();
+
+		glosario = 
+				new Glosario(
+						null, 
+						nombreInstancia, 
+						null, 
+						null,
+						"",
+						new TipoGlosario (
+								8, 
+								null, 
+								null, 
+								null));
+		
+		try {
+			logger.debug("antes de agregar glosario");
+			glosario = glosarioDAO.crearGlosario(idProyecto, glosario);
+			if(!glosario.getId().equalsIgnoreCase("")){
+				logger.debug("id Glosario es diferente de vacio");
+				instancia.setIdGlosario(Integer.parseInt(glosario.getId()));
+				instancia.setIdGlosarioConceptoRelacion(idConcepto);
+				if(instancia.getIdGlosario() != 0){
+					logger.debug("id instancia es diferente de vacio");
+					instancia = instanciaDAO.crearInstancia(instancia);
+					elementoMensaje.setSucces(true);
+					elementoMensaje.setElemento(instancia);
+				}else{
+					ErrorEnviar enviarError;
+					enviarError = new ErrorEnviar("0060", null, "Error al insertar en BD");
+					elementoMensaje.getListaError().add(enviarError);					
+				}
+			}else{
+				ErrorEnviar enviarError;
+				enviarError = new ErrorEnviar("0061", null, "Error al insertar en BD");
+				elementoMensaje.getListaError().add(enviarError);				
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			elementoMensaje.setSucces(false);
+			ErrorEnviar enviarError;
+			enviarError = new ErrorEnviar("0051", null, "Error al insertar en BD");
+			elementoMensaje.getListaError().add(enviarError);
+		}			
+
+		return elementoMensaje;
+	}	
 	
 }

@@ -14,6 +14,7 @@ angular.module('methontool')
 	                                ,'$listarInstanciaSinConceptoAsociado'
 	                                ,'$verInstancia'
 	                                ,'$actualizarInstancia'
+	                                ,'$crearInstancia'
 	                           ];
 
 	function FactoryInstancia (
@@ -21,6 +22,7 @@ angular.module('methontool')
 			,$listarInstanciaSinConceptoAsociado
 			,$verInstancia
 			,$actualizarInstancia
+			,$crearInstancia
 			){
 		
 		var funcion = {
@@ -32,9 +34,19 @@ angular.module('methontool')
 				},
 				actualizarElemento: function (idInstancia ,idConcepto ,idInstanciado ,definicion){
 					return actualizarElemento(idInstancia ,idConcepto ,idInstanciado ,definicion);
+				},
+				crearElemento: function (nombreInstancia, idConcepto){
+					return crearElemento(nombreInstancia, idConcepto);
 				}
 			};
 		
+		function crearElemento(nombreInstancia, idConcepto){
+			return $crearInstancia.post({
+				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
+				,'idConcepto' : idConcepto
+				,'nombreInstancia' : nombreInstancia
+				},{}).$promise;
+		}
 		function actualizarElemento(idInstancia ,idConcepto ,idInstanciado ,definicion){
 			return actualizarElemento(idInstancia ,idConcepto ,definicion);
 		}

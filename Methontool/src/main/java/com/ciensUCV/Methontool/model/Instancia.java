@@ -178,6 +178,7 @@ public class Instancia {
 	}
 	
 	public void actualizarAtributoInstancia(){
+		logger.debug("this.idGlosarioConceptoRelacion "+this.idGlosarioConceptoRelacion);
 		if(this.idGlosarioConceptoRelacion != 0){
     		ArrayList<AtributoInstanciaDesarrollo> listaActualAtributoInstancia = listarAtributoInstanciaDadoIdGlosarioConcepto(this.idGlosarioConceptoRelacion);
     		

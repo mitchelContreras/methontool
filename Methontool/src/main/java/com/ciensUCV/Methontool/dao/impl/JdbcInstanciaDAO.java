@@ -140,11 +140,16 @@ public class JdbcInstanciaDAO implements InstanciaDAO {
 			ps.setInt(1, idInstancia);
 			ResultSet rs = ps.executeQuery();
 			
+			logger.debug("antes de verInstanciaDadoIdInstancia rs");
 			while(rs.next()){
+				logger.debug("entre en verInstanciaDadoIdInstancia");
 				instancia = new Instancia();
 				instancia.setId(rs.getInt("id_instancia"));
 				instancia.setIdGlosario(rs.getInt("id_glosario_instancia"));
 				instancia.setIdGlosarioConceptoRelacion(rs.getInt("id_glosario_concepto"));
+				logger.debug("instancia1 es "+instancia.toString());
+				instancia.actualizarAtributoInstancia();
+				logger.debug("instancia2 es "+instancia.toString());
 			}
 			rs.close();
 			ps.close();
@@ -206,7 +211,7 @@ public class JdbcInstanciaDAO implements InstanciaDAO {
 				String aux = jsonArray.toString();
 				instancia.setDefinicion(jsonArray);
 				logger.debug("instancia.getDefinicion().size() "+instancia.getDefinicion().size());
-				
+				instancia.actualizarAtributoInstancia();				
 //				JsonObject jsonObject;
 //				JsonParser parser = new JsonParser();
 //	            PGobject dataObject = new PGobject();
@@ -263,6 +268,53 @@ public class JdbcInstanciaDAO implements InstanciaDAO {
 			
 			while(rs.next()){
 				instancia = new Instancia();
+				instancia.setIdGlosario(rs.getInt("id_glosario_instancia"));
+			}
+			rs.close();
+			ps.close();
+			return instancia;	
+		} catch (SQLException e) {
+			logger.info("SQLException "+e);
+			throw new RuntimeException(e);
+		} catch(Exception e) {
+			logger.info("error "+e.toString());
+			return instancia;	
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					return instancia;
+				}
+			}
+		}		
+	}
+
+	@Override
+	public Instancia crearInstancia(Instancia instancia) {
+		// TODO Auto-generated method stub
+//		private int id;
+//		private int idGlosario;
+//		private int idGlosarioConceptoRelacion;
+//		private ArrayList<AtributoInstanciaDesarrollo> definicion;
+		
+		String sql = null;		
+		sql = "INSERT INTO instancia"
+				+ " (id_glosario_instancia, id_glosario_concepto, definicion)"
+				+ " VALUES (?, ?, ?::json) RETURNING id_glosario_instancia;";		
+		
+		Connection conn = null; 
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+
+			ps.setInt(1, instancia.getIdGlosario());
+			ps.setInt(2, instancia.getIdGlosarioConceptoRelacion());
+			ps.setString(3, instancia.definicionToJsonString());
+			
+			ResultSet rs = ps.executeQuery();
+			instancia.setIdGlosario(0);
+			while(rs.next()){
 				instancia.setIdGlosario(rs.getInt("id_glosario_instancia"));
 			}
 			rs.close();

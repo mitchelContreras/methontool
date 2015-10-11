@@ -119,12 +119,18 @@ public class PruebaFunciones {
 		
 		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
 //		logger.trace("ver Instancia dado idInstancia "+instanciaDAO.verInstanciaDadoIdInstancia(31));
+
 		Instancia instancia = new Instancia();
+		instancia.setIdGlosario(83);
+		instancia.setIdGlosarioConceptoRelacion(7);
+		instancia = instanciaDAO.crearInstancia(instancia);
 		
-		instancia = instanciaDAO.verInstanciaDadoIdGlosarioInstancia(14);
-		logger.trace("** instancia "+instancia.toString());
-		instancia.actualizarAtributoInstancia();
-		logger.trace("definicion as json"+instancia.definicionToJsonString());
+		
+		
+//		instancia = instanciaDAO.verInstanciaDadoIdGlosarioInstancia(14);
+//		logger.trace("** instancia "+instancia.toString());
+//		instancia.actualizarAtributoInstancia();
+//		logger.trace("definicion as json"+instancia.definicionToJsonString());
 		
 		
 //		ArrayList<Instancia> prueba2 = instanciaDAO.listaInstanciaDadoIdGlosarioConcepto(7);

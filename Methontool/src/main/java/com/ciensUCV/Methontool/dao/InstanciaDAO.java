@@ -11,4 +11,5 @@ public interface InstanciaDAO {
 	public Instancia verInstanciaDadoIdInstancia(int idInstancia);
 	public Instancia verInstanciaDadoIdGlosarioInstancia (int idGlosarioInstancia);
 	public Instancia actualizarInstancia (Instancia instancia);
+	public Instancia crearInstancia (Instancia instancia);
 }

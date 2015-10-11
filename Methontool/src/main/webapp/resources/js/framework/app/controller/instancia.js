@@ -47,42 +47,12 @@ function ControllerInstancia($rootScope,
 	cnInstancia.listaConcepto = {};
 	cnInstancia.mensajeAlertPositiva = "";
 	cnInstancia.mensajeAlertNegativa = "";
+	cnInstancia.crearErrorMensaje = "Debe llenar todos los campos obligatorios (*) ";
 	cnInstancia.alertPositiva = false;
 	cnInstancia.alertNegativa = false;
+	cnInstancia.crearErrorBoolean = false;
 	
-
-	
-	
-//	{
-//		  "array": [
-//		    {
-//		      "listaAtributo": ["uno", "dos","tres"]
-//		      ,"CardinalidadOrigen": "origen"
-//		      ,"CardinalidadDestino":"destino"
-//		      ,"Nombre":"Atributo Uno"
-//		      ,"tipoAributo":"1"
-//		      ,"idAtributo":"12"
-//		    }
-//		    ,{
-//		      "listaAtributo": ["cuatro", "cinco","seis"]
-//		      ,"CardinalidadOrigen": "M"
-//		      ,"CardinalidadDestino":"N"
-//		      ,"Nombre":"Atributo Dos"
-//		      ,"tipoAributo":"2"
-//		      ,"idAtributo":"113"
-//		    }
-//		    ,{
-//		      "listaAtributo": ["siete", "ocho","nueve"]
-//		      ,"CardinalidadOrigen": "A"
-//		      ,"CardinalidadDestino":"B"
-//		      ,"Nombre":"Atributo Tres"
-//		      ,"tipoAributo":"3"
-//		      ,"idAtributo":"14"
-//		    }
-//		  ]
-//		}
-	
-	
+		
 //-------------------Funciones----------------------------------	
 	
 	cnInstancia.modificarInstancia = modificarInstancia;
@@ -98,6 +68,62 @@ function ControllerInstancia($rootScope,
 	cnInstancia.confirmoAgregarAtributoLista = confirmoAgregarAtributoLista;
 	cnInstancia.verConceptoAsociado = verConceptoAsociado;
 	cnInstancia.guardarNuevoValor = guardarNuevoValor;
+	cnInstancia.agregarInstanciaModal = agregarInstanciaModal;
+	cnInstancia.guardarNuevaInstancia = guardarNuevaInstancia;
+	
+	function guardarNuevaInstancia(){
+		if( cnInstancia.nuevaInstancia.conceptoAsociado == "" || cnInstancia.nuevaInstancia.nombre ==""){
+			cnInstancia.crearErrorBoolean = true;
+		}else{
+			var salida;
+			salida = FactoryInstancia.crearElemento(cnInstancia.nuevaInstancia.nombre, cnInstancia.nuevaInstancia.conceptoAsociado.originalObject.id);
+			FactoryMensajeCarga.abrirMensaje("Cargando");
+			salida.then(
+	            function(aux) {
+	            	console.log("entro en salida");
+	            	console.log("aux es "+JSON.stringify(aux));
+	                if(aux.succes){
+	                	var elementoNuevo = {"id":aux.elemento.idGlosario};
+	                	var glosario = FactoryGlosario.actualizarLista();
+	                	console.log("salida de getListaElemento "+glosario.length);
+	    	    		glosario.then(
+	    		                function(salida) {
+	    			            	console.log("entro en salida 2");
+	    			            	console.log("aux es "+JSON.stringify(aux));	    		                	
+	    		                    if(salida.succes){
+	    		                    	FactoryGlosario.setListaElemento (salida.elementos);
+	    		                    	FactoryGlosario.setYaConsulte (true);
+	    		                    	cnInstancia.listaInstancia = FactoryGlosario.getGlosarioDadoTipoGlosario(8);
+	    		                    	cnInstancia.alertPositiva = true;
+	    		                    	cnInstancia.mensajeAlertPositiva = "La Instancia ha sido creada";
+	    		                    	cnInstancia.seleccioneGlosario (elementoNuevo, 'false');	    		                    	
+	    		                    	
+	    		                    	FactoryMensajeCarga.cerrarMensaje();
+	    		                    }
+	    		                }
+	    		        );	                	
+	                	
+	                	
+	                }
+	            }
+	        );			
+			
+			$('#verModalAgregarInstanciaenInstancia').modal('hide');
+		}
+	}
+	
+	function agregarInstanciaModal(){
+		cnInstancia.listaConcepto = [];
+		cnInstancia.nuevaInstancia = {};
+		cnInstancia.nuevaInstancia.conceptoAsociado = "";
+		cnInstancia.nuevaInstancia.nombre = "";
+		cnInstancia.crearErrorBoolean = false;
+		$scope.$broadcast('angucomplete-alt:asignar-defoult', 'autoAgregarConceptoAsociadoInstancia', "");
+		cnInstancia.listaConcepto = FactoryGlosario.getGlosarioDadoTipoGlosario(2).slice(0);
+		
+		$('#verModalAgregarInstanciaenInstancia').modal('show');
+		
+	}
 	
 	function guardarNuevoValor(){
 		$('#verModalagregarNuevoValorListaInstancia1').modal('hide');

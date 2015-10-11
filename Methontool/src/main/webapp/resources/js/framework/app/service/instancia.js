@@ -31,5 +31,12 @@
             put: {method: 'PUT', params: {idProyecto: '@idProyecto', idGlosarioInstancia:'@idGlosarioInstancia' }, isArray:false}
             });
     });
+    
+    proy.factory('$crearInstancia',function ($resource){
+    	var urlConsultar = urlProyecto+"/api/proyecto/:idProyecto/instancia";
+        return $resource(urlConsultar,{},{
+            post: {method: 'POST', params: {idProyecto: '@idProyecto'}, isArray:false}
+            });
+    });    
 
 })();
