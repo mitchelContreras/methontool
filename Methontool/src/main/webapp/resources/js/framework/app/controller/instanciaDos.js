@@ -17,12 +17,14 @@ ControllerInstanciaDos.$inject = ['$rootScope',
                        'InformacionPrincipalApp'
                        ,'FactoryGlosario'
                        ,'FactoryMensajeCarga'
+                       ,'FactoryConcepto'
                        ];	
 
 function ControllerInstanciaDos($rootScope,
 		InformacionPrincipalApp
 		,FactoryGlosario
 		,FactoryMensajeCarga
+		,FactoryConcepto
 		){
 	
 	console.log("Entro en ControllerInstanciaDos");
@@ -141,20 +143,38 @@ function ControllerInstanciaDos($rootScope,
 			console.log("limpiar en select");
 			cnInstanciaDos.alertPositiva = false;
 		}
-//		cnInstanciaDos.varEdicion = {};
+		cnInstanciaDos.varEdicion = {};
 		cnInstanciaDos.varEdicion.glosarioConceptoActual = {};
+		cnInstanciaDos.mensajeAlertNegativa = "";
 		
 //		asigno la relacion con la que estoy trabajando
 		cnInstanciaDos.varEdicion.glosarioConceptoActual = elemento;
 		
-//		var salida;
-//		salida = FactoryInstancia.verElemento(elemento.id);
-//		FactoryMensajeCarga.abrirMensaje("Cargando");
-//		salida.then(
-//	            function(aux) {
-//	                if(aux.succes){
-//	                	console.log("consultar Instancia es true");
-//
+		console.log("Elemento que voy a consultar es ");
+		console.log(JSON.stringify(elemento, null, '\t'));
+		
+//		Consulto el concepto seleccionado
+		var salida;
+		salida = FactoryConcepto.consultarElemento(elemento.id);
+		FactoryMensajeCarga.abrirMensaje("Cargando");
+		salida.then(
+	            function(aux) {
+	        		console.log("***Salid de consulta");
+	        		console.log(JSON.stringify(aux, null, '\t'));
+	        		
+	                if(aux.succes){
+	                	console.log("consultar Conecpto es true");
+	                	
+//	                	Consulto glosario de oncepto actual
+	                	cnInstanciaDos.varEdicion.glosarioConceptoActual = 
+	                		FactoryGlosario.consultarElemento(aux.elemento.idGlosario);
+	                	
+//	                	Traigo las listas de atributo
+	                	cnInstanciaDos.varEdicion.atributosClase =
+	                		aux.elemento.atributosClase;
+	                	cnInstanciaDos.varEdicion.atributosInstancia =
+	                		aux.elemento.atributosInstancia;
+	                	
 //	            		cnInstancia.varEdicion.tipoDeDato 
 //	            			= FactoryTipoDato.consultarElemento(aux.elemento.tipoDeDato.codigo);
 //	            		
@@ -163,13 +183,11 @@ function ControllerInstanciaDos($rootScope,
 //	            		
 //	            		cnInstancia.varEdicion.medida
 //	                		= FactoryMedida.consultarElemento(aux.elemento.medida.codigo);
-//	                	
-//	                	FactoryMensajeCarga.cerrarMensaje();
-//	                }else{
-//	                	
-//	                }
-//	            }
-//	        );
+	                	
+	                	FactoryMensajeCarga.cerrarMensaje();
+	                }
+	            }
+	        );
 	}
 	function modificarInstanciaDos (){
 		cnInstanciaDos.disabled = false;

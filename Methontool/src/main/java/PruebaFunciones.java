@@ -117,13 +117,13 @@ public class PruebaFunciones {
 		
 		
 		
-		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
-//		logger.trace("ver Instancia dado idInstancia "+instanciaDAO.verInstanciaDadoIdInstancia(31));
-
-		Instancia instancia = new Instancia();
-		instancia.setIdGlosario(83);
-		instancia.setIdGlosarioConceptoRelacion(7);
-		instancia = instanciaDAO.crearInstancia(instancia);
+//		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
+////		logger.trace("ver Instancia dado idInstancia "+instanciaDAO.verInstanciaDadoIdInstancia(31));
+//
+//		Instancia instancia = new Instancia();
+//		instancia.setIdGlosario(83);
+//		instancia.setIdGlosarioConceptoRelacion(7);
+//		instancia = instanciaDAO.crearInstancia(instancia);
 		
 		
 		
@@ -299,6 +299,20 @@ public class PruebaFunciones {
 //			e.printStackTrace();
 //			logger.trace("error coño");
 //		}
+		
+		
+//		TipoDeDatoDAO tipoDeDatoDAO = (TipoDeDatoDAO) context.getBean("tipoDeDatoDAO");	
+//		TipoDeDato tipoDeDato = new TipoDeDato();
+//		tipoDeDato.setCodigo("int");
+//		tipoDeDato = tipoDeDatoDAO.verTipoDeDato(tipoDeDato) ;
+//		logger.debug("tipoDeDato "+tipoDeDato.toString());
+		
+		MedidaDAO medidaDAO = (MedidaDAO) context.getBean("medidaDAO");	
+		Medida medida = new Medida();
+		medida.setCodigo("mtrs");
+		medida = medidaDAO.verMedida(medida) ;
+		logger.debug("medida "+medida.toString());
+		
 	}
 
 }

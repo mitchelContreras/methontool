@@ -40,4 +40,10 @@ public class Medida {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+	@Override
+	public String toString() {
+		return "Medida [id=" + id + ", codigo=" + codigo + ", nombre=" + nombre
+				+ ", descripcion=" + descripcion + "]";
+	}
+	
 }
