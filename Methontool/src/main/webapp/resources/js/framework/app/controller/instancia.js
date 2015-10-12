@@ -247,7 +247,9 @@ function ControllerInstancia($rootScope,
                 	console.log("actualizar es true");
                 	cnInstancia.alertPositiva = true;
                 	cnInstancia.mensajeAlertPositiva = "La Instancia ha sido actualizado";
-                	cnInstancia.seleccioneGlosario (cnInstancia.varEdicion, 'false');
+                	console.log("aux.idGlosario "+aux.elemento.idGlosario);
+                	var enviar = {"id":aux.elemento.idGlosario};
+                	cnInstancia.seleccioneGlosario (enviar, 'false');
                 }
              }
 		);	

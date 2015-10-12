@@ -207,11 +207,19 @@ public class JdbcInstanciaDAO implements InstanciaDAO {
 	            dataObject.setType("json");
 	            logger.debug("antes del error");
 	            dataObject = (PGobject)rs.getObject("definicion");
-	            jsonArray = (JsonArray) parser.parse(dataObject.toString());
-				String aux = jsonArray.toString();
-				instancia.setDefinicion(jsonArray);
+	            logger.debug("1");
+	            try {
+		            jsonArray = (JsonArray) parser.parse(dataObject.toString());
+					String aux = jsonArray.toString();		
+					instancia.setDefinicion(jsonArray);
+					logger.debug("el aux de definicion string "+aux);
+				} catch (Exception e) {
+					// TODO: handle exception
+					logger.debug("falla con vacio");
+				}
 				logger.debug("instancia.getDefinicion().size() "+instancia.getDefinicion().size());
-				instancia.actualizarAtributoInstancia();				
+				instancia.actualizarAtributoInstancia();	
+				logger.trace("instancia.getDefinicion() "+instancia.getDefinicion());
 //				JsonObject jsonObject;
 //				JsonParser parser = new JsonParser();
 //	            PGobject dataObject = new PGobject();
@@ -228,7 +236,7 @@ public class JdbcInstanciaDAO implements InstanciaDAO {
 			logger.info("SQLException "+e);
 			throw new RuntimeException(e);
 		} catch(Exception e) {
-			logger.info("error "+e.toString());
+			logger.info("error "+e);
 			return instancia;	
 		} finally {
 			if (conn != null) {
@@ -265,10 +273,11 @@ public class JdbcInstanciaDAO implements InstanciaDAO {
 			ps.setInt(2, instancia.getIdGlosario());
 			ps.setInt(3, instancia.getIdGlosarioConceptoRelacion());
 			ResultSet rs = ps.executeQuery();
-			
+			instancia.setIdGlosario(0);
+			logger.debug("antes de actualizar ");
 			while(rs.next()){
-				instancia = new Instancia();
 				instancia.setIdGlosario(rs.getInt("id_glosario_instancia"));
+				logger.trace("dentro de actualizar");
 			}
 			rs.close();
 			ps.close();

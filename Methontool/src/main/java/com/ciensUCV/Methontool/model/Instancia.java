@@ -137,7 +137,7 @@ public class Instancia {
 		boolean encontre;
 //		Actualizo
 		ArrayList<AtributoInstanciaDesarrollo> listaEliminar = new ArrayList<AtributoInstanciaDesarrollo> ();
-		logger.debug("size antes "+this.definicion.size()+" ");
+		logger.debug("size antes "+this.definicion.size()+" "+this.definicion.toString());
 		for(AtributoInstanciaDesarrollo aux1 : this.definicion){
 			encontre = false;
 			for(int i=0;i<listaActualAtributoInstancia.size();i++){
@@ -178,6 +178,7 @@ public class Instancia {
 	}
 	
 	public void actualizarAtributoInstancia(){
+		logger.debug("___________________________________________________________________________________");
 		logger.debug("this.idGlosarioConceptoRelacion "+this.idGlosarioConceptoRelacion);
 		if(this.idGlosarioConceptoRelacion != 0){
     		ArrayList<AtributoInstanciaDesarrollo> listaActualAtributoInstancia = listarAtributoInstanciaDadoIdGlosarioConcepto(this.idGlosarioConceptoRelacion);
@@ -194,6 +195,7 @@ public class Instancia {
     		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
     		instanciaDAO.actualizarInstancia(this);
     	}
+		logger.debug("___________________________________________________________________________________");
 	}
 
 

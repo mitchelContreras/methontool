@@ -95,7 +95,15 @@ public class AtributoInstanciaDesarrollo {
 	
 	private ArrayList <String> cloneList(ArrayList <String> list) {
 		ArrayList <String>  clone = new ArrayList <String> (list.size());
-	    for(String item: list) clone.add(item);
+		if(this.valores.size() == 0){
+		    for(String item: list){
+		    	clone.add(item);
+		    }
+		}else{
+			clone = this.valores;
+		}
+		
+
 	    return clone;
 	}
 	
