@@ -233,6 +233,7 @@ function ControllerInstancia($rootScope,
 		var salida;
 		var auxDefinicion = {};
 
+		console.log("JSON.stringify(cnInstancia.varAuxiliarDefinicion) "+JSON.stringify(cnInstancia.varAuxiliarDefinicion));
 //		idInstancia ,idConcepto ,definicion
 		salida = FactoryInstancia.actualizarElemento(
 				cnInstancia.varEdicion.idGlosario
@@ -255,7 +256,9 @@ function ControllerInstancia($rootScope,
 		);	
 	}
 	function cancelaInstancia (){
-		seleccioneGlosario(cnInstancia.varEdicion.instancia, 'true');
+		var salida = {"id":cnInstancia.varEdicion.idGlosario};
+		console.log("salida "+JSON.stringify(salida));
+		seleccioneGlosario(salida, 'true');
 		cnInstancia.disabled = true;
 		cnInstancia.modificar = false;
 	}

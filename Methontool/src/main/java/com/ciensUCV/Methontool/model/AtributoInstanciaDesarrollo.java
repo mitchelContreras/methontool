@@ -2,6 +2,9 @@ package com.ciensUCV.Methontool.model;
 
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class AtributoInstanciaDesarrollo {
 
 	private int id;
@@ -13,6 +16,8 @@ public class AtributoInstanciaDesarrollo {
 	private String nombre;
 	private String descripcion;
 	private ArrayList <String> valores;
+	
+	private static final Logger logger = LoggerFactory.getLogger(AtributoInstanciaDesarrollo.class);
 	
 	AtributoInstanciaDesarrollo (){
 		this.valores = new ArrayList <String> ();
@@ -94,6 +99,9 @@ public class AtributoInstanciaDesarrollo {
 	}
 	
 	private ArrayList <String> cloneList(ArrayList <String> list) {
+		logger.debug("entrada en Clone "+list.toString());
+		logger.debug("this.valores actual "+this.valores);
+		
 		ArrayList <String>  clone = new ArrayList <String> (list.size());
 		if(this.valores.size() == 0){
 		    for(String item: list){

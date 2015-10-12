@@ -154,7 +154,7 @@
 										id="{{$index}}">
 										<div class="col-xs-9">
 											<input class="form-control" ng-model="valores"
-												ng-disabled="cnInstancia.disabled"></input>
+												ng-disabled="true"></input>
 										</div>
 										<div class="col-xs-3">
 											<div class="btn-group">

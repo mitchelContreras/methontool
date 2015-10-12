@@ -131,7 +131,7 @@
 							<div class="col-xs-5">
 								<div class="row" ng-repeat="sinonimo in cnGlosario.listaSinonimo track by $index" id="{{$index}}">
 									<div class="col-xs-9">
-										<input class="form-control" ng-model="sinonimo" ng-disabled="cnGlosario.disabled"></input>
+										<input class="form-control" ng-model="sinonimo" ng-disabled="true"></input>
 									</div>
 									<div class="col-xs-3">
 										<div class="btn-group">
@@ -162,7 +162,7 @@
 							<div class="col-xs-5">
 								<div class="row" ng-repeat="acronimo in cnGlosario.listaAcronimo track by $index" id="{{$index}}">
 									<div class="col-xs-9">
-										<input class="form-control" ng-model="acronimo" ng-disabled="cnGlosario.disabled"></input>
+										<input class="form-control" ng-model="acronimo" ng-disabled="true"></input>
 									</div>
 									<div class="col-xs-3">
 										<div class="btn-group">
