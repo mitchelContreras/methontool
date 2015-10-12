@@ -97,8 +97,8 @@
 				            <li><a href="#" ng-click="cnCabecera.menuConstantePrincipal()">Constante</a></li>
 				            <li><a href="#" ng-click="cnCabecera.menuAxiomaPrincipal()">Axioma</a></li>				            
 		            		<li><a href="#" ng-click="cnCabecera.menuReglaPrincipal()">Reglas</a></li>
-				            <li><a href="#" ng-click="cnCabecera.menuInstanciaPrincipal()">Instancia uno</a></li>
-				            <li><a href="#" ng-click="cnCabecera.menuInstanciaDosPrincipal()">Instancia dos</a></li>		            
+				            <li><a href="#" ng-click="cnCabecera.menuInstanciaPrincipal()">Instancia individual</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuInstanciaDosPrincipal()">Instancia masivo</a></li>		            
 		         		 </ul>
 		        	</li>
 		        	<li class="dropdown">
