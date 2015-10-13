@@ -27,7 +27,7 @@ public class GlosarioRest {
 
 	private static final Logger logger = LoggerFactory.getLogger(GlosarioRest.class);
 	ApplicationContext context = 
-    		new ClassPathXmlApplicationContext(VariablesConfiguracion.rutaArchivoSpringDaoImpl);
+    		new ClassPathXmlApplicationContext(LeerConfig.obtenerPropiedad("Spring.rutaArchivoSpringDaoImpl"));
 	
 	@RequestMapping(value="/api/proyecto/{idProyecto}/glosario", method = RequestMethod.GET)
 	public @ResponseBody ElementosMensaje<Glosario> listarGlosario(@PathVariable("idProyecto") int idProyecto){

@@ -1,5 +1,12 @@
 package com.ciensUCV.Methontool.rest;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 import org.slf4j.Logger;
@@ -32,6 +39,8 @@ import com.ciensUCV.Methontool.rest.model.ElementosMensaje;
 import com.ciensUCV.Methontool.rest.model.ErrorEnviar;
 import com.ciensUCV.Methontool.util.LeerConfig;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 public class InstanciaRest {
 	private static final Logger logger = LoggerFactory.getLogger(InstanciaRest.class);
@@ -39,6 +48,101 @@ public class InstanciaRest {
     		new ClassPathXmlApplicationContext(
     				LeerConfig.obtenerPropiedad("Spring.rutaArchivoSpringDaoImpl"));
 
+	
+	private String construirArchivoSalida (int idProyecto, int idGlosarioConcepto){
+//		Busco informacion del concepto en glosario
+		GlosarioDAO glosarioDAO = (GlosarioDAO) context.getBean("glosarioDAO");
+		Glosario glosarioConcepto = glosarioDAO.verGlosario(idGlosarioConcepto);
+		
+		logger.debug("Glosario de Concepto "+glosarioConcepto.toString());
+		
+//		Busco informacion de las Instancias
+		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
+		ArrayList<Instancia> instancias = instanciaDAO.listaInstanciaDadoIdGlosarioConcepto(7);
+		logger.debug("Total de instancias "+instancias.size());
+		
+		String aux = "";
+//		Genero StringBuilder del archivo de salida
+		StringBuilder sb = new StringBuilder();
+		sb.append(LeerConfig.obtenerPropiedad("archivoSalida.MensajePrincipal"));
+		sb.append("\n");
+		sb.append(LeerConfig.obtenerPropiedad("archivoSalida.MensajeLlenado"));
+		sb.append("\n");sb.append("\n");
+		sb.append(LeerConfig.obtenerPropiedad("archivoSalida.concepto"));
+		sb.append("\n");
+		aux = LeerConfig.obtenerPropiedad("archivoSalida.id")+" "+glosarioConcepto.getId();
+		sb.append(aux);sb.append("\n");
+		aux = LeerConfig.obtenerPropiedad("archivoSalida.Nombre")+" "+glosarioConcepto.getNombre();
+		sb.append(aux);sb.append("\n");		
+		aux = LeerConfig.obtenerPropiedad("archivoSalida.Descripcion")+" "+glosarioConcepto.getDescripcion();
+		sb.append(aux);sb.append("\n");sb.append("\n");
+	
+		Glosario auxGlosario;
+		Instancia instancia;
+		for(int i = 0; i<instancias.size(); i++ ){
+			sb.append("\n");
+			instancia = instancias.get(i);
+//			Agrego descripcion de la instancia
+			sb.append(LeerConfig.obtenerPropiedad("archivoSalida.separador2"));	sb.append("\n");	
+			auxGlosario = glosarioDAO.verGlosario(instancia.getIdGlosario());			
+			aux = LeerConfig.obtenerPropiedad("archivoSalida.instancia")+" "+(i+1);
+			sb.append(aux);sb.append("\n");
+			aux = LeerConfig.obtenerPropiedad("archivoSalida.id")+" "+auxGlosario.getId();
+			sb.append(aux);sb.append("\n");
+			aux = LeerConfig.obtenerPropiedad("archivoSalida.Nombre")+" "+auxGlosario.getNombre();
+			sb.append(aux);sb.append("\n");		
+			aux = LeerConfig.obtenerPropiedad("archivoSalida.Descripcion")+" "+auxGlosario.getDescripcion();
+			sb.append(aux);sb.append("\n");
+			for(int j=0; j<instancia.getDefinicion().size(); j++){
+				AtributoInstanciaDesarrollo atrbInstancia = instancia.getDefinicion().get(j);
+				sb.append("\n");
+				sb.append("\t");sb.append(LeerConfig.obtenerPropiedad("archivoSalida.AtributoInstancia"));sb.append("\n");
+				aux = LeerConfig.obtenerPropiedad("archivoSalida.id")+" "+atrbInstancia.getIdGlosario();
+				sb.append("\t");sb.append("\t");sb.append(aux);sb.append("\n");
+				aux = LeerConfig.obtenerPropiedad("archivoSalida.Nombre")+" "+atrbInstancia.getNombre();
+				sb.append("\t");sb.append("\t");sb.append(aux);sb.append("\n");
+				aux = LeerConfig.obtenerPropiedad("archivoSalida.Descripcion")+" "+atrbInstancia.getDescripcion();
+				sb.append("\t");sb.append("\t");sb.append(aux);sb.append("\n");				
+				aux = LeerConfig.obtenerPropiedad("archivoSalida.precision")+" "+atrbInstancia.getPrecision();
+				sb.append("\t");sb.append("\t");sb.append(aux);sb.append("\n");	
+				aux = LeerConfig.obtenerPropiedad("archivoSalida.rangoValores")+" "+atrbInstancia.getRangoValores();
+				sb.append("\t");sb.append("\t");sb.append(aux);sb.append("\n");					
+				aux = LeerConfig.obtenerPropiedad("archivoSalida.cardinalidad")+" ["+atrbInstancia.getCardinalidadMinima()+";"+atrbInstancia.getCardinaliadMaxima()+"]";
+				sb.append("\t");sb.append("\t");sb.append(aux);sb.append("\n");		
+				aux = LeerConfig.obtenerPropiedad("archivoSalida.valores")+" "+atrbInstancia.getValoresJsonString();
+				sb.append("\t");sb.append("\t");sb.append(aux);sb.append("\n");			
+			}
+		}
+		
+		String salida = sb.toString();
+		return salida;
+	}
+	
+	@RequestMapping(value="/api/proyecto/{idProyecto}/concepto/{idGlosarioConcepto}/donwloadFileInstancias", method = RequestMethod.GET)
+	public void donwloadInstancias(
+			@PathVariable("idProyecto") int idProyecto
+			,@PathVariable("idGlosarioConcepto") int idGlosarioConcepto
+			,HttpServletResponse response
+			) throws IOException{
+		
+		logger.trace("*** donwloadInstancias ");
+		logger.trace("idProyecto "+idProyecto);
+		logger.trace("idGlosarioConcepto "+idGlosarioConcepto);		
+		
+		response.setContentType("application/octet-stream");
+		// Response header
+		response.setHeader("Content-Disposition", "attachment; filename=\""
+				+ LeerConfig.obtenerPropiedad("archivoSalida.nombreDelArchivo") + "\"");
+		// Read from the file and write into the response
+		OutputStream os = response.getOutputStream();
+		PrintStream printStream = new PrintStream(os);
+		printStream.print(construirArchivoSalida (idProyecto, idGlosarioConcepto));
+		
+		os.flush();
+		os.close();
+		
+	}
+	
 	@RequestMapping(value="/api/proyecto/{idProyecto}/instancia", method = RequestMethod.GET)
 	public @ResponseBody ElementosMensaje<Instancia> listarInstanciaSinConceptoAsociado(
 			@PathVariable("idProyecto") int idProyecto

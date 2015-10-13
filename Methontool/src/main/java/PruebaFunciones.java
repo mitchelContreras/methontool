@@ -108,8 +108,7 @@ public class PruebaFunciones {
 //		AtributoClaseDAO atributoClaseDAO = (AtributoClaseDAO) context.getBean("atributoClaseDAO");
 //		ArrayList<AtributoClase> prueba = atributoClaseDAO.listarAtributoClaseDadoIdGlosarioConcepto(7);
 //		logger.trace("prueba "+prueba.size());
-//		logger.trace("salida de atributo clase es "+atributoClaseDAO.verAtributoClase(1, 19).getIdGlosario());
-//		
+
 //		AtributoInstanciaDAO atributoInstanciaDAO = (AtributoInstanciaDAO) context.getBean("atributoInstanciaDAO");
 //		ArrayList<AtributoInstancia> prueba1 = atributoInstanciaDAO.listarAtributoInstanciaDadoIdGlosarioConcepto(7);
 //		logger.trace("prueba "+prueba1.size());
@@ -117,7 +116,7 @@ public class PruebaFunciones {
 		
 		
 		
-//		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
+		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
 ////		logger.trace("ver Instancia dado idInstancia "+instanciaDAO.verInstanciaDadoIdInstancia(31));
 //
 //		Instancia instancia = new Instancia();
@@ -125,6 +124,9 @@ public class PruebaFunciones {
 //		instancia.setIdGlosarioConceptoRelacion(7);
 //		instancia = instanciaDAO.crearInstancia(instancia);
 		
+		ArrayList<Instancia> instancias = instanciaDAO.listaInstanciaDadoIdGlosarioConcepto(7);
+		logger.debug("instancias.size() "+instancias.size());
+		logger.debug("instancias.toString() "+instancias.toString());
 		
 		
 //		instancia = instanciaDAO.verInstanciaDadoIdGlosarioInstancia(14);
@@ -307,11 +309,11 @@ public class PruebaFunciones {
 //		tipoDeDato = tipoDeDatoDAO.verTipoDeDato(tipoDeDato) ;
 //		logger.debug("tipoDeDato "+tipoDeDato.toString());
 		
-		MedidaDAO medidaDAO = (MedidaDAO) context.getBean("medidaDAO");	
-		Medida medida = new Medida();
-		medida.setCodigo("mtrs");
-		medida = medidaDAO.verMedida(medida) ;
-		logger.debug("medida "+medida.toString());
+//		MedidaDAO medidaDAO = (MedidaDAO) context.getBean("medidaDAO");	
+//		Medida medida = new Medida();
+//		medida.setCodigo("mtrs");
+//		medida = medidaDAO.verMedida(medida) ;
+//		logger.debug("medida "+medida.toString());
 		
 	}
 

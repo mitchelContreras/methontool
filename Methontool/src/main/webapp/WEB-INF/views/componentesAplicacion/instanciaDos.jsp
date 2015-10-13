@@ -105,12 +105,12 @@
 					    </thead>
     					<tbody>
     						<tr ng-repeat="row in cnInstanciaDos.varEdicion.atributosClase">
-    							<td>{{row.nombre}}</td>
-					        	<td>{{row.tipoValor}}</td>
+    							<td>{{cnInstanciaDos.obtenerGlosarioDadoIdGlosaro(row.idGlosario).nombre}}</td>
+					        	<td>{{row.tipoDeDato.nombre}}</td>
 					       		<td>{{row.precision}}</td> 
     							<td>{{row.rangoValores}}</td>
-					        	<td>[{{row.cardinalidadOrigen}}:{{cardinalidadDestino}}]</td>
-					       		<td>{{row.valor}}</td>
+					        	<td>[{{row.cardinalidadMin}}:{{row.cardinalidadMax}}]</td>
+					       		<td>{{row.value}}</td>
     						</tr>
     					</tbody>
     				</table>	
@@ -129,28 +129,23 @@
 					    </thead>
     					<tbody>
     						<tr ng-repeat="row in cnInstanciaDos.varEdicion.atributosInstancia">
-    							<td>{{row.nombre}}</td>
-					        	<td>{{row.tipoValor}}</td>
+    							<td>{{cnInstanciaDos.obtenerGlosarioDadoIdGlosaro(row.idGlosario).nombre}}</td>
+					        	<td>{{row.tipoDeDato.nombre}}</td>
 					       		<td>{{row.precision}}</td> 
-					       		<td>{{row.medida}}</td> 
+					       		<td>{{row.medida.nombre}}</td> 
     							<td>{{row.rangoValores}}</td>
-					        	<td>[{{row.cardinalidadOrigen}}:{{cardinalidadDestino}}]</td>
-					       		<td>{{row.valorDefecto}}</td>
+					        	<td>[{{row.cardinalidadMin}}:{{row.cardinalidadMax}}]</td>
+					       		<td>{{row.value}}</td>
     						</tr>
     					</tbody>
     				</table>					
-    									
-						<div class="form-group" ng-show="!cnInstanciaDos.modificar">
-							<div class="col-xs-offset-4 col-xs-5">
-								<button type="submit" class="btn btn-primary" ng-click="cnInstanciaDos.modificarInstanciaDos()">Modificar</button>
-							</div>
-						</div>						
-						<div class="form-group" ng-show="cnInstanciaDos.modificar">
-							<div class="col-xs-offset-4 col-xs-5">
-								<button type="submit" class="btn btn-primary" ng-click="cnInstanciaDos.modifiqueInstanciaDos()" >Guardar</button>
-								<button type="submit" class="btn btn-defaul" ng-click="cnInstanciaDos.cancelaInstanciaDos() ">Cancelar</button>
-							</div>	
-						</div>																											
+    														
+					<div class="form-group" >
+						<div class="col-xs-offset-4 col-xs-5">
+							<a href="{{cnInstanciaDos.rutaDonwload}}" download>Descargar achivo</a>
+							<button  class="btn btn-defaul" ng-click="cnInstanciaDos.cancelaInstanciaDos() ">Cancelar</button>
+						</div>	
+					</div>																											
 					</form>
 				</div>
 			</div>

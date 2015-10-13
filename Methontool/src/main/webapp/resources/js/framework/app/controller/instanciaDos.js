@@ -18,6 +18,8 @@ ControllerInstanciaDos.$inject = ['$rootScope',
                        ,'FactoryGlosario'
                        ,'FactoryMensajeCarga'
                        ,'FactoryConcepto'
+                       ,'FactoryInstancia'
+                       ,'$http'
                        ];	
 
 function ControllerInstanciaDos($rootScope,
@@ -25,6 +27,8 @@ function ControllerInstanciaDos($rootScope,
 		,FactoryGlosario
 		,FactoryMensajeCarga
 		,FactoryConcepto
+		,FactoryInstancia
+		,$http
 		){
 	
 	console.log("Entro en ControllerInstanciaDos");
@@ -49,79 +53,6 @@ function ControllerInstanciaDos($rootScope,
 	cnInstanciaDos.alertNegativa = false;
 	
 	
-//	nombre:
-//	tipoValor:
-//	precision:
-//	rangoValores:
-//	cardinalidadOrigen:
-//	cardinalidadDestino:
-//	valor: 		
-	
-	cnInstanciaDos.varEdicion.atributosClase =
-		[
-			{
-			  "nombre": "nombreUno"
-			  ,"cardinalidadOrigen": "origen"
-			  ,"cardinalidadDestino":"destino"
-			  ,"tipoValor":"tipo valor 1"
-			  ,"precision":"precionando"
-			  ,"rangoValores":"rango valorcito"
-			  ,"valor":"valororores"	  
-			}
-			,{
-					"nombre": "nombreDos"
-					  ,"cardinalidadOrigen": "origen3"
-					  ,"cardinalidadDestino":"destino3"
-					  ,"tipoValor":"tipo valor 123"
-					  ,"precision":"precionando"
-					  ,"rangoValores":"rango valorcito"
-					  ,"valor":"valororores"	  
-			},{
-				  "nombre": "nombreTres"
-					  ,"cardinalidadOrigen": "origen2"
-					  ,"cardinalidadDestino":"destino2"
-					  ,"tipoValor":"tipo valor 431"
-					  ,"precision":"precionando"
-					  ,"rangoValores":"rango valorcito"
-					  ,"valor":"valororores"	  
-			}
-		];
-
-
-	cnInstanciaDos.varEdicion.atributosInstancia =
-		[
-			{
-			  "nombre": "nombreUno"
-			  ,"cardinalidadOrigen": "origen"
-			  ,"cardinalidadDestino":"destino"
-			  ,"tipoValor":"tipo valor 1"
-			  ,"precision":"precionando"
-			  ,"rangoValores":"rango valorcito"
-			  ,"valorDefecto":"valororores"	  
-			  ,"medida":"medias"
-			}
-			,{
-					"nombre": "nombreDos"
-					  ,"cardinalidadOrigen": "origen3"
-					  ,"cardinalidadDestino":"destino3"
-					  ,"tipoValor":"tipo valor 123"
-					  ,"precision":"precionando"
-					  ,"rangoValores":"rango valorcito"
-					  ,"valorDefecto":"valororores"	  
-					  ,"medida":"medias"	  
-			},{
-				  "nombre": "nombreTres"
-					  ,"cardinalidadOrigen": "origen2"
-					  ,"cardinalidadDestino":"destino2"
-					  ,"tipoValor":"tipo valor 431"
-					  ,"precision":"precionando"
-					  ,"rangoValores":"rango valorcito"
-					  ,"valorDefecto":"valororores"	  
-					  ,"medida":"medias"  
-			}
-		];
-	
-	
 //-------------------Funciones----------------------------------	
 	
 	cnInstanciaDos.modificarInstanciaDos = modificarInstanciaDos;
@@ -129,14 +60,20 @@ function ControllerInstanciaDos($rootScope,
 	cnInstanciaDos.cancelaInstanciaDos = cancelaInstanciaDos;
 	cnInstanciaDos.verDescripcionGlosario = verDescripcionGlosario;
 	cnInstanciaDos.seleccioneGlosario = seleccioneGlosario;
+	cnInstanciaDos.obtenerGlosarioDadoIdGlosaro = obtenerGlosarioDadoIdGlosaro;
+	
+	function obtenerGlosarioDadoIdGlosaro (elementoId){
+		return FactoryGlosario.consultarElemento(elementoId);
+	}
 	
 	function seleccioneGlosario(elemento, limpiar){
 		cnInstanciaDos.seleccionado = elemento.id;
 		cnInstanciaDos.enBlanco = false;
 		cnInstanciaDos.modificar = false;
 		cnInstanciaDos.disabled = true;
-		
-		
+	
+		cnInstanciaDos.rutaDonwload = FactoryInstancia.getRutaDescargarArchivo(cnInstanciaDos.seleccionado);
+		console.log("cnInstanciaDos.rutaDonwload "+cnInstanciaDos.rutaDonwload);
 //		limpio variables
 		if(limpiar == 'true'){
 			//Si selecciono desde la lista quiero quitar el mensaje positivo
@@ -189,10 +126,12 @@ function ControllerInstanciaDos($rootScope,
 	            }
 	        );
 	}
+	
 	function modificarInstanciaDos (){
 		cnInstanciaDos.disabled = false;
 		cnInstanciaDos.modificar = true;
 	}
+	
 	function modifiqueInstanciaDos (){
 //		var salida;
 //		salida = FactoryInstancia.actualizarElemento(

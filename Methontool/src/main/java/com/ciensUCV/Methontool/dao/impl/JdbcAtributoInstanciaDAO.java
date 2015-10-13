@@ -10,12 +10,17 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.ciensUCV.Methontool.dao.AtributoInstanciaDAO;
+import com.ciensUCV.Methontool.dao.MedidaDAO;
+import com.ciensUCV.Methontool.dao.TipoDeDatoDAO;
 import com.ciensUCV.Methontool.model.AtributoClase;
 import com.ciensUCV.Methontool.model.AtributoInstancia;
 import com.ciensUCV.Methontool.model.Medida;
 import com.ciensUCV.Methontool.model.TipoDeDato;
+import com.ciensUCV.Methontool.util.VariablesConfiguracion;
 
 public class JdbcAtributoInstanciaDAO implements AtributoInstanciaDAO {
 	private static final Logger logger = LoggerFactory.getLogger(JdbcAtributoInstanciaDAO.class);
@@ -48,6 +53,12 @@ public class JdbcAtributoInstanciaDAO implements AtributoInstanciaDAO {
 		Connection conn = null;
 		AtributoInstancia atributoInstancia = null;
 		ArrayList<AtributoInstancia> arrayList = new ArrayList<AtributoInstancia>();
+
+		ApplicationContext context = 
+	    		new ClassPathXmlApplicationContext(VariablesConfiguracion.rutaArchivoSpringDaoImpl);
+		MedidaDAO medidaDAO = (MedidaDAO) context.getBean("medidaDAO");		
+		TipoDeDatoDAO tipoDeDatoDAO = (TipoDeDatoDAO) context.getBean("tipoDeDatoDAO");	
+		
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -60,13 +71,15 @@ public class JdbcAtributoInstanciaDAO implements AtributoInstanciaDAO {
 				atributoInstancia.setId(rs.getInt("id_atributo"));
 				atributoInstancia.setIdGlosario(rs.getInt("id_glosario_atributo"));
 				atributoInstancia.setIdGlosarioConcepto(rs.getInt("id_glosario_concepto"));
-				atributoInstancia.setTipoDeDato(new TipoDeDato(0, rs.getString("cod_dato"), null, null));
-				atributoInstancia.setMedida(new Medida(0, rs.getString("cod_medida"), null, null));
 				atributoInstancia.setPrecision(rs.getString("precision"));
 				atributoInstancia.setRangoValores(rs.getString("rango_valores"));
 				atributoInstancia.setCardinalidadMin(rs.getString("cardinalidad_minimo"));
 				atributoInstancia.setCardinalidadMax(rs.getString("cardinalidad_maximo"));
 				atributoInstancia.setValue(rs.getString("valor_defecto"));
+
+				atributoInstancia.setTipoDeDato(tipoDeDatoDAO.verTipoDeDato(new TipoDeDato(0, rs.getString("cod_dato"), null, null)));
+				atributoInstancia.setMedida(medidaDAO.verMedida(new Medida(0, rs.getString("cod_medida"), null, null)));
+				
 				arrayList.add(atributoInstancia);
 			}
 			rs.close();
