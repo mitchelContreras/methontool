@@ -93,10 +93,14 @@ function ControllerCabecera(
 		    cambiarMenu(true, false, false, false);
 		}
 		function clickConceptualizacion(){	
-            cambiarMenu(false, true, false, false);
+			if(cnCabecera.nombreProyecto != ""){
+				cambiarMenu(false, true, false, false);
+			}
 		}
 		function clickImplementacion(){
-            cambiarMenu(false, false, true, false);
+			if(cnCabecera.nombreProyecto != ""){
+				cambiarMenu(false, false, true, false);
+			}
 		}
 		function cambiarMenu(especificacion, conceptualizacion, implementacion, menuInicial){
             cnCabecera.especificacion = especificacion;

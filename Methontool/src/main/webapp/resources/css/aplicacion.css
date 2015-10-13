@@ -45,6 +45,11 @@ body {
 	text-align: right;
 }
 
+.not-active-link {
+   pointer-events: none;
+   cursor: default;
+}
+
 .navegar{
 	height: 50px;
 }
