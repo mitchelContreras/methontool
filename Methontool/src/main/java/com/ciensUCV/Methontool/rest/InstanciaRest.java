@@ -58,7 +58,7 @@ public class InstanciaRest {
 		
 //		Busco informacion de las Instancias
 		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
-		ArrayList<Instancia> instancias = instanciaDAO.listaInstanciaDadoIdGlosarioConcepto(7);
+		ArrayList<Instancia> instancias = instanciaDAO.listaInstanciaDadoIdGlosarioConcepto(idGlosarioConcepto);
 		logger.debug("Total de instancias "+instancias.size());
 		
 		String aux = "";
@@ -115,6 +115,8 @@ public class InstanciaRest {
 		}
 		
 		String salida = sb.toString();
+		
+		
 		return salida;
 	}
 	
@@ -128,7 +130,7 @@ public class InstanciaRest {
 		logger.trace("*** donwloadInstancias ");
 		logger.trace("idProyecto "+idProyecto);
 		logger.trace("idGlosarioConcepto "+idGlosarioConcepto);		
-		
+		logger.trace("coño llama a las vainas");
 		response.setContentType("application/octet-stream");
 		// Response header
 		response.setHeader("Content-Disposition", "attachment; filename=\""
