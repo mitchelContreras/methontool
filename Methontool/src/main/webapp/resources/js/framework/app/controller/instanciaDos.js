@@ -20,6 +20,7 @@ ControllerInstanciaDos.$inject = ['$rootScope',
                        ,'FactoryConcepto'
                        ,'FactoryInstancia'
                        ,'$http'
+                       ,'fileUpload'
                        ];	
 
 function ControllerInstanciaDos($rootScope,
@@ -29,6 +30,7 @@ function ControllerInstanciaDos($rootScope,
 		,FactoryConcepto
 		,FactoryInstancia
 		,$http
+		,fileUpload
 		){
 	
 	console.log("Entro en ControllerInstanciaDos");
@@ -61,6 +63,16 @@ function ControllerInstanciaDos($rootScope,
 	cnInstanciaDos.verDescripcionGlosario = verDescripcionGlosario;
 	cnInstanciaDos.seleccioneGlosario = seleccioneGlosario;
 	cnInstanciaDos.obtenerGlosarioDadoIdGlosaro = obtenerGlosarioDadoIdGlosaro;
+	cnInstanciaDos.uploadFile = uploadFile;
+	
+	function uploadFile(){
+		console.log("entre a subir archivo");
+        var file = cnInstanciaDos.myFile;
+        console.log('file is ' );
+        console.dir(file);
+        var uploadUrl = "http://localhost:8080/Methontool/upload";
+        fileUpload.uploadFileToUrl(file, uploadUrl);
+	}
 	
 	function obtenerGlosarioDadoIdGlosaro (elementoId){
 		return FactoryGlosario.consultarElemento(elementoId);
@@ -72,7 +84,7 @@ function ControllerInstanciaDos($rootScope,
 		cnInstanciaDos.modificar = false;
 		cnInstanciaDos.disabled = true;
 	
-		cnInstanciaDos.rutaDonwload = FactoryInstancia.getRutaDescargarArchivo(cnInstanciaDos.seleccionado);
+		cnInstanciaDos.rutaDonwload = FactoryInstancia.getRutaDescargarArchivo(cnInstanciaDos.seleccionado, 10);
 		console.log("cnInstanciaDos.rutaDonwload "+cnInstanciaDos.rutaDonwload);
 //		limpio variables
 		if(limpiar == 'true'){

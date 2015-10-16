@@ -144,9 +144,26 @@
 						<div class="col-xs-offset-4 col-xs-5">
 							<a href="{{cnInstanciaDos.rutaDonwload}}" download>Descargar achivo</a>
 							<button  class="btn btn-defaul" ng-click="cnInstanciaDos.cancelaInstanciaDos() ">Cancelar</button>
-						</div>	
+						</div>
+							
 					</div>																											
 					</form>
+<!-- 				
+						<form method="POST" enctype="multipart/form-data"
+							action="http://localhost:8080/Methontool/upload">
+							File to upload: <input type="file" name="file"><br /> 
+							Name: <input type="text" name="name"><br /> <br />
+							 <input type="submit" value="Upload"> Upload file
+						</form>	
+						</br>
+						</br>
+						</br>
+						</br>
+					    <input type="file" file-model="cnInstanciaDos.myFile"/>
+					    <button ng-click="cnInstanciaDos.uploadFile()">upload me</button>
+    
+						otro <input type="file" file-model="myFile"/>		
+ -->								
 				</div>
 			</div>
 		</div>

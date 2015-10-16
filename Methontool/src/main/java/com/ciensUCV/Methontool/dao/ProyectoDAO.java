@@ -14,6 +14,7 @@ import com.ciensUCV.Methontool.model.Proyecto;
 public interface ProyectoDAO {
 	public ArrayList<Proyecto> listarProyectos(int idUsuario);
 	public Proyecto verProyecto(int idUsuario, int idProyecto);
+	public Proyecto verProyecto(int idProyecto);
 	public int crearProyecto(Proyecto proyecto, int [] usuarios);
 	public int actualizarProyecto(Proyecto proyecto);
 	public int eliminarProyecto(int idProyecto); 

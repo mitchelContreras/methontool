@@ -8,10 +8,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,12 +22,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ciensUCV.Methontool.dao.AtributoClaseDAO;
 import com.ciensUCV.Methontool.dao.AtributoInstanciaDAO;
 import com.ciensUCV.Methontool.dao.GlosarioDAO;
 import com.ciensUCV.Methontool.dao.InstanciaDAO;
 import com.ciensUCV.Methontool.dao.InstanciadoDAO;
+import com.ciensUCV.Methontool.dao.ProyectoDAO;
 import com.ciensUCV.Methontool.dao.TaxonomiaDAO;
 import com.ciensUCV.Methontool.model.AtributoClase;
 import com.ciensUCV.Methontool.model.AtributoInstancia;
@@ -32,6 +37,7 @@ import com.ciensUCV.Methontool.model.AtributoInstanciaDesarrollo;
 import com.ciensUCV.Methontool.model.Glosario;
 import com.ciensUCV.Methontool.model.Instancia;
 import com.ciensUCV.Methontool.model.Instanciado;
+import com.ciensUCV.Methontool.model.Proyecto;
 import com.ciensUCV.Methontool.model.Taxonomia;
 import com.ciensUCV.Methontool.model.TipoGlosario;
 import com.ciensUCV.Methontool.rest.model.ElementoMensaje;
@@ -42,6 +48,7 @@ import com.ciensUCV.Methontool.util.LeerConfig;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
+//@PropertySource("classpath:application.properties")
 public class InstanciaRest {
 	private static final Logger logger = LoggerFactory.getLogger(InstanciaRest.class);
 	ApplicationContext context = 
@@ -49,7 +56,96 @@ public class InstanciaRest {
     				LeerConfig.obtenerPropiedad("Spring.rutaArchivoSpringDaoImpl"));
 
 	
-	private String construirArchivoSalida (int idProyecto, int idGlosarioConcepto){
+	private String construirArchivoSalida (int idProyecto, int idGlosarioConcepto, int cantidadInstancia){
+		
+//		Busco informacion del proyecto
+		ProyectoDAO proyectoDAO = (ProyectoDAO) context.getBean("proyectoDAO");
+		Proyecto proyecto = proyectoDAO.verProyecto(idProyecto);
+		logger.debug("Proyecto es "+proyecto.toString());
+		
+//		Busco informacion del concepto en glosario
+		GlosarioDAO glosarioDAO = (GlosarioDAO) context.getBean("glosarioDAO");
+		Glosario glosarioConcepto = glosarioDAO.verGlosario(idGlosarioConcepto);
+		
+		logger.debug("Glosario de Concepto "+glosarioConcepto.toString());
+		
+//		Busco informacion de los atribtuos de instancia
+		AtributoInstanciaDAO atributoInstanciaDAO = (AtributoInstanciaDAO) context.getBean("atributoInstanciaDAO");
+		ArrayList<AtributoInstancia> atributoInstancia = atributoInstanciaDAO.listarAtributoInstanciaDadoIdGlosarioConcepto(idGlosarioConcepto);
+		logger.debug("Total de atributoInstancia "+atributoInstancia.size());
+		logger.debug("lista imprimir "+atributoInstancia.toString());
+		
+//		Buscar Glosario de cada uno de los atributo de Instancia
+		ArrayList<Glosario> glosarioAtrbInstancia = new ArrayList<Glosario>();
+		for (AtributoInstancia aux : atributoInstancia){
+			glosarioAtrbInstancia.add( glosarioDAO.verGlosario(aux.getIdGlosario()) );
+		}
+		
+		String aux = "";
+//		Genero StringBuilder del archivo de salida
+		StringBuilder sb = new StringBuilder();
+		sb.append(LeerConfig.obtenerPropiedad("archivoSalida.MensajePrincipal"));
+		sb.append("\n");
+		sb.append(LeerConfig.obtenerPropiedad("archivoSalida.MensajeLlenado"));
+		sb.append("\n");sb.append("\n");
+		
+		sb.append(LeerConfig.obtenerPropiedad("archivoSalida.Proyecto"));
+		sb.append("\n");		
+		aux = LeerConfig.obtenerPropiedad("archivoSalida.id")+" "+proyecto.getIdProyecto();
+		sb.append(aux);sb.append("\n");
+		aux = LeerConfig.obtenerPropiedad("archivoSalida.Nombre")+" "+proyecto.getNombre();
+		sb.append(aux);sb.append("\n");sb.append("\n");	
+		sb.append(LeerConfig.obtenerPropiedad("archivoSalida.concepto"));
+		sb.append("\n");
+		aux = LeerConfig.obtenerPropiedad("archivoSalida.id")+" "+glosarioConcepto.getId();
+		sb.append(aux);sb.append("\n");
+		aux = LeerConfig.obtenerPropiedad("archivoSalida.Nombre")+" "+glosarioConcepto.getNombre();
+		sb.append(aux);sb.append("\n");		
+		aux = LeerConfig.obtenerPropiedad("archivoSalida.Descripcion")+" "+glosarioConcepto.getDescripcion();
+		sb.append(aux);sb.append("\n");sb.append("\n");
+	
+		for(int i = 0; i<cantidadInstancia; i++ ){
+			sb.append("\n");
+//			Agrego descripcion de la instancia
+			sb.append(LeerConfig.obtenerPropiedad("archivoSalida.separador2"));	sb.append("\n");		
+			aux = LeerConfig.obtenerPropiedad("archivoSalida.instancia")+" "+(i+1);
+			sb.append(aux);sb.append("\n");
+			aux = LeerConfig.obtenerPropiedad("archivoSalida.Nombre")+"\" \"";
+			sb.append(aux);sb.append("\n");		
+			aux = LeerConfig.obtenerPropiedad("archivoSalida.Descripcion")+"\" \"";
+			sb.append(aux);sb.append("\n");
+			for(int j=0; j<atributoInstancia.size(); j++){
+				AtributoInstancia atrbInstancia = atributoInstancia.get(j);
+				sb.append("\n");
+				sb.append("\t");sb.append(LeerConfig.obtenerPropiedad("archivoSalida.AtributoInstancia"));sb.append("\n");
+				aux = LeerConfig.obtenerPropiedad("archivoSalida.id")+" "+atrbInstancia.getIdGlosario();
+				sb.append("\t");sb.append("\t");sb.append(aux);sb.append("\n");
+				aux = LeerConfig.obtenerPropiedad("archivoSalida.Nombre")+" "+glosarioAtrbInstancia.get(j).getNombre();
+				sb.append("\t");sb.append("\t");sb.append(aux);sb.append("\n");
+				aux = LeerConfig.obtenerPropiedad("archivoSalida.Descripcion")+" "+glosarioAtrbInstancia.get(j).getDescripcion();
+				sb.append("\t");sb.append("\t");sb.append(aux);sb.append("\n");				
+				aux = LeerConfig.obtenerPropiedad("archivoSalida.precision")+" "+atrbInstancia.getPrecision();
+				sb.append("\t");sb.append("\t");sb.append(aux);sb.append("\n");	
+				aux = LeerConfig.obtenerPropiedad("archivoSalida.rangoValores")+" "+atrbInstancia.getRangoValores();
+				sb.append("\t");sb.append("\t");sb.append(aux);sb.append("\n");					
+				aux = LeerConfig.obtenerPropiedad("archivoSalida.cardinalidad")+" ["+atrbInstancia.getCardinalidadMin()+";"+atrbInstancia.getCardinalidadMax()+"]";
+				sb.append("\t");sb.append("\t");sb.append(aux);sb.append("\n");		
+				aux = LeerConfig.obtenerPropiedad("archivoSalida.valores")+" [";
+				if (!atrbInstancia.getValue().equalsIgnoreCase("")){
+					aux+="\""+atrbInstancia.getValue()+"\"";
+				}
+				aux +="]";
+				sb.append("\t");sb.append("\t");sb.append(aux);sb.append("\n");			
+			}
+		}
+		
+		String salida = sb.toString();
+		
+		
+		return salida;
+	}
+	
+	private String construirArchivoSalida1 (int idProyecto, int idGlosarioConcepto){
 //		Busco informacion del concepto en glosario
 		GlosarioDAO glosarioDAO = (GlosarioDAO) context.getBean("glosarioDAO");
 		Glosario glosarioConcepto = glosarioDAO.verGlosario(idGlosarioConcepto);
@@ -60,6 +156,8 @@ public class InstanciaRest {
 		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
 		ArrayList<Instancia> instancias = instanciaDAO.listaInstanciaDadoIdGlosarioConcepto(idGlosarioConcepto);
 		logger.debug("Total de instancias "+instancias.size());
+		
+
 		
 		String aux = "";
 //		Genero StringBuilder del archivo de salida
@@ -119,17 +217,50 @@ public class InstanciaRest {
 		
 		return salida;
 	}
+
 	
-	@RequestMapping(value="/api/proyecto/{idProyecto}/concepto/{idGlosarioConcepto}/donwloadFileInstancias", method = RequestMethod.GET)
+    @RequestMapping(value="/upload", method=RequestMethod.GET)
+    public @ResponseBody String provideUploadInfo() {
+    	logger.debug("entre a la funcion coño2!");
+        return "You can upload a file by posting to this same URL.";
+    }
+ 
+    @RequestMapping(value="/upload", method=RequestMethod.POST)
+    public @ResponseBody String handleFileUpload( @RequestParam("file") MultipartFile file){
+    	
+    	logger.debug("entre a la funcion coño!");
+    	return "algo";
+//        if (!file.isEmpty()) {
+//        	logger.debug("file no es null");
+//            try {
+//                byte[] bytes = file.getBytes();
+//                BufferedOutputStream stream =
+//                        new BufferedOutputStream(new FileOutputStream(new File(name)));
+//                stream.write(bytes);
+//                stream.close();
+//                return "You successfully uploaded " + name + "!";
+//            } catch (Exception e) {
+//                return "You failed to upload " + name + " => " + e.getMessage();
+//            }
+//        } else {
+//        	logger.debug("file es null");
+//            return "You failed to upload " + name + " because the file was empty.";
+//        }
+    }	
+    
+	@RequestMapping(value="/api/proyecto/{idProyecto}/concepto/{idGlosarioConcepto}/donwloadFileInstancias/{cantidadInstancia}", method = RequestMethod.GET)
 	public void donwloadInstancias(
 			@PathVariable("idProyecto") int idProyecto
 			,@PathVariable("idGlosarioConcepto") int idGlosarioConcepto
+			,@PathVariable("cantidadInstancia")int cantidadInstancia
 			,HttpServletResponse response
 			) throws IOException{
 		
 		logger.trace("*** donwloadInstancias ");
 		logger.trace("idProyecto "+idProyecto);
-		logger.trace("idGlosarioConcepto "+idGlosarioConcepto);		
+		logger.trace("idGlosarioConcepto "+idGlosarioConcepto);
+		logger.trace("cantidadInstancia "+cantidadInstancia);
+		
 		logger.trace("coño llama a las vainas");
 		response.setContentType("application/octet-stream");
 		// Response header
@@ -138,7 +269,7 @@ public class InstanciaRest {
 		// Read from the file and write into the response
 		OutputStream os = response.getOutputStream();
 		PrintStream printStream = new PrintStream(os);
-		printStream.print(construirArchivoSalida (idProyecto, idGlosarioConcepto));
+		printStream.print(construirArchivoSalida (idProyecto, idGlosarioConcepto, cantidadInstancia));
 		
 		os.flush();
 		os.close();
