@@ -36,6 +36,7 @@ import com.ciensUCV.Methontool.model.Relacion;
 import com.ciensUCV.Methontool.model.Taxonomia;
 import com.ciensUCV.Methontool.model.TipoDeDato;
 import com.ciensUCV.Methontool.rest.model.ElementoMensaje;
+import com.ciensUCV.Methontool.util.LeerConfig;
 import com.ciensUCV.Methontool.util.VariablesConfiguracion;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -48,273 +49,272 @@ public class PruebaFunciones {
 	private static final Logger logger = LoggerFactory.getLogger(PruebaFunciones.class);
 	static ApplicationContext context = 
     		new ClassPathXmlApplicationContext(VariablesConfiguracion.rutaArchivoSpringDaoImpl);
-		
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-//--------------Prueba de actualizar proyecto -----------------------------		
-//		ProyectoDAO proyectoDAO = (ProyectoDAO) context.getBean("proyectoDAO");
-//		Proyecto proyecto = new Proyecto();
-//		proyecto.setIdProyecto(Integer.parseInt("2"));
-//		proyecto.setNombre("nombre");
-//		proyecto.fuenteConocimientoStringToArray("fuenteConocimiento");
-//		proyecto.setDominio("dominio");
-//		proyecto.setAlcance("alcance");
-//		proyecto.setProposito("proposito");
-//		proyecto.preguntasCompetenciaStringToArray("preguntasCompetencia");
-//		proyecto.desarrolladoresStringToArray("desarrolladores");
-//		proyecto.setFecha("02/04/1970");
-//		proyecto.setNivelFormalidad(new NivelFormalidad(1,"bla", "bla", "bla"));
-//		logger.info("antes de llamar a actualziar");
-//		int salida = proyectoDAO.actualizarProyecto(proyecto);
-//		logger.info("salida es "+salida);
-//------------------Fin----------------------
-		
-//-------------------Prueba de ElementoMensaje---------------------		
-//		Proyecto proyecto = new Proyecto();
-//		proyecto.setIdProyecto(Integer.parseInt("2"));
-//		proyecto.setNombre("nombre");
-//		proyecto.fuenteConocimientoStringToArray("fuenteConocimiento");
-//		proyecto.setDominio("dominio");
-//		proyecto.setAlcance("alcance");
-//		proyecto.setProposito("proposito");
-//		proyecto.preguntasCompetenciaStringToArray("preguntasCompetencia");
-//		proyecto.desarrolladoresStringToArray("desarrolladores");
-//		proyecto.setFecha("02/04/1970");
-//		proyecto.setNivelFormalidad(new NivelFormalidad(1,"bla", "bla", "bla"));
-//		ElementoMensaje<Proyecto> prueba;
-//		prueba = new ElementoMensaje<Proyecto> (proyecto);
-//		System.out.println("Prueba de template el nombre del proyecto= "+prueba.getElemento().getNombre());
-//		
-		
-		logger.trace("En pruebaFunciones");
-//		Taxonomia taxonomia = new Taxonomia(); 
-//		TaxonomiaDAO taxonomiaDAO = (TaxonomiaDAO) context.getBean("taxonomiaDAO");
-		
-//		Relacion relacion;
-//		RelacionDAO relacionDAO = (RelacionDAO) context.getBean("relacionDAO");
-//		
-//		relacion = new Relacion();
-//		relacion.setIdGlosarioRelacion(13);
-//		relacion.setIdGlosarioOrigen(6);
-//		relacion.setIdGlosarioDestino(2);
-//		relacion.setCardinalidad("blaaaaa");
-//		relacion.setIdGlosarioRelacionInversa(2);
-//		relacion.setIdRelacion(6);
-//		relacion = relacionDAO.crearRelacion(1, relacion);
-//		relacion = relacionDAO.actualizarRelacion(1, relacion);
-//		ArrayList<Relacion> prueba = relacionDAO.listarRelacionDadoIdGlosarioConcepto(15);
-//		logger.trace("longitud de lista es"+prueba.size());
-		
-//		AtributoClaseDAO atributoClaseDAO = (AtributoClaseDAO) context.getBean("atributoClaseDAO");
-//		ArrayList<AtributoClase> prueba = atributoClaseDAO.listarAtributoClaseDadoIdGlosarioConcepto(7);
-//		logger.trace("prueba "+prueba.size());
+	
+	private static void leerArchivoCargaMasivas(String entrada){
 
-//		AtributoInstanciaDAO atributoInstanciaDAO = (AtributoInstanciaDAO) context.getBean("atributoInstanciaDAO");
-//		ArrayList<AtributoInstancia> prueba1 = atributoInstanciaDAO.listarAtributoInstanciaDadoIdGlosarioConcepto(7);
-//		logger.trace("prueba "+prueba1.size());
-//		logger.trace("salida de atributoInstancia "+atributoInstanciaDAO.verAtributoInstancia(1, 23).getCardinalidadMax());
+		String[] splitEntrada =entrada.split(LeerConfig.obtenerPropiedad("archivoSalida.separador"));
+//		logger.debug("total de elementos splitEntrada "+splitEntrada.length);
+		
+//		1. Busco indicador de proyecto
+		int auxCont = splitEntrada[0].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.Proyecto"));
+		int auxOri, auxFin;
+		if(auxCont == -1){
+//			romper ejecucion
+		}
+//		logger.debug("auxCont - "+auxCont);
+		auxCont += LeerConfig.obtenerPropiedad("archivoSalida.Proyecto").length();
+//		logger.debug("auxCont + "+auxCont);
+		if(auxCont == -1){
+//			romper ejecucion
+		}
+		auxCont = splitEntrada[0].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.id"), auxCont);
+//		logger.debug("auxCont ++"+auxCont);
+		if(auxCont == -1){
+//			romper ejecucion
+		}
+		
+		auxOri = splitEntrada[0].indexOf("\"", (auxCont+1));
+		if(auxOri == -1){
+//			romper ejecucion
+		}
+		auxFin = splitEntrada[0].indexOf("\"", (auxOri+1));
+		if(auxFin == -1){
+//			romper ejecucion
+		}		
+		String idProyectoString = splitEntrada[0].substring((auxOri+1), auxFin);
+//		logger.trace("idProyectoString "+idProyectoString);
+		idProyectoString = idProyectoString.trim();
+		int idProyectoInt = 0;
+		try {
+			idProyectoInt = Integer.parseInt(idProyectoString);
+		} catch (Exception e) {
+			// TODO: handle exception
+//			romper ejecucion
+		}
+		
+//		Consigo el idProyecto
+//		logger.debug("auxOri "+auxOri+" auxFin "+auxFin);
+		logger.debug("idProyectoInt "+idProyectoInt);
 		
 		
+//		Busco idConcepto
+		auxCont = splitEntrada[0].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.concepto"), auxFin);
+		if(auxCont == -1){
+//			romper ejecucion
+		}		
+//		logger.debug("auxCont -"+auxCont);
+		auxCont += LeerConfig.obtenerPropiedad("archivoSalida.concepto").length();		
+//		logger.debug("auxCont +"+auxCont);
+		if(auxCont == -1){
+//			romper ejecucion
+		}
+		auxCont = splitEntrada[0].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.id"), auxCont);
+//		logger.debug("auxCont ++"+auxCont);
+		if(auxCont == -1){
+//			romper ejecucion
+		}
 		
-		InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
-////		logger.trace("ver Instancia dado idInstancia "+instanciaDAO.verInstanciaDadoIdInstancia(31));
-//
-//		Instancia instancia = new Instancia();
-//		instancia.setIdGlosario(83);
-//		instancia.setIdGlosarioConceptoRelacion(7);
-//		instancia = instanciaDAO.crearInstancia(instancia);
+		auxOri = splitEntrada[0].indexOf("\"", (auxCont+1));
+		if(auxOri == -1){
+//			romper ejecucion
+		}
+		auxFin = splitEntrada[0].indexOf("\"", (auxOri+1));
+		if(auxFin == -1){
+//			romper ejecucion
+		}	
+		String idConceptoString = splitEntrada[0].substring((auxOri+1), auxFin);
+		idProyectoString = idProyectoString.trim();
+		int idConceptoInt = 0;
+		try {
+			idConceptoInt = Integer.parseInt(idConceptoString);
+		} catch (Exception e) {
+			// TODO: handle exception
+//			romper ejecucion
+		}		
+
+//		Consigo el idConceptoInt
+//		logger.debug("auxOri "+auxOri+" auxFin "+auxFin);
+		logger.debug("idConceptoInt "+idConceptoInt);
 		
-		ArrayList<Instancia> instancias = instanciaDAO.listaInstanciaDadoIdGlosarioConcepto(7);
-		logger.debug("instancias.size() "+instancias.size());
-		logger.debug("instancias.toString() "+instancias.toString());
+		for(int i=1;i<splitEntrada.length;i++){
+			logger.debug("****************** "+i);
+			auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.Nombre"));
+			auxOri = splitEntrada[i].indexOf("\"", (auxCont+1));
+			if(auxOri == -1){
+//				romper ejecucion
+			}
+			
+			auxFin = splitEntrada[i].indexOf("\"", (auxOri+1));
+			if(auxFin == -1){
+//				romper ejecucion
+			}	
+			
+			String nombre = splitEntrada[i].substring((auxOri+1), auxFin);	
+//			logger.debug("auxOri "+auxOri+" auxFin "+auxFin);
+			logger.debug("Nombre "+nombre);
+			
+			auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.Descripcion"), auxFin);
+			auxOri = splitEntrada[i].indexOf("\"", (auxCont+1));
+			if(auxOri == -1){
+//				romper ejecucion
+			}
+			
+			auxFin = splitEntrada[i].indexOf("\"", (auxOri+1));
+			if(auxFin == -1){
+//				romper ejecucion
+			}	
+
+			String descripcion = splitEntrada[i].substring((auxOri+1), auxFin);
+			logger.debug("descripcion "+descripcion);
+			
+//			logger.debug("auxOri "+auxOri+" auxFin "+auxFin);
+//			logger.debug("splitEntrada[i].length "+splitEntrada[i].length());
+			auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.AtributoInstancia"), (auxFin+1)); 
+//			String imprimir;
+//			logger.debug("auxCont1: "+auxCont);
+			
+			
+			while(auxCont != -1){
+				logger.debug("_____________________________________________________________");
+				if(auxCont == -1){
+//					romper ejecucion
+				}
+				auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.id"), auxCont+1);
+//				imprimir = splitEntrada[i].substring(auxCont, auxCont+15);logger.debug("imprimir "+imprimir);
+				auxOri = splitEntrada[i].indexOf("\"", (auxCont+1));
+				if(auxOri == -1){
+//					romper ejecucion
+				}
+				
+				auxFin = splitEntrada[i].indexOf("\"", (auxOri+1));
+				if(auxFin == -1){
+//					romper ejecucion
+				}
+//				imprimir = splitEntrada[i].substring(auxOri+1, auxFin);logger.debug("imprimir "+imprimir);
+				idConceptoString = splitEntrada[i].substring((auxOri+1), auxFin);
+				idProyectoString = idProyectoString.trim();
+				idConceptoInt = 0;
+				try {
+					idConceptoInt = Integer.parseInt(idConceptoString);
+				} catch (Exception e) {
+					// TODO: handle exception
+//					romper ejecucion
+				}
+				
+//				ID atrbInstancia1
+				logger.debug("idAtrbInst "+idConceptoInt);
+				
+				auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.valores"), auxFin+1);
+//				imprimir = splitEntrada[i].substring(auxCont, auxCont+15);logger.debug("imprimir "+imprimir);
+				auxOri = splitEntrada[i].indexOf("[", (auxCont+1));
+				if(auxOri == -1){
+//					romper ejecucion
+				}
+				
+				auxFin = splitEntrada[i].indexOf("]", (auxOri+1));
+				if(auxFin == -1){
+//					romper ejecucion
+				}
+				String valores = splitEntrada[i].substring(auxOri+1, auxFin);
+				logger.debug("valores "+valores);
+				
+				auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.AtributoInstancia"), (auxFin+1)); 
+//				logger.debug("***auxCont: "+auxCont);
+			}
+//			auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.valores"), auxFin);
+//			auxCont += LeerConfig.obtenerPropiedad("archivoSalida.valores").length();
+//			auxOri = splitEntrada[i].indexOf("[", auxCont);
+//			if(auxOri == -1){
+////				romper ejecucion
+//			}
+//			auxFin = splitEntrada[i].indexOf("]", auxOri);
+//			if(auxFin == -1){
+////				romper ejecucion
+//			}	
+//			String valores = splitEntrada[i].substring(auxOri, auxFin);
+//			logger.debug("valores "+valores);
+		}
+	}
+	
+	public static void main(String[] args) {
 		
-		
-//		instancia = instanciaDAO.verInstanciaDadoIdGlosarioInstancia(14);
-//		logger.trace("** instancia "+instancia.toString());
-//		instancia.actualizarAtributoInstancia();
-//		logger.trace("definicion as json"+instancia.definicionToJsonString());
-		
-		
-//		ArrayList<Instancia> prueba2 = instanciaDAO.listaInstanciaDadoIdGlosarioConcepto(7);
-//		logger.trace("prueba2 "+prueba2.size());
-//		AtributoInstancia atributoInstancia = new AtributoInstancia ();
-//		atributoInstancia.setCardinalidadMax("CardMAx");
-//		atributoInstancia.setCardinalidadMin("CardMin");
-//		atributoInstancia.setIdGlosario(24);
-//		atributoInstancia.setIdGlosarioConcepto(7);
-//		Medida medida = new Medida ();
-//		medida.setCodigo("mtrs");
-//		atributoInstancia.setMedida(medida);
-//		atributoInstancia.setPrecision("precision");
-//		atributoInstancia.setRangoValores("rango valores");
-//		TipoDeDato tipoDeDato = new TipoDeDato ();
-//		tipoDeDato.setCodigo("int");
-//		atributoInstancia.setTipoDeDato(tipoDeDato);
-//		atributoInstancia.setValue("valooor");
-//		AtributoInstancia salida = atributoInstanciaDAO.actualizarAtributoInstancia(1, atributoInstancia);
-//		logger.trace("el id_atributo es "+salida.getId());
-		
-//		AtributoClaseDAO atributoClaseDAO = (AtributoClaseDAO) context.getBean("atributoClaseDAO");
-//		AtributoClase atributoClase = new AtributoClase();
-//		atributoClase.setCardinalidadMax("maxCard");
-//		atributoClase.setCardinalidadMin("cardMin");
-//		atributoClase.setIdGlosario(20);
-//		atributoClase.setIdGlosarioConcepto(7);
-//		atributoClase.setPrecision("pres pres");
-//		atributoClase.setRangoValores("rango de vooolres");
-//		TipoDeDato tipoDeDato = new TipoDeDato ();
-//		tipoDeDato.setCodigo("int");
-//		atributoClase.setTipoDeDato(tipoDeDato);
-//		atributoClase.setValue("valuandoooo");
-//		AtributoClase salida = atributoClaseDAO.actualizarAtributoClase(1, atributoClase);
-//		logger.trace("id atributo es "+salida.getId());
-////		taxonomia.setConceptoOrigen(1);
-//		taxonomia.getRelaciones().add("desDisjunta");
-//		taxonomia.getConceptosDestino().addToInnerArray(0, 4);
-//		taxonomia.getConceptosDestino().addToInnerArray(0, 6);
-//		taxonomia.getRelaciones().add("desExhaustiva");
-//		taxonomia.getConceptosDestino().addToInnerArray(1, 7);
-//		taxonomia.getRelaciones().add("particion");
-//		taxonomia.getConceptosDestino().addToInnerArray(2, 9);
-//		taxonomia.getRelaciones().add("subClase");
-//		taxonomia.getConceptosDestino().addToInnerArray(3, 9);
-		
-//		taxonomia.getRelaciones().add("desDisjunta");
-//		taxonomia.getRelaciones().add("desExhaustiva");
-//		taxonomia.getRelaciones().add("particion");
-//		taxonomia.getRelaciones().add("subClase");
-		
-//		taxonomia.getConceptosDestino().addToInnerArray(0, 4);
-//		taxonomia.getConceptosDestino().addToInnerArray(0, 6);	
-//		taxonomia.getConceptosDestino().addToInnerArray(1, 4);
-//		taxonomia.getConceptosDestino().addToInnerArray(1, 6);
-//		taxonomia.getConceptosDestino().addToInnerArray(2, 4);
-//		taxonomia.getConceptosDestino().addToInnerArray(2, 6);	
-//		taxonomia.getConceptosDestino().addToInnerArray(3, 4);
-//		taxonomia.getConceptosDestino().addToInnerArray(3, 6);	
-//		int salida = taxonomiaDAO.actualizarTaxonomia(1, taxonomia);
-		
-//		ConceptoDAO conceptoDAO = (ConceptoDAO) context.getBean("conceptoDAO");
-//		ArrayList<Integer> aux = new ArrayList<Integer>();
-//		ArrayList<Integer> aux1 = new ArrayList<Integer>();
-//		ArrayList<Integer> aux2 = new ArrayList<Integer>();
-//		aux.add(1);
-//		aux.add(2);
-//		aux1.add(8);
-//		aux1.add(9);
-		
-//		String salida;
-//		salida = conceptoDAO.actualizarConcepto(aux, aux1, aux2, 7);
-//		logger.trace("salida "+salida);
-		
-//		MedidaDAO medidaDAO = (MedidaDAO) context.getBean("medidaDAO");
-//		logger.trace("total lista1 "+medidaDAO.listarMedida().get(0).getCodigo());
-//		
-//		TipoDeDatoDAO tipoDeDatoDAO = (TipoDeDatoDAO)  context.getBean("tipoDeDatoDAO");
-//		logger.trace("total lista2 "+tipoDeDatoDAO.listarTipoDeDato().get(0).getCodigo());
-		
-//		ConstanteDAO constanteDAO = (ConstanteDAO) context.getBean("constanteDAO");
-//		int salida = constanteDAO.crearConstante(26);
-//		logger.trace("salida es "+salida);
-		
-//		Constante constante = new Constante ();
-//		constante.setIdGlosarioConstante(26);
-//		constante.setMedida(new Medida(0, "mtrs", null, null));
-//		constante.setTipoDeDato(new TipoDeDato(0, "int", null, null));
-//		constante.setValor( "valor");
-//		
-//		constanteDAO.actualizarConstante(1, constante);
-//		logger.trace("id es "+constante.getId());
-		
-//		constante = constanteDAO.verConstante(1, 26);
-//		logger.trace("id es "+constante.getId());
-//		logger.trace("valor "+constante.getValor());
-//		logger.trace("glosario "+constante.getIdGlosarioConstante());
-//		logger.trace("medida "+constante.getMedida().toString());
-//		logger.trace("dato "+constante.getTipoDeDato().toString());
-		
-//		AxiomaDAO axiomaDAO = (AxiomaDAO) context.getBean("axiomaDAO");
-//		logger.trace("longitud "+axiomaDAO.atrbInstanciaDadoAxioma(1, 30));
-//		axiomaDAO.verAxioma(1, 30);
-//		axiomaDAO.crearAxioma(1, 1);
-		
-//		ReglaDAO reglaDAO = (ReglaDAO) context.getBean("reglaDAO");
-//		logger.trace("concepto "+reglaDAO.conceptoDadoRegla(1, 34));
-//		logger.trace("relacion "+reglaDAO.relacionDadoRegla(1, 34));
-//		logger.trace("clase "+reglaDAO.atrbClaseDadoRegla(1, 34));
-//		logger.trace("instancia "+reglaDAO.atrbInstanciaDadoRegla(1, 34));
-		//logger.trace(reglaDAO.verRegla(1, 34).toString());
-		//reglaDAO.crearRegla(1, 1);
-		
-//		Instanciado instanciado = new Instanciado ();
-//		Instancia instancia = new Instancia ();
-//		instancia.setId(31);
-//		instancia.setIdGlosario(1);
-//		instancia.setIdGlosarioConceptoRelacion(1);
-//		instanciado.setInstancia(instancia);
-//		Gson definicion;
-//		definicion = new Gson();
-//		definicion.toJson("{\"username\":\"robert\",\"posts\":100122,\"emailaddress\":\"robert@omniti.com\"}");
-//		logger.trace("definicion "+definicion.toString());
-////		logger.trace("definicion "+definicion.toJson(jsonElement));
-//		JsonParser parser = new JsonParser();
-//		JsonObject o = (JsonObject)parser.parse("{\"a\": \"A\"}");
-//		JsonObject b = (JsonObject)parser.parse("{\"username\":\"robert\",\"posts\":100122,\"emailaddress\":[\"robert@omniti.com\",\"robert@omniti.com\",\"robert@omniti.com\",\"robert@omniti.com\"]}");
-//		logger.trace("o "+o.toString());
-//		logger.trace("b "+b.toString());
-//		o = (JsonObject)parser.parse(b.toString());
-//		logger.trace("o "+o.toString());
-//		//instanciado.setDefinicion(o);
-//		InstanciadoDAO instanciadoDAO = (InstanciadoDAO) context.getBean("instanciadoDAO");
-//		//logger.trace("salida es "+instanciadoDAO.crearInstanciado(instanciado, 1));
-//		//instanciado.setId(1);
-//		//logger.trace("modificar "+instanciadoDAO.actualizarInstanciado(instanciado, 1));
-//		logger.trace("ver "+instanciadoDAO.verInstanciado(instanciado, 1));
-		
-//		***********************************
-//		Instanciado instanciado = new Instanciado ();
-//		Instancia instancia = new Instancia ();
-//		instancia.setId(32);
-//		instancia.setIdGlosarioConceptoRelacion(1);
-//		JsonParser parser = new JsonParser();
-//		JsonObject b = (JsonObject)parser.parse("{\"username\":\"robert\",\"posts\":100122,\"emailaddress\":[\"robert@omniti.com\",\"robert@omniti.com\",\"robert@omniti.com\",\"robert@omniti.com\"]}");
-//		instanciado.setInstancia(instancia);
-////		instanciado.setDefinicion(b);
-////		logger.trace("salida es "+instanciadoDAO.crearInstanciado(instanciado, 1));
-//		JsonObject o = (JsonObject)parser.parse("{\"a\": \"A\"}");
-////		instanciado.setDefinicion(o);
-////		instanciado.setId(7);
-////		logger.trace("modificar "+instanciadoDAO.actualizarInstanciado(instanciado, 1));
-//		logger.trace("ver "+instanciadoDAO.verInstanciado(instanciado, 1));
-		
-		
-		
-		
-//		logger.trace("prueba de generar archivo OWL con owlapi");
-//		
-//		ExportarOWL exportarOWL;
-//		try {
-//			exportarOWL = new ExportarOWL(1, "salidaMitchell");
-//			exportarOWL.crearOntologia();
-//		} catch (OWLOntologyCreationException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			logger.trace("error coño");
-//		}
-		
-		
-//		TipoDeDatoDAO tipoDeDatoDAO = (TipoDeDatoDAO) context.getBean("tipoDeDatoDAO");	
-//		TipoDeDato tipoDeDato = new TipoDeDato();
-//		tipoDeDato.setCodigo("int");
-//		tipoDeDato = tipoDeDatoDAO.verTipoDeDato(tipoDeDato) ;
-//		logger.debug("tipoDeDato "+tipoDeDato.toString());
-		
-//		MedidaDAO medidaDAO = (MedidaDAO) context.getBean("medidaDAO");	
-//		Medida medida = new Medida();
-//		medida.setCodigo("mtrs");
-//		medida = medidaDAO.verMedida(medida) ;
-//		logger.debug("medida "+medida.toString());
-		
+		String archivo = "Llena bien esta vaina, deja el sabotaje. Solo edita los campos correspondientes."+
+				"Debe llenar solo los campo valores  de los atributos, tiene formato JSON. Es un arreglo [] separados por ','. Quedara [\"A\",\"B\",\"C\",\"D\"]"+
+
+				"___Proyecto"+
+				"Id: \"123\""+
+				"Nombre: proyectoPrueba"+
+
+				"___CONCEPTO"+
+				"Id: \"789\""+
+				"Nombre: Artrópodos"+
+				"Descripcion: Son animales invertebrados, de cuerpo cpm so,etría bilateral, cubierto por cutícula, formado por una serie lineal de segmentos más o menos ostensibles y provistos de apéndices compuestos de piezas articuladas o artejos"+
+
+
+				"___________________________________________________ "+
+				"___INSTANCIA 1"+
+				"Nombre:\"Nombre de la instancia 1\""+
+				"Descripcion:\"Descripcion de la instancia 1\""+
+
+				"	___ATRIBUTO INSTANCIA"+
+				"		Id: \"24\""+
+				"		Nombre: atrbInstancia3"+
+				"		Descripcion: atrbInstancia3"+
+				"		Precision: precision"+
+				"		Rango valores: rango valores"+
+				"		Cardinalidad: [CardMin;CardMAx]"+
+				"		Valores:  [\"valor24\"]"+
+
+				"	___ATRIBUTO INSTANCIA"+
+				"		Id: \"25\""+
+				"		Nombre: atrbInstancia4"+
+				"		Descripcion: atrbInstancia4"+
+				"		Precision: precision"+
+				"		Rango valores: rangoValores"+
+				"		Cardinalidad: [cardinalidadMin;cardinalidadMax]"+
+				"		Valores:  [\"valor25\"]"+
+
+				"	___ATRIBUTO INSTANCIA"+
+				"		Id: \"23\""+
+				"		Nombre: atrbInstancia2"+
+				"		Descripcion: atrbInstancia2 -----mas masm as"+
+				"		Precision: Mitchell te amo"+
+				"		Rango valores: 1..10000"+
+				"		Cardinalidad: [1;n]"+
+				"		Valores:  [\"valor23\"]"+
+
+				"___________________________________________________ "+
+				"___INSTANCIA 2"+
+				"Nombre:\"nombre isntancia2\""+
+				"Descripcion:\" descripcion instancia2\""+
+				"	___ATRIBUTO INSTANCIA"+
+				"		Id: \"27\""+
+				"		Nombre: atrbInstancia3"+
+				"		Descripcion: atrbInstancia3"+
+				"		Precision: precision"+
+				"		Rango valores: rango valores"+
+				"		Cardinalidad: [CardMin;CardMAx]"+
+				"		Valores:  [\"valooor24\"]"+
+
+				"	___ATRIBUTO INSTANCIA"+
+				"		Id: \"28\""+
+				"		Nombre: atrbInstancia4"+
+				"		Descripcion: atrbInstancia4"+
+				"		Precision: precision"+
+				"		Rango valores: rangoValores"+
+				"		Cardinalidad: [cardinalidadMin;cardinalidadMax]"+
+				"		Valores:  [\"valuuue25\"]"+
+
+				"	___ATRIBUTO INSTANCIA"+
+				"		Id: \"29\""+
+				"		Nombre: atrbInstancia2"+
+				"		Descripcion: atrbInstancia2 -----mas masm as"+
+				"		Precision: Mitchell te amo"+
+				"		Rango valores: 1..10000"+
+				"		Cardinalidad: [1;n]"+
+				"		Valores:  [\"valorate23\"]";
+		leerArchivoCargaMasivas (archivo);
 	}
 
+	
 }
