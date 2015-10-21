@@ -92,13 +92,13 @@ public class InstanciaRest {
 		
 		sb.append(LeerConfig.obtenerPropiedad("archivoSalida.Proyecto"));
 		sb.append("\n");		
-		aux = LeerConfig.obtenerPropiedad("archivoSalida.id")+" "+proyecto.getIdProyecto();
+		aux = LeerConfig.obtenerPropiedad("archivoSalida.id")+"\""+proyecto.getIdProyecto()+"\"";
 		sb.append(aux);sb.append("\n");
 		aux = LeerConfig.obtenerPropiedad("archivoSalida.Nombre")+" "+proyecto.getNombre();
 		sb.append(aux);sb.append("\n");sb.append("\n");	
 		sb.append(LeerConfig.obtenerPropiedad("archivoSalida.concepto"));
 		sb.append("\n");
-		aux = LeerConfig.obtenerPropiedad("archivoSalida.id")+" "+glosarioConcepto.getId();
+		aux = LeerConfig.obtenerPropiedad("archivoSalida.id")+"\""+glosarioConcepto.getId()+"\"";
 		sb.append(aux);sb.append("\n");
 		aux = LeerConfig.obtenerPropiedad("archivoSalida.Nombre")+" "+glosarioConcepto.getNombre();
 		sb.append(aux);sb.append("\n");		
@@ -111,15 +111,15 @@ public class InstanciaRest {
 			sb.append(LeerConfig.obtenerPropiedad("archivoSalida.separador2"));	sb.append("\n");		
 			aux = LeerConfig.obtenerPropiedad("archivoSalida.instancia")+" "+(i+1);
 			sb.append(aux);sb.append("\n");
-			aux = LeerConfig.obtenerPropiedad("archivoSalida.Nombre")+"\" \"";
+			aux = LeerConfig.obtenerPropiedad("archivoSalida.Nombre")+"\"\"";
 			sb.append(aux);sb.append("\n");		
-			aux = LeerConfig.obtenerPropiedad("archivoSalida.Descripcion")+"\" \"";
+			aux = LeerConfig.obtenerPropiedad("archivoSalida.Descripcion")+"\"\"";
 			sb.append(aux);sb.append("\n");
 			for(int j=0; j<atributoInstancia.size(); j++){
 				AtributoInstancia atrbInstancia = atributoInstancia.get(j);
 				sb.append("\n");
 				sb.append("\t");sb.append(LeerConfig.obtenerPropiedad("archivoSalida.AtributoInstancia"));sb.append("\n");
-				aux = LeerConfig.obtenerPropiedad("archivoSalida.id")+" "+atrbInstancia.getIdGlosario();
+				aux = LeerConfig.obtenerPropiedad("archivoSalida.id")+"\""+atrbInstancia.getIdGlosario()+"\"";
 				sb.append("\t");sb.append("\t");sb.append(aux);sb.append("\n");
 				aux = LeerConfig.obtenerPropiedad("archivoSalida.Nombre")+" "+glosarioAtrbInstancia.get(j).getNombre();
 				sb.append("\t");sb.append("\t");sb.append(aux);sb.append("\n");
