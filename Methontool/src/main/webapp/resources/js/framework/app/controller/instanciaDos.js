@@ -72,6 +72,7 @@ function ControllerInstanciaDos($rootScope,
 	cnInstanciaDos.alertPositiva = false;
 	cnInstanciaDos.alertNegativa = false;
 	cnInstanciaDos.cambioArchivo = false;
+	cnInstanciaDos.subiendoArchivo = false;
 	
 	
 //-------------------Funciones----------------------------------	
@@ -90,6 +91,8 @@ function ControllerInstanciaDos($rootScope,
 		if(uploader.queue.length > 0){
 			console.log("cargar");
 			uploader.queue[0].upload();
+			cnInstanciaDos.subiendoArchivo = true;
+			
 		}		
 	}
 	
@@ -97,6 +100,7 @@ function ControllerInstanciaDos($rootScope,
 		if(uploader.queue.length > 0){
 			uploader.queue[0].remove();
 			cnInstanciaDos.cambioArchivo = false;
+			cnInstanciaDos.subiendoArchivo = false;
 			 cnInstanciaDos.archivoASubir = {};
 		}
 	}
@@ -119,6 +123,7 @@ function ControllerInstanciaDos($rootScope,
 		cnInstanciaDos.enBlanco = false;
 		cnInstanciaDos.modificar = false;
 		cnInstanciaDos.disabled = true;
+		eliminarArchivo();
 	
 		cnInstanciaDos.rutaDonwload = FactoryInstancia.getRutaDescargarArchivo(cnInstanciaDos.seleccionado, 10);
 		console.log("cnInstanciaDos.rutaDonwload "+cnInstanciaDos.rutaDonwload);
@@ -207,12 +212,6 @@ function ControllerInstanciaDos($rootScope,
 	function verDescripcionGlosario(){
 		$('#verDescripcionGlosarioInstanciaDosModal').modal('show');
 	}
-	
-    $rootScope.$watch('uploader.queue', function (newValue, oldValue) {
-    	if (newValue !== oldValue) {
-            console.log("cambio uploader '");
-    	}
-    }, false);
 
 //-------------------Funciones extranjeras-------------------------------		
     $rootScope.$on('menuInstanciaDosPrincipal', function(event, data){
@@ -221,6 +220,7 @@ function ControllerInstanciaDos($rootScope,
     	cnInstanciaDos.disabled = true;  //variable usada para bloquear los campos de edicion 
     	cnInstanciaDos.modificar = false; //si se permite modificar los valores 
     	cnInstanciaDos.enBlanco = true;	    //mostrar seccion en blanco
+    	cnInstanciaDos.seleccionado = 0;
     });
 	
     $rootScope.$watch('actual.instanciaDos', function (newValue, oldValue) {

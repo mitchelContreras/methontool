@@ -191,7 +191,7 @@
 								</div>
 								<div class="col-xs-5 ">
 									<div class="progress" style="margin-bottom: 0;">
-		                            	<div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+		                            	<div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.queue[0].progress + '%' }"></div>
 		                            </div>
 								</div>
 							</div>							
@@ -199,17 +199,25 @@
 								<div class="col-xs-4 control-label" >
 									<label >Acciones:</label>
 								</div>
-								<div class="col-xs-5 ">
+								<div class="col-xs-5 " >
 								<!-- <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess"> -->	
-                                    <button type="button" class="btn btn-success btn-xs" ng-click="cnInstanciaDos.cargarArchivo()">
+                                    <button type="button" class="btn btn-success btn-xs" ng-click="cnInstanciaDos.cargarArchivo()" ng-show="!cnInstanciaDos.subiendoArchivo">
                                         <span class="glyphicon glyphicon-upload"></span> Cargar
                                     </button>
+                                    <div style="width: 60px; display: inline-block;" ng-show="cnInstanciaDos.subiendoArchivo">
+										<div class="progress" style="margin-bottom: 0;height: 15px;">
+			                            	<div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.queue[0].progress + '%' }"></div>
+			                            </div>                                    
+                                    </div>
+                                    <span ng-show="uploader.queue[0].isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+									<span ng-show="uploader.queue[0].isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                    <span ng-show="uploader.queue[0].isError"><i class="glyphicon glyphicon-remove"></i></span>                                    
                                     <button type="button" class="btn btn-danger btn-xs" ng-click="cnInstanciaDos.eliminarArchivo()">
                                         <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                    </button>									
+                                    </button>	                                 						
 								</div>
-							</div>									
-						</div>
+							</div>															
+						</div>					
 						<!-- 
 						<div class="form-group">
 							<div class="col-xs-4 control-label" >
