@@ -48,9 +48,16 @@
 		<!-- Angucomple-alt -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/angucomplete-alt.js"></script>
 		
+		
 		<!-- JS -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/aplicacion.js"></script>
 	
+		<!-- Upload file -->
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/angular-file-upload.min.js"></script>
+
+		<!-- Script comunes -->
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/scriptComunes.js"></script>
+		
 		<!-- Controller -->
 		<!-- Cabecera -->	
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/framework/app/controller/cabecera.js"></script>

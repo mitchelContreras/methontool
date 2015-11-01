@@ -1,5 +1,6 @@
 package com.ciensUCV.Methontool.rest;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,6 +13,8 @@ import java.util.StringTokenizer;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.output.TeeOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -354,6 +357,29 @@ public class InstanciaRest {
     public @ResponseBody String handleFileUpload( @RequestParam("file") MultipartFile file){
     	
     	logger.debug("entre a la funcion coño!");
+        try {
+            String filePath="C:/temp/";
+            StringBuffer result=new StringBuffer();
+            byte[] bytes=null;
+            result.append("Uploading of File(s) ");
+
+            if (!file.isEmpty()) {
+            		logger.debug("file no es vacio "+file.getOriginalFilename());
+            		logger.debug(" file.toString() "+ file.toString());
+            		logger.debug(" file.getSize() "+ file.getSize());
+            		
+	    		ByteArrayInputStream stream = new   ByteArrayInputStream(file.getBytes());
+	    		String myString = IOUtils.toString(stream, "UTF-8");           		
+	    		logger.debug(" myString "+ myString);	
+                }
+                else
+                    result.append( file.getOriginalFilename() + " Failed. ");
+
+            logger.debug("dentro con "+result.toString());
+
+        } catch (Exception e) {
+            return "Error Occured while uploading files." + " => " + e.getMessage();
+        }    	
     	return "algo";
 //        if (!file.isEmpty()) {
 //        	logger.debug("file no es null");

@@ -21,6 +21,8 @@ ControllerInstanciaDos.$inject = ['$rootScope',
                        ,'FactoryInstancia'
                        ,'$http'
                        ,'fileUpload'
+                       ,'FileUploader'
+                       ,'$scope'
                        ];	
 
 function ControllerInstanciaDos($rootScope,
@@ -31,8 +33,24 @@ function ControllerInstanciaDos($rootScope,
 		,FactoryInstancia
 		,$http
 		,fileUpload
+		,FileUploader
+		,$scope
 		){
 	
+    var uploader = $scope.uploader = new FileUploader({
+        url: 'http://localhost:8080/Methontool/upload'
+    });
+    
+    uploader.onAfterAddingAll = function(addedFileItems) {
+        cnInstanciaDos.cambioArchivo = true;
+        cnInstanciaDos.archivoASubir = addedFileItems[0].file;
+        console.log("cnInstanciaDos.archivoASubir.size "+cnInstanciaDos.archivoASubir.size);
+        var aux = cnInstanciaDos.archivoASubir.size/1024;
+        cnInstanciaDos.archivoASubir.tamano = aux.toFixed(2)+" KB";
+    }
+    
+    
+    
 	console.log("Entro en ControllerInstanciaDos");
 	var cnInstanciaDos = this;
 	
@@ -53,6 +71,7 @@ function ControllerInstanciaDos($rootScope,
 	cnInstanciaDos.mensajeAlertNegativa = "";
 	cnInstanciaDos.alertPositiva = false;
 	cnInstanciaDos.alertNegativa = false;
+	cnInstanciaDos.cambioArchivo = false;
 	
 	
 //-------------------Funciones----------------------------------	
@@ -64,6 +83,23 @@ function ControllerInstanciaDos($rootScope,
 	cnInstanciaDos.seleccioneGlosario = seleccioneGlosario;
 	cnInstanciaDos.obtenerGlosarioDadoIdGlosaro = obtenerGlosarioDadoIdGlosaro;
 	cnInstanciaDos.uploadFile = uploadFile;
+	cnInstanciaDos.eliminarArchivo = eliminarArchivo;
+	cnInstanciaDos.cargarArchivo = cargarArchivo;
+	
+	function cargarArchivo(){
+		if(uploader.queue.length > 0){
+			console.log("cargar");
+			uploader.queue[0].upload();
+		}		
+	}
+	
+	function eliminarArchivo(){
+		if(uploader.queue.length > 0){
+			uploader.queue[0].remove();
+			cnInstanciaDos.cambioArchivo = false;
+			 cnInstanciaDos.archivoASubir = {};
+		}
+	}
 	
 	function uploadFile(){
 		console.log("entre a subir archivo");
@@ -104,39 +140,39 @@ function ControllerInstanciaDos($rootScope,
 		
 //		Consulto el concepto seleccionado
 		var salida;
-		salida = FactoryConcepto.consultarElemento(elemento.id);
-		FactoryMensajeCarga.abrirMensaje("Cargando");
-		salida.then(
-	            function(aux) {
-	        		console.log("***Salid de consulta");
-	        		console.log(JSON.stringify(aux, null, '\t'));
-	        		
-	                if(aux.succes){
-	                	console.log("consultar Conecpto es true");
-	                	
-//	                	Consulto glosario de oncepto actual
-	                	cnInstanciaDos.varEdicion.glosarioConceptoActual = 
-	                		FactoryGlosario.consultarElemento(aux.elemento.idGlosario);
-	                	
-//	                	Traigo las listas de atributo
-	                	cnInstanciaDos.varEdicion.atributosClase =
-	                		aux.elemento.atributosClase;
-	                	cnInstanciaDos.varEdicion.atributosInstancia =
-	                		aux.elemento.atributosInstancia;
-	                	
-//	            		cnInstancia.varEdicion.tipoDeDato 
-//	            			= FactoryTipoDato.consultarElemento(aux.elemento.tipoDeDato.codigo);
-//	            		
-//	            		cnInstancia.varEdicion.valor
-//	            			= aux.elemento.valor;
-//	            		
-//	            		cnInstancia.varEdicion.medida
-//	                		= FactoryMedida.consultarElemento(aux.elemento.medida.codigo);
-	                	
-	                	FactoryMensajeCarga.cerrarMensaje();
-	                }
-	            }
-	        );
+//		salida = FactoryConcepto.consultarElemento(elemento.id);
+//		FactoryMensajeCarga.abrirMensaje("Cargando");
+//		salida.then(
+//	            function(aux) {
+//	        		console.log("***Salid de consulta");
+//	        		console.log(JSON.stringify(aux, null, '\t'));
+//	        		
+//	                if(aux.succes){
+//	                	console.log("consultar Conecpto es true");
+//	                	
+////	                	Consulto glosario de oncepto actual
+//	                	cnInstanciaDos.varEdicion.glosarioConceptoActual = 
+//	                		FactoryGlosario.consultarElemento(aux.elemento.idGlosario);
+//	                	
+////	                	Traigo las listas de atributo
+//	                	cnInstanciaDos.varEdicion.atributosClase =
+//	                		aux.elemento.atributosClase;
+//	                	cnInstanciaDos.varEdicion.atributosInstancia =
+//	                		aux.elemento.atributosInstancia;
+//	                	
+////	            		cnInstancia.varEdicion.tipoDeDato 
+////	            			= FactoryTipoDato.consultarElemento(aux.elemento.tipoDeDato.codigo);
+////	            		
+////	            		cnInstancia.varEdicion.valor
+////	            			= aux.elemento.valor;
+////	            		
+////	            		cnInstancia.varEdicion.medida
+////	                		= FactoryMedida.consultarElemento(aux.elemento.medida.codigo);
+//	                	
+//	                	FactoryMensajeCarga.cerrarMensaje();
+//	                }
+//	            }
+//	        );
 	}
 	
 	function modificarInstanciaDos (){
@@ -172,7 +208,11 @@ function ControllerInstanciaDos($rootScope,
 		$('#verDescripcionGlosarioInstanciaDosModal').modal('show');
 	}
 	
-	
+    $rootScope.$watch('uploader.queue', function (newValue, oldValue) {
+    	if (newValue !== oldValue) {
+            console.log("cambio uploader '");
+    	}
+    }, false);
 
 //-------------------Funciones extranjeras-------------------------------		
     $rootScope.$on('menuInstanciaDosPrincipal', function(event, data){

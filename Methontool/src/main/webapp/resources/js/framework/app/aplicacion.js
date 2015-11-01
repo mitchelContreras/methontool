@@ -29,6 +29,7 @@
         ,'modConstante'
         ,'modAxioma'
         ,'modRegla'
+        ,'angularFileUpload'
         ])
 
         .directive('fileModel', ['$parse', function ($parse) {
@@ -53,7 +54,8 @@
 	            fd.append('file', file);
 	            $http.post(uploadUrl, fd, {
 	                transformRequest: angular.identity,
-	                headers: {'Content-Type': 'multipart/form-data'}
+	                enctype: "multipart/form-data",
+	                headers: {'Content-Type': 'multipart/form-data;boundary=gc0p4Jq0M2Yt08jU534c0p','boundary':'gc0p4Jq0M2Yt08jU534c0p', 'enctype':"multipart/form-data"}
 	            })
 	            .success(function(){
 	            })
