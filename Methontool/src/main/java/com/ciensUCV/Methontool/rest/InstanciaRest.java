@@ -111,7 +111,7 @@ public class InstanciaRest {
 		for(int i = 0; i<cantidadInstancia; i++ ){
 			sb.append("\n");
 //			Agrego descripcion de la instancia
-			sb.append(LeerConfig.obtenerPropiedad("archivoSalida.separador2"));	sb.append("\n");		
+			sb.append(LeerConfig.obtenerPropiedad("archivoSalida.separador"));	sb.append("\n");		
 			aux = LeerConfig.obtenerPropiedad("archivoSalida.instancia")+" "+(i+1);
 			sb.append(aux);sb.append("\n");
 			aux = LeerConfig.obtenerPropiedad("archivoSalida.Nombre")+"\"\"";
@@ -223,9 +223,7 @@ public class InstanciaRest {
 	}
 
 	private void leerArchivoCargaMasivas(String entrada){
-
-		String[] splitEntrada =entrada.split(LeerConfig.obtenerPropiedad("archivoSalida.separador2"));
-		logger.debug("total de elementos splitEntrada "+splitEntrada.length);
+		String[] splitEntrada =entrada.split(LeerConfig.obtenerPropiedad("archivoSalida.separador"));
 		
 //		1. Busco indicador de proyecto
 		int auxCont = splitEntrada[0].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.Proyecto"));
@@ -233,14 +231,11 @@ public class InstanciaRest {
 		if(auxCont == -1){
 //			romper ejecucion
 		}
-		logger.debug("auxCont -"+auxCont);
 		auxCont += LeerConfig.obtenerPropiedad("archivoSalida.Proyecto").length();
-		logger.debug("auxCont +"+auxCont);
 		if(auxCont == -1){
 //			romper ejecucion
 		}
 		auxCont = splitEntrada[0].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.id"), auxCont);
-		logger.debug("auxCont ++"+auxCont);
 		if(auxCont == -1){
 //			romper ejecucion
 		}
@@ -249,11 +244,11 @@ public class InstanciaRest {
 		if(auxOri == -1){
 //			romper ejecucion
 		}
-		auxFin = splitEntrada[0].indexOf("\"", auxOri);
+		auxFin = splitEntrada[0].indexOf("\"", auxOri+1);
 		if(auxFin == -1){
 //			romper ejecucion
 		}		
-		String idProyectoString = splitEntrada[0].substring(auxOri, auxFin);
+		String idProyectoString = splitEntrada[0].substring(auxOri+1, auxFin);
 		idProyectoString = idProyectoString.trim();
 		int idProyectoInt = 0;
 		try {
@@ -264,21 +259,18 @@ public class InstanciaRest {
 		}
 		
 //		Consigo el idProyecto
-		logger.debug("idProyectoInt "+idProyectoInt);
+		logger.debug("idProyecto: "+idProyectoInt);
 		
 //		Busco idConcepto
 		auxCont = splitEntrada[0].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.concepto"), auxFin);
 		if(auxCont == -1){
 //			romper ejecucion
 		}		
-		logger.debug("auxCont -"+auxCont);
 		auxCont += LeerConfig.obtenerPropiedad("archivoSalida.concepto").length();		
-		logger.debug("auxCont +"+auxCont);
 		if(auxCont == -1){
 //			romper ejecucion
 		}
 		auxCont = splitEntrada[0].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.id"), auxCont);
-		logger.debug("auxCont ++"+auxCont);
 		if(auxCont == -1){
 //			romper ejecucion
 		}
@@ -287,11 +279,11 @@ public class InstanciaRest {
 		if(auxOri == -1){
 //			romper ejecucion
 		}
-		auxFin = splitEntrada[0].indexOf("\"", auxOri);
+		auxFin = splitEntrada[0].indexOf("\"", auxOri+1);
 		if(auxFin == -1){
 //			romper ejecucion
 		}	
-		String idConceptoString = splitEntrada[0].substring(auxOri, auxFin);
+		String idConceptoString = splitEntrada[0].substring(auxOri+1, auxFin);
 		idProyectoString = idProyectoString.trim();
 		int idConceptoInt = 0;
 		try {
@@ -302,22 +294,23 @@ public class InstanciaRest {
 		}		
 
 //		Consigo el idConceptoInt
-		logger.debug("idConceptoInt "+idConceptoInt);
+		logger.debug("idConcepto: "+idConceptoInt);
 		
 		for(int i=1;i<splitEntrada.length;i++){
 			logger.debug("****************** "+i);
+//			logger.debug("splitEntrada[i] "+splitEntrada[i]);
 			auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.Nombre"));
 			auxCont += LeerConfig.obtenerPropiedad("archivoSalida.Nombre").length();
 			auxOri = splitEntrada[i].indexOf("\"", auxCont);
 			if(auxOri == -1){
 //				romper ejecucion
 			}
-			auxFin = splitEntrada[i].indexOf("\"", auxOri);
+			auxFin = splitEntrada[i].indexOf("\"", auxOri+1);
 			if(auxFin == -1){
 //				romper ejecucion
 			}	
-			String nombre = splitEntrada[i].substring(auxOri, auxFin);	
-			logger.debug("Nombre "+nombre);
+			String nombre = splitEntrada[i].substring(auxOri+1, auxFin);	
+			logger.debug("NOMBRE: "+nombre);
 			
 			auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.Descripcion"), auxFin);
 			auxCont += LeerConfig.obtenerPropiedad("archivoSalida.Descripcion").length();
@@ -325,25 +318,60 @@ public class InstanciaRest {
 			if(auxOri == -1){
 //				romper ejecucion
 			}
-			auxFin = splitEntrada[i].indexOf("\"", auxOri);
+			auxFin = splitEntrada[i].indexOf("\"", auxOri+1);
 			if(auxFin == -1){
 //				romper ejecucion
 			}	
-			String descripcion = splitEntrada[i].substring(auxOri, auxFin);
-			logger.debug("descripcion "+descripcion);
+			String descripcion = splitEntrada[i].substring(auxOri+1, auxFin);
+			logger.debug("dESCRIPCION: "+descripcion);
 			
-			auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.valores"), auxFin);
-			auxCont += LeerConfig.obtenerPropiedad("archivoSalida.valores").length();
-			auxOri = splitEntrada[i].indexOf("[", auxCont);
-			if(auxOri == -1){
-//				romper ejecucion
+//			Busco AtributoInstancia
+			auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.AtributoInstancia"), auxFin+1);
+			while(auxCont != -1){
+				logger.debug("****atributo instancia");
+
+				auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.id"), auxCont);
+				if(auxCont == -1){
+//					romper ejecucion
+				}
+				
+				auxOri = splitEntrada[i].indexOf("\"", auxCont);
+				if(auxOri == -1){
+//					romper ejecucion
+				}
+				auxFin = splitEntrada[i].indexOf("\"", auxOri+1);
+				if(auxFin == -1){
+//					romper ejecucion
+				}		
+				idProyectoString = splitEntrada[i].substring(auxOri+1, auxFin);
+				idProyectoString = idProyectoString.trim();
+				idProyectoInt = 0;
+				try {
+					idProyectoInt = Integer.parseInt(idProyectoString);
+				} catch (Exception e) {
+					// TODO: handle exception
+//					romper ejecucion
+				}
+				
+//				Consigo el idProyecto
+				logger.debug("ID:"+idProyectoInt);
+
+				auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.valores"), auxFin+1);
+				auxCont += LeerConfig.obtenerPropiedad("archivoSalida.valores").length();
+				auxOri = splitEntrada[i].indexOf("[", auxCont);
+				if(auxOri == -1){
+//					romper ejecucion
+				}
+				auxFin = splitEntrada[i].indexOf("]", auxOri+1);
+				if(auxFin == -1){
+//					romper ejecucion
+				}	
+				String valores = splitEntrada[i].substring(auxOri+1, auxFin);
+				logger.debug("VALORES: "+valores);		
+				
+				auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.AtributoInstancia"), auxFin+1);
+				logger.debug("auxCont "+auxCont);
 			}
-			auxFin = splitEntrada[i].indexOf("]", auxOri);
-			if(auxFin == -1){
-//				romper ejecucion
-			}	
-			String valores = splitEntrada[i].substring(auxOri, auxFin);
-			logger.debug("valores "+valores);
 		}
 	}
 	
@@ -364,13 +392,10 @@ public class InstanciaRest {
             result.append("Uploading of File(s) ");
 
             if (!file.isEmpty()) {
-            		logger.debug("file no es vacio "+file.getOriginalFilename());
-            		logger.debug(" file.toString() "+ file.toString());
-            		logger.debug(" file.getSize() "+ file.getSize());
-            		
 	    		ByteArrayInputStream stream = new   ByteArrayInputStream(file.getBytes());
 	    		String myString = IOUtils.toString(stream, "UTF-8");           		
-	    		logger.debug(" myString "+ myString);	
+//	    		logger.debug(" myString "+ myString);
+	    		leerArchivoCargaMasivas(myString);
                 }
                 else
                     result.append( file.getOriginalFilename() + " Failed. ");

@@ -125,7 +125,6 @@ function ControllerInstanciaDos($rootScope,
 		cnInstanciaDos.disabled = true;
 		eliminarArchivo();
 	
-		cnInstanciaDos.rutaDonwload = FactoryInstancia.getRutaDescargarArchivo(cnInstanciaDos.seleccionado, 10);
 		console.log("cnInstanciaDos.rutaDonwload "+cnInstanciaDos.rutaDonwload);
 //		limpio variables
 		if(limpiar == 'true'){
@@ -223,6 +222,16 @@ function ControllerInstanciaDos($rootScope,
     	cnInstanciaDos.seleccionado = 0;
     });
 	
+    $scope.$watch('cantidadInstancias', function (newValue, oldValue) {
+    	if (newValue !== oldValue) {
+            cnInstanciaDos.cantidadInstancias = newValue;
+            if(cnInstanciaDos.cantidadInstancias > 0){
+            	cnInstanciaDos.rutaDonwload = FactoryInstancia.getRutaDescargarArchivo(cnInstanciaDos.seleccionado, cnInstanciaDos.cantidadInstancias);
+            }
+            
+    	}
+    }, false);
+    
     $rootScope.$watch('actual.instanciaDos', function (newValue, oldValue) {
     	if (newValue !== oldValue) {
             console.log("cambio valor actual.InstanciaDos a '"+newValue+"'");

@@ -150,7 +150,7 @@
 								</span><label >Indique la cantidad de instancias:</label>
 							</div>
 							<div class="col-xs-2">
-								<input type="text" class="form-control" ng-model="cnInstanciaDos.cantidadInstancias" onkeypress="return isNumberKey(this)">
+								<input type="text" class="form-control" ng-model="cantidadInstancias" onkeypress="return isNumberKey(this)">
 							</div>
 						</div>
 						<div class="form-group" ng-show="cnInstanciaDos.cantidadInstancias > 0">
