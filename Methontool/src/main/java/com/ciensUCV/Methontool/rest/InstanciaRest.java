@@ -38,6 +38,7 @@ import com.ciensUCV.Methontool.dao.TaxonomiaDAO;
 import com.ciensUCV.Methontool.model.AtributoClase;
 import com.ciensUCV.Methontool.model.AtributoInstancia;
 import com.ciensUCV.Methontool.model.AtributoInstanciaDesarrollo;
+import com.ciensUCV.Methontool.model.Concepto;
 import com.ciensUCV.Methontool.model.Glosario;
 import com.ciensUCV.Methontool.model.Instancia;
 import com.ciensUCV.Methontool.model.Instanciado;
@@ -225,6 +226,11 @@ public class InstanciaRest {
 	private void leerArchivoCargaMasivas(String entrada){
 		String[] splitEntrada =entrada.split(LeerConfig.obtenerPropiedad("archivoSalida.separador"));
 		
+		Proyecto proyecto = new Proyecto();
+		Concepto concepto = new Concepto();
+		ArrayList<Instancia> listaInstancia = new ArrayList<Instancia>();
+		ArrayList<Glosario> listaGlosario = new ArrayList<Glosario>();
+		
 //		1. Busco indicador de proyecto
 		int auxCont = splitEntrada[0].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.Proyecto"));
 		int auxOri, auxFin;
@@ -260,6 +266,7 @@ public class InstanciaRest {
 		
 //		Consigo el idProyecto
 		logger.debug("idProyecto: "+idProyectoInt);
+		proyecto.setIdProyecto(idProyectoInt);
 		
 //		Busco idConcepto
 		auxCont = splitEntrada[0].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.concepto"), auxFin);
@@ -295,9 +302,12 @@ public class InstanciaRest {
 
 //		Consigo el idConceptoInt
 		logger.debug("idConcepto: "+idConceptoInt);
+		concepto.setIdGlosario(idConceptoInt);
 		
 		for(int i=1;i<splitEntrada.length;i++){
 			logger.debug("****************** "+i);
+			Instancia instanciaAux = new Instancia();
+			Glosario glosarioAux = new Glosario();
 //			logger.debug("splitEntrada[i] "+splitEntrada[i]);
 			auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.Nombre"));
 			auxCont += LeerConfig.obtenerPropiedad("archivoSalida.Nombre").length();
@@ -311,6 +321,8 @@ public class InstanciaRest {
 			}	
 			String nombre = splitEntrada[i].substring(auxOri+1, auxFin);	
 			logger.debug("NOMBRE: "+nombre);
+			glosarioAux.setNombre(nombre);
+			
 			
 			auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.Descripcion"), auxFin);
 			auxCont += LeerConfig.obtenerPropiedad("archivoSalida.Descripcion").length();
@@ -324,10 +336,12 @@ public class InstanciaRest {
 			}	
 			String descripcion = splitEntrada[i].substring(auxOri+1, auxFin);
 			logger.debug("dESCRIPCION: "+descripcion);
+			glosarioAux.setDescripcion(descripcion);
 			
 //			Busco AtributoInstancia
 			auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.AtributoInstancia"), auxFin+1);
 			while(auxCont != -1){
+				AtributoInstanciaDesarrollo atributoInstanciaAux = new AtributoInstanciaDesarrollo();
 				logger.debug("****atributo instancia");
 
 				auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.id"), auxCont);
@@ -355,6 +369,7 @@ public class InstanciaRest {
 				
 //				Consigo el idProyecto
 				logger.debug("ID:"+idProyectoInt);
+				atributoInstanciaAux.setIdGlosario(idProyectoInt);
 
 				auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.valores"), auxFin+1);
 				auxCont += LeerConfig.obtenerPropiedad("archivoSalida.valores").length();
@@ -367,12 +382,88 @@ public class InstanciaRest {
 //					romper ejecucion
 				}	
 				String valores = splitEntrada[i].substring(auxOri+1, auxFin);
-				logger.debug("VALORES: "+valores);		
+				logger.debug("VALORES: "+valores);
+				valores = "["+valores+"]";
+				atributoInstanciaAux.setValores(valores);
+				instanciaAux.getDefinicion().add(atributoInstanciaAux);
 				
 				auxCont = splitEntrada[i].indexOf(LeerConfig.obtenerPropiedad("archivoSalida.AtributoInstancia"), auxFin+1);
 				logger.debug("auxCont "+auxCont);
 			}
+			listaInstancia.add(instanciaAux);
+			listaGlosario.add(glosarioAux);
 		}
+		logger.debug("***********************");
+		logger.debug("Proyecto: "+proyecto.toString());
+		logger.debug("Concepto: "+concepto.toString());
+		logger.debug("listaInstancia "+listaInstancia.toString());
+		logger.debug("listaGlosario "+listaGlosario.toString());
+		
+		crearElementosCargados(proyecto, concepto, listaInstancia, listaGlosario);
+		
+	}
+
+	public void crearElementosCargados(Proyecto proyecto, Concepto concepto, ArrayList<Instancia> listaInstancia, ArrayList<Glosario> listaGlosario){
+//		Validar que existe proyecto   Listo
+//		Validar que existe concepto   Listo
+//		Validar que los atributos estan relacionados al concepto
+//		Crear instancia y asociar los atributos de instancia
+		
+//		Validar que existe proyecto
+		ProyectoDAO proyectoDAO = (ProyectoDAO) context.getBean("proyectoDAO");
+		try {
+			
+			proyecto = proyectoDAO.verProyecto(proyecto.getIdProyecto());
+			if(proyecto != null){
+				GlosarioDAO glosarioDAO = (GlosarioDAO) context.getBean("glosarioDAO");
+				logger.debug("concepto.getIdGlosario() "+concepto.getIdGlosario());
+				Glosario glosario = glosarioDAO.verGlosario(concepto.getIdGlosario());
+				if(glosario != null){
+					AtributoInstanciaDAO atributoInstanciaDAO = (AtributoInstanciaDAO) context.getBean("atributoInstanciaDAO");
+					ArrayList<AtributoInstancia> atributoInstancia =  atributoInstanciaDAO.listarAtributoInstanciaDadoIdGlosarioConcepto(concepto.getIdGlosario());
+					TipoGlosario tipoGlosario = new TipoGlosario();
+					tipoGlosario.setId(8);
+					Glosario glosarioAux;
+					Instancia instanciaAux;
+					if(atributoInstancia.size() > 0){
+						if(listaInstancia.size() == listaGlosario.size()){
+							InstanciaDAO instanciaDAO = (InstanciaDAO) context.getBean("instanciaDAO");
+							for(int i=0;i<listaInstancia.size();i++){
+								logger.debug("**** instancia "+(i+1));
+								logger.debug("nombre: "+listaGlosario.get(i).getNombre());
+								logger.debug("descripcion: "+listaGlosario.get(i).getDescripcion());
+								logger.debug("Instancia: "+listaInstancia.get(i).getDefinicion().toString());
+//								Crear el glosario
+								listaGlosario.get(i).setTipoGlosario(tipoGlosario);
+								glosarioAux = glosarioDAO.crearGlosario(proyecto.getIdProyecto(), listaGlosario.get(i));
+								logger.debug("El idGlosarioCreado:"+glosarioAux.getId());
+								if(!glosarioAux.getId().equalsIgnoreCase("")){
+//									Agregar propiedades a instancia
+									listaInstancia.get(i).setIdGlosario(Integer.parseInt(glosarioAux.getId()));
+									listaInstancia.get(i).setIdGlosarioConceptoRelacion(concepto.getIdGlosario());
+									instanciaAux = instanciaDAO.crearInstancia(listaInstancia.get(i));	
+									logger.debug("El idInstanciaCreada es "+instanciaAux.getIdGlosario());
+								}else{
+									logger.error("El idGlosarioCreado:"+glosario.getId()+" es vacio");
+								}
+								
+							}
+						}else{
+							logger.debug("listas con logitud diferentes");
+						}
+					}else{
+						logger.debug("concepto no tiene atributo de instancia asociado");
+					}
+				}else{
+					logger.debug("ID glosario con error");
+				}
+			}else{
+				logger.debug("ID proyecto con error");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 	}
 	
     @RequestMapping(value="/upload", method=RequestMethod.GET)

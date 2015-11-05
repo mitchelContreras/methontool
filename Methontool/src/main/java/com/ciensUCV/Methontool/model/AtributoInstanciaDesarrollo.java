@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 public class AtributoInstanciaDesarrollo {
@@ -26,7 +27,7 @@ public class AtributoInstanciaDesarrollo {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AtributoInstanciaDesarrollo.class);
 	
-	AtributoInstanciaDesarrollo (){
+	public AtributoInstanciaDesarrollo (){
 		this.valores = new ArrayList <String> ();
 	}
 	public int getId() {
@@ -91,6 +92,16 @@ public class AtributoInstanciaDesarrollo {
 	}	
 	public void setValores(ArrayList<String> valores) {
 		this.valores = valores;
+	}
+	public void setValores(String valores) {
+		JsonParser parser = new JsonParser();
+		JsonElement tradeElement = parser.parse(valores);
+		JsonArray trade = tradeElement.getAsJsonArray();
+		if (trade != null) { 
+		   for (int i=0;i<trade.size();i++){ 
+		    this.valores.add(trade.get(i).toString());
+		   } 
+		} 
 	}
 	@Override
 	public String toString() {
