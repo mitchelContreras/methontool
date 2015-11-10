@@ -92,12 +92,6 @@ angular.module('methontool')
 			})
 		}
 		function getElementoDadoId (id, succes, fail){
-			var i;
-			for(i=0;i<listaObjeto.length;i++){
-				if(listaObjeto[i].id == id ){
-					succes (listaObjeto[i]);
-				}
-			}
 			$verGlosario.get(
 					{idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
 					,idGlosario: id})
@@ -105,12 +99,12 @@ angular.module('methontool')
 					function(salida) {
 						console.log("En $verGlosario");
 						if(salida.succes){
-							console.log("llamando a succes");
+							console.log("llamando a succes con "+JSON.stringify(salida.elemento));
 							succes (salida.elemento);
 						}else{
 							fail();
 						}
-			})
+			})	
 		}
 		function getListaElementos (succes, fail){
 			console.log("entre en la funcion");
@@ -121,7 +115,6 @@ angular.module('methontool')
 						console.log("En funcion");
 						if(salida.succes){
 							console.log("llamando a succes");
-							listaObjeto = salida.elementos;
 							succes (salida.elementos);
 						}else{
 							fail();
