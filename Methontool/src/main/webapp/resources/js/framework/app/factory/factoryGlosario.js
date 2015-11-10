@@ -92,6 +92,7 @@ angular.module('methontool')
 			})
 		}
 		function getElementoDadoId (id, succes, fail){
+			console.log("getElementoDadoId "+id);
 			$verGlosario.get(
 					{idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
 					,idGlosario: id})

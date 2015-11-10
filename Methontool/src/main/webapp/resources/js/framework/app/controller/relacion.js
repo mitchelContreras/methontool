@@ -233,9 +233,9 @@ function ControllerRelacion(
 		                			'glosarioRelacionInversa':{},
 		                			'cardinalidad':''};
 	                		elemento.idRelacion = aux.elementos[i].idRelacion;
-	                		elemento.glosarioOrigen = FactoryGlosario.consultarElemento(aux.elementos[i].idGlosarioOrigen);
-	                		elemento.glosarioDestino = FactoryGlosario.consultarElemento(aux.elementos[i].idGlosarioDestino);
-	                		elemento.glosarioRelacionInversa = FactoryGlosario.consultarElemento(aux.elementos[i].idGlosarioRelacionInversa);
+	                		elemento.glosarioOrigen = buscarEnlistaGlosario(aux.elementos[i].idGlosarioOrigen);
+	                		elemento.glosarioDestino = buscarEnlistaGlosario(aux.elementos[i].idGlosarioDestino);
+	                		elemento.glosarioRelacionInversa = buscarEnlistaGlosario(aux.elementos[i].idGlosarioRelacionInversa);
 	                		elemento.cardinalidad = aux.elementos[i].cardinalidad;
 	                		cnRelacion.listaRelacion.push(elemento);
 	                	}
@@ -249,6 +249,15 @@ function ControllerRelacion(
 	        );
 	}
 
+	function buscarEnlistaGlosario(id){
+		console.log("buscar id:"+id+" cnRelacion.listaGlosario.length:"+cnRelacion.listaGlosario.length);
+		for (var i=0;i<cnRelacion.listaGlosario.length;i++){
+			if (cnRelacion.listaGlosario[i].id == id){
+				console.log("encontro");
+				return cnRelacion.listaGlosario[i];
+			}
+		}
+	}
 	function cancelarModificarRelacion(){
 		cnRelacion.disabled = true;
 		cnRelacion.modificar = false;
@@ -354,12 +363,12 @@ function ControllerRelacion(
 	}
 
 //---------------------Watch variables de controller---------------------	
-//	$scope.$watch('cnRelacion.varEdicion.glosarioOrigenSelected', function (newValue, oldValue) {
-//		if (newValue !== oldValue) {
-//			cnRelacion.varEdicion.glosarioOrigen = cnRelacion.varEdicion.glosarioOrigenSelected.originalObject;
-//			llenarListaGlosarioConceptoDestino ();
-//    	}
-//	}, false);
+	$scope.$watch('cnRelacion.varEdicion.glosarioOrigenSelected', function (newValue, oldValue) {
+		if (newValue !== oldValue) {
+			cnRelacion.varEdicion.glosarioOrigen = cnRelacion.varEdicion.glosarioOrigenSelected.originalObject;
+			llenarListaGlosarioConceptoDestino ();
+    	}
+	}, false);
 	
 //-------------------Funciones extranjeras-------------------------------		
     $rootScope.$on('menuRelacionPrincipal', function(event, data){
