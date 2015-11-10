@@ -210,7 +210,14 @@ function ControllerAtributoInstancia($rootScope,
 	
 //-------------------Funciones complementarias---------------------------
 	function  listarGlosario(){
-		cnAtributoInstancia.listaGlosario = FactoryGlosario.getListaElemento();
+		FactoryGlosario.getListaElementos(
+				function (output){
+					cnAtributoInstancia.listaGlosario = output;
+					FactoryMensajeCarga.cerrarMensaje();
+				},function (){
+					console.log("error");
+				}
+			);
 	}
 	
 

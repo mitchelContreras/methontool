@@ -349,7 +349,13 @@ function ControllerRegla($rootScope,
     	if (newValue !== oldValue) {
     		console.log("cambio valor actual.regla a '"+newValue+"'");
     		cnRegla.soyActual = InformacionPrincipalApp.soyVistaActual('Regla');	//Indico al controlador actual si se debe mostrar
-    		cnRegla.listaGlosario = FactoryGlosario.getListaElemento();
+    		FactoryGlosario.getListaElementos(
+    				function (output){
+    					cnRegla.listaGlosario = output;
+    				},function (){
+    					console.log("error");
+    				}
+    			); 
     	}
     }, false);
 	

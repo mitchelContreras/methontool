@@ -350,7 +350,13 @@ function ControllerAxioma($rootScope,
     	if (newValue !== oldValue) {
             console.log("cambio valor actual.axioma a '"+newValue+"'");
             cnAxioma.soyActual = InformacionPrincipalApp.soyVistaActual('Axioma');	//Indico al controlador actual si se debe mostrar
-            cnAxioma.listaGlosario = FactoryGlosario.getListaElemento();
+    		FactoryGlosario.getListaElementos(
+    				function (output){
+    					cnAxioma.listaGlosario = output;
+    				},function (){
+    					console.log("error");
+    				}
+    			);
             
     	}
     }, false);

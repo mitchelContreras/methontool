@@ -303,7 +303,13 @@ function ControllerRelacion(
 	
 //-------------------Funciones complementarias---------------------------
 	function  listarGlosario(){
-		cnRelacion.listaGlosario = FactoryGlosario.getListaElemento();
+		FactoryGlosario.getListaElementos(
+				function (output){
+					cnRelacion.listaGlosario = output;
+				},function (){
+					console.log("error");
+				}
+			); 
 	}
 
 	

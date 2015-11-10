@@ -156,7 +156,13 @@ function ControllerConstante($rootScope,
     	if (newValue !== oldValue) {
             console.log("cambio valor actual.constante a '"+newValue+"'");
             cnConstante.soyActual = InformacionPrincipalApp.soyVistaActual('Constante');	//Indico al controlador actual si se debe mostrar
-            cnConstante.listaGlosario = FactoryGlosario.getListaElemento();
+    		FactoryGlosario.getListaElementos(
+    				function (output){
+    					cnConstante.listaGlosario = output;
+    				},function (){
+    					console.log("error");
+    				}
+    			);
             cnConstante.listaMedida = FactoryMedida.getListaElemento();
             cnConstante.listaTipoDeDato = FactoryTipoDato.getListaElemento();
     	}

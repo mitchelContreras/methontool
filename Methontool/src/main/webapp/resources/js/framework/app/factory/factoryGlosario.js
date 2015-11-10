@@ -15,6 +15,8 @@ angular.module('methontool')
 	                           ,'$crearGlosario'
 	                           ,'$actualizarGlosario'
 	                           ,'FactoryMensajeCarga'
+	                           ,'$listarGlosarioDadoIdTipoGlosario'
+	                           ,'$verGlosario'
 	                           ];
 
 	function FactoryGlosario (
@@ -23,13 +25,11 @@ angular.module('methontool')
 			,$crearGlosario
 			,$actualizarGlosario
 			,FactoryMensajeCarga
+			,$listarGlosarioDadoIdTipoGlosario
+			,$verGlosario
 			){
 		
 		var funcion = {
-				getListaElemento: function (){
-//					return getListaElemento();
-					return listaObjeto;
-				},
 				setListaElemento: function (entrada){
 					listaObjeto = entrada;
 				},
@@ -65,9 +65,52 @@ angular.module('methontool')
 					return $listarGlosario.get
 					({id: InformacionPrincipalApp.getProyecto().idProyecto})
 					.$promise;
-				} 
+				},
+				getListaElementos: function (succes, fail){
+					return getListaElementos (succes, fail);
+				},
+				getElementoDadoId: function(id, succes, fail){
+					return getElementoDadoId(id, succes, fail);
+				}
 			};
-		
+		function getElementoDadoId (id, succes, fail){
+			var i;
+			for(i=0;i<listaObjeto.length;i++){
+				if(listaObjeto[i].id == id ){
+					succes (listaObjeto[i]);
+				}
+			}
+			$verGlosario.get(
+					{idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
+					,idGlosario: id})
+			.$promise.then(
+					function(salida) {
+						console.log("En $verGlosario");
+						if(salida.succes){
+							console.log("llamando a succes");
+							succes (salida.elemento);
+						}else{
+							fail();
+						}
+			})
+		}
+		function getListaElementos (succes, fail){
+			console.log("entre en la funcion");
+			$listarGlosario.get
+			({id: InformacionPrincipalApp.getProyecto().idProyecto})
+			.$promise.then(
+					function(salida) {
+						console.log("En funcion");
+						if(salida.succes){
+							console.log("llamando a succes");
+							listaObjeto = salida.elementos;
+							succes (salida.elementos);
+						}else{
+							fail();
+						}
+			})			
+		}
+
 		function getGlosarioDadoTipoGlosario (idTipoGlosario){
 			var salida = [];
 			var i;
@@ -111,12 +154,6 @@ angular.module('methontool')
 			}
 			
 			console.log("dentro de actualizar elemento");
-					console.log(idGlosario);
-					console.log(nombre);
-					console.log(tipoGlosario);
-					console.log(descripcion);
-					console.log(sinonimos);
-					console.log(acronimos);
 			return 	$actualizarGlosario.put({
 				idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
 				,idGlosario: idGlosario
@@ -127,32 +164,11 @@ angular.module('methontool')
 				,'acronimo' : acronimos
 				},{}).$promise;
 		}
-		
-//		function getListaElemento(){
-//			console.log("en getListaElemento Glosario");
-//			if (yaConsulte){
-//				console.log("Ya tengo el valor de Glosario");
-//				
-//			}else{
-//				console.log("antes del rest");
-//
-//			} 
-//		}
 		function eliminarElemento (id){
 			return true;
 		}
 		function agregarElemento (objeto){
 			listaObjeto.push(objeto);
-		}
-		function consultarElemento (id){
-			var i;
-			for(i=0;i<listaObjeto.length;i++){
-				if(listaObjeto[i].id == id ){
-					return listaObjeto[i];
-				}
-			}
-			var objetoError = {'id' :0};
-			return objetoError;
 		}
 		function crearElemento(nombre, tipoGlosario, descripcion, listaSinonimo, listaAcronimo){
 			var sinonimos= "";

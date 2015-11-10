@@ -52,6 +52,7 @@ public class GlosarioRest {
 	public @ResponseBody ElementoMensaje<Glosario> verGlosario(
 			@PathVariable("idProyecto") int idProyecto
 			,@PathVariable("idGlosario") int idGlosario){
+		logger.debug("verGlosario");
 		logger.info("el idProyecto es "+idProyecto);
 		logger.info("el idGlosario es "+idGlosario);
 		ElementoMensaje<Glosario> elementoMensaje = new ElementoMensaje<Glosario> ();

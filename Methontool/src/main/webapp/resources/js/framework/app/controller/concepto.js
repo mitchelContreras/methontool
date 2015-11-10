@@ -322,7 +322,13 @@ function ControllerConcepto(
 	
 //-------------------Funciones complementarias---------------------------
 	function  listarGlosario(){
-		cnConcepto.listaGlosario = FactoryGlosario.getListaElemento();
+		FactoryGlosario.getListaElementos(
+				function (output){
+					cnConcepto.listaGlosario = output;
+				},function (){
+					console.log("error");
+				}
+			);
 	}
 
 //	retorna la posicion en el arreglo si existe sino -1

@@ -199,7 +199,13 @@ function ControllerAtributoClase($rootScope,
 	
 //-------------------Funciones complementarias---------------------------
 	function  listarGlosario(){
-		cnAtributoClase.listaGlosario = FactoryGlosario.getListaElemento();
+		FactoryGlosario.getListaElementos(
+				function (output){
+					cnAtributoClase.listaGlosario = output;
+				},function (){
+					console.log("error");
+				}
+		);
 	}	
 //-------------------Funciones extranjeras-------------------------------			
     $rootScope.$on('menuAtributoClasePrincipal', function(event, data){
