@@ -228,4 +228,60 @@ public class JdbcGlosarioDAO implements GlosarioDAO {
 		return null;
 	}
 
+	@Override
+	public ArrayList<Glosario> listarGlosarioDadoIdTipoGlosario(
+			int idProyecto
+			,int idTipoGlosario) {
+		// TODO Auto-generated method stub
+		String sql;
+		sql = "select "
+				+ "glo.id_glosario "
+				+ ",glo.nombre "
+				+ ",glo.acronimos "
+				+ ",glo.tipo_glosario "
+				+ ",glo.descripcion "
+				+ ",glo.sinonimo "
+				+ ",glo.id_proyecto "
+				+ "from glosario as glo "
+				+ "where glo.id_Proyecto = ? and "
+				+ "glo.tipo_glosario = ?";
+		Connection conn = null;
+		Glosario glosario = null;
+		ArrayList<Glosario> arrayList = new ArrayList<Glosario>();
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idProyecto);
+			ps.setInt(2, idTipoGlosario);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				glosario = new Glosario();
+				glosario.setId(rs.getString("id_glosario"));
+				glosario.setNombre(rs.getString("nombre"));
+				glosario.sinonimosStringToArray(rs.getString("sinonimo"));
+				glosario.acronimosStringToArray(rs.getString("acronimos"));
+				glosario.setTipoGlosario(new TipoGlosario (rs.getInt("tipo_glosario"), null, null, null));
+				glosario.setDescripcion (rs.getString("descripcion"));
+				arrayList.add(glosario);
+			}
+			rs.close();
+			ps.close();
+			return arrayList;	
+		} catch (SQLException e) {
+			logger.info("SQLException "+e);
+			throw new RuntimeException(e);
+		} catch(Exception e) {
+			logger.info("error "+e.toString());
+			return arrayList;	
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					return arrayList;
+				}
+			}
+		}
+	}
+
 }

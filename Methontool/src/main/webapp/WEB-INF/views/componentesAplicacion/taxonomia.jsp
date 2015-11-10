@@ -36,46 +36,38 @@
 						</div>
 						<div ng-if="filtroTaxonomia.buscarPor == 'nombre'">
 							<div class="list-group">
-								<div ng-repeat="glosario in cnTaxonomia.listaGlosario | orderBy: 'nombre' | filter:{nombre: filtroTaxonomia.nombre}">
-									<div ng-if="glosario.tipoGlosario.id == 2">
-										<a href="#" class="list-group-item" 
-										ng-class="{active: cnTaxonomia.seleccionado == glosario.id}"
-										ng-click="cnTaxonomia.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>									
-									</div>
+								<div ng-repeat="glosario in cnTaxonomia.listaTaxonomia | orderBy: 'nombre' | filter:{nombre: filtroTaxonomia.nombre}">
+									<a href="#" class="list-group-item" 
+									ng-class="{active: cnTaxonomia.seleccionado == glosario.id}"
+									ng-click="cnTaxonomia.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>
 								</div>
 							</div>	
 						
 						</div>
 						<div ng-if="filtroTaxonomia.buscarPor == 'sinonimo'">
 							<div class="list-group ">
-								<div ng-repeat="glosario in cnTaxonomia.listaGlosario | orderBy: 'nombre' | filter:{sinonimos: filtroTaxonomia.sinonimo}">
-									<div ng-if="glosario.tipoGlosario.id == 2">
+								<div ng-repeat="glosario in cnTaxonomia.listaTaxonomia | orderBy: 'nombre' | filter:{sinonimos: filtroTaxonomia.sinonimo}">
 										<a href="#" class="list-group-item" 
 										ng-class="{active: cnTaxonomia.seleccionado == glosario.id}"
-										ng-click="cnTaxonomia.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>									
-									</div>
+										ng-click="cnTaxonomia.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>		
 								</div>
 							</div>
 						</div>
 						<div ng-if="filtroTaxonomia.buscarPor == 'acronimo'">
 							<div class="list-group">
-								<div ng-repeat="glosario in cnTaxonomia.listaGlosario | orderBy: 'nombre' | filter:{acronimos: filtroTaxonomia.acronimo}">
-									<div ng-if="glosario.tipoGlosario.id == 2">
+								<div ng-repeat="glosario in cnTaxonomia.listaTaxonomia | orderBy: 'nombre' | filter:{acronimos: filtroTaxonomia.acronimo}">
 										<a href="#" class="list-group-item" 
 										ng-class="{active: cnTaxonomia.seleccionado == glosario.id}"
-										ng-click="cnTaxonomia.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>									
-									</div>
+										ng-click="cnTaxonomia.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>	
 								</div>
 							</div>
 						</div>
 						<div ng-if="filtroTaxonomia.buscarPor == 'seleccione'">
 							<div class="list-group">
-								<div ng-repeat="glosario in cnTaxonomia.listaGlosario | orderBy: 'nombre' ">
-									<div ng-if="glosario.tipoGlosario.id == 2">
+								<div ng-repeat="glosario in cnTaxonomia.listaTaxonomia | orderBy: 'nombre' ">
 										<a href="#" class="list-group-item" 
 										ng-class="{active: cnTaxonomia.seleccionado == glosario.id}"
-										ng-click="cnTaxonomia.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>									
-									</div>
+										ng-click="cnTaxonomia.seleccioneGlosario (glosario, 'true')"> {{glosario.nombre}}</a>	
 								</div>
 							</div>					
 						</div>		
@@ -240,8 +232,8 @@
 							<div  class= "col-xs-11">
 								<div ng-if="cnTaxonomia.filtroTaxonomiaAgregar.buscarPor == 'nombre'">
 									<div class="list-group">
-										<div ng-repeat="glosario in cnTaxonomia.listaGlosario | orderBy: 'nombre' | filter:{nombre: filtroTaxonomiaAgregar.nombre}">
-											<div ng-if="glosario.tipoGlosario.id == 2 && glosario.id !=cnTaxonomia.varEdicion.id && !cnTaxonomia.estaEnLista(glosario)">
+										<div ng-repeat="glosario in cnTaxonomia.listaTaxonomia | orderBy: 'nombre' | filter:{nombre: filtroTaxonomiaAgregar.nombre}">
+											<div ng-if="glosario.id !=cnTaxonomia.varEdicion.id && !cnTaxonomia.estaEnLista(glosario)">
 												<a href="#" class="list-group-item" 
 												ng-class="{active: cnTaxonomia.seleccionadoAgregar.id == glosario.id}"
 												ng-click="cnTaxonomia.seleccionadoAgregar = glosario"> {{glosario.nombre}}</a>									
@@ -251,8 +243,8 @@
 								</div>
 								<div ng-if="cnTaxonomia.filtroTaxonomiaAgregar.buscarPor == 'sinonimo'">
 									<div class="list-group ">
-										<div ng-repeat="glosario in cnTaxonomia.listaGlosario | orderBy: 'nombre' | filter:{sinonimos: filtroTaxonomiaAgregar.sinonimo}">
-											<div ng-if="glosario.tipoGlosario.id == 2 && glosario.id !=cnTaxonomia.varEdicion.id && !cnTaxonomia.estaEnLista(glosario)">
+										<div ng-repeat="glosario in cnTaxonomia.listaTaxonomia | orderBy: 'nombre' | filter:{sinonimos: filtroTaxonomiaAgregar.sinonimo}">
+											<div ng-if="glosario.id !=cnTaxonomia.varEdicion.id && !cnTaxonomia.estaEnLista(glosario)">
 												<a href="#" class="list-group-item" 
 												ng-class="{active: cnTaxonomia.seleccionadoAgregar.id == glosario.id}"
 												ng-click="cnTaxonomia.seleccionadoAgregar = glosario"> {{glosario.nombre}}</a>									
@@ -262,8 +254,8 @@
 								</div>
 								<div ng-if="cnTaxonomia.filtroTaxonomiaAgregar.buscarPor == 'acronimo'">
 									<div class="list-group">
-										<div ng-repeat="glosario in cnTaxonomia.listaGlosario | orderBy: 'nombre' | filter:{acronimos: filtroTaxonomiaAgregar.acronimo}">
-											<div ng-if="glosario.tipoGlosario.id == 2 && glosario.id !=cnTaxonomia.varEdicion.id && !cnTaxonomia.estaEnLista(glosario)">
+										<div ng-repeat="glosario in cnTaxonomia.listaTaxonomia | orderBy: 'nombre' | filter:{acronimos: filtroTaxonomiaAgregar.acronimo}">
+											<div ng-if="glosario.id !=cnTaxonomia.varEdicion.id && !cnTaxonomia.estaEnLista(glosario)">
 												<a href="#" class="list-group-item" 
 												ng-class="{active: cnTaxonomia.seleccionadoAgregar.id == glosario.id}"
 												ng-click="cnTaxonomia.seleccionadoAgregar = glosario"> {{glosario.nombre}}</a>									
@@ -273,8 +265,8 @@
 								</div>
 								<div ng-if="cnTaxonomia.filtroTaxonomiaAgregar.buscarPor == 'seleccione'">
 									<div class="list-group">
-										<div ng-repeat="glosario in cnTaxonomia.listaGlosario | orderBy: 'nombre' ">
-											<div ng-if="glosario.tipoGlosario.id == 2 && glosario.id !=cnTaxonomia.varEdicion.id && !cnTaxonomia.estaEnLista(glosario)">
+										<div ng-repeat="glosario in cnTaxonomia.listaTaxonomia | orderBy: 'nombre' ">
+											<div ng-if="glosario.id !=cnTaxonomia.varEdicion.id && !cnTaxonomia.estaEnLista(glosario)">
 												<a href="#" class="list-group-item" 
 												ng-class="{active: cnTaxonomia.seleccionadoAgregar.id == glosario.id}"
 												ng-click="cnTaxonomia.seleccionadoAgregar = glosario"> {{glosario.nombre}}</a>									

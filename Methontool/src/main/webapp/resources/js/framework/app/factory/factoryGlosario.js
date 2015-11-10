@@ -71,8 +71,26 @@ angular.module('methontool')
 				},
 				getElementoDadoId: function(id, succes, fail){
 					return getElementoDadoId(id, succes, fail);
+				},
+				getListaGlosarioDadoIdTipoGlosario: function (idTipoGlosario, succes, fail){
+					return getListaGlosarioDadoIdTipoGlosario(idTipoGlosario, succes, fail);
 				}
 			};
+		function getListaGlosarioDadoIdTipoGlosario(idTipoGlosario, succes, fail){
+			$listarGlosarioDadoIdTipoGlosario.get(
+					{idProyecto: InformacionPrincipalApp.getProyecto().idProyecto
+					,idTipoGlsoario: idTipoGlosario})
+			.$promise.then(
+					function(salida) {
+						console.log("En $listarGlosarioDadoIdTipoGlosario");
+						if(salida.succes){
+							console.log("llamando a succes");
+							succes (salida.elementos);
+						}else{
+							fail();
+						}
+			})
+		}
 		function getElementoDadoId (id, succes, fail){
 			var i;
 			for(i=0;i<listaObjeto.length;i++){

@@ -241,7 +241,6 @@ function ControllerTaxonomia($rootScope
 				function(){
 					console.log("error en seleccioneGlosario");
 				});
-//		id = cnTaxonomia.listaGlosario.indexOf(elemento);
 		cnTaxonomia.seleccionado = elemento.id;
 		cnTaxonomia.enBlanco = false;
 		cnTaxonomia.modificar = false;
@@ -383,9 +382,10 @@ function ControllerTaxonomia($rootScope
 	
 //-------------------Funciones complementarias---------------------------
 	function  listarGlosario(){
-		FactoryGlosario.getListaElementos(
-				function (output){
-					cnTaxonomia.listaGlosario = output;
+		FactoryGlosario.getListaGlosarioDadoIdTipoGlosario(
+				2
+				,function (output){
+					cnTaxonomia.listaTaxonomia = output;
 				},function (){
 					console.log("error");
 				}

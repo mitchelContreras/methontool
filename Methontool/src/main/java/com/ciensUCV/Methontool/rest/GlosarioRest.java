@@ -47,6 +47,29 @@ public class GlosarioRest {
 		}
 		return elementosMensaje;
 	}
+
+	@RequestMapping(value="/api/proyecto/{idProyecto}/glosario/tipoGlsoario/{idTipoGlsoario}", method = RequestMethod.GET)
+	public @ResponseBody ElementosMensaje<Glosario> listarGlosarioDadoIdTipoGlosario(
+			@PathVariable("idProyecto") int idProyecto
+			,@PathVariable("idTipoGlsoario") int idTipoGlsoario){
+		logger.debug("listarGlosarioDadoIdTipoGlosario");
+		logger.debug("el id es "+idProyecto);
+		logger.debug("el idTipoGlsoario es "+idTipoGlsoario);
+		ElementosMensaje<Glosario> elementosMensaje = new ElementosMensaje<Glosario> ();
+		GlosarioDAO glosarioDAO = (GlosarioDAO) context.getBean("glosarioDAO");
+		try {
+			elementosMensaje.setElementos(glosarioDAO.listarGlosarioDadoIdTipoGlosario(idProyecto, idTipoGlsoario));
+			logger.info("Cantidad de la lista es "+elementosMensaje.getElementos().size());
+			elementosMensaje.setSucces(true);
+		} catch (Exception e) {
+			// TODO: handle exception
+			elementosMensaje.setSucces(false);
+			ErrorEnviar enviarError;
+			enviarError = new ErrorEnviar("0050", null, "Error al traer datos de BD");
+			elementosMensaje.getListaError().add(enviarError);
+		}
+		return elementosMensaje;
+	}
 	
 	@RequestMapping(value="/api/proyecto/{idProyecto}/glosario/{idGlosario}", method = RequestMethod.GET)
 	public @ResponseBody ElementoMensaje<Glosario> verGlosario(

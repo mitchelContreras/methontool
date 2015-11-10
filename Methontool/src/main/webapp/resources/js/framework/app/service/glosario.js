@@ -19,9 +19,9 @@
     });
     
     proy.factory('$listarGlosarioDadoIdTipoGlosario',function($resource){
-    	var urlConsultar = urlProyecto+"/api/proyecto/:idProyecto/glosario/tipoGlsoario/:idGlosario";
+    	var urlConsultar = urlProyecto+"/api/proyecto/:idProyecto/glosario/tipoGlsoario/:idTipoGlsoario";
          return $resource(urlConsultar,{},{
-            get: {method: 'GET', params: {idProyecto: '@idProyecto', idGlosario: 'idGlosario'}, isArray:false}
+            get: {method: 'GET', params: {idProyecto: '@idProyecto', idTipoGlsoario: 'idTipoGlsoario'}, isArray:false}
             });
     });
  
