@@ -65,8 +65,9 @@ function ControllerInstanciaDos($rootScope,
 	
 
 //-------------------Variables----------------------------------
-	cnInstanciaDos.listaInstancia = {};
-	cnInstanciaDos.listaConcepto = {};
+	cnInstanciaDos.listaInstancia = [];
+	cnInstanciaDos.listaConcepto = [];
+	cnInstanciaDos.listaGlosario = [];
 	cnInstanciaDos.mensajeAlertPositiva = "";
 	cnInstanciaDos.mensajeAlertNegativa = "";
 	cnInstanciaDos.alertPositiva = false;
@@ -115,7 +116,7 @@ function ControllerInstanciaDos($rootScope,
 	}
 	
 	function obtenerGlosarioDadoIdGlosaro (elementoId){
-		return FactoryGlosario.consultarElemento(elementoId);
+		return buscarEnlistaGlosario(elementoId);
 	}
 	
 	function seleccioneGlosario(elemento, limpiar){
@@ -212,6 +213,39 @@ function ControllerInstanciaDos($rootScope,
 		$('#verDescripcionGlosarioInstanciaDosModal').modal('show');
 	}
 
+	function buscarEnlistaGlosario(id){
+		console.log("buscar id:"+id+" cnInstanciaDos.listaGlosario.length:"+cnInstanciaDos.listaGlosario.length);
+		for (var i=0;i<cnInstanciaDos.listaGlosario.length;i++){
+			if (cnInstanciaDos.listaGlosario[i].id == id){
+				console.log("encontro");
+				return cnInstanciaDos.listaGlosario[i];
+			}
+		}
+	}	
+	
+	function getGlosarioDadoTipoGlosario (idTipoGlosario){
+		var salida = [];
+		var i;
+		for (i = 0; i<cnInstanciaDos.listaGlosario.length;i++){
+			if(cnInstanciaDos.listaGlosario[i].tipoGlosario.id == idTipoGlosario){
+				salida.push(cnInstanciaDos.listaGlosario[i]);
+			}
+		}
+		return salida;
+	}	
+	
+	function consultarlistaGlosario(){
+		FactoryGlosario.getListaElementos(
+				function (output){
+					cnInstanciaDos.listaGlosario = output;
+					cnInstanciaDos.listaInstancia = getGlosarioDadoTipoGlosario(8);
+					cnInstanciaDos.listaConcepto = getGlosarioDadoTipoGlosario(2);					
+				},function (){
+					console.log("error");
+				}
+			); 		
+	}
+	
 //-------------------Funciones extranjeras-------------------------------		
     $rootScope.$on('menuInstanciaDosPrincipal', function(event, data){
     	InformacionPrincipalApp.voyAvista("InstanciaDos");	//Indico a las otras secciones que esta es la actual
@@ -236,8 +270,7 @@ function ControllerInstanciaDos($rootScope,
     	if (newValue !== oldValue) {
             console.log("cambio valor actual.InstanciaDos a '"+newValue+"'");
             cnInstanciaDos.soyActual = InformacionPrincipalApp.soyVistaActual('InstanciaDos');	//Indico al controlador actual si se debe mostrar
-            cnInstanciaDos.listaInstancia = FactoryGlosario.getGlosarioDadoTipoGlosario(8);
-            cnInstanciaDos.listaConcepto = FactoryGlosario.getGlosarioDadoTipoGlosario(2);
+            consultarlistaGlosario();
     	}
     }, false);
     
