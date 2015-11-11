@@ -127,7 +127,7 @@ function ControllerConcepto(
 		                	var i;
 		                	for(i=0;i<aux.elementos.length;i++){
 		                		cnConcepto.ConceptoActual.agregarInstancia.push(
-		                				FactoryGlosario.consultarElemento(aux.elementos[i].idGlosario));
+		                				buscarEnlistaGlosario(aux.elementos[i].idGlosario));
 		                	}
 		                	
 		                	
@@ -159,7 +159,7 @@ function ControllerConcepto(
 		                	var i;
 		                	for(i=0;i<aux.elementos.length;i++){
 		                		cnConcepto.ConceptoActual.agregarAtributosClase.push(
-		                				FactoryGlosario.consultarElemento(aux.elementos[i].idGlosario));
+		                				buscarEnlistaGlosario(aux.elementos[i].idGlosario));
 		                	} 	
 		                	
 		                	unirParaAgregar(cnConcepto.ConceptoActual.agregarAtributosClase, cnConcepto.eliminadoAtributoClase, cnConcepto.ConceptoActual.atributosClase);
@@ -186,7 +186,7 @@ function ControllerConcepto(
 		                	var i;
 		                	for(i=0;i<aux.elementos.length;i++){
 		                		cnConcepto.ConceptoActual.agregarAtributosInstancia.push(
-		                				FactoryGlosario.consultarElemento(aux.elementos[i].idGlosario));
+		                				buscarEnlistaGlosario(aux.elementos[i].idGlosario));
 		                	} 	
 		                	
 		                	unirParaAgregar(cnConcepto.ConceptoActual.agregarAtributosInstancia, cnConcepto.eliminadoAtributoInstancia, cnConcepto.ConceptoActual.atributosInstancia);
@@ -269,7 +269,7 @@ function ControllerConcepto(
 		cnConcepto.disabled = true;
 		
 //		asigno la relacion con la que estoy trabajando
-		cnConcepto.ConceptoActual = FactoryGlosario.consultarElemento(elemento.id);
+		cnConcepto.ConceptoActual = buscarEnlistaGlosario(elemento.id);
 		
 		if(limpiar){
 			cnConcepto.alertPositiva = false;
@@ -290,22 +290,22 @@ function ControllerConcepto(
 	                	
 	                	cnConcepto.ConceptoActual.relaciones = [];
 	                	for(i=0;i<aux.elemento.relaciones.length;i++){
-	                		cnConcepto.ConceptoActual.relaciones.push(FactoryGlosario.consultarElemento(aux.elemento.relaciones[i].idGlosarioRelacion));
+	                		cnConcepto.ConceptoActual.relaciones.push(buscarEnlistaGlosario(aux.elemento.relaciones[i].idGlosarioRelacion));
 	                	}
 	                	
 	                	cnConcepto.ConceptoActual.instancias = [];
 	                	for(i=0;i<aux.elemento.instancias.length;i++){
-	                		cnConcepto.ConceptoActual.instancias.push(FactoryGlosario.consultarElemento(aux.elemento.instancias[i].idGlosario));
+	                		cnConcepto.ConceptoActual.instancias.push(buscarEnlistaGlosario(aux.elemento.instancias[i].idGlosario));
 	                	}
 	                	
 	                	cnConcepto.ConceptoActual.atributosClase = [];
 	                	for(i=0;i<aux.elemento.atributosClase.length;i++){
-	                		cnConcepto.ConceptoActual.atributosClase.push(FactoryGlosario.consultarElemento(aux.elemento.atributosClase[i].idGlosario));
+	                		cnConcepto.ConceptoActual.atributosClase.push(buscarEnlistaGlosario(aux.elemento.atributosClase[i].idGlosario));
 	                	}
 	                	
 	                	cnConcepto.ConceptoActual.atributosInstancia = [];
 	                	for(i=0;i<aux.elemento.atributosInstancia.length;i++){
-	                		cnConcepto.ConceptoActual.atributosInstancia.push(FactoryGlosario.consultarElemento(aux.elemento.atributosInstancia[i].idGlosario));
+	                		cnConcepto.ConceptoActual.atributosInstancia.push(buscarEnlistaGlosario(aux.elemento.atributosInstancia[i].idGlosario));
 	                	}
 	                	
               	
@@ -317,6 +317,15 @@ function ControllerConcepto(
 	        );
 	}
 
+	function buscarEnlistaGlosario(id){
+		console.log("buscar id:"+id+" cnConcepto.listaGlosario.length:"+cnConcepto.listaGlosario.length);
+		for (var i=0;i<cnConcepto.listaGlosario.length;i++){
+			if (cnConcepto.listaGlosario[i].id == id){
+				console.log("encontro");
+				return cnConcepto.listaGlosario[i];
+			}
+		}
+	}
 
 
 	
