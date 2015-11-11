@@ -160,10 +160,9 @@ function ControllerRelacion(
 				cnRelacion.varEdicion.origenCardinalidad = "";
 				cnRelacion.varEdicion.destinoCardinalidad = "";
 			}
-			console.log("relacionBuscada.glosarioRelacionInversa "+relacionBuscada.glosarioRelacionInversa);
-			console.log("relacionBuscada.glosarioRelacionInversa.nombre "+relacionBuscada.glosarioRelacionInversa.nombre);
-			console.log("relacionBuscada.glosarioRelacionInversa.id "+relacionBuscada.glosarioRelacionInversa.id);
-			if(relacionBuscada.glosarioRelacionInversa.nombre != undefined){
+			console.log("antes de explotar");
+			console.log("error "+relacionBuscada.glosarioRelacionInversa.nombre);
+			if(typeof relacionBuscada.glosarioRelacionInversa.nombre !== "undefined"){
 				cnRelacion.varEdicion.relacionInversaSelected.originalObject = relacionBuscada.glosarioRelacionInversa;
 				cnRelacion.varEdicion.relacionInversa = relacionBuscada.glosarioRelacionInversa;
 				console.log("relacionBuscada.glosarioRelacionInversa.nombre "+relacionBuscada.glosarioRelacionInversa.nombre);
@@ -257,6 +256,7 @@ function ControllerRelacion(
 				return cnRelacion.listaGlosario[i];
 			}
 		}
+		return {"nombre":""};
 	}
 	function cancelarModificarRelacion(){
 		cnRelacion.disabled = true;
