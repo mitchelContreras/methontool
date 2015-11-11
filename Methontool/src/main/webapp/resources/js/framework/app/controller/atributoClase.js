@@ -106,7 +106,7 @@ function ControllerAtributoClase($rootScope,
 //	                	asigno concepto
 	                	console.log("aux.elemento.idGlosarioConcepto "+aux.elemento.idGlosarioConcepto);
 	                	cnAtributoClase.varEdicion.glosarioConcepto
-	                		= FactoryGlosario.consultarElemento(aux.elemento.idGlosarioConcepto);
+	                		= buscarEnlistaGlosario(aux.elemento.idGlosarioConcepto);
 	                	
 	                	if(aux.elemento.idGlosarioConcepto == 0){
 	                		console.log("es 0 glosario");
@@ -155,7 +155,15 @@ function ControllerAtributoClase($rootScope,
 	        );
 		
 	}
-	
+	function buscarEnlistaGlosario(id){
+		console.log("buscar id:"+id+" cnAtributoClase.listaGlosario.length:"+cnAtributoClase.listaGlosario.length);
+		for (var i=0;i<cnAtributoClase.listaGlosario.length;i++){
+			if (cnAtributoClase.listaGlosario[i].id == id){
+				console.log("encontro");
+				return cnAtributoClase.listaGlosario[i];
+			}
+		}
+	}	
 	function modificarAtributoClase (){
 		cnAtributoClase.disabled = false;
 		cnAtributoClase.modificar = true;
