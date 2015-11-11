@@ -43,8 +43,9 @@ function ControllerInstancia($rootScope,
 	
 	
 //-------------------Variables----------------------------------
-	cnInstancia.listaInstancia = {};
-	cnInstancia.listaConcepto = {};
+	cnInstancia.listaInstancia = [];
+	cnInstancia.listaConcepto = [];
+	cnInstancia.listaGlosario = [];
 	cnInstancia.mensajeAlertPositiva = "";
 	cnInstancia.mensajeAlertNegativa = "";
 	cnInstancia.crearErrorMensaje = "Debe llenar todos los campos obligatorios (*) ";
@@ -85,15 +86,13 @@ function ControllerInstancia($rootScope,
 	                if(aux.succes){
 	                	var elementoNuevo = {"id":aux.elemento.idGlosario};
 	                	var glosario = FactoryGlosario.actualizarLista();
-	                	console.log("salida de getListaElemento "+glosario.length);
 	    	    		glosario.then(
 	    		                function(salida) {
 	    			            	console.log("entro en salida 2");
 	    			            	console.log("aux es "+JSON.stringify(aux));	    		                	
 	    		                    if(salida.succes){
-	    		                    	FactoryGlosario.setListaElemento (salida.elementos);
-	    		                    	FactoryGlosario.setYaConsulte (true);
-	    		                    	cnInstancia.listaInstancia = FactoryGlosario.getGlosarioDadoTipoGlosario(8);
+	    		                    	cnInstancia.listaGlosario = salida.elementos;
+	    		                    	cnInstancia.listaInstancia = getGlosarioDadoTipoGlosario(8);
 	    		                    	cnInstancia.alertPositiva = true;
 	    		                    	cnInstancia.mensajeAlertPositiva = "La Instancia ha sido creada";
 	    		                    	cnInstancia.seleccioneGlosario (elementoNuevo, 'false');	    		                    	
@@ -119,8 +118,8 @@ function ControllerInstancia($rootScope,
 		cnInstancia.nuevaInstancia.nombre = "";
 		cnInstancia.crearErrorBoolean = false;
 		$scope.$broadcast('angucomplete-alt:asignar-defoult', 'autoAgregarConceptoAsociadoInstancia', "");
-		cnInstancia.listaConcepto = FactoryGlosario.getGlosarioDadoTipoGlosario(2).slice(0);
-		
+//		cnInstancia.listaConcepto = FactoryGlosario.getGlosarioDadoTipoGlosario(2).slice(0);
+		cnInstancia.listaConcepto = getGlosarioDadoTipoGlosario(2);
 		$('#verModalAgregarInstanciaenInstancia').modal('show');
 		
 	}
@@ -190,8 +189,8 @@ function ControllerInstancia($rootScope,
 	            	console.log("aux es "+JSON.stringify(aux));
 	                if(aux.succes){
 	                	cnInstancia.varEdicion = aux.elemento;
-	                	cnInstancia.varEdicion.conceptoAsociado = FactoryGlosario.consultarElemento(cnInstancia.varEdicion.idGlosarioConceptoRelacion);
-	                	cnInstancia.varEdicion.glosarioInstancia = FactoryGlosario.consultarElemento(cnInstancia.varEdicion.idGlosario);
+	                	cnInstancia.varEdicion.conceptoAsociado = buscarEnlistaGlosario(cnInstancia.varEdicion.idGlosarioConceptoRelacion);
+	                	cnInstancia.varEdicion.glosarioInstancia = buscarEnlistaGlosario(cnInstancia.varEdicion.idGlosario);
 	                	console.log("Mitchell cnInstancia.varEdicion.definicion "+JSON.stringify(cnInstancia.varEdicion.definicion));
 //	                	cnInstancia.varEdicion.definicion = JSON.parse(cnInstancia.varEdicion.definicion);
 //	                	cnInstancia.varAuxiliarDefinicion = cnInstancia.varEdicion.definicion.atributoInstancia.slice();
@@ -208,7 +207,7 @@ function ControllerInstancia($rootScope,
 	                	
 	                	FactoryMensajeCarga.cerrarMensaje();
 	                }else{
-	                	cnInstancia.varEdicion.glosarioInstancia = FactoryGlosario.consultarElemento(elemento.id);
+	                	cnInstancia.varEdicion.glosarioInstancia = buscarEnlistaGlosario(elemento.id);
 	                	cnInstancia.mensajeAlertNegativa = "La instancia no ha sido asociada a algún concepto";
 	                	cnInstancia.alertNegativa = true;
 	                	FactoryMensajeCarga.cerrarMensaje();
@@ -262,7 +261,36 @@ function ControllerInstancia($rootScope,
 		cnInstancia.disabled = true;
 		cnInstancia.modificar = false;
 	}
-	
+	function buscarEnlistaGlosario(id){
+		console.log("buscar id:"+id+" cnInstancia.listaGlosario.length:"+cnInstancia.listaGlosario.length);
+		for (var i=0;i<cnInstancia.listaGlosario.length;i++){
+			if (cnInstancia.listaGlosario[i].id == id){
+				console.log("encontro");
+				return cnInstancia.listaGlosario[i];
+			}
+		}
+	}	
+	function consultarlistaGlosario(){
+		FactoryGlosario.getListaElementos(
+				function (output){
+					cnInstancia.listaGlosario = output;
+		            cnInstancia.listaInstancia = getGlosarioDadoTipoGlosario(8);
+		            cnInstancia.listaConcepto = getGlosarioDadoTipoGlosario(2);					
+				},function (){
+					console.log("error");
+				}
+			); 		
+	}
+	function getGlosarioDadoTipoGlosario (idTipoGlosario){
+		var salida = [];
+		var i;
+		for (i = 0; i<cnInstancia.listaGlosario.length;i++){
+			if(cnInstancia.listaGlosario[i].tipoGlosario.id == idTipoGlosario){
+				salida.push(cnInstancia.listaGlosario[i]);
+			}
+		}
+		return salida;
+	}	
 	
 
 //-------------------Funciones extranjeras-------------------------------		
@@ -278,8 +306,7 @@ function ControllerInstancia($rootScope,
     	if (newValue !== oldValue) {
             console.log("cambio valor actual.Instancia a '"+newValue+"'");
             cnInstancia.soyActual = InformacionPrincipalApp.soyVistaActual('Instancia');	//Indico al controlador actual si se debe mostrar
-            cnInstancia.listaInstancia = FactoryGlosario.getGlosarioDadoTipoGlosario(8);
-            cnInstancia.listaConcepto = FactoryGlosario.getGlosarioDadoTipoGlosario(2);
+            consultarlistaGlosario();
     	}
     }, false);
     
