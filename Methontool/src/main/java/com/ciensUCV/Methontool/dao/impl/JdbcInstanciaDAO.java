@@ -40,8 +40,11 @@ public class JdbcInstanciaDAO implements InstanciaDAO {
 			int idGlosarioConcepto) {
 		// TODO Auto-generated method stub
 		String sql;
-		sql = "SELECT id_glosario_instancia "
-				+ "from instancia "
+		sql = "select id_instancia "
+				+ ",id_glosario_instancia "
+				+ ",id_glosario_concepto "
+				+ ",definicion "
+				+ " from instancia "
 				+ "where id_glosario_concepto = ?";
 
 		Connection conn = null;
@@ -52,10 +55,27 @@ public class JdbcInstanciaDAO implements InstanciaDAO {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idGlosarioConcepto);
 			ResultSet rs = ps.executeQuery();
-			
+						
 			while(rs.next()){
 				instancia = new Instancia();
+				instancia.setId(rs.getInt("id_instancia"));
 				instancia.setIdGlosario(rs.getInt("id_glosario_instancia"));
+				instancia.setIdGlosarioConceptoRelacion(rs.getInt("id_glosario_concepto"));
+				
+				JsonArray jsonArray;
+				JsonParser parser = new JsonParser();
+	            PGobject dataObject = new PGobject();
+	            dataObject.setType("json");
+	            dataObject = (PGobject)rs.getObject("definicion");
+	            try {
+		            jsonArray = (JsonArray) parser.parse(dataObject.toString());
+					String aux = jsonArray.toString();		
+					instancia.setDefinicion(jsonArray);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				instancia.actualizarAtributoInstancia();			
+			
 				arrayList.add(instancia);
 			}
 			rs.close();
@@ -177,7 +197,6 @@ public class JdbcInstanciaDAO implements InstanciaDAO {
 		// TODO Auto-generated method stub
 		String sql;
 		sql = "select id_instancia "
-				+ "id_instancia"
 				+ ",id_glosario_instancia "
 				+ ",id_glosario_concepto "
 				+ ",definicion "

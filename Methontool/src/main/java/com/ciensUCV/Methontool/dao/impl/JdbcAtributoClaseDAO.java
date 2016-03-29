@@ -10,10 +10,15 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.ciensUCV.Methontool.dao.AtributoClaseDAO;
+import com.ciensUCV.Methontool.dao.TipoDeDatoDAO;
 import com.ciensUCV.Methontool.model.AtributoClase;
+import com.ciensUCV.Methontool.model.Medida;
 import com.ciensUCV.Methontool.model.TipoDeDato;
+import com.ciensUCV.Methontool.util.VariablesConfiguracion;
 
 public class JdbcAtributoClaseDAO implements AtributoClaseDAO {
 	private static final Logger logger = LoggerFactory.getLogger(JdbcAtributoClaseDAO.class);
@@ -28,12 +33,25 @@ public class JdbcAtributoClaseDAO implements AtributoClaseDAO {
 		// TODO Auto-generated method stub
 		String sql;
 		sql = "select id_glosario_atributo "
-				+ "from atributo_clase where "
+				+ " ,id_atributo "
+				+ " ,id_glosario_concepto "
+				+ " ,cod_dato "
+				+ " ,valor "
+				+ " ,precision "
+				+ " ,rango_valores "
+				+ " ,cardinalidad_minimo "
+				+ " ,cardinalidad_maximo "
+				+ " from atributo_clase where "
 				+ "id_glosario_concepto = ?";
 
 		Connection conn = null;
 		AtributoClase atributoClase = null;
 		ArrayList<AtributoClase> arrayList = new ArrayList<AtributoClase>();
+
+		ApplicationContext context = 
+	    		new ClassPathXmlApplicationContext(VariablesConfiguracion.rutaArchivoSpringDaoImpl);
+		TipoDeDatoDAO tipoDeDatoDAO = (TipoDeDatoDAO) context.getBean("tipoDeDatoDAO");	
+		
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -43,6 +61,16 @@ public class JdbcAtributoClaseDAO implements AtributoClaseDAO {
 			while(rs.next()){
 				atributoClase = new AtributoClase();
 				atributoClase.setIdGlosario(rs.getInt("id_glosario_atributo"));
+				atributoClase.setCardinalidadMax(rs.getString("cardinalidad_maximo"));
+				atributoClase.setCardinalidadMin(rs.getString("cardinalidad_minimo"));
+				atributoClase.setId(rs.getInt("id_atributo"));
+				atributoClase.setIdGlosarioConcepto(rs.getInt("id_glosario_concepto"));
+				atributoClase.setPrecision(rs.getString("precision"));
+				atributoClase.setRangoValores(rs.getString("rango_valores"));
+				atributoClase.setValue(rs.getString("valor"));
+				
+				atributoClase.setTipoDeDato(tipoDeDatoDAO.verTipoDeDato(new TipoDeDato(0, rs.getString("cod_dato"), null, null)));
+			
 				arrayList.add(atributoClase);
 			}
 			rs.close();

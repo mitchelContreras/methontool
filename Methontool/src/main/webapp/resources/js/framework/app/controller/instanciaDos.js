@@ -17,14 +17,40 @@ ControllerInstanciaDos.$inject = ['$rootScope',
                        'InformacionPrincipalApp'
                        ,'FactoryGlosario'
                        ,'FactoryMensajeCarga'
+                       ,'FactoryConcepto'
+                       ,'FactoryInstancia'
+                       ,'$http'
+                       ,'fileUpload'
+                       ,'FileUploader'
+                       ,'$scope'
                        ];	
 
 function ControllerInstanciaDos($rootScope,
 		InformacionPrincipalApp
 		,FactoryGlosario
 		,FactoryMensajeCarga
+		,FactoryConcepto
+		,FactoryInstancia
+		,$http
+		,fileUpload
+		,FileUploader
+		,$scope
 		){
 	
+    var uploader = $scope.uploader = new FileUploader({
+        url: 'http://localhost:8080/Methontool/upload'
+    });
+    
+    uploader.onAfterAddingAll = function(addedFileItems) {
+        cnInstanciaDos.cambioArchivo = true;
+        cnInstanciaDos.archivoASubir = addedFileItems[0].file;
+        console.log("cnInstanciaDos.archivoASubir.size "+cnInstanciaDos.archivoASubir.size);
+        var aux = cnInstanciaDos.archivoASubir.size/1024;
+        cnInstanciaDos.archivoASubir.tamano = aux.toFixed(2)+" KB";
+    }
+    
+    
+    
 	console.log("Entro en ControllerInstanciaDos");
 	var cnInstanciaDos = this;
 	
@@ -39,85 +65,15 @@ function ControllerInstanciaDos($rootScope,
 	
 
 //-------------------Variables----------------------------------
-	cnInstanciaDos.listaInstancia = {};
-	cnInstanciaDos.listaConcepto = {};
+	cnInstanciaDos.listaInstancia = [];
+	cnInstanciaDos.listaConcepto = [];
+	cnInstanciaDos.listaGlosario = [];
 	cnInstanciaDos.mensajeAlertPositiva = "";
 	cnInstanciaDos.mensajeAlertNegativa = "";
 	cnInstanciaDos.alertPositiva = false;
 	cnInstanciaDos.alertNegativa = false;
-	
-	
-//	nombre:
-//	tipoValor:
-//	precision:
-//	rangoValores:
-//	cardinalidadOrigen:
-//	cardinalidadDestino:
-//	valor: 		
-	
-	cnInstanciaDos.varEdicion.atributosClase =
-		[
-			{
-			  "nombre": "nombreUno"
-			  ,"cardinalidadOrigen": "origen"
-			  ,"cardinalidadDestino":"destino"
-			  ,"tipoValor":"tipo valor 1"
-			  ,"precision":"precionando"
-			  ,"rangoValores":"rango valorcito"
-			  ,"valor":"valororores"	  
-			}
-			,{
-					"nombre": "nombreDos"
-					  ,"cardinalidadOrigen": "origen3"
-					  ,"cardinalidadDestino":"destino3"
-					  ,"tipoValor":"tipo valor 123"
-					  ,"precision":"precionando"
-					  ,"rangoValores":"rango valorcito"
-					  ,"valor":"valororores"	  
-			},{
-				  "nombre": "nombreTres"
-					  ,"cardinalidadOrigen": "origen2"
-					  ,"cardinalidadDestino":"destino2"
-					  ,"tipoValor":"tipo valor 431"
-					  ,"precision":"precionando"
-					  ,"rangoValores":"rango valorcito"
-					  ,"valor":"valororores"	  
-			}
-		];
-
-
-	cnInstanciaDos.varEdicion.atributosInstancia =
-		[
-			{
-			  "nombre": "nombreUno"
-			  ,"cardinalidadOrigen": "origen"
-			  ,"cardinalidadDestino":"destino"
-			  ,"tipoValor":"tipo valor 1"
-			  ,"precision":"precionando"
-			  ,"rangoValores":"rango valorcito"
-			  ,"valorDefecto":"valororores"	  
-			  ,"medida":"medias"
-			}
-			,{
-					"nombre": "nombreDos"
-					  ,"cardinalidadOrigen": "origen3"
-					  ,"cardinalidadDestino":"destino3"
-					  ,"tipoValor":"tipo valor 123"
-					  ,"precision":"precionando"
-					  ,"rangoValores":"rango valorcito"
-					  ,"valorDefecto":"valororores"	  
-					  ,"medida":"medias"	  
-			},{
-				  "nombre": "nombreTres"
-					  ,"cardinalidadOrigen": "origen2"
-					  ,"cardinalidadDestino":"destino2"
-					  ,"tipoValor":"tipo valor 431"
-					  ,"precision":"precionando"
-					  ,"rangoValores":"rango valorcito"
-					  ,"valorDefecto":"valororores"	  
-					  ,"medida":"medias"  
-			}
-		];
+	cnInstanciaDos.cambioArchivo = false;
+	cnInstanciaDos.subiendoArchivo = false;
 	
 	
 //-------------------Funciones----------------------------------	
@@ -127,54 +83,108 @@ function ControllerInstanciaDos($rootScope,
 	cnInstanciaDos.cancelaInstanciaDos = cancelaInstanciaDos;
 	cnInstanciaDos.verDescripcionGlosario = verDescripcionGlosario;
 	cnInstanciaDos.seleccioneGlosario = seleccioneGlosario;
+	cnInstanciaDos.obtenerGlosarioDadoIdGlosaro = obtenerGlosarioDadoIdGlosaro;
+	cnInstanciaDos.uploadFile = uploadFile;
+	cnInstanciaDos.eliminarArchivo = eliminarArchivo;
+	cnInstanciaDos.cargarArchivo = cargarArchivo;
+	
+	function cargarArchivo(){
+		if(uploader.queue.length > 0){
+			console.log("cargar");
+			uploader.queue[0].upload();
+			cnInstanciaDos.subiendoArchivo = true;
+			
+		}		
+	}
+	
+	function eliminarArchivo(){
+		if(uploader.queue.length > 0){
+			uploader.queue[0].remove();
+			cnInstanciaDos.cambioArchivo = false;
+			cnInstanciaDos.subiendoArchivo = false;
+			 cnInstanciaDos.archivoASubir = {};
+		}
+	}
+	
+	function uploadFile(){
+		console.log("entre a subir archivo");
+        var file = cnInstanciaDos.myFile;
+        console.log('file is ' );
+        console.dir(file);
+        var uploadUrl = "http://localhost:8080/Methontool/upload";
+        fileUpload.uploadFileToUrl(file, uploadUrl);
+	}
+	
+	function obtenerGlosarioDadoIdGlosaro (elementoId){
+		return buscarEnlistaGlosario(elementoId);
+	}
 	
 	function seleccioneGlosario(elemento, limpiar){
 		cnInstanciaDos.seleccionado = elemento.id;
 		cnInstanciaDos.enBlanco = false;
 		cnInstanciaDos.modificar = false;
 		cnInstanciaDos.disabled = true;
-		
-		
+		eliminarArchivo();
+	
+		console.log("cnInstanciaDos.rutaDonwload "+cnInstanciaDos.rutaDonwload);
 //		limpio variables
 		if(limpiar == 'true'){
 			//Si selecciono desde la lista quiero quitar el mensaje positivo
 			console.log("limpiar en select");
 			cnInstanciaDos.alertPositiva = false;
 		}
-//		cnInstanciaDos.varEdicion = {};
+		cnInstanciaDos.varEdicion = {};
 		cnInstanciaDos.varEdicion.glosarioConceptoActual = {};
+		cnInstanciaDos.mensajeAlertNegativa = "";
 		
 //		asigno la relacion con la que estoy trabajando
 		cnInstanciaDos.varEdicion.glosarioConceptoActual = elemento;
 		
-//		var salida;
-//		salida = FactoryInstancia.verElemento(elemento.id);
+		console.log("Elemento que voy a consultar es ");
+		console.log(JSON.stringify(elemento, null, '\t'));
+		
+//		Consulto el concepto seleccionado
+		var salida;
+//		salida = FactoryConcepto.consultarElemento(elemento.id);
 //		FactoryMensajeCarga.abrirMensaje("Cargando");
 //		salida.then(
 //	            function(aux) {
+//	        		console.log("***Salid de consulta");
+//	        		console.log(JSON.stringify(aux, null, '\t'));
+//	        		
 //	                if(aux.succes){
-//	                	console.log("consultar Instancia es true");
-//
-//	            		cnInstancia.varEdicion.tipoDeDato 
-//	            			= FactoryTipoDato.consultarElemento(aux.elemento.tipoDeDato.codigo);
-//	            		
-//	            		cnInstancia.varEdicion.valor
-//	            			= aux.elemento.valor;
-//	            		
-//	            		cnInstancia.varEdicion.medida
-//	                		= FactoryMedida.consultarElemento(aux.elemento.medida.codigo);
+//	                	console.log("consultar Conecpto es true");
+//	                	
+////	                	Consulto glosario de oncepto actual
+//	                	cnInstanciaDos.varEdicion.glosarioConceptoActual = 
+//	                		FactoryGlosario.consultarElemento(aux.elemento.idGlosario);
+//	                	
+////	                	Traigo las listas de atributo
+//	                	cnInstanciaDos.varEdicion.atributosClase =
+//	                		aux.elemento.atributosClase;
+//	                	cnInstanciaDos.varEdicion.atributosInstancia =
+//	                		aux.elemento.atributosInstancia;
+//	                	
+////	            		cnInstancia.varEdicion.tipoDeDato 
+////	            			= FactoryTipoDato.consultarElemento(aux.elemento.tipoDeDato.codigo);
+////	            		
+////	            		cnInstancia.varEdicion.valor
+////	            			= aux.elemento.valor;
+////	            		
+////	            		cnInstancia.varEdicion.medida
+////	                		= FactoryMedida.consultarElemento(aux.elemento.medida.codigo);
 //	                	
 //	                	FactoryMensajeCarga.cerrarMensaje();
-//	                }else{
-//	                	
 //	                }
 //	            }
 //	        );
 	}
+	
 	function modificarInstanciaDos (){
 		cnInstanciaDos.disabled = false;
 		cnInstanciaDos.modificar = true;
 	}
+	
 	function modifiqueInstanciaDos (){
 //		var salida;
 //		salida = FactoryInstancia.actualizarElemento(
@@ -202,9 +212,40 @@ function ControllerInstanciaDos($rootScope,
 	function verDescripcionGlosario(){
 		$('#verDescripcionGlosarioInstanciaDosModal').modal('show');
 	}
-	
-	
 
+	function buscarEnlistaGlosario(id){
+		console.log("buscar id:"+id+" cnInstanciaDos.listaGlosario.length:"+cnInstanciaDos.listaGlosario.length);
+		for (var i=0;i<cnInstanciaDos.listaGlosario.length;i++){
+			if (cnInstanciaDos.listaGlosario[i].id == id){
+				console.log("encontro");
+				return cnInstanciaDos.listaGlosario[i];
+			}
+		}
+	}	
+	
+	function getGlosarioDadoTipoGlosario (idTipoGlosario){
+		var salida = [];
+		var i;
+		for (i = 0; i<cnInstanciaDos.listaGlosario.length;i++){
+			if(cnInstanciaDos.listaGlosario[i].tipoGlosario.id == idTipoGlosario){
+				salida.push(cnInstanciaDos.listaGlosario[i]);
+			}
+		}
+		return salida;
+	}	
+	
+	function consultarlistaGlosario(){
+		FactoryGlosario.getListaElementos(
+				function (output){
+					cnInstanciaDos.listaGlosario = output;
+					cnInstanciaDos.listaInstancia = getGlosarioDadoTipoGlosario(8);
+					cnInstanciaDos.listaConcepto = getGlosarioDadoTipoGlosario(2);					
+				},function (){
+					console.log("error");
+				}
+			); 		
+	}
+	
 //-------------------Funciones extranjeras-------------------------------		
     $rootScope.$on('menuInstanciaDosPrincipal', function(event, data){
     	InformacionPrincipalApp.voyAvista("InstanciaDos");	//Indico a las otras secciones que esta es la actual
@@ -212,14 +253,24 @@ function ControllerInstanciaDos($rootScope,
     	cnInstanciaDos.disabled = true;  //variable usada para bloquear los campos de edicion 
     	cnInstanciaDos.modificar = false; //si se permite modificar los valores 
     	cnInstanciaDos.enBlanco = true;	    //mostrar seccion en blanco
+    	cnInstanciaDos.seleccionado = 0;
     });
 	
+    $scope.$watch('cantidadInstancias', function (newValue, oldValue) {
+    	if (newValue !== oldValue) {
+            cnInstanciaDos.cantidadInstancias = newValue;
+            if(cnInstanciaDos.cantidadInstancias > 0){
+            	cnInstanciaDos.rutaDonwload = FactoryInstancia.getRutaDescargarArchivo(cnInstanciaDos.seleccionado, cnInstanciaDos.cantidadInstancias);
+            }
+            
+    	}
+    }, false);
+    
     $rootScope.$watch('actual.instanciaDos', function (newValue, oldValue) {
     	if (newValue !== oldValue) {
             console.log("cambio valor actual.InstanciaDos a '"+newValue+"'");
             cnInstanciaDos.soyActual = InformacionPrincipalApp.soyVistaActual('InstanciaDos');	//Indico al controlador actual si se debe mostrar
-            cnInstanciaDos.listaInstancia = FactoryGlosario.getGlosarioDadoTipoGlosario(8);
-            cnInstanciaDos.listaConcepto = FactoryGlosario.getGlosarioDadoTipoGlosario(2);
+            consultarlistaGlosario();
     	}
     }, false);
     

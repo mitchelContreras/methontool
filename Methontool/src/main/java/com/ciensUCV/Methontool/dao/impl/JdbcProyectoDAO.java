@@ -94,7 +94,6 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 			}
 		}
 	}
-	
 	@Override
 	public Proyecto verProyecto(int idUsuario, int idProyecto) {
 		// TODO Auto-generated method stub
@@ -148,6 +147,7 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 			}
 		}
 	}
+	
 	@Override
 	public int crearProyecto(Proyecto proyecto, int [] usuarios) {
 		// TODO Auto-generated method stub
@@ -289,6 +289,54 @@ public class JdbcProyectoDAO implements ProyectoDAO {
 					return salida;
 				} catch(Exception e){
 					logger.info(e.toString());
+				}
+			}
+		}
+	}
+	@Override
+	public Proyecto verProyecto(int idProyecto) {
+		// TODO Auto-generated method stub
+
+		String sql = "Select * from "+
+				"proyecto as p "+
+				"join nivel_formalidad as nivel on p.id_nivel_formalidad = nivel.id_nivel_formalidad "+
+				"where p.id_proyecto = ? "; //1	idProyecto
+		
+		Connection conn = null;
+		Proyecto proyecto = null;
+		NivelFormalidad nivelFormalidad= null;
+	
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idProyecto);
+			
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				proyecto = new Proyecto();
+				nivelFormalidad = new NivelFormalidad();
+				proyecto.setIdProyecto(rs.getInt("id_proyecto"));
+				proyecto.setNombre(rs.getString(2));
+				proyecto.setDominio(rs.getString("dominio"));
+				proyecto.setProposito(rs.getString("proposito"));
+				proyecto.setAlcance(rs.getString("alcance"));
+				proyecto.setFecha(rs.getString("fecha"));
+				proyecto.preguntasCompetenciaStringToArray(rs.getString("preguntas_competencia"));				
+				nivelFormalidad.setIdNivelFormalidad(rs.getInt("id_nivel_formalidad"));
+				proyecto.setNivelFormalidad(nivelFormalidad);
+			}
+			rs.close();
+			ps.close();
+			logger.info("proyecto es "+proyecto.toString());
+			return proyecto;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					return proyecto;
 				}
 			}
 		}

@@ -45,7 +45,7 @@ function ControllerTaxonomia($rootScope
 	cnTaxonomia.varTaxonomiaActual = {};
 	
 //-------------------Variables ------------------------------------------
-	cnTaxonomia.listaGlosario = FactoryGlosario.getListaElemento();
+	cnTaxonomia.listaGlosario = [];
 	cnTaxonomia.seleccionado = -1;
 	cnTaxonomia.varEdicion = {};
 	cnTaxonomia.varAgregar = 0;
@@ -233,9 +233,14 @@ function ControllerTaxonomia($rootScope
 	 */
 	function seleccioneGlosario(elemento, limpiar){
 		console.log("Seleccione con id "+elemento.id+" codigo="+limpiar);
-//		var id;
-		var elementoOrigen = FactoryGlosario.consultarElemento(elemento.id);
-//		id = cnTaxonomia.listaGlosario.indexOf(elemento);
+		var elementoOrigen = {};
+		FactoryGlosario.getElementoDadoId(elemento.id,
+				function(ouput){
+			    	elementoOrigen = ouput;
+				},
+				function(){
+					console.log("error en seleccioneGlosario");
+				});
 		cnTaxonomia.seleccionado = elemento.id;
 		cnTaxonomia.enBlanco = false;
 		cnTaxonomia.modificar = false;
@@ -272,8 +277,15 @@ function ControllerTaxonomia($rootScope
 	                	console.log(" "+aux.elemento.conceptosDestino[3].length);
 	                	console.log("aux.elemento.conceptoOrigen "+aux.elemento.conceptoOrigen);
 	                	cnTaxonomia.elementoActual = {};
-	                	cnTaxonomia.elementoActual.conceptoOrigen = FactoryGlosario.consultarElemento(aux.elemento.conceptoOrigen);
-	                	console.log("elemento origen traido de FactoryGlosario.consultarElemento "+cnTaxonomia.elementoActual.conceptoOrigen.id+" "+cnTaxonomia.elementoActual.conceptoOrigen.nombre);
+	                	cnTaxonomia.elementoActual.conceptoOrigen = {};
+	                	FactoryGlosario.getElementoDadoId(aux.elemento.conceptoOrigen,
+	            				function(ouput){
+	                				cnTaxonomia.elementoActual.conceptoOrigen = ouput;
+	                				console.log("elemento origen traido de FactoryGlosario.consultarElemento "+cnTaxonomia.elementoActual.conceptoOrigen.id+" "+cnTaxonomia.elementoActual.conceptoOrigen.nombre);
+	            				},
+	            				function(){
+	            					console.log("error en cnTaxonomia.elementoActual.conceptoOrigen");
+	            				});
 	                	cnTaxonomia.elementoActual.relaciones = aux.elemento.relaciones.slice();
 	                	cnTaxonomia.elementoActual.conDestinoDesDisjunta = [];
 	                	cnTaxonomia.elementoActual.conDestinoDesExhaustiva = [];
@@ -287,30 +299,67 @@ function ControllerTaxonomia($rootScope
 	                			case "desDisjunta":
 	                					var len = aux.elemento.conceptosDestino[i].length;
 	                					var j;
+	                					cnTaxonomia.elementoActual.conDestinoDesDisjunta = [];
+	                					cnTaxonomia.varEdicion.listaDisjunta = [];
 	                					for(j=0;j<len;j++){
-	                						console.log("*****elemento a agregar es "+aux.elemento.conceptosDestino[i][j]);
-	                						cnTaxonomia.elementoActual.conDestinoDesDisjunta[j] = FactoryGlosario.consultarElemento(aux.elemento.conceptosDestino[i][j]);
+	                	                	FactoryGlosario.getElementoDadoId(aux.elemento.conceptosDestino[i][j],
+            	            				function(ouput){
+	                	                		cnTaxonomia.elementoActual.conDestinoDesDisjunta.push(ouput);
+	                	                		cnTaxonomia.varEdicion.listaDisjunta.push(ouput);
+            	            				},
+            	            				function(){
+            	            					console.log("error en cnTaxonomia.elementoActual.conceptoOrigen");
+            	            				});
 	                					}
 	                				break;
 	                			case "desExhaustiva":
 		                				var len = aux.elemento.conceptosDestino[i].length;
 		            					var j;
+		            					cnTaxonomia.elementoActual.conDestinoDesExhaustiva = [];
+		            					cnTaxonomia.varEdicion.listaExhustiva = [];
 		            					for(j=0;j<len;j++){
-		            						cnTaxonomia.elementoActual.conDestinoDesExhaustiva[j] = FactoryGlosario.consultarElemento(aux.elemento.conceptosDestino[i][j]);
+		            						FactoryGlosario.getElementoDadoId(aux.elemento.conceptosDestino[i][j],
+            	            				function(ouput){
+		            							cnTaxonomia.elementoActual.conDestinoDesExhaustiva.push(ouput);
+		            							cnTaxonomia.varEdicion.listaExhustiva.push(ouput);
+            	            				},
+            	            				function(){
+            	            					console.log("error en cnTaxonomia.elementoActual.conDestinoDesExhaustiva");
+            	            				});
 		            					}
 	                				break;
 	                			case "particion":
 		                				var len = aux.elemento.conceptosDestino[i].length;
 		            					var j;
+		            					cnTaxonomia.elementoActual.conDestinoParticion = [];
+            							cnTaxonomia.varEdicion.listaParticion = [];
 		            					for(j=0;j<len;j++){
-		            						cnTaxonomia.elementoActual.conDestinoParticion[j] = FactoryGlosario.consultarElemento(aux.elemento.conceptosDestino[i][j]);
+		            						cnTaxonomia.elementoActual.conDestinoParticion[j] = {};
+		            						FactoryGlosario.getElementoDadoId(aux.elemento.conceptosDestino[i][j],
+            	            				function(ouput){
+		            							cnTaxonomia.elementoActual.conDestinoParticion.push(ouput);
+		            							cnTaxonomia.varEdicion.listaParticion = [];
+		            							cnTaxonomia.varEdicion.listaParticion.push(ouput);
+            	            				},
+            	            				function(){
+            	            					console.log("error en cnTaxonomia.elementoActual.conDestinoParticion");
+            	            				});
 		            					}
 	                				break;
 	                			case "subClase":
 		                				var len = aux.elemento.conceptosDestino[i].length;
 		            					var j;
+		            					cnTaxonomia.elementoActual.conDestinoSubClase = [];
+		            					cnTaxonomia.varEdicion.listaSubClase = [];
 		            					for(j=0;j<len;j++){
-		            						cnTaxonomia.elementoActual.conDestinoSubClase[j] = FactoryGlosario.consultarElemento(aux.elemento.conceptosDestino[i][j]);
+		            						FactoryGlosario.getElementoDadoId(aux.elemento.conceptosDestino[i][j],
+            	            				function(ouput){
+		            							cnTaxonomia.elementoActual.conDestinoSubClase.push(ouput);
+		            							cnTaxonomia.varEdicion.listaSubClase.push(ouput);
+		            						},
+            	            				function(){
+            	            					console.log("error en cnTaxonomia.elementoActual.conDestinoParticion");
+            	            				});
 		            					}
 	                				break;
 	                			default:
@@ -322,61 +371,34 @@ function ControllerTaxonomia($rootScope
 	            		cnTaxonomia.varEdicion.id = elementoOrigen.id;
 	            		cnTaxonomia.varEdicion.nombre = elementoOrigen.nombre;
 	            		cnTaxonomia.varEdicion.descripcion = elementoOrigen.descripcion;
-	            		cnTaxonomia.varEdicion.listaSubClase = cnTaxonomia.elementoActual.conDestinoSubClase.slice();
-	            		cnTaxonomia.varEdicion.listaParticion = cnTaxonomia.elementoActual.conDestinoParticion.slice();
-	            		cnTaxonomia.varEdicion.listaDisjunta = cnTaxonomia.elementoActual.conDestinoDesDisjunta.slice();
-	            		cnTaxonomia.varEdicion.listaExhustiva = cnTaxonomia.elementoActual.conDestinoDesExhaustiva.slice();
+//	            		cnTaxonomia.varEdicion.listaSubClase = cnTaxonomia.elementoActual.conDestinoSubClase.slice();
+//	            		cnTaxonomia.varEdicion.listaParticion = cnTaxonomia.elementoActual.conDestinoParticion.slice();
+//	            		cnTaxonomia.varEdicion.listaDisjunta = cnTaxonomia.elementoActual.conDestinoDesDisjunta.slice();
+//	            		cnTaxonomia.varEdicion.listaExhustiva = cnTaxonomia.elementoActual.conDestinoDesExhaustiva.slice();
 	                	console.log("cnTaxonomia.elementoActual.conDestinoDesDisjunta.length "+cnTaxonomia.elementoActual.conDestinoDesDisjunta.length);
 	                	console.log("cnTaxonomia.elementoActual.conDestinoDesExhaustiva.length "+cnTaxonomia.elementoActual.conDestinoDesExhaustiva.length);
 	                	console.log("cnTaxonomia.elementoActual.conDestinoParticion.length "+cnTaxonomia.elementoActual.conDestinoParticion.length);
 	                	console.log("cnTaxonomia.elementoActual.conDestinoSubClase.length "+cnTaxonomia.elementoActual.conDestinoSubClase.length);
 	                	console.log("cnTaxonomia.elementoActual.relaciones "+cnTaxonomia.elementoActual.relaciones.length);
-	                	FactoryTaxonomia.agregarElemento(cnTaxonomia.elementoActual);
+	                	//FactoryTaxonomia.agregarElemento(cnTaxonomia.elementoActual);
 	                	FactoryMensajeCarga.cerrarMensaje();
 	                }else{
 	                	
 	                }
 	            }
 	        );	
-//		}else{
-//			console.log("esto en else con "+salida.conceptoOrigen.id);
-//        	cnTaxonomia.elementoActual = {};
-//        	
-//        	cnTaxonomia.elementoActual= {'conceptoOrigen':{'id':'','nombre':'','descripcion':''},
-//					'relaciones':[],
-//					'conDestinoSubClase':[],
-//					'conDestinoParticion':[],
-//					'conDestinoDesDisjunta':[],
-//					'conDestinoDesExhaustiva':[]};
-//        	cnTaxonomia.elementoActual.conceptoOrigen = FactoryGlosario.consultarElemento(salida.conceptoOrigen.id);
-//        	
-//    		cnTaxonomia.varEdicion.id = cnTaxonomia.elementoActual.conceptoOrigen.id;
-//    		cnTaxonomia.varEdicion.nombre = cnTaxonomia.elementoActual.conceptoOrigen.nombre;
-//    		cnTaxonomia.varEdicion.descripcion = cnTaxonomia.elementoActual.conceptoOrigen.descripcion;
-//    		cnTaxonomia.elementoActual.relaciones = salida.relaciones.slice();
-//    		cnTaxonomia.elementoActual.conDestinoSubClase = salida.conDestinoSubClase.slice();
-//    		cnTaxonomia.elementoActual.conDestinoParticion = salida.conDestinoParticion.slice();
-//    		cnTaxonomia.elementoActual.conDestinoDesDisjunta = salida.conDestinoDesDisjunta.slice();
-//    		cnTaxonomia.elementoActual.conDestinoDesExhaustiva = salida.conDestinoDesExhaustiva.slice();
-//    		
-//    		cnTaxonomia.varEdicion.listaSubClase = salida.conDestinoSubClase.slice();
-//    		cnTaxonomia.varEdicion.listaParticion = salida.conDestinoParticion.slice();
-//    		cnTaxonomia.varEdicion.listaDisjunta = salida.conDestinoDesDisjunta.slice();
-//    		cnTaxonomia.varEdicion.listaExhustiva = salida.conDestinoDesExhaustiva.slice();
-//        	
-//        	console.log("cnTaxonomia.elementoActual.conDestinoDesDisjunta.length "+cnTaxonomia.varEdicion.listaDisjunta.length);
-//        	console.log("cnTaxonomia.elementoActual.conDestinoDesExhaustiva.length "+cnTaxonomia.varEdicion.listaExhustiva.length);
-//        	console.log("cnTaxonomia.elementoActual.conDestinoParticion.length "+cnTaxonomia.varEdicion.listaParticion.length);
-//        	console.log("cnTaxonomia.elementoActual.conDestinoSubClase.length "+cnTaxonomia.varEdicion.listaSubClase.length);
-//       		console.log("cnTaxonomia.elementoActual.relaciones "+cnTaxonomia.elementoActual.relaciones.length);	
-//		}
 	}
 	
 //-------------------Funciones complementarias---------------------------
 	function  listarGlosario(){
-		console.log("en listarGlosario");
-		cnTaxonomia.listaGlosario = FactoryGlosario.getListaElemento();
-		console.log("lon "+cnTaxonomia.listaGlosario.length);
+		FactoryGlosario.getListaGlosarioDadoIdTipoGlosario(
+				2
+				,function (output){
+					cnTaxonomia.listaTaxonomia = output;
+				},function (){
+					console.log("error");
+				}
+			); 
 	}
 	
 	function buscarGlosarioEnLista(glosario, lista){

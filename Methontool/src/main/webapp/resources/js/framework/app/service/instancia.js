@@ -37,6 +37,10 @@
         return $resource(urlConsultar,{},{
             post: {method: 'POST', params: {idProyecto: '@idProyecto'}, isArray:false}
             });
-    });    
+    }); 
+
+    proy.factory('$rutaDescargaArchivo', function (){
+    	return urlProyecto;
+    });
 
 })();

@@ -40,6 +40,11 @@ public class TipoDeDato {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+	@Override
+	public String toString() {
+		return "TipoDeDato [id=" + id + ", codigo=" + codigo + ", nombre="
+				+ nombre + ", descripcion=" + descripcion + "]";
+	}
 	
 	
 }

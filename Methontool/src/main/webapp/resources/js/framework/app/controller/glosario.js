@@ -20,6 +20,7 @@ ControllerGlosario.$inject = ['$rootScope'
                               ,'$scope'
                               ,'FactoryTipoDato'
                               ,'FactoryMedida'
+                              ,'FactoryMensajeCarga'
                               ];	
 
 function ControllerGlosario(
@@ -31,6 +32,7 @@ function ControllerGlosario(
        	,$scope
     	,FactoryTipoDato
     	,FactoryMedida
+    	,FactoryMensajeCarga
  
     ){
 	console.log("Entro en ControllerGlosario");
@@ -64,27 +66,6 @@ function ControllerGlosario(
 //------------------Variables globales---------------------------
 	cnGlosario.listaGlosario = [];
 	cnGlosario.listaTipoGlosario = [];
-	
-	
-	//toca borrar
-//	var glosario;
-//	glosario = FactoryGlosario.getListaElemento();
-//	glosario.then(
-//            function(salida) {
-//                if(salida.succes){
-//                	FactoryGlosario.setListaElemento (salida.elementos);
-//                	FactoryGlosario.setYaConsulte (true);
-//                	cnGlosario.listaGlosario = FactoryGlosario.getListaElemento();
-//                }else{
-//                    if(!salida.succes){
-//                    	console.log("succes es false en getListaElemento Glosario");
-//                    }else{
-//                        console.log("No en getListaElemento Glosario");
-//                    }
-//                }
-//            }
-//    );
-//	cnGlosario.listaTipoGlosario = FactoryTipoGlosario.getListaElemento();
 	
 //-------------------Funciones----------------------------------	
 	
@@ -140,7 +121,13 @@ function ControllerGlosario(
             function(aux) {
                 if(aux.succes){
                 	FactoryGlosario.agregarElemento(aux.elemento);
-                	cnGlosario.listaGlosario = FactoryGlosario.getListaElemento();
+            		FactoryGlosario.getListaElementos(
+            				function (output){
+            					cnGlosario.listaGlosario = output;
+            				},function (){
+            					console.log("error");
+            				}
+            			);                	
                 	cnGlosario.alertPositiva = true;
                 	cnGlosario.mensajeAlertPositiva = "El Glosario ha sido creado";
                 	seleccioneGlosario(aux.elemento,2);
@@ -193,13 +180,20 @@ function ControllerGlosario(
 		cnGlosario.alertNegativa = false;
 		
 		//lleno los valores de la vista
-		var consultar = FactoryGlosario.consultarElemento (cnGlosario.seleccionado);
-		cnGlosario.varNombre =	consultar.nombre;
-		cnGlosario.varTipo = consultar.tipoGlosario;
-		cnGlosario.descripcion = consultar.descripcion;
-		cnGlosario.listaSinonimo =  consultar.sinonimos.slice();
-		cnGlosario.listaAcronimo =  consultar.acronimos.slice();
-		cnGlosario.idGlosario = consultar.id;
+		var consultar = {};
+		FactoryGlosario.getElementoDadoId(cnGlosario.seleccionado,
+		function(ouput){
+			consultar = ouput;
+			cnGlosario.varNombre =	consultar.nombre;
+			cnGlosario.varTipo = consultar.tipoGlosario;
+			cnGlosario.descripcion = consultar.descripcion;
+			cnGlosario.listaSinonimo =  consultar.sinonimos.slice();
+			cnGlosario.listaAcronimo =  consultar.acronimos.slice();
+			cnGlosario.idGlosario = consultar.id;
+		},
+		function(){
+			console.log("error en cnTaxonomia.elementoActual.conceptoOrigen");
+		});
 	}
 	function cancelarModificarGlosario(){
 		cnGlosario.disabled = true;
@@ -231,7 +225,13 @@ function ControllerGlosario(
                 if(aux.succes){
                 	console.log("actualizar es true");
                 	FactoryGlosario.modificarElemento(aux.elemento);
-                	cnGlosario.listaGlosario = FactoryGlosario.getListaElemento();
+            		FactoryGlosario.getListaElementos(
+            				function (output){
+            					cnGlosario.listaGlosario = output;
+            				},function (){
+            					console.log("error");
+            				}
+            			); 
                 	cnGlosario.alertPositiva = true;
                 	cnGlosario.mensajeAlertPositiva = "El Glosario ha sido actualizado";
                 	seleccioneGlosario(aux.elemento,2);
@@ -278,8 +278,14 @@ function ControllerGlosario(
 	
 //Funciones ajenas al $scope
 	function listarGlosario(){
-		cnGlosario.listaGlosario = FactoryGlosario.getListaElemento();
-		console.log("la lista de glosario es "+cnGlosario.listaGlosario.length);
+			FactoryGlosario.getListaElementos(
+			function (output){
+				cnGlosario.listaGlosario = output;
+				FactoryMensajeCarga.cerrarMensaje();
+			},function (){
+				console.log("error");
+			}
+		);
 	}
 	
     $rootScope.$on('menuGlosarioPrincipal', function(event, data){

@@ -15,6 +15,7 @@ angular.module('methontool')
 	                                ,'$verInstancia'
 	                                ,'$actualizarInstancia'
 	                                ,'$crearInstancia'
+	                                ,'$rutaDescargaArchivo'
 	                           ];
 
 	function FactoryInstancia (
@@ -23,6 +24,7 @@ angular.module('methontool')
 			,$verInstancia
 			,$actualizarInstancia
 			,$crearInstancia
+			,$rutaDescargaArchivo
 			){
 		
 		var funcion = {
@@ -37,8 +39,15 @@ angular.module('methontool')
 				},
 				crearElemento: function (nombreInstancia, idConcepto){
 					return crearElemento(nombreInstancia, idConcepto);
+				},
+				getRutaDescargarArchivo: function (idGlosarioConcepto, cantidadInstancia){
+					return getRutaDescargarArchivo (idGlosarioConcepto, cantidadInstancia);
 				}
 			};
+		function getRutaDescargarArchivo(idGlosarioConcepto, cantidadInstancia){
+	    	var urlConsultar = $rutaDescargaArchivo+"/api/proyecto/"+InformacionPrincipalApp.getProyecto().idProyecto+"/concepto/"+idGlosarioConcepto+"/donwloadFileInstancias/"+cantidadInstancia;
+	    	return urlConsultar;
+		}
 		
 		function crearElemento(nombreInstancia, idConcepto){
 			return $crearInstancia.post({

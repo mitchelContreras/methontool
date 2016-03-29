@@ -102,6 +102,16 @@ function ControllerAxioma($rootScope,
 		}
 	}
 	
+	function buscarEnlistaGlosario(id){
+		console.log("buscar id:"+id+" cnAxioma.listaGlosario.length:"+cnAxioma.listaGlosario.length);
+		for (var i=0;i<cnAxioma.listaGlosario.length;i++){
+			if (cnAxioma.listaGlosario[i].id == id){
+				console.log("encontro");
+				return cnAxioma.listaGlosario[i];
+			}
+		}
+	}	
+	
 	function agregarALista(lista){
 		console.log("agregar a lista "+lista);
 		
@@ -124,8 +134,8 @@ function ControllerAxioma($rootScope,
 			var lista1 = [];
 			var lista2 = [];
 			cnAxioma.ListaAgregar = [];
-			lista1 = FactoryGlosario.getGlosarioDadoTipoGlosario(3);
-			lista2 = FactoryGlosario.getGlosarioDadoTipoGlosario(4);
+			lista1 = getGlosarioDadoTipoGlosario(3);
+			lista2 = getGlosarioDadoTipoGlosario(4);
 			cnAxioma.ListaAgregar = unirListas(lista1, lista2);
 			$scope.$broadcast('angucomplete-alt:clearInput', 'autoAgregarAtributoAxioma');
 			$('#verAgregarAtributoAxioma').modal('show');
@@ -133,14 +143,14 @@ function ControllerAxioma($rootScope,
 		case 'relacion':
 			console.log("relacion");
 			cnAxioma.AuxAgregar = {};
-			cnAxioma.ListaAgregar = FactoryGlosario.getGlosarioDadoTipoGlosario(1);
+			cnAxioma.ListaAgregar = getGlosarioDadoTipoGlosario(1);
 			$scope.$broadcast('angucomplete-alt:clearInput', 'autoAgregarRelacionAxioma');
 			$('#verAgregarRelacionAxioma').modal('show');
 			break;
 		case 'concepto':
 			console.log("concepto");
 			cnAxioma.AuxAgregar = {};
-			cnAxioma.ListaAgregar = FactoryGlosario.getGlosarioDadoTipoGlosario(2);
+			cnAxioma.ListaAgregar = getGlosarioDadoTipoGlosario(2);
 			$scope.$broadcast('angucomplete-alt:clearInput', 'autoAgregarConceptoAxioma');
 			$('#verAgregarConceptoAxioma').modal('show');
 			break;	
@@ -311,12 +321,24 @@ function ControllerAxioma($rootScope,
 
 	
 //Funcion generica
+	
+	function getGlosarioDadoTipoGlosario (idTipoGlosario){
+		var salida = [];
+		var i;
+		for (i = 0; i<cnAxioma.listaGlosario.length;i++){
+			if(cnAxioma.listaGlosario[i].tipoGlosario.id == idTipoGlosario){
+				salida.push(cnAxioma.listaGlosario[i]);
+			}
+		}
+		return salida;
+	}
+	
 	function returnListaGLosario(entrada){
 		var salida = [];
 		
 		if(entrada.length > 0){
 			for(var i = 0; i<entrada.length; i++){
-				salida.push(FactoryGlosario.consultarElemento(entrada[i]));
+				salida.push(buscarEnlistaGlosario(entrada[i]));
 			}
 		}
 		return salida;
@@ -350,7 +372,13 @@ function ControllerAxioma($rootScope,
     	if (newValue !== oldValue) {
             console.log("cambio valor actual.axioma a '"+newValue+"'");
             cnAxioma.soyActual = InformacionPrincipalApp.soyVistaActual('Axioma');	//Indico al controlador actual si se debe mostrar
-            cnAxioma.listaGlosario = FactoryGlosario.getListaElemento();
+    		FactoryGlosario.getListaElementos(
+    				function (output){
+    					cnAxioma.listaGlosario = output;
+    				},function (){
+    					console.log("error");
+    				}
+    			);
             
     	}
     }, false);

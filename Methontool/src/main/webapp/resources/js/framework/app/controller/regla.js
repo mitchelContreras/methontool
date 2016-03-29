@@ -121,8 +121,8 @@ function ControllerRegla($rootScope,
 			var lista1 = [];
 			var lista2 = [];
 			cnRegla.ListaAgregar = [];
-			lista1 = FactoryGlosario.getGlosarioDadoTipoGlosario(3);
-			lista2 = FactoryGlosario.getGlosarioDadoTipoGlosario(4);
+			lista1 = getGlosarioDadoTipoGlosario(3);
+			lista2 = getGlosarioDadoTipoGlosario(4);
 			cnRegla.ListaAgregar = unirListas(lista1, lista2);
 			$scope.$broadcast('angucomplete-alt:clearInput', 'autoAgregarAtributoRegla');
 			$('#verAgregarAtributoRegla').modal('show');
@@ -130,14 +130,14 @@ function ControllerRegla($rootScope,
 		case 'relacion':
 			console.log("relacion");
 			cnRegla.AuxAgregar = {};
-			cnRegla.ListaAgregar = FactoryGlosario.getGlosarioDadoTipoGlosario(1);
+			cnRegla.ListaAgregar = getGlosarioDadoTipoGlosario(1);
 			$scope.$broadcast('angucomplete-alt:clearInput', 'autoAgregarRelacionRegla');
 			$('#verAgregarRelacionRegla').modal('show');
 			break;
 		case 'concepto':
 			console.log("concepto");
 			cnRegla.AuxAgregar = {};
-			cnRegla.ListaAgregar = FactoryGlosario.getGlosarioDadoTipoGlosario(2);
+			cnRegla.ListaAgregar = getGlosarioDadoTipoGlosario(2);
 			$scope.$broadcast('angucomplete-alt:clearInput', 'autoAgregarConceptoRegla');
 			$('#verAgregarConceptoRegla').modal('show');
 			break;	
@@ -313,12 +313,20 @@ function ControllerRegla($rootScope,
 		
 		if(entrada.length > 0){
 			for(var i = 0; i<entrada.length; i++){
-				salida.push(FactoryGlosario.consultarElemento(entrada[i]));
+				salida.push(buscarEnlistaGlosario(entrada[i]));
 			}
 		}
 		return salida;
 	}
-	
+	function buscarEnlistaGlosario(id){
+		console.log("buscar id:"+id+" cnRegla.listaGlosario.listaGlosario.length:"+cnRegla.listaGlosario.length);
+		for (var i=0;i<cnRegla.listaGlosario.length;i++){
+			if (cnRegla.listaGlosario[i].id == id){
+				console.log("encontro");
+				return cnRegla.listaGlosario[i];
+			}
+		}
+	}	
 	function unirListas(listaUno, listaDos){
 		var salida = [];
 		
@@ -335,7 +343,17 @@ function ControllerRegla($rootScope,
 	}
 
 //Fin Funciones genericas	
-
+	function getGlosarioDadoTipoGlosario (idTipoGlosario){
+		var salida = [];
+		var i;
+		for (i = 0; i<cnRegla.listaGlosario.length;i++){
+			if(cnRegla.listaGlosario[i].tipoGlosario.id == idTipoGlosario){
+				salida.push(cnRegla.listaGlosario[i]);
+			}
+		}
+		return salida;
+	}
+	
 	
     $rootScope.$on('menuReglaPrincipal', function(event, data){
     	InformacionPrincipalApp.voyAvista("Regla");	//Indico a las otras secciones que esta es la actual
@@ -349,7 +367,13 @@ function ControllerRegla($rootScope,
     	if (newValue !== oldValue) {
     		console.log("cambio valor actual.regla a '"+newValue+"'");
     		cnRegla.soyActual = InformacionPrincipalApp.soyVistaActual('Regla');	//Indico al controlador actual si se debe mostrar
-    		cnRegla.listaGlosario = FactoryGlosario.getListaElemento();
+    		FactoryGlosario.getListaElementos(
+    				function (output){
+    					cnRegla.listaGlosario = output;
+    				},function (){
+    					console.log("error");
+    				}
+    			); 
     	}
     }, false);
 	

@@ -70,9 +70,49 @@ public class JdbcMedidaDAO implements MedidaDAO {
 	}
 
 	@Override
-	public Medida verMedida(String codMedida) {
+	public Medida verMedida(Medida medida) {
 		// TODO Auto-generated method stub
-		return null;
+		// TODO Auto-generated method stub
+		String sql;
+		sql = "SELECT"
+				+ " id_unidad_medida,"
+				+ " codigo, "
+				+ "nombre, "
+				+ "descripcion "
+				+ "FROM medida "
+				+ "WHERE codigo = ? ";
+		Connection conn = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, medida.getCodigo());
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				medida.setId(rs.getInt("id_unidad_medida"));
+				medida.setCodigo(rs.getString("codigo"));
+				medida.setNombre(rs.getString("codigo"));
+				medida.setDescripcion(rs.getString("descripcion"));
+			}
+			rs.close();
+			ps.close();
+			return medida;	
+		} catch (SQLException e) {
+			logger.info("SQLException "+e);
+			throw new RuntimeException(e);
+		} catch(Exception e) {
+			logger.info("error "+e.toString());
+			return medida;	
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					return medida;
+				}
+			}
+		}
 	}
 
 	@Override
@@ -82,7 +122,7 @@ public class JdbcMedidaDAO implements MedidaDAO {
 	}
 
 	@Override
-	public String eliminarMedida(String codMedida) {
+	public String eliminarMedida(Medida medida) {
 		// TODO Auto-generated method stub
 		return null;
 	}

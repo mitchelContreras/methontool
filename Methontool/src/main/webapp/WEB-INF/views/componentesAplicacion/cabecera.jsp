@@ -6,15 +6,16 @@
 		<div class="col-md-12">
 			<div class="col-md-10 cabeceraTitulo" >
 				<a href="#" ng-click="cnCabecera.clickEspecificacion()" 
-				ng-class="{'classTituloNoSeleccionado':!cnCabecera.especificacion, 'classTituloSeleccionado':cnCabecera.especificacion}">Especificaci&#243n</a>
-				<a href="#" class="classTituloNoSeleccionado" >&#62</a>
+				ng-class="{'classTituloNoSeleccionado':!cnCabecera.especificacion, 'classTituloSeleccionado':cnCabecera.especificacion, 'not-active-link': !cnCabecera.mostrarNombreProyecto}">Especificaci&#243n</a>
+				<a href="#" class="classTituloNoSeleccionado not-active-link" disabled>&#62</a>
 				<a href="#" ng-click="cnCabecera.clickConceptualizacion()"
-				ng-class="{'classTituloNoSeleccionado':!cnCabecera.conceptualizacion, 'classTituloSeleccionado':cnCabecera.conceptualizacion}">Conceptualizaci&#243n</a>
-				<a href="#" class="classTituloNoSeleccionado" >&#62</a>
+				ng-class="{'classTituloNoSeleccionado':!cnCabecera.conceptualizacion, 'classTituloSeleccionado':cnCabecera.conceptualizacion, 'not-active-link': !cnCabecera.mostrarNombreProyecto}">Conceptualizaci&#243n</a>
+				<a href="#" class="classTituloNoSeleccionado not-active-link" >&#62</a>
 				<a href="#" ng-click="cnCabecera.clickImplementacion()"
-				ng-class="{'classTituloNoSeleccionado':!cnCabecera.implementacion, 'classTituloSeleccionado':cnCabecera.implementacion}">Implementaci&#243n</a>
+				ng-class="{'classTituloNoSeleccionado':!cnCabecera.implementacion, 'classTituloSeleccionado':cnCabecera.implementacion, 'not-active-link': !cnCabecera.mostrarNombreProyecto}">Implementaci&#243n</a>
 				<h4 ng-show="cnCabecera.mostrarNombreProyecto">{{cnCabecera.nombreProyecto}}</h4>
 			</div>
+			{{cnCabecera.mostrarNombreProyecto}}
 			<div class="col-md-2 sesionCabecera">
 				<label> Mitchell Contreras</label>
 				<a href="">Cerrar sesion</a>

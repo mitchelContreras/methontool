@@ -70,9 +70,48 @@ public class JdbcTipoDeDatoDAO implements TipoDeDatoDAO {
 	}
 
 	@Override
-	public TipoDeDato verTipoDeDato(String codTipoDeDato) {
+	public TipoDeDato verTipoDeDato(TipoDeDato tipoDeDato) {
 		// TODO Auto-generated method stub
-		return null;
+		String sql;
+		sql = "SELECT"
+				+ " id_tipo_dato,"
+				+ " codigo, "
+				+ "nombre, "
+				+ "descripcion "
+				+ "FROM tipo_de_dato "
+				+ "WHERE codigo = ? ";
+		Connection conn = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, tipoDeDato.getCodigo());
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				tipoDeDato.setCodigo(rs.getString("codigo"));
+				tipoDeDato.setDescripcion(rs.getString("descripcion"));
+				tipoDeDato.setId(rs.getInt("id_tipo_dato"));
+				tipoDeDato.setNombre(rs.getString("nombre"));
+			}
+			rs.close();
+			ps.close();
+			return tipoDeDato;	
+		} catch (SQLException e) {
+			logger.info("SQLException "+e);
+			throw new RuntimeException(e);
+		} catch(Exception e) {
+			logger.info("error "+e.toString());
+			return tipoDeDato;	
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {
+					return tipoDeDato;
+				}
+			}
+		}
 	}
 
 	@Override
@@ -82,7 +121,7 @@ public class JdbcTipoDeDatoDAO implements TipoDeDatoDAO {
 	}
 
 	@Override
-	public String eliminarTipoDeDato(String codTipoDato) {
+	public String eliminarTipoDeDato(TipoDeDato tipoDeDato) {
 		// TODO Auto-generated method stub
 		return null;
 	}
