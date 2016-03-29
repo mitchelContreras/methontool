@@ -55,6 +55,7 @@ angular.module('methontool')
 	    	function seleccioneProyecto(proyecto){
 //	    		console.log("el idProyecto es "+proyecto.idProyecto);
 	    		InformacionPrincipalApp.setProyecto(proyecto);
+	    		console.log("OJO OJO "+InformacionPrincipalApp.getProyecto().idProyecto);
 //	    		console.log("el2 idProyecto es "+InformacionPrincipalApp.getProyecto().idProyecto);
 	    		InformacionPrincipalApp.voyAvista("Proyecto");
 	    		
@@ -68,25 +69,29 @@ angular.module('methontool')
 	    		var glosario;
 	    		
 	    		//Siempre sera la primera vez que traigo las listas
-	    		glosario = FactoryGlosario.getListaElemento();
-	    		console.log("salida de getListaElemento "+glosario);
+	    		glosario = FactoryGlosario.actualizarLista();
+	    		console.log("salida de getListaElemento "+glosario.length);
 	    		glosario.then(
 		                function(salida) {
 		                    if(salida.succes){
 		                    	FactoryGlosario.setListaElemento (salida.elementos);
 		                    	FactoryGlosario.setYaConsulte (true);
+		                    	FactoryMensajeCarga.cerrarMensaje();
 		                    }else{
 		                        if(!salida.succes){
 		                        	console.log("succes es false en getListaElemento Glosario");
+		                        	FactoryMensajeCarga.cerrarMensaje();
 		                        }else{
 		                            console.log("No en getListaElemento Glosario");
+		                            FactoryMensajeCarga.cerrarMensaje();
 		                        }
 		                    }
 		                }
 		        );
 	    		
-	    		FactoryTipoGlosario.getListaElemento();
-
+//	    		FactoryTipoGlosario.getListaElemento();
+		
+	    		
 	    		FactoryMensajeCarga.cerrarMensaje();
 	    	}
 	    	

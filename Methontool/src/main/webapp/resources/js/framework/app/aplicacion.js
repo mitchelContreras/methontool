@@ -18,6 +18,17 @@
         'ngTouch',
         'angucomplete-alt'
         ,'modTipoGlosario'
+        ,'modTaxonomia'
+        ,'modRelacion'
+        ,'modConcepto'
+        ,'modInstancia'
+        ,'modAtributoClase'
+        ,'modAtributoInstancia'
+        ,'modMedida'
+        ,'modTipoDeDato'
+        ,'modConstante'
+        ,'modAxioma'
+        ,'modRegla'
         ])
     
 })();

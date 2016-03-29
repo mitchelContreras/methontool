@@ -44,25 +44,31 @@ function ControllerCabecera(
     	cnCabecera.menuReglaPrincipal = menuReglaPrincipal;
     	cnCabecera.menuAxiomaPrincipal = menuAxiomaPrincipal;
     	cnCabecera.menuRelacionPrincipal = menuRelacionPrincipal;
+    	cnCabecera.menuRelacionDosPrincipal = menuRelacionDosPrincipal;
     	cnCabecera.menuTaxonomiaPrincipal = menuTaxonomiaPrincipal;
     	cnCabecera.menuConceptoPrincipal = menuConceptoPrincipal;
     	cnCabecera.menuInstanciaPrincipal = menuInstanciaPrincipal;
     	cnCabecera.menuConstantePrincipal = menuConstantePrincipal;
+    	cnCabecera.menuInstanciaDosPrincipal = menuInstanciaDosPrincipal;
 //fin funciones relacionadas con  visualisar ó tarea
+    	function menuInstanciaDosPrincipal(){
+    		$rootScope.$broadcast('menuInstanciaDosPrincipal');
+    	}
+    	function menuRelacionDosPrincipal(){
+    		$rootScope.$broadcast('menuRelacionDosPrincipal');
+    	}
     	function menuConstantePrincipal(){
     		$rootScope.$broadcast('menuConstantePrincipal');
     	}
     	function menuInstanciaPrincipal(){
-    		//$rootScope.$broadcast('menuInstanciaPrincipal');
-    		console.log("instancia no se ha implementado");
+    		$rootScope.$broadcast('menuInstanciaPrincipal');
+//    		console.log("instancia no se ha implementado");
     	}
     	function menuConceptoPrincipal(){
-    		//$rootScope.$broadcast('menuConceptoPrincipal');
-    		console.log("concepto no se ha implementado");
+    		$rootScope.$broadcast('menuConceptoPrincipal');
     	}
     	function menuTaxonomiaPrincipal(){
-    		//$rootScope.$broadcast('menuTaxonomiaPrincipal');
-    		console.log("taxonomia no se ha implementado");
+    		$rootScope.$broadcast('menuTaxonomiaPrincipal');
     	}
     	function menuRelacionPrincipal(){
     		$rootScope.$broadcast('menuRelacionPrincipal');

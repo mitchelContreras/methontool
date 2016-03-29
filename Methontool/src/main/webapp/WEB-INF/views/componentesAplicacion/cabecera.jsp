@@ -88,15 +88,17 @@
 		         		 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Visualizar <span class="caret"></span></a>
 		         		 <ul class="dropdown-menu" role="menu">
 		           			<li><a href="#" ng-click="cnCabecera.menuGlosarioPrincipal()" >Glosario</a></li>
-		            		<li><a href="#" ng-click="cnCabecera.menuAtributoClasePrincipal()">Atributo de clase</a></li>
-		            		<li><a href="#" ng-click="cnCabecera.menuAtributoInstanciaPrincipal()">Atributo de instancia</a></li>
-		            		<li><a href="#" ng-click="cnCabecera.menuReglaPrincipal()">Reglas</a></li>
-				            <li><a href="#" ng-click="cnCabecera.menuAxiomaPrincipal()">Axioma</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuTaxonomiaPrincipal()">Taxonomia</a></li>	
 				            <li><a href="#" ng-click="cnCabecera.menuRelacionPrincipal()">Relaciones</a></li>
-				            <li><a href="#" ng-click="cnCabecera.menuTaxonomiaPrincipal()">Taxonomia</a></li>
-				            <li><a href="#" ng-click="cnCabecera.menuConceptoPrincipal()">Concepto</a></li>
-				            <li><a href="#" ng-click="cnCabecera.menuInstanciaPrincipal()">Instancia</a></li>
-				            <li><a href="#" ng-click="cnCabecera.menuConstantePrincipal()">Constante</a></li>			            
+				            <li><a href="#" ng-click="cnCabecera.menuConceptoPrincipal()">Concepto</a></li>	
+				            <li><a href="#" ng-click="cnCabecera.menuRelacionDosPrincipal()">Modificar Relaciones</a></li>			
+		            		<li><a href="#" ng-click="cnCabecera.menuAtributoInstanciaPrincipal()">Atributo de instancia</a></li>				            	            			            				            	           			
+		            		<li><a href="#" ng-click="cnCabecera.menuAtributoClasePrincipal()">Atributo de clase</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuConstantePrincipal()">Constante</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuAxiomaPrincipal()">Axioma</a></li>				            
+		            		<li><a href="#" ng-click="cnCabecera.menuReglaPrincipal()">Reglas</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuInstanciaPrincipal()">Instancia individual</a></li>
+				            <li><a href="#" ng-click="cnCabecera.menuInstanciaDosPrincipal()">Instancia masivo</a></li>		            
 		         		 </ul>
 		        	</li>
 		        	<li class="dropdown">

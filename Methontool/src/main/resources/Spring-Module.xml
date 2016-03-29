@@ -12,5 +12,16 @@
 	<import resource="beanDataBase/Spring-NivelFormalidad.xml" />
 	<import resource="beanDataBase/Spring-Glosario.xml" />
 	<import resource="beanDataBase/Spring-TipoGlosario.xml" />
-	
+	<import resource="beanDataBase/Spring-Taxonomia.xml" />
+	<import resource="beanDataBase/Spring-Relacion.xml" />
+	<import resource="beanDataBase/Spring-Instancia.xml" />
+	<import resource="beanDataBase/Spring-Instanciado.xml" />
+	<import resource="beanDataBase/Spring-AtributoClase.xml" />
+	<import resource="beanDataBase/Spring-AtributoInstancia.xml" />
+	<import resource="beanDataBase/Spring-Concepto.xml" />
+	<import resource="beanDataBase/Spring-TipoDeDato.xml" />
+	<import resource="beanDataBase/Spring-Medida.xml" />
+	<import resource="beanDataBase/Spring-Constante.xml" />
+	<import resource="beanDataBase/Spring-Axioma.xml" />
+	<import resource="beanDataBase/Spring-Regla.xml" />
 </beans>

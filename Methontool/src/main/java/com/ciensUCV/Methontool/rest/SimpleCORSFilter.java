@@ -21,7 +21,6 @@ import org.springframework.stereotype.Component;
  * @author mitchell
  *
  */
-
 public class SimpleCORSFilter implements Filter {
 	private static final Logger logger = LoggerFactory.getLogger(SimpleCORSFilter.class);
 	/* (non-Javadoc)
@@ -30,7 +29,6 @@ public class SimpleCORSFilter implements Filter {
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
-
 	}
 	/* (non-Javadoc)
 	 * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)
@@ -52,14 +50,12 @@ public class SimpleCORSFilter implements Filter {
         response.setHeader("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
         arg2.doFilter(arg0, arg1);
 	}
-
 	/* (non-Javadoc)
 	 * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
 	 */
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 		// TODO Auto-generated method stub
-
 	}
-
+	
 }

@@ -27,7 +27,8 @@ angular.module('methontool')
 		
 		var funcion = {
 				getListaElemento: function (){
-					return getListaElemento();
+//					return getListaElemento();
+					return listaObjeto;
 				},
 				setListaElemento: function (entrada){
 					listaObjeto = entrada;
@@ -55,9 +56,28 @@ angular.module('methontool')
 				},
 				modificarElemento: function (glosario){
 					modificarElemento (glosario);
-				}
+				},
+				getGlosarioDadoTipoGlosario : function (idTipoGlosario){
+					return getGlosarioDadoTipoGlosario (idTipoGlosario);
+				},
+				actualizarLista: function (){
+					console.log("dentro de actualizar");
+					return $listarGlosario.get
+					({id: InformacionPrincipalApp.getProyecto().idProyecto})
+					.$promise;
+				} 
 			};
 		
+		function getGlosarioDadoTipoGlosario (idTipoGlosario){
+			var salida = [];
+			var i;
+			for (i = 0; i<listaObjeto.length;i++){
+				if(listaObjeto[i].tipoGlosario.id == idTipoGlosario){
+					salida.push(listaObjeto[i]);
+				}
+			}
+			return salida;
+		}
 		function modificarElemento (glosario){
 			var i = 0;
 			for (i = 0; i<listaObjeto.length;i++){
@@ -108,18 +128,16 @@ angular.module('methontool')
 				},{}).$promise;
 		}
 		
-		function getListaElemento(){
-			console.log("en getListaElemento Glosario");
-			if (yaConsulte){
-				console.log("Ya tengo el valor de Glosario");
-				return listaObjeto;
-			}else{
-				console.log("antes del rest");
-				return $listarGlosario.get
-				({id: InformacionPrincipalApp.getProyecto().idProyecto})
-				.$promise;
-			} 
-		}
+//		function getListaElemento(){
+//			console.log("en getListaElemento Glosario");
+//			if (yaConsulte){
+//				console.log("Ya tengo el valor de Glosario");
+//				
+//			}else{
+//				console.log("antes del rest");
+//
+//			} 
+//		}
 		function eliminarElemento (id){
 			return true;
 		}
@@ -127,7 +145,14 @@ angular.module('methontool')
 			listaObjeto.push(objeto);
 		}
 		function consultarElemento (id){
-			return true;
+			var i;
+			for(i=0;i<listaObjeto.length;i++){
+				if(listaObjeto[i].id == id ){
+					return listaObjeto[i];
+				}
+			}
+			var objetoError = {'id' :0};
+			return objetoError;
 		}
 		function crearElemento(nombre, tipoGlosario, descripcion, listaSinonimo, listaAcronimo){
 			var sinonimos= "";

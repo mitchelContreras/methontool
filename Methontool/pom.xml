@@ -32,6 +32,13 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+		<!-- Solventar error de  Exception sending context destroyed event to listener instance of class org.springframework.web.context.ContextLoaderListener
+java.lang.NullPointerException
+		<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-web</artifactId>
+		<version>3.0.5.RELEASE</version>
+		</dependency>-->
 		<!--Spring-JDBC-->
 		<dependency>
 		    <groupId>org.springframework</groupId>
@@ -40,10 +47,23 @@
 		</dependency>
 		<!--postgresql-->
 		<dependency>
-			<groupId>postgresql</groupId>
+			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>9.1-901-1.jdbc4</version>
+			<version>9.4-1201-jdbc41</version>
 		</dependency>
+		<!-- JEna para OWL y RDF -->
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>jena-core</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<!-- OWl with owlapi -->
+		<dependency>
+			<groupId>net.sourceforge.owlapi</groupId>
+			<artifactId>owlapi-distribution</artifactId>
+			<version>4.0.2</version>
+		</dependency>
+		
 		<!-- Necesario para REst y JSON -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -111,6 +131,8 @@
 			<scope>runtime</scope>
 		</dependency>
 
+
+		
 		<!-- @Inject -->
 		<dependency>
 			<groupId>javax.inject</groupId>
@@ -143,7 +165,14 @@
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
-		</dependency>        
+		</dependency>
+		
+		<!-- Para Json en JAVA --> 
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>       
 	</dependencies>
     <build>
         <plugins>

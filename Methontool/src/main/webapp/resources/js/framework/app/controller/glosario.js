@@ -18,6 +18,8 @@ ControllerGlosario.$inject = ['$rootScope'
                               ,'FactoryTipoGlosario'
                               ,'FactoryGlosario'
                               ,'$scope'
+                              ,'FactoryTipoDato'
+                              ,'FactoryMedida'
                               ];	
 
 function ControllerGlosario(
@@ -26,9 +28,17 @@ function ControllerGlosario(
     	,$listarGlosario
     	,FactoryTipoGlosario
     	,FactoryGlosario
-    	,$scope
+       	,$scope
+    	,FactoryTipoDato
+    	,FactoryMedida
+ 
     ){
 	console.log("Entro en ControllerGlosario");
+	
+	FactoryTipoGlosario.getListaElemento();
+	FactoryMedida.getListaElemento();
+	FactoryTipoDato.getListaElemento();
+	
 	var cnGlosario = this;
 	
 	
@@ -131,7 +141,9 @@ function ControllerGlosario(
                 if(aux.succes){
                 	FactoryGlosario.agregarElemento(aux.elemento);
                 	cnGlosario.listaGlosario = FactoryGlosario.getListaElemento();
-                	seleccioneGlosario(cnGlosario.listaGlosario.indexOf(aux.elemento));
+                	cnGlosario.alertPositiva = true;
+                	cnGlosario.mensajeAlertPositiva = "El Glosario ha sido creado";
+                	seleccioneGlosario(aux.elemento,2);
                 }else{
                 	
                 }
@@ -157,25 +169,42 @@ function ControllerGlosario(
 		cnGlosario.idGlosario = "";
 		
 	}
-	function seleccioneGlosario(id){
-		cnGlosario.seleccionado = id;
+	
+	/*
+	 * SeleccioneGlosario
+	 * elemento: es el glosario que se seleccionado
+	 * codigo: 1 Quiero limpiar mensaje positivo y negativo
+	 * 		   2 Quiero dejar mensaje positvo
+	 * 		La diferencia es que cuando llamo con (2) no quiero limpiar el mensaje que dice que fue modificado
+	 */
+	function seleccioneGlosario(elemento, codigo){
+		var id;
+		id = cnGlosario.listaGlosario.indexOf(elemento);
+		cnGlosario.seleccionado = elemento.id;
 		cnGlosario.enCrear = false;
 		cnGlosario.enBlanco = false;
 		cnGlosario.modificar = false;
 		cnGlosario.disabled = true;
 		
+		if(codigo == 1){
+			//Si selecciono desde la lista quiero quitar el mensaje positivo
+			cnGlosario.alertPositiva = false;
+		}
+		cnGlosario.alertNegativa = false;
+		
 		//lleno los valores de la vista
-		cnGlosario.varNombre =	cnGlosario.listaGlosario[id].nombre;
-		cnGlosario.varTipo = cnGlosario.listaGlosario[id].tipoGlosario;
-		cnGlosario.descripcion = cnGlosario.listaGlosario[id].descripcion;
-		cnGlosario.listaSinonimo =  cnGlosario.listaGlosario[id].sinonimos.slice();
-		cnGlosario.listaAcronimo =  cnGlosario.listaGlosario[id].acronimos.slice();
-		cnGlosario.idGlosario = cnGlosario.listaGlosario[id].id;
+		var consultar = FactoryGlosario.consultarElemento (cnGlosario.seleccionado);
+		cnGlosario.varNombre =	consultar.nombre;
+		cnGlosario.varTipo = consultar.tipoGlosario;
+		cnGlosario.descripcion = consultar.descripcion;
+		cnGlosario.listaSinonimo =  consultar.sinonimos.slice();
+		cnGlosario.listaAcronimo =  consultar.acronimos.slice();
+		cnGlosario.idGlosario = consultar.id;
 	}
 	function cancelarModificarGlosario(){
 		cnGlosario.disabled = true;
 		cnGlosario.modificar = false;
-		seleccioneGlosario(cnGlosario.seleccionado); //Llamo con el id del seleccionado porque es su posicion en el arreglo lo que necesito y no su id en bd
+		seleccioneGlosario({'id':cnGlosario.idGlosario},1); //Llamo con el id del seleccionado porque es su posicion en el arreglo lo que necesito y no su id en bd
 	}
 	function modifiqueGlosario(){
 		console.log(cnGlosario.idGlosario);
@@ -203,7 +232,9 @@ function ControllerGlosario(
                 	console.log("actualizar es true");
                 	FactoryGlosario.modificarElemento(aux.elemento);
                 	cnGlosario.listaGlosario = FactoryGlosario.getListaElemento();
-                	seleccioneGlosario(cnGlosario.listaGlosario.indexOf(aux.elemento));
+                	cnGlosario.alertPositiva = true;
+                	cnGlosario.mensajeAlertPositiva = "El Glosario ha sido actualizado";
+                	seleccioneGlosario(aux.elemento,2);
                 }
              }
 		);	
@@ -247,8 +278,8 @@ function ControllerGlosario(
 	
 //Funciones ajenas al $scope
 	function listarGlosario(){
-		console.log("en listarGlosario");
 		cnGlosario.listaGlosario = FactoryGlosario.getListaElemento();
+		console.log("la lista de glosario es "+cnGlosario.listaGlosario.length);
 	}
 	
     $rootScope.$on('menuGlosarioPrincipal', function(event, data){
@@ -258,6 +289,8 @@ function ControllerGlosario(
     	cnGlosario.modificar = false; //si se permite modificar los valores 
     	cnGlosario.enBlanco = true;	    //mostrar seccion en blanco
     	cnGlosario.seleccionado = -1;
+    	cnGlosario.alertPositiva = false;
+    	cnGlosario.alertNegativa = false;
     });
 	
     $rootScope.$watch('actual.glosario', function (newValue, oldValue) {
